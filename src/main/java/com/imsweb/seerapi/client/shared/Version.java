@@ -9,10 +9,6 @@ public class Version {
     @JsonProperty("count")
     protected Long _count;
 
-    /**
-     * Return the version string
-     * @return
-     */
     public String getVersion() {
         return _version;
     }

@@ -6,22 +6,26 @@ package com.imsweb.seerapi.client;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
 import org.glassfish.jersey.jackson.JacksonFeature;
 
+import com.imsweb.seerapi.client.naaccr.NaaccrField;
+import com.imsweb.seerapi.client.naaccr.NaaccrFieldName;
+import com.imsweb.seerapi.client.naaccr.NaaccrVersion;
+import com.imsweb.seerapi.client.shared.Version;
 import com.imsweb.seerapi.client.siterecode.SiteRecode;
 
 /**
  * Entry point for Java API into SEER*API.
- * <p/>
- * Based on code from http://github-api.kohsuke.org/
  */
 public final class SeerApi {
 
@@ -54,8 +58,7 @@ public final class SeerApi {
      */
     public static SeerApi connect() throws IOException {
         Properties props = new Properties();
-        File homeDir = new File(System.getProperty("user.home"));
-        FileInputStream in = new FileInputStream(new File(homeDir, ".seerapi"));
+        FileInputStream in = new FileInputStream(new File(System.getProperty("user.home"), ".seerapi"));
 
         try {
             props.load(in);
@@ -96,19 +99,14 @@ public final class SeerApi {
     }
 
     /**
-     * Ensure a valid API Key has been supplied
-     */
-    private void requireCredentials() {
-        if (_apiKey == null || _apiKey.isEmpty())
-            throw new IllegalStateException("This operation requires a credential but none is given to the SeerApi constructor");
-    }
-
-    /**
      * Helper method to return a base web target
      * @param path
      * @return a WebTarget using the base URL and the passed path
      */
     private WebTarget createTarget(String path) {
+        if (_apiKey == null || _apiKey.isEmpty())
+            throw new IllegalStateException("This operation requires a credential but none is given to the SeerApi constructor");
+
         return _client.target(_baseUrl).path(path);
     }
 
@@ -122,6 +120,16 @@ public final class SeerApi {
     }
 
     /**
+     * Return the version of the SEER Site Recode database.
+     * @return a String representing the database version
+     */
+    public String siteRecodeVersion() {
+        WebTarget target = createTarget("/recode/version");
+
+        return getBuilder(target).get(Version.class).getVersion();
+    }
+
+    /**
      * Return the SEER Site Group for the site/histology combination, or 99999 if the combination is unknown.
      * @param site
      * @param histology
@@ -129,10 +137,40 @@ public final class SeerApi {
      * @throws IOException
      */
     public SiteRecode siteRecode(String site, String histology) throws IOException {
-        requireCredentials();
-
         WebTarget target = createTarget("/recode/sitegroup").queryParam("site", site).queryParam("hist", histology);
 
         return getBuilder(target).get(SiteRecode.class);
+    }
+
+    /**
+     * Return a collection of NaaccrVersion objects which descibe the available versions
+     * @return a list of the available NAACCR versions and information about each of them
+     */
+    public List<NaaccrVersion> naaccrVersions() {
+        WebTarget target = createTarget("/naaccr/versions");
+
+        return getBuilder(target).get(new GenericType<List<NaaccrVersion>>() {});
+    }
+
+    /**
+     * Return a list of all the field identifiers and names from a specified NAACCR version
+     * @param version
+     * @return a list of NaaccrFieldName objects
+     */
+    public List<NaaccrFieldName> naaccrFieldNames(String version) {
+        WebTarget target = createTarget("/naaccr/{version}").resolveTemplate("version", version);
+
+        return getBuilder(target).get(new GenericType<List<NaaccrFieldName>>() {});
+    }
+
+    /**
+     * Return a list of all the field identifiers and names from a specified NAACCR version
+     * @param version
+     * @return a list of NaaccrFieldName objects
+     */
+    public NaaccrField naaccrField(String version, Integer item) {
+        WebTarget target = createTarget("/naaccr/{version}/item/{item}").resolveTemplate("version", version).resolveTemplate("item", item);
+
+        return getBuilder(target).get(NaaccrField.class);
     }
 }

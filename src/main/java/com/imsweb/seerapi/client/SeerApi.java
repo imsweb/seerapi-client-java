@@ -14,7 +14,6 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 import com.imsweb.seerapi.client.siterecode.SiteRecode;
@@ -62,7 +61,14 @@ public final class SeerApi {
             props.load(in);
         }
         finally {
-            IOUtils.closeQuietly(in);
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            }
+            catch (IOException ioe) {
+                // ignore
+            }
         }
 
         return new SeerApi(_SEERAPI_URL, props.getProperty("apikey"));

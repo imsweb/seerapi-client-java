@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
+apply plugin: 'nexus'
 
 group = 'com.imsweb'
 version = '1.0-SNAPSHOT'
@@ -53,6 +54,21 @@ findbugs {
     ignoreFailures = true
     effort = 'max'
     excludeFilter = file("config/findbugs/findbugs-exclude.xml")
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7'
+    }
+}
+
+nexus {
+    repositoryUrl = 'http://cilantro.imsweb.com:8080/nexus/content/repositories/releases'
+    snapshotRepositoryUrl = 'http://cilantro.imsweb.com:8080/nexus/content/repositories/snapshots'
 }
 
 // Gradle wrapper, this allows to build the project without having to install Gradle!

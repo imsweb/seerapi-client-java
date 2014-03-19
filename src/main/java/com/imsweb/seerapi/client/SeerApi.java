@@ -24,20 +24,13 @@ import com.imsweb.seerapi.client.siterecode.SiteRecode;
  * <p/>
  * Based on code from http://github-api.kohsuke.org/
  */
-public class SeerApi {
+public final class SeerApi {
 
     private static final String _SEERAPI_URL = "https://api.seer.cancer.gov/rest";
 
     private Client _client;
     private String _baseUrl;
     private String _apiKey;
-
-    /**
-     * Private constructor
-     */
-    private SeerApi() {
-        // nobody should call this
-    }
 
     /**
      * Creates a client API root object
@@ -57,7 +50,7 @@ public class SeerApi {
 
     /**
      * Creates a connection to the API using the key stored in ~/.seerapi
-     * @return
+     * @return a new SeerApi instance
      * @throws IOException
      */
     public static SeerApi connect() throws IOException {
@@ -78,7 +71,7 @@ public class SeerApi {
     /**
      * Creates a connection to the API
      * @param apiKey
-     * @return
+     * @return a new SeerApi instance
      * @throws IOException
      */
     public static SeerApi connect(String apiKey) throws IOException {
@@ -89,7 +82,7 @@ public class SeerApi {
      * Creates a connection to the API
      * @param baseUrl
      * @param apiKey
-     * @return
+     * @return a new SeerApi instance
      * @throws IOException
      */
     public static SeerApi connect(String baseUrl, String apiKey) throws IOException {
@@ -107,7 +100,7 @@ public class SeerApi {
     /**
      * Helper method to return a base web target
      * @param path
-     * @return
+     * @return a WebTarget using the base URL and the passed path
      */
     private WebTarget createTarget(String path) {
         return _client.target(_baseUrl).path(path);
@@ -116,7 +109,7 @@ public class SeerApi {
     /**
      * Builds the default invocation builder.  All requests are currently JSON and are GZIP encoded.
      * @param target
-     * @return
+     * @return a Builder instance using the passed target and including default header information that is used on all our calls
      */
     private Invocation.Builder getBuilder(WebTarget target) {
         return target.request().header("X-SEERAPI-Key", _apiKey).accept(MediaType.APPLICATION_JSON_TYPE).acceptEncoding("gzip");
@@ -126,7 +119,7 @@ public class SeerApi {
      * Return the SEER Site Group for the site/histology combination, or 99999 if the combination is unknown.
      * @param site
      * @param histology
-     * @return
+     * @return a SiteRecode object based on the site and histology
      * @throws IOException
      */
     public SiteRecode siteRecode(String site, String histology) throws IOException {

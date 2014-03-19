@@ -1,0 +1,64 @@
+<FindBugsFilter>
+    <!-- Don't match test classes -->
+    <Match>
+        <Class name="~.*Test$" />
+    </Match>
+
+    <Match>
+        <Package name="com.imsweb.seerutils.validator.internal" />
+    </Match>
+
+    <Match>
+        <Package name="com.imsweb.seerutils.validator.xml" />
+    </Match>
+
+    <Match>
+        <Package name="com.imsweb.seerutils.validator.xml.set" />
+    </Match>
+
+    <Match>
+        <Package name="com.imsweb.seerutils.validator.internal.context" />
+    </Match>
+
+    <Match>
+        <Bug pattern="CD_CIRCULAR_DEPENDENCY" />
+    </Match>
+
+    <Match>
+        <Bug category="MALICIOUS_CODE" />
+    </Match>
+
+    <Match>
+        <Bug pattern="SE_TRANSIENT_FIELD_NOT_RESTORED" />
+    </Match>
+
+    <Match>
+        <Bug pattern="DM_DEFAULT_ENCODING" />
+    </Match>
+
+    <Match>
+        <Class name="com.imsweb.seerutils.SeerUtils" />
+        <Bug pattern="OS_OPEN_STREAM" />
+    </Match>
+
+    <Match>
+        <Class name="com.imsweb.seerutils.SeerUtils" />
+        <Bug pattern="OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE" />
+    </Match>
+
+    <Match>
+        <Class name="com.imsweb.seerutils.cstage.CollaborativeStageDataCard" />
+        <Bug pattern="NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD" />
+    </Match>
+
+    <Match>
+        <Class name="com.imsweb.seerutils.cstage.CollaborativeStageDataCard" />
+        <Bug pattern="UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD" />
+    </Match>
+
+    <Match>
+        <Class name="com.imsweb.seerutils.layout.fixedcolumns.FixedColumnsLayout" />
+        <Bug pattern="DM_STRING_CTOR" />
+    </Match>
+
+</FindBugsFilter>

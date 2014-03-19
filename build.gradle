@@ -1,0 +1,61 @@
+apply plugin: 'java'
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+
+group = 'com.imsweb'
+version = '1.0-SNAPSHOT'
+description = 'Java client library for SEER*API'
+
+// UTF-8 for all compilation tasks
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+repositories {
+    maven {
+        url "http://cilantro.imsweb.com:8080/nexus/content/groups/public"
+    }
+    mavenCentral()
+}
+
+dependencies {
+    compile 'commons-io:commons-io:1.4'
+    //compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+    compile 'org.glassfish.jersey.core:jersey-client:2.7'
+    compile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.7'
+
+    testCompile 'junit:junit:4.11'
+}
+
+jar {
+    // specify the archive name; otherwise the version is appended to the war file
+    archiveName = 'seerapi-java.jar'
+
+    manifest {
+        attributes('Implementation-Title': 'SEER*API Java Client',
+                'Implementation-Version': version,
+                'Implementation-Vendor': group,
+                'Created-By': System.properties['java.vm.version'] + " (" + System.properties['java.vm.vendor'] + ")",
+                'Built-By': System.getProperty('user.name'),
+                'Built-Date': new Date(),
+                'Built-JDK': System.getProperty('java.version'),
+        )
+    }
+}
+
+// checkstyle plugin settings
+checkstyle {
+    ignoreFailures = true
+    configFile = file("config/checkstyle/checkstyle.xml")
+}
+
+// findbugs plugin settings
+findbugs {
+    sourceSets = [sourceSets.main]
+    ignoreFailures = true
+    effort = 'max'
+    excludeFilter = file("config/findbugs/findbugs-exclude.xml")
+}
+
+// Gradle wrapper, this allows to build the project without having to install Gradle!
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.10'
+}

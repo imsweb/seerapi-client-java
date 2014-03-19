@@ -1,0 +1,11 @@
+/target
+/build
+/dist
+/classes
+/.gradle
+src/main/resources/git.properties
+/.idea/workspace.xml
+/.idea/tasks.xml
+/.idea
+/.extract
+seerapi-client-java.iml

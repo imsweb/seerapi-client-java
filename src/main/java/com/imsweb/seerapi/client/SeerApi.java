@@ -18,6 +18,12 @@ import javax.ws.rs.core.MediaType;
 
 import org.glassfish.jersey.jackson.JacksonFeature;
 
+import com.imsweb.seerapi.client.cs.CsCodeValidity;
+import com.imsweb.seerapi.client.cs.CsSchema;
+import com.imsweb.seerapi.client.cs.CsSchemaExistence;
+import com.imsweb.seerapi.client.cs.CsSchemaName;
+import com.imsweb.seerapi.client.cs.CsTable;
+import com.imsweb.seerapi.client.cs.CsVersion;
 import com.imsweb.seerapi.client.naaccr.NaaccrField;
 import com.imsweb.seerapi.client.naaccr.NaaccrFieldName;
 import com.imsweb.seerapi.client.naaccr.NaaccrVersion;
@@ -172,5 +178,92 @@ public final class SeerApi {
         WebTarget target = createTarget("/naaccr/{version}/item/{item}").resolveTemplate("version", version).resolveTemplate("item", item);
 
         return getBuilder(target).get(NaaccrField.class);
+    }
+
+    /**
+     * Return a collection of CsVersion objects which descibe the available versions
+     * @return a list of the available Collaborative Staging versions and information about each of them
+     */
+    public List<CsVersion> csVersions() {
+        WebTarget target = createTarget("/cstage/versions");
+
+        return getBuilder(target).get(new GenericType<List<CsVersion>>() {});
+    }
+
+    /**
+     * Return the list of schema names and identifiers for the specifid version
+     * @param version
+     * @return a list of CsCschemaName objects
+     */
+    public List<CsSchemaName> csSchemas(String version) {
+        WebTarget target = createTarget("/cstage/{version}").resolveTemplate("version", version);
+
+        return getBuilder(target).get(new GenericType<List<CsSchemaName>>() {});
+    }
+
+    /**
+     * Checks whether a site/histology combination maps to an existing schema for the passed CS version
+     * @param version
+     * @param site
+     * @param histology
+     * @return a CsSchemaExistence object which includes information about the matching schema
+     */
+    public CsSchemaExistence csSchemaExists(String version, String site, String histology) {
+        WebTarget target = createTarget("/cstage/{version}/check_schema_exists").resolveTemplate("version", version).queryParam("site", site).queryParam("hist", histology);
+
+        return getBuilder(target).get(CsSchemaExistence.class);
+    }
+
+    /**
+     * Return a full schema based on schema number
+     * @param version
+     * @param schemaNumber
+     * @return a csSchema object
+     */
+    public CsSchema csSchema(String version, Integer schemaNumber) {
+        WebTarget target = createTarget("/cstage/{version}/schema").resolveTemplate("version", version).queryParam("id", schemaNumber);
+
+        return getBuilder(target).get(CsSchema.class);
+    }
+
+    /**
+     * Return a full schema based on primary site, histology and site-specific factor 25
+     * @param version
+     * @param site
+     * @param histology
+     * @param ssf25
+     * @return a CsSchema object
+     */
+    public CsSchema csSchema(String version, String site, String histology, String ssf25) {
+        WebTarget target = createTarget("/cstage/{version}/schema").resolveTemplate("version", version).queryParam("site", site).queryParam("hist", histology).queryParam("ssf25", ssf25);
+
+        return getBuilder(target).get(CsSchema.class);
+    }
+
+    /**
+     * Tests whether a code is valid or obsolete.
+     * @param version
+     * @param schemaNumber
+     * @param tableNumber
+     * @param code
+     * @return a CsCodeValidity object indicating validity and whether the code is obsolete
+     */
+    public CsCodeValidity csValidCode(String version, Integer schemaNumber, Integer tableNumber, String code) {
+        WebTarget target = createTarget("/cstage/{version}/is_code_valid").resolveTemplate("version", version).queryParam("id", schemaNumber).queryParam("table", tableNumber).queryParam("code", code);
+
+        return getBuilder(target).get(CsCodeValidity.class);
+    }
+
+    /**
+     * Return the specified CS table
+     * @param version
+     * @param schemaNumber
+     * @param tableNumber
+     * @return
+     */
+    public CsTable csTable(String version, Integer schemaNumber, Integer tableNumber) {
+        WebTarget target = createTarget("/cstage/{version}/table").resolveTemplate("version", version).queryParam("id", schemaNumber).queryParam("table", tableNumber);
+
+        return getBuilder(target).get(CsTable.class);
     }
 }

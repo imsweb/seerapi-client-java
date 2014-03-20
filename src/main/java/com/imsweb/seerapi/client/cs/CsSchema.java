@@ -11,7 +11,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 /**
  * Simple Java object that contains all of the schemas relevant information.
  */
-public class SchemaDto {
+public class CsSchema {
 
     @JsonProperty("schema_number")
     protected int _schemaNumber;
@@ -26,7 +26,7 @@ public class SchemaDto {
     @JsonProperty("note")
     protected List<String> _notes;
     @JsonProperty("ssf")
-    protected List<SiteSpecificFactorDto> _siteSpecificFactors = new ArrayList<SiteSpecificFactorDto>();
+    protected List<CsSiteSpecificFactor> _siteSpecificFactors = new ArrayList<CsSiteSpecificFactor>();
     @JsonProperty("num_tables")
     protected int _numTables;
     @JsonProperty("revision_date")
@@ -56,7 +56,7 @@ public class SchemaDto {
         return _notes;
     }
 
-    public List<SiteSpecificFactorDto> getSiteSpecificFactors() {
+    public List<CsSiteSpecificFactor> getSiteSpecificFactors() {
         return _siteSpecificFactors;
     }
 

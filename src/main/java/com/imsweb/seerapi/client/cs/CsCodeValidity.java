@@ -2,7 +2,7 @@ package com.imsweb.seerapi.client.cs;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class CodeValidity {
+public class CsCodeValidity {
 
     @JsonProperty("schema_number")
     protected Integer _schemaNumber;
@@ -27,11 +27,11 @@ public class CodeValidity {
         return _code;
     }
 
-    public Boolean getIsValid() {
+    public Boolean isValid() {
         return _isValid;
     }
 
-    public Boolean getIsObsolete() {
+    public Boolean isObsolete() {
         return _isObsolete;
     }
 }

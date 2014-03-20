@@ -10,7 +10,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 /**
  * Object that contains all of the relevant information for a CStage table.
  */
-public class TableDto {
+public class CsTable {
 
     @JsonProperty("table_id")
     protected String _tableId;
@@ -27,7 +27,7 @@ public class TableDto {
     @JsonProperty("header")
     protected List<String> _headers;
     @JsonProperty("row")
-    protected List<TableRowDto> _rows;
+    protected List<CsTableRow> _rows;
     @JsonProperty("footnote")
     protected List<String> _footnotes;
     @JsonProperty("usage")
@@ -67,7 +67,7 @@ public class TableDto {
         return _headers;
     }
 
-    public List<TableRowDto> getRows() {
+    public List<CsTableRow> getRows() {
         return _rows;
     }
 

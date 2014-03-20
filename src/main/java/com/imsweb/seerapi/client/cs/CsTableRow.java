@@ -10,7 +10,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 /**
  * Simple Java object that contains all of the values for a CollaborativeStageTableRow.
  */
-public class TableRowDto {
+public class CsTableRow {
 
     @JsonProperty("cell")
     protected List<String> _cells;

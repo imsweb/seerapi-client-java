@@ -2,7 +2,7 @@ package com.imsweb.seerapi.client.cs;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class InvolvedTableDto {
+public class CsInvolvedTable {
 
     @JsonProperty("table_number")
     protected Integer _tableNumber;

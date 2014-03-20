@@ -10,7 +10,14 @@ import javax.ws.rs.BadRequestException;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.unitils.reflectionassert.ReflectionAssert;
 
+import com.imsweb.seerapi.client.cs.CsCodeValidity;
+import com.imsweb.seerapi.client.cs.CsSchema;
+import com.imsweb.seerapi.client.cs.CsSchemaExistence;
+import com.imsweb.seerapi.client.cs.CsSchemaName;
+import com.imsweb.seerapi.client.cs.CsTable;
+import com.imsweb.seerapi.client.cs.CsVersion;
 import com.imsweb.seerapi.client.naaccr.NaaccrField;
 import com.imsweb.seerapi.client.naaccr.NaaccrFieldName;
 import com.imsweb.seerapi.client.naaccr.NaaccrVersion;
@@ -75,5 +82,67 @@ public class SeerApiTest {
         Assert.assertEquals(2, name.getSubFields().size());
         Assert.assertEquals(522, name.getSubFields().get(0).getItem().longValue());
         Assert.assertEquals(523, name.getSubFields().get(1).getItem().longValue());
+    }
+
+    @Test
+    public void testCsVersions() throws IOException {
+        List<CsVersion> versions = SeerApi.connect().csVersions();
+
+        Assert.assertEquals(1, versions.size());
+        for (CsVersion version : versions) {
+            Assert.assertTrue(version.getVersion().length() > 0);
+            Assert.assertTrue(version.getTimestamp().length() > 0);
+            Assert.assertEquals(153, version.getNumSchemas().longValue());
+        }
+    }
+
+    @Test
+    public void testCsSchemas() throws IOException {
+        List<CsSchemaName> schemas = SeerApi.connect().csSchemas("latest");
+
+        Assert.assertEquals(153, schemas.size());
+        for (CsSchemaName schema : schemas) {
+            Assert.assertTrue(schema.getName().length() > 0);
+            Assert.assertTrue(schema.getSchemaNumber() > 0);
+        }
+    }
+
+    @Test
+    public void testCsSchemaExists() throws IOException {
+        CsSchemaExistence exists = SeerApi.connect().csSchemaExists("latest", "C481", "8240");
+        Assert.assertTrue(exists.isValid());
+        Assert.assertTrue(exists.needsDescriminator());
+        Assert.assertNotNull(exists.getTable());
+        Assert.assertEquals(102, exists.getTable().getTableNumber().longValue());
+    }
+
+    @Test
+    public void testCsSchema() throws IOException {
+        CsSchema schemaById = SeerApi.connect().csSchema("latest", 105);
+        Assert.assertNotNull(schemaById);
+        Assert.assertEquals(105, schemaById.getSchemaNumber());
+        Assert.assertTrue(schemaById.getSiteSpecificFactors().size() > 0);
+
+        // get the same schema using site/hist/ssf25 and compare to the original schema
+        CsSchema schemaBySiteHist = SeerApi.connect().csSchema("latest", "C481", "8240", "002");
+        ReflectionAssert.assertReflectionEquals(schemaById, schemaBySiteHist);
+    }
+
+    @Test
+    public void testCsCodeValidity() throws IOException {
+        CsCodeValidity validity = SeerApi.connect().csValidCode("latest", 112, 3, "0");
+
+        Assert.assertTrue(validity.isValid());
+        Assert.assertFalse(validity.isObsolete());
+    }
+
+    @Test
+    public void testCsTable() throws IOException {
+        CsTable table = SeerApi.connect().csTable("latest", 112, 3);
+
+        Assert.assertNotNull(table);
+        Assert.assertEquals(112, table.getTableNumber().longValue());  // TODO this seems like it is returning the schema number in the table number field.  It's a problem in the API though.
+        Assert.assertTrue(table.getTitle().length() > 0);
+        Assert.assertTrue(table.getRows().size() > 0);
     }
 }

@@ -2,7 +2,7 @@ package com.imsweb.seerapi.client.cs;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class SchemaExistence {
+public class CsSchemaExistence {
 
     @JsonProperty("site")
     protected String _site;
@@ -13,7 +13,7 @@ public class SchemaExistence {
     @JsonProperty("needs_descriminator")
     protected Boolean _needDescriminator;
     @JsonProperty("discriminator_table")
-    protected TableDto _table;
+    protected CsTable _table;
 
     public String getSite() {
         return _site;
@@ -23,15 +23,15 @@ public class SchemaExistence {
         return _histology;
     }
 
-    public Boolean getIsValid() {
+    public Boolean isValid() {
         return _isValid;
     }
 
-    public Boolean getNeedDescriminator() {
+    public Boolean needsDescriminator() {
         return _needDescriminator;
     }
 
-    public TableDto getTable() {
+    public CsTable getTable() {
         return _table;
     }
 }

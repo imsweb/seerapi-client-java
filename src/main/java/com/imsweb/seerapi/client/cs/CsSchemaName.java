@@ -9,7 +9,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
  * Simple Java object that contains all of the schemas relevant information.
  * @author criderp
  */
-public class SchemaNameDto {
+public class CsSchemaName {
 
     @JsonProperty("number")
     protected int _schemaNumber;

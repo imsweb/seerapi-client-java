@@ -9,7 +9,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
  * Simple Java object that represents a single site-specific-factor (SSF1 to SSF25).
  * @author may
  */
-public class SiteSpecificFactorDto {
+public class CsSiteSpecificFactor {
 
     @JsonProperty("number")
     protected int _ssfNumber;

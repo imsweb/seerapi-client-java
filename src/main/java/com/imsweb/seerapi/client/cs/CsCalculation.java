@@ -8,9 +8,9 @@ import java.util.List;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
- * Simple Java object that contains all of the relevant information for a CStage table row.
+ * Simple Java object that contains all of the relevant information for a csCalculate result
  */
-public class ResultsDto {
+public class CsCalculation {
 
     @JsonProperty("schema_number")
     protected Integer _schemaNum;
@@ -109,9 +109,9 @@ public class ResultsDto {
     @JsonProperty("ss2000")
     protected String _displaySs2000;
     @JsonProperty("involved_table")
-    protected List<InvolvedTableDto> _involvedTables;
+    protected List<CsInvolvedTable> _involvedTables;
     @JsonProperty("problem_codes")
-    protected List<CodeValidity> _problemCodes;
+    protected List<CsCodeValidity> _problemCodes;
 
     public Integer getSchemaNum() {
         return _schemaNum;
@@ -289,11 +289,11 @@ public class ResultsDto {
         return _displaySs2000;
     }
 
-    public List<InvolvedTableDto> getInvolvedTables() {
+    public List<CsInvolvedTable> getInvolvedTables() {
         return _involvedTables;
     }
 
-    public List<CodeValidity> getProblemCodes() {
+    public List<CsCodeValidity> getProblemCodes() {
         return _problemCodes;
     }
 }

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.WebApplicationException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,6 +31,24 @@ public class SeerApiTest {
     @Test(expected = BadRequestException.class)
     public void testBadParameterExceptiion() throws IOException {
         SeerApi.connect().siteRecode("C379", null);
+    }
+
+    @Test
+    public void testExceptionMessages() throws IOException {
+        String message = "";
+
+        try {
+            SeerApi.connect().siteRecode("C379", null);
+        }
+        catch (WebApplicationException e) {
+            message = e.getMessage();
+        }
+
+        // the API call works out to:
+        //     https://api.seer.cancer.gov/rest/recode/sitegroup?site=C379
+        // and the full message returned should be
+        //     {"code":400,"message":"Site and histology must be supplied"}
+        Assert.assertEquals("Site and histology must be supplied", message);
     }
 
     @Test

@@ -29,6 +29,7 @@ import com.imsweb.seerapi.client.cs.CsVersion;
 import com.imsweb.seerapi.client.naaccr.NaaccrField;
 import com.imsweb.seerapi.client.naaccr.NaaccrFieldName;
 import com.imsweb.seerapi.client.naaccr.NaaccrVersion;
+import com.imsweb.seerapi.client.publishable.PublishableVersionBean;
 import com.imsweb.seerapi.client.shared.Version;
 import com.imsweb.seerapi.client.siterecode.SiteRecode;
 
@@ -278,18 +279,18 @@ public final class SeerApi {
     public CsResult csCalculate(String version, CsInput input) {
         WebTarget target = createTarget("/cstage/{version}/calculate").resolveTemplate("version", version);
 
-        target = target.queryParam("site", input.getSite()).queryParam("hist", input.getHistology()).queryParam("diagnosis_year", input.getDiagnosisYear())
-                .queryParam("csver_original", input.getCsVersionOriginal()).queryParam("behav", input.getBehavior()).queryParam("grade", input.getGrade()).queryParam("age", input.getAge())
-                .queryParam("lvi", input.getLvi()).queryParam("size", input.getTumorSize()).queryParam("ext", input.getExtension()).queryParam("exteval", input.getExtensionEval())
-                .queryParam("nodes", input.getLymphNodes()).queryParam("nodeseval", input.getLymphNodesEval()).queryParam("lnpos", input.getLymphNodesPositive())
-                .queryParam("lnexam", input.getLymphNodesExamined()).queryParam("mets", input.getMetsAtDx()).queryParam("metseval", input.getMetsEval()).queryParam("ssf1", input.getSsf1())
-                .queryParam("ssf2", input.getSsf2()).queryParam("ssf3", input.getSsf3()).queryParam("ssf4", input.getSsf4()).queryParam("ssf5", input.getSsf5()).queryParam("ssf6", input.getSsf6())
-                .queryParam("ssf7", input.getSsf7()).queryParam("ssf8", input.getSsf8()).queryParam("ssf9", input.getSsf9()).queryParam("ssf10", input.getSsf10())
-                .queryParam("ssf11", input.getSsf11()).queryParam("ssf12", input.getSsf12()).queryParam("ssf13", input.getSsf13()).queryParam("ssf14", input.getSsf14())
-                .queryParam("ssf15", input.getSsf15()).queryParam("ssf16", input.getSsf16()).queryParam("ssf17", input.getSsf17()).queryParam("ssf18", input.getSsf18())
-                .queryParam("ssf19", input.getSsf19()).queryParam("ssf10", input.getSsf20()).queryParam("ssf21", input.getSsf21()).queryParam("ssf22", input.getSsf22())
-                .queryParam("ssf23", input.getSsf23()).queryParam("ssf24", input.getSsf24()).queryParam("ssf25", input.getSsf25());
+        target = target.queryParam("site", input.getSite()).queryParam("hist", input.getHistology()).queryParam("diagnosis_year", input.getDiagnosisYear()).queryParam("csver_original", input.getCsVersionOriginal()).queryParam("behav", input.getBehavior()).queryParam("grade", input.getGrade()).queryParam("age", input.getAge()).queryParam("lvi", input.getLvi()).queryParam("size", input.getTumorSize()).queryParam("ext", input.getExtension()).queryParam("exteval", input.getExtensionEval()).queryParam("nodes", input.getLymphNodes()).queryParam("nodeseval", input.getLymphNodesEval()).queryParam("lnpos", input.getLymphNodesPositive()).queryParam("lnexam", input.getLymphNodesExamined()).queryParam("mets", input.getMetsAtDx()).queryParam("metseval", input.getMetsEval()).queryParam("ssf1", input.getSsf1()).queryParam("ssf2", input.getSsf2()).queryParam("ssf3", input.getSsf3()).queryParam("ssf4", input.getSsf4()).queryParam("ssf5", input.getSsf5()).queryParam("ssf6", input.getSsf6()).queryParam("ssf7", input.getSsf7()).queryParam("ssf8", input.getSsf8()).queryParam("ssf9", input.getSsf9()).queryParam("ssf10", input.getSsf10()).queryParam("ssf11", input.getSsf11()).queryParam("ssf12", input.getSsf12()).queryParam("ssf13", input.getSsf13()).queryParam("ssf14", input.getSsf14()).queryParam("ssf15", input.getSsf15()).queryParam("ssf16", input.getSsf16()).queryParam("ssf17", input.getSsf17()).queryParam("ssf18", input.getSsf18()).queryParam("ssf19", input.getSsf19()).queryParam("ssf10", input.getSsf20()).queryParam("ssf21", input.getSsf21()).queryParam("ssf22", input.getSsf22()).queryParam("ssf23", input.getSsf23()).queryParam("ssf24", input.getSsf24()).queryParam("ssf25", input.getSsf25());
 
         return getBuilder(target).get(CsResult.class);
+    }
+
+    /**
+     * Return a list of all disease versions and information about them
+     * @return a list of PublishableVersionBean objects
+     */
+    public List<PublishableVersionBean> diseaseVersions() {
+        WebTarget target = createTarget("/disease/versions");
+
+        return getBuilder(target).get(new GenericType<List<PublishableVersionBean>>() {});
     }
 }

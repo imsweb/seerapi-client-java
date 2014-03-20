@@ -24,6 +24,7 @@ import com.imsweb.seerapi.client.cs.CsVersion;
 import com.imsweb.seerapi.client.naaccr.NaaccrField;
 import com.imsweb.seerapi.client.naaccr.NaaccrFieldName;
 import com.imsweb.seerapi.client.naaccr.NaaccrVersion;
+import com.imsweb.seerapi.client.publishable.PublishableVersionBean;
 import com.imsweb.seerapi.client.siterecode.SiteRecode;
 
 public class SeerApiTest {
@@ -197,5 +198,16 @@ public class SeerApiTest {
         Assert.assertEquals("020550", result.getCsVersionDerived());
         Assert.assertEquals("KidneyRenalPelvis", result.getSchemaName());
         Assert.assertEquals("IV", result.getDisplayAjcc7StageGroup());
+    }
+
+    @Test
+    public void testDiseaseVersions() throws IOException {
+        List<PublishableVersionBean> versions = SeerApi.connect().diseaseVersions();
+
+        Assert.assertTrue(versions.size() > 0);
+        for (PublishableVersionBean version : versions) {
+            Assert.assertTrue(version.getName().length() > 0);
+            Assert.assertTrue(version.getType().length() > 0);
+        }
     }
 }

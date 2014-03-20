@@ -19,6 +19,8 @@ import javax.ws.rs.core.MediaType;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 import com.imsweb.seerapi.client.cs.CsCodeValidity;
+import com.imsweb.seerapi.client.cs.CsInput;
+import com.imsweb.seerapi.client.cs.CsResult;
 import com.imsweb.seerapi.client.cs.CsSchema;
 import com.imsweb.seerapi.client.cs.CsSchemaExistence;
 import com.imsweb.seerapi.client.cs.CsSchemaName;
@@ -265,5 +267,14 @@ public final class SeerApi {
         WebTarget target = createTarget("/cstage/{version}/table").resolveTemplate("version", version).queryParam("id", schemaNumber).queryParam("table", tableNumber);
 
         return getBuilder(target).get(CsTable.class);
+    }
+
+    public CsResult csCalculate(String version, CsInput input) {
+        WebTarget target = createTarget("/cstage/{version}/calculate").resolveTemplate("version", version);
+
+        // TODO set all the query parameters!
+
+        return getBuilder(target).get(CsResult.class);
+
     }
 }

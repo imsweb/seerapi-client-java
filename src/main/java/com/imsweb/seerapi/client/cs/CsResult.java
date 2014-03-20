@@ -10,7 +10,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 /**
  * Simple Java object that contains all of the relevant information for a csCalculate result
  */
-public class CsCalculation {
+public class CsResult {
 
     @JsonProperty("schema_number")
     protected Integer _schemaNum;

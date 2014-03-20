@@ -113,7 +113,7 @@ public class CsResult {
     @JsonProperty("problem_codes")
     protected List<CsCodeValidity> _problemCodes;
 
-    public Integer getSchemaNum() {
+    public Integer getSchemaNumber() {
         return _schemaNum;
     }
 

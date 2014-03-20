@@ -13,6 +13,8 @@ import org.junit.Test;
 import org.unitils.reflectionassert.ReflectionAssert;
 
 import com.imsweb.seerapi.client.cs.CsCodeValidity;
+import com.imsweb.seerapi.client.cs.CsInput;
+import com.imsweb.seerapi.client.cs.CsResult;
 import com.imsweb.seerapi.client.cs.CsSchema;
 import com.imsweb.seerapi.client.cs.CsSchemaExistence;
 import com.imsweb.seerapi.client.cs.CsSchemaName;
@@ -144,5 +146,37 @@ public class SeerApiTest {
         Assert.assertEquals(112, table.getTableNumber().longValue());  // TODO this seems like it is returning the schema number in the table number field.  It's a problem in the API though.
         Assert.assertTrue(table.getTitle().length() > 0);
         Assert.assertTrue(table.getRows().size() > 0);
+    }
+
+    @Test
+    public void testCsCalculate() throws IOException {
+        CsInput input = new CsInput();
+        input.setSite("C659");
+        input.setHistology("8130");
+        input.setDiagnosisYear("2010");
+        input.setCsVersionOriginal("020200");
+        input.setBehavior("3");
+        input.setGrade("4");
+        input.setAge("076");
+        input.setLvi("0");
+        input.setTumorSize("065");
+        input.setExtension("700");
+        input.setExtensionEval("3");
+        input.setLymphNodes("000");
+        input.setLymphNodesEval("0");
+        input.setLymphNodesPositive("98");
+        input.setLymphNodesExamined("00");
+        input.setMetsAtDx("00");
+        input.setMetsEval("0");
+        input.setSsf1("888");
+        input.setSsf2("000");
+
+        CsResult result = SeerApi.connect().csCalculate("latest", input);
+
+        Assert.assertNotNull(result);
+        Assert.assertEquals(127, result.getSchemaNumber().longValue());
+        Assert.assertEquals("020550", result.getCsVersionDerived());
+        Assert.assertEquals("KidneyRenalPelvis", result.getSchemaName());
+        Assert.assertEquals("IV", result.getDisplayAjcc7StageGroup());
     }
 }

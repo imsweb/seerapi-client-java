@@ -7,6 +7,7 @@ public class CsInput {
 
     private String _site;
     private String _histology;
+    private String _diagnosisYear;
     private String _csVersionOriginal;
     private String _behavior;
     private String _grade;
@@ -61,6 +62,14 @@ public class CsInput {
 
     public void setHistology(String histology) {
         _histology = histology;
+    }
+
+    public String getDiagnosisYear() {
+        return _diagnosisYear;
+    }
+
+    public void setDiagnosisYear(String diagnosisYear) {
+        _diagnosisYear = diagnosisYear;
     }
 
     public String getCsVersionOriginal() {

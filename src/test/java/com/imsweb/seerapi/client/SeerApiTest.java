@@ -208,6 +208,7 @@ public class SeerApiTest {
         for (PublishableVersionBean version : versions) {
             Assert.assertTrue(version.getName().length() > 0);
             Assert.assertTrue(version.getType().length() > 0);
+            Assert.assertNotNull(version.getLastModified());
         }
     }
 }

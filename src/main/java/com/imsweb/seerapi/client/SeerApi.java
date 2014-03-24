@@ -27,13 +27,13 @@ import com.imsweb.seerapi.client.cs.CsSchemaName;
 import com.imsweb.seerapi.client.cs.CsTable;
 import com.imsweb.seerapi.client.cs.CsVersion;
 import com.imsweb.seerapi.client.disease.Disease;
+import com.imsweb.seerapi.client.disease.DiseaseVersionBean;
 import com.imsweb.seerapi.client.disease.PrimarySite;
 import com.imsweb.seerapi.client.disease.SamePrimaries;
 import com.imsweb.seerapi.client.disease.SiteCategory;
 import com.imsweb.seerapi.client.naaccr.NaaccrField;
 import com.imsweb.seerapi.client.naaccr.NaaccrFieldName;
 import com.imsweb.seerapi.client.naaccr.NaaccrVersion;
-import com.imsweb.seerapi.client.publishable.PublishableVersionBean;
 import com.imsweb.seerapi.client.shared.Version;
 import com.imsweb.seerapi.client.siterecode.SiteRecode;
 
@@ -290,12 +290,12 @@ public final class SeerApi {
 
     /**
      * Return a list of all disease versions and information about them
-     * @return a list of PublishableVersionBean objects
+     * @return a list of DiseaseVersionBean objects
      */
-    public List<PublishableVersionBean> diseaseVersions() {
+    public List<DiseaseVersionBean> diseaseVersions() {
         WebTarget target = createTarget("/disease/versions");
 
-        return getBuilder(target).get(new GenericType<List<PublishableVersionBean>>() {});
+        return getBuilder(target).get(new GenericType<List<DiseaseVersionBean>>() {});
     }
 
     // TODO version changelog

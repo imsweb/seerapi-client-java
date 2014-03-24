@@ -1,13 +1,13 @@
 /*
  * Copyright (C) 2012 Information Management Services, Inc.
  */
-package com.imsweb.seerapi.client.publishable;
+package com.imsweb.seerapi.client.disease;
 
 import java.util.Date;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class PublishableVersionBean {
+public class DiseaseVersionBean {
 
     @JsonProperty("version")
     private String _name;

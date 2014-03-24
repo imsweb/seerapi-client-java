@@ -1,20 +1,20 @@
 /*
  * Copyright (C) 2012 Information Management Services, Inc.
  */
-package com.imsweb.seerapi.client.publishable;
+package com.imsweb.seerapi.client.disease;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class ChangelogEntryBean {
+public class DiseaseChangelogEntry {
 
     @JsonProperty("id")
     private String _id;
     @JsonProperty("name")
     private String _name;
     @JsonProperty("old")
-    private PublishableBean _oldVersion;
+    private Disease _oldVersion;
     @JsonProperty("new")
-    private PublishableBean _newVersion;
+    private Disease _newVersion;
 
     public String getId() {
         return _id;
@@ -24,11 +24,11 @@ public class ChangelogEntryBean {
         return _name;
     }
 
-    public PublishableBean getOldVersion() {
+    public Disease getOldVersion() {
         return _oldVersion;
     }
 
-    public PublishableBean getNewVersion() {
+    public Disease getNewVersion() {
         return _newVersion;
     }
 }

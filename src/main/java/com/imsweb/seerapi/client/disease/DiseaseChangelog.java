@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2012 Information Management Services, Inc.
  */
-package com.imsweb.seerapi.client.publishable;
+package com.imsweb.seerapi.client.disease;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,18 +9,18 @@ import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public abstract class ChangelogBean implements Serializable {
+public class DiseaseChangelog implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @JsonProperty("id")
     protected String _displayId;
     @JsonProperty("adds")
-    private List<ChangelogEntryBean> _adds;
+    private List<DiseaseChangelogEntry> _adds;
     @JsonProperty("deletes")
-    private List<ChangelogEntryBean> _deletes;
+    private List<DiseaseChangelogEntry> _deletes;
     @JsonProperty("mods")
-    private List<ChangelogEntryBean> _mods;
+    private List<DiseaseChangelogEntry> _mods;
     @JsonProperty("user")
     private String _user;
     @JsonProperty("date")
@@ -34,15 +34,15 @@ public abstract class ChangelogBean implements Serializable {
         return _displayId;
     }
 
-    public List<ChangelogEntryBean> getAdds() {
+    public List<DiseaseChangelogEntry> getAdds() {
         return _adds;
     }
 
-    public List<ChangelogEntryBean> getDeletes() {
+    public List<DiseaseChangelogEntry> getDeletes() {
         return _deletes;
     }
 
-    public List<ChangelogEntryBean> getMods() {
+    public List<DiseaseChangelogEntry> getMods() {
         return _mods;
     }
 

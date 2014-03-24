@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2014 Information Management Services, Inc.
  */
-package com.imsweb.seerapi.client.publishable;
+package com.imsweb.seerapi.client.shared;
 
 import java.util.Set;
 

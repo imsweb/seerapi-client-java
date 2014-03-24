@@ -21,13 +21,13 @@ import com.imsweb.seerapi.client.cs.CsSchemaName;
 import com.imsweb.seerapi.client.cs.CsTable;
 import com.imsweb.seerapi.client.cs.CsVersion;
 import com.imsweb.seerapi.client.disease.Disease;
+import com.imsweb.seerapi.client.disease.DiseaseVersionBean;
 import com.imsweb.seerapi.client.disease.PrimarySite;
 import com.imsweb.seerapi.client.disease.SamePrimaries;
 import com.imsweb.seerapi.client.disease.SiteCategory;
 import com.imsweb.seerapi.client.naaccr.NaaccrField;
 import com.imsweb.seerapi.client.naaccr.NaaccrFieldName;
 import com.imsweb.seerapi.client.naaccr.NaaccrVersion;
-import com.imsweb.seerapi.client.publishable.PublishableVersionBean;
 import com.imsweb.seerapi.client.siterecode.SiteRecode;
 
 public class SeerApiTest {
@@ -205,10 +205,10 @@ public class SeerApiTest {
 
     @Test
     public void testDiseaseVersions() throws IOException {
-        List<PublishableVersionBean> versions = SeerApi.connect().diseaseVersions();
+        List<DiseaseVersionBean> versions = SeerApi.connect().diseaseVersions();
 
         Assert.assertTrue(versions.size() > 0);
-        for (PublishableVersionBean version : versions) {
+        for (DiseaseVersionBean version : versions) {
             Assert.assertTrue(version.getName().length() > 0);
             Assert.assertTrue(version.getType().length() > 0);
             Assert.assertNotNull(version.getLastModified());
@@ -247,6 +247,10 @@ public class SeerApiTest {
         Disease disease = SeerApi.connect().diseaseById("latest", "51f6cf58e3e27c3994bd5408");
 
         Assert.assertNotNull(disease);
+        Assert.assertEquals("Acute erythroid leukemia", disease.getName());
+        Assert.assertEquals(Disease.Type.HEMATO, disease.getType());
+        Assert.assertEquals("9840/3", disease.getIcdO3Morphology());
+        Assert.assertEquals(10, disease.getSamePrimaries().size());
     }
 
     @Test

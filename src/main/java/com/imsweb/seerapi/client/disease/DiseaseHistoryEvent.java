@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2012 Information Management Services, Inc.
  */
-package com.imsweb.seerapi.client.publishable;
+package com.imsweb.seerapi.client.disease;
 
 import java.util.Date;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class HistoryEvent {
+public class DiseaseHistoryEvent {
 
     @JsonProperty("user")
     private String _user;
     @JsonProperty("date")
     private Date _date;
     @JsonProperty("old")
-    private PublishableBean _old;
+    private Disease _old;
     @JsonProperty("new")
-    private PublishableBean _new;
+    private Disease _new;
 
     public String getUser() {
         return _user;
@@ -26,11 +26,11 @@ public class HistoryEvent {
         return _date;
     }
 
-    public PublishableBean getOld() {
+    public Disease getOld() {
         return _old;
     }
 
-    public PublishableBean getNew() {
+    public Disease getNew() {
         return _new;
     }
 }

@@ -9,12 +9,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.jackson.JacksonFeature;
 
@@ -57,7 +59,7 @@ public final class SeerApi {
         this._baseUrl = baseUrl;
         this._apiKey = apiKey;
 
-        _client = ClientBuilder.newClient().register(JacksonFeature.class).register(GzipInterceptor.class);
+        _client = ClientBuilder.newClient().register(JacksonFeature.class).register(GzipInterceptor.class).register(ErrorResponseFilter.class);
     }
 
     /**
@@ -148,7 +150,11 @@ public final class SeerApi {
     public SiteRecode siteRecode(String site, String histology) throws IOException {
         WebTarget target = createTarget("/recode/sitegroup").queryParam("site", site).queryParam("hist", histology);
 
-        return getBuilder(target).get(SiteRecode.class);
+        Response response = getBuilder(target).get();
+        if (response.getStatus() == Response.Status.BAD_REQUEST.getStatusCode())
+            throw new BadRequestException(response.readEntity(ErrorResponseConverter.class).getMessage());
+
+        return response.readEntity(SiteRecode.class);
     }
 
     /**

@@ -9,6 +9,9 @@ public class ErrorResponseConverter {
     @JsonProperty("message")
     protected String _message;
 
+    public ErrorResponseConverter() {
+    }
+
     /**
      * Constuctor
      */
@@ -17,4 +20,11 @@ public class ErrorResponseConverter {
         this._message = message;
     }
 
+    public Integer getId() {
+        return _id;
+    }
+
+    public String getMessage() {
+        return _message;
+    }
 }

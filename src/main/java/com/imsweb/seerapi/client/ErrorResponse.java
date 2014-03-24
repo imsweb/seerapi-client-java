@@ -2,20 +2,20 @@ package com.imsweb.seerapi.client;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class ErrorResponseConverter {
+public class ErrorResponse {
 
     @JsonProperty("code")
     protected Integer _id;
     @JsonProperty("message")
     protected String _message;
 
-    public ErrorResponseConverter() {
+    public ErrorResponse() {
     }
 
     /**
      * Constuctor
      */
-    public ErrorResponseConverter(Integer id, String message) {
+    public ErrorResponse(Integer id, String message) {
         this._id = id;
         this._message = message;
     }

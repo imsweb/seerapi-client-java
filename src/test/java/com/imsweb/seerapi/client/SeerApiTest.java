@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.WebApplicationException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,7 +29,7 @@ import com.imsweb.seerapi.client.siterecode.SiteRecode;
 public class SeerApiTest {
 
     @Test(expected = BadRequestException.class)
-    public void testBadParameterExceptiion() throws IOException {
+    public void testBadRequestExceptiion() throws IOException {
         SeerApi.connect().siteRecode("C379", null);
     }
 
@@ -41,7 +40,7 @@ public class SeerApiTest {
         try {
             SeerApi.connect().siteRecode("C379", null);
         }
-        catch (WebApplicationException e) {
+        catch (BadRequestException e) {
             message = e.getMessage();
         }
 

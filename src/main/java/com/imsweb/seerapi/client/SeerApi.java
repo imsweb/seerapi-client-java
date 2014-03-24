@@ -27,6 +27,8 @@ import com.imsweb.seerapi.client.cs.CsSchemaName;
 import com.imsweb.seerapi.client.cs.CsTable;
 import com.imsweb.seerapi.client.cs.CsVersion;
 import com.imsweb.seerapi.client.disease.Disease;
+import com.imsweb.seerapi.client.disease.DiseaseSearch;
+import com.imsweb.seerapi.client.disease.DiseaseSearchResults;
 import com.imsweb.seerapi.client.disease.DiseaseVersionBean;
 import com.imsweb.seerapi.client.disease.PrimarySite;
 import com.imsweb.seerapi.client.disease.SamePrimaries;
@@ -300,8 +302,12 @@ public final class SeerApi {
 
     // TODO version changelog
 
-    public void diseaseSearch() {
-        // TODO need to define an input bean
+    public DiseaseSearchResults diseaseSearch(String version, DiseaseSearch search) {
+        WebTarget target = createTarget("/disease/{version}").resolveTemplate("version", version);
+
+        target = target.queryParam("q", search.getQuery()).queryParam("type", search.getType()).queryParam("site_category", search.getSiteCategory()).queryParam("mode", search.getMode()).queryParam("status", search.getStatus()).queryParam("assigned_to", search.getAssignedTo()).queryParam("modified_from", search.getModifiedFrom()).queryParam("modified_to", search.getModifiedTo()).queryParam("published_from", search.getPublishedFrom()).queryParam("published_to", search.getPublishedTo()).queryParam("been_published", search.getBeenPublished()).queryParam("hidden", search.getHidden()).queryParam("count", search.getCount()).queryParam("count_only", search.getCountOnly()).queryParam("glossary", search.getIncludeGlossary()).queryParam("output_type", search.getOutputType());
+
+        return getBuilder(target).get(DiseaseSearchResults.class);
     }
 
     /**

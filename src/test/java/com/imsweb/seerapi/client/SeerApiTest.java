@@ -4,6 +4,7 @@
 package com.imsweb.seerapi.client;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.ws.rs.BadRequestException;
@@ -21,6 +22,8 @@ import com.imsweb.seerapi.client.cs.CsSchemaName;
 import com.imsweb.seerapi.client.cs.CsTable;
 import com.imsweb.seerapi.client.cs.CsVersion;
 import com.imsweb.seerapi.client.disease.Disease;
+import com.imsweb.seerapi.client.disease.DiseaseSearch;
+import com.imsweb.seerapi.client.disease.DiseaseSearchResults;
 import com.imsweb.seerapi.client.disease.DiseaseVersionBean;
 import com.imsweb.seerapi.client.disease.PrimarySite;
 import com.imsweb.seerapi.client.disease.SamePrimaries;
@@ -259,6 +262,20 @@ public class SeerApiTest {
 
         Assert.assertNotNull(same);
         Assert.assertEquals(false, same.isSame());
+    }
+
+    @Test
+    public void testDiseaseSearch() throws IOException {
+        DiseaseSearch search = new DiseaseSearch();
+
+        search.setType(Disease.Type.HEMATO);
+        search.setQuery("basophilic");
+        DiseaseSearchResults results = SeerApi.connect().diseaseSearch("latest", search);
+
+        Assert.assertNotNull(results);
+        Assert.assertEquals(3, results.getCount().longValue());
+        Assert.assertEquals(3, results.getResults().size());
+        Assert.assertEquals(Arrays.asList("basophilic"), results.getTerms());
     }
 
 }

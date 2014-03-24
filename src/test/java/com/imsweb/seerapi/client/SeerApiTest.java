@@ -20,6 +20,10 @@ import com.imsweb.seerapi.client.cs.CsSchemaExistence;
 import com.imsweb.seerapi.client.cs.CsSchemaName;
 import com.imsweb.seerapi.client.cs.CsTable;
 import com.imsweb.seerapi.client.cs.CsVersion;
+import com.imsweb.seerapi.client.disease.Disease;
+import com.imsweb.seerapi.client.disease.PrimarySite;
+import com.imsweb.seerapi.client.disease.SamePrimaries;
+import com.imsweb.seerapi.client.disease.SiteCategory;
 import com.imsweb.seerapi.client.naaccr.NaaccrField;
 import com.imsweb.seerapi.client.naaccr.NaaccrFieldName;
 import com.imsweb.seerapi.client.naaccr.NaaccrVersion;
@@ -210,4 +214,47 @@ public class SeerApiTest {
             Assert.assertNotNull(version.getLastModified());
         }
     }
+
+    @Test
+    public void testDiseasePrimarySites() throws IOException {
+        List<PrimarySite> sites = SeerApi.connect().diseasePrimarySites();
+
+        Assert.assertTrue(sites.size() > 0);
+        Assert.assertEquals("C000", sites.get(0).getValue());
+        Assert.assertEquals("External upper lip", sites.get(0).getLabel());
+    }
+
+    @Test
+    public void testDiseasePrimarySiteCode() throws IOException {
+        List<PrimarySite> sites = SeerApi.connect().diseasePrimarySiteCode("C021");
+
+        Assert.assertTrue(sites.size() > 0);
+        Assert.assertEquals("C021", sites.get(0).getValue());
+        Assert.assertEquals("Border of tongue", sites.get(0).getLabel());
+    }
+
+    @Test
+    public void testDiseaseSiteCateogires() throws IOException {
+        List<SiteCategory> categories = SeerApi.connect().diseaseSiteCategories();
+
+        Assert.assertTrue(categories.size() > 0);
+        Assert.assertEquals("head-and-neck", categories.get(0).getId());
+        Assert.assertEquals("Head and Neck", categories.get(0).getLabel());
+    }
+
+    @Test
+    public void testDiseaseById() throws IOException {
+        Disease disease = SeerApi.connect().diseaseById("latest", "51f6cf58e3e27c3994bd5408");
+
+        Assert.assertNotNull(disease);
+    }
+
+    @Test
+    public void testDiseaseSamePrimary() throws IOException {
+        SamePrimaries same = SeerApi.connect().diseaseSamePrimaries("latest", "9870/3", "9872/3", "2010");
+
+        Assert.assertNotNull(same);
+        Assert.assertEquals(false, same.isSame());
+    }
+
 }

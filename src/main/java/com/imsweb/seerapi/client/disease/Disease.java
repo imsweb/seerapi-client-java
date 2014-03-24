@@ -6,7 +6,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 import com.imsweb.seerapi.client.publishable.PublishableBean;
 
-public class DiseaseBean extends PublishableBean {
+public class Disease extends PublishableBean {
 
     // values for the datasources
     public enum Type {

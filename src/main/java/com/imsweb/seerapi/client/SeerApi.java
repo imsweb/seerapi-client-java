@@ -26,6 +26,10 @@ import com.imsweb.seerapi.client.cs.CsSchemaExistence;
 import com.imsweb.seerapi.client.cs.CsSchemaName;
 import com.imsweb.seerapi.client.cs.CsTable;
 import com.imsweb.seerapi.client.cs.CsVersion;
+import com.imsweb.seerapi.client.disease.Disease;
+import com.imsweb.seerapi.client.disease.PrimarySite;
+import com.imsweb.seerapi.client.disease.SamePrimaries;
+import com.imsweb.seerapi.client.disease.SiteCategory;
 import com.imsweb.seerapi.client.naaccr.NaaccrField;
 import com.imsweb.seerapi.client.naaccr.NaaccrFieldName;
 import com.imsweb.seerapi.client.naaccr.NaaccrVersion;
@@ -293,4 +297,70 @@ public final class SeerApi {
 
         return getBuilder(target).get(new GenericType<List<PublishableVersionBean>>() {});
     }
+
+    // TODO version changelog
+
+    public void diseaseSearch() {
+        // TODO need to define an input bean
+    }
+
+    /**
+     * Return a complete disease entity based in identifier
+     * @param version
+     * @param id
+     * @return a Disease object
+     */
+    public Disease diseaseById(String version, String id) {
+        WebTarget target = createTarget("/disease/{version}/id/{id}").resolveTemplate("version", version).resolveTemplate("id", id);
+
+        return getBuilder(target).get(Disease.class);
+    }
+
+    /**
+     * Return a list of all primary sites and labels
+     * @return a List of PrimarySite objects
+     */
+    public List<PrimarySite> diseasePrimarySites() {
+        WebTarget target = createTarget("/disease/primary_site");
+
+        return getBuilder(target).get(new GenericType<List<PrimarySite>>() {});
+    }
+
+    /**
+     * Return a single primary site and label
+     * @param primarySite
+     * @return a PrimarySite object
+     */
+    public List<PrimarySite> diseasePrimarySiteCode(String primarySite) {
+        WebTarget target = createTarget("/disease/primary_site/{code}").resolveTemplate("code", primarySite);
+
+        return getBuilder(target).get(new GenericType<List<PrimarySite>>() {});
+    }
+
+    /**
+     * Return a complete list of site categories and definitions
+     * @return a list of SiteCategory objects
+     */
+    public List<SiteCategory> diseaseSiteCategories() {
+        WebTarget target = createTarget("/disease/site_categories");
+
+        return getBuilder(target).get(new GenericType<List<SiteCategory>>() {});
+    }
+
+    /**
+     * Return whether the 2 morphologies represent the same primary for the given year.
+     * @param version
+     * @param morphology1
+     * @param morphology2
+     * @param year
+     * @return a SamePrimary object
+     */
+    public SamePrimaries diseaseSamePrimaries(String version, String morphology1, String morphology2, String year) {
+        WebTarget target = createTarget("/disease/{version}/same_primary").resolveTemplate("version", version).queryParam("d1", morphology1).queryParam("d2", morphology2).queryParam("year", year);
+
+        return getBuilder(target).get(SamePrimaries.class);
+    }
+
+    // TODO reportability API...the first one to use a POST
+
 }

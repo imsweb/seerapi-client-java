@@ -36,6 +36,7 @@ import com.imsweb.seerapi.client.cs.CsSchemaName;
 import com.imsweb.seerapi.client.cs.CsTable;
 import com.imsweb.seerapi.client.cs.CsVersion;
 import com.imsweb.seerapi.client.disease.Disease;
+import com.imsweb.seerapi.client.disease.DiseaseChangelog;
 import com.imsweb.seerapi.client.disease.DiseaseSearch;
 import com.imsweb.seerapi.client.disease.DiseaseSearchResults;
 import com.imsweb.seerapi.client.disease.DiseaseVersion;
@@ -335,7 +336,19 @@ public final class SeerApi {
         return getBuilder(target).get(new GenericType<List<DiseaseVersion>>() {});
     }
 
-    // TODO version changelog
+    /**
+     * Return the changelog entries for the passed database version
+     * @param version
+     * @param fromDate if not null, only include changes from this date forward (YYYY-MM-DD)
+     * @param toDate if not null, only include changes prior to this date (YYYY-MM-DD)
+     * @param count if not null, limit the number returned
+     * @return a list of DiseaseChangelog objects
+     */
+    public List<DiseaseChangelog> _diseaseChangelogs(String version, String fromDate, String toDate, Integer count) {
+        WebTarget target = createTarget("/disease/{version}/changelog").resolveTemplate("version", version).queryParam("from", fromDate).queryParam("to", toDate).queryParam("count", count);
+
+        return getBuilder(target).get(new GenericType<List<DiseaseChangelog>>() {});
+    }
 
     public DiseaseSearchResults diseaseSearch(String version, DiseaseSearch search) {
         WebTarget target = createTarget("/disease/{version}").resolveTemplate("version", version);

@@ -22,6 +22,7 @@ import com.imsweb.seerapi.client.cs.CsSchemaName;
 import com.imsweb.seerapi.client.cs.CsTable;
 import com.imsweb.seerapi.client.cs.CsVersion;
 import com.imsweb.seerapi.client.disease.Disease;
+import com.imsweb.seerapi.client.disease.DiseaseChangelog;
 import com.imsweb.seerapi.client.disease.DiseaseSearch;
 import com.imsweb.seerapi.client.disease.DiseaseSearchResults;
 import com.imsweb.seerapi.client.disease.DiseaseVersion;
@@ -299,4 +300,13 @@ public class SeerApiTest {
         Assert.assertNotNull(result.getReportable());
     }
 
+    @Test
+    public void testDiseaseChangelog() throws IOException {
+        List<DiseaseChangelog> changes = SeerApi.connect()._diseaseChangelogs("latest", null, null, 3);
+
+        Assert.assertNotNull(changes);
+        Assert.assertEquals(3, changes.size());
+        Assert.assertNotNull(changes.get(0).getUser());
+        Assert.assertEquals("latest", changes.get(0).getVersion());
+    }
 }

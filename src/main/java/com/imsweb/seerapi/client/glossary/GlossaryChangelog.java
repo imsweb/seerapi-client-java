@@ -1,23 +1,24 @@
 /*
- * Copyright (C) 2012 Information Management Services, Inc.
+ * Copyright (C) 2013 Information Management Services, Inc.
  */
-package com.imsweb.seerapi.client.disease;
+package com.imsweb.seerapi.client.glossary;
+
 
 import java.util.Date;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class DiseaseChangelog {
+public class GlossaryChangelog {
 
     @JsonProperty("id")
     protected String _displayId;
     @JsonProperty("adds")
-    private List<DiseaseChangelogEntry> _adds;
+    private List<GlossaryChangelogEntry> _adds;
     @JsonProperty("deletes")
-    private List<DiseaseChangelogEntry> _deletes;
+    private List<GlossaryChangelogEntry> _deletes;
     @JsonProperty("mods")
-    private List<DiseaseChangelogEntry> _mods;
+    private List<GlossaryChangelogEntry> _mods;
     @JsonProperty("user")
     private String _user;
     @JsonProperty("date")
@@ -31,15 +32,15 @@ public class DiseaseChangelog {
         return _displayId;
     }
 
-    public List<DiseaseChangelogEntry> getAdds() {
+    public List<GlossaryChangelogEntry> getAdds() {
         return _adds;
     }
 
-    public List<DiseaseChangelogEntry> getDeletes() {
+    public List<GlossaryChangelogEntry> getDeletes() {
         return _deletes;
     }
 
-    public List<DiseaseChangelogEntry> getMods() {
+    public List<GlossaryChangelogEntry> getMods() {
         return _mods;
     }
 

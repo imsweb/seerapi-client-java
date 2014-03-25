@@ -3,13 +3,12 @@
  */
 package com.imsweb.seerapi.client.disease;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class DiseaseChangelog implements Serializable {
+public class DiseaseChangelog {
 
     private static final long serialVersionUID = 1L;
 

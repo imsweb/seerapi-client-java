@@ -12,11 +12,27 @@ public class SiteRange {
     @JsonProperty("high")
     protected String _high;
 
+    public SiteRange() {
+    }
+
+    public SiteRange(String low, String high) {
+        _low = low;
+        _high = high;
+    }
+
     public String getLow() {
         return _low;
     }
 
     public String getHigh() {
         return _high;
+    }
+
+    public void setLow(String low) {
+        _low = low;
+    }
+
+    public void setHigh(String high) {
+        _high = high;
     }
 }

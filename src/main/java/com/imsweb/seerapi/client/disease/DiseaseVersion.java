@@ -7,7 +7,7 @@ import java.util.Date;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class DiseaseVersionBean {
+public class DiseaseVersion {
 
     @JsonProperty("version")
     private String _name;

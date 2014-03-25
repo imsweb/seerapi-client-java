@@ -24,10 +24,12 @@ import com.imsweb.seerapi.client.cs.CsVersion;
 import com.imsweb.seerapi.client.disease.Disease;
 import com.imsweb.seerapi.client.disease.DiseaseSearch;
 import com.imsweb.seerapi.client.disease.DiseaseSearchResults;
-import com.imsweb.seerapi.client.disease.DiseaseVersionBean;
+import com.imsweb.seerapi.client.disease.DiseaseVersion;
 import com.imsweb.seerapi.client.disease.PrimarySite;
 import com.imsweb.seerapi.client.disease.SamePrimaries;
 import com.imsweb.seerapi.client.disease.SiteCategory;
+import com.imsweb.seerapi.client.disease.SiteRange;
+import com.imsweb.seerapi.client.disease.YearRange;
 import com.imsweb.seerapi.client.naaccr.NaaccrField;
 import com.imsweb.seerapi.client.naaccr.NaaccrFieldName;
 import com.imsweb.seerapi.client.naaccr.NaaccrVersion;
@@ -208,10 +210,10 @@ public class SeerApiTest {
 
     @Test
     public void testDiseaseVersions() throws IOException {
-        List<DiseaseVersionBean> versions = SeerApi.connect().diseaseVersions();
+        List<DiseaseVersion> versions = SeerApi.connect().diseaseVersions();
 
         Assert.assertTrue(versions.size() > 0);
-        for (DiseaseVersionBean version : versions) {
+        for (DiseaseVersion version : versions) {
             Assert.assertTrue(version.getName().length() > 0);
             Assert.assertTrue(version.getType().length() > 0);
             Assert.assertNotNull(version.getLastModified());
@@ -276,6 +278,25 @@ public class SeerApiTest {
         Assert.assertEquals(3, results.getCount().longValue());
         Assert.assertEquals(3, results.getResults().size());
         Assert.assertEquals(Arrays.asList("basophilic"), results.getTerms());
+    }
+
+    @Test
+    public void testDiseaseReportability() throws IOException {
+        Disease partial = new Disease();
+
+        partial.setType(Disease.Type.HEMATO);
+        partial.setIcdO3Morphology("9840/3");
+        partial.setIcdO2Morphology("9840/3");
+        partial.setIcdO1Morphology("9840/3");
+        partial.setIcdO3Effective(new YearRange(2001, null));
+        partial.setIcdO2Effective(new YearRange(1992, 2000));
+        partial.setIcdO1Effective(new YearRange(1978, 2001));
+        partial.setPrimarySite(Arrays.asList(new SiteRange("C421", "C421")));
+
+        Disease result = SeerApi.connect().diseaseReportability(partial);
+
+        Assert.assertNotNull(result);
+        Assert.assertNotNull(result.getReportable());
     }
 
 }

@@ -6,17 +6,26 @@ package com.imsweb.seerapi.client;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Properties;
+import java.util.TimeZone;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
-import org.glassfish.jersey.jackson.JacksonFeature;
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonMethod;
+import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import com.imsweb.seerapi.client.cs.CsCodeValidity;
 import com.imsweb.seerapi.client.cs.CsInput;
@@ -29,7 +38,7 @@ import com.imsweb.seerapi.client.cs.CsVersion;
 import com.imsweb.seerapi.client.disease.Disease;
 import com.imsweb.seerapi.client.disease.DiseaseSearch;
 import com.imsweb.seerapi.client.disease.DiseaseSearchResults;
-import com.imsweb.seerapi.client.disease.DiseaseVersionBean;
+import com.imsweb.seerapi.client.disease.DiseaseVersion;
 import com.imsweb.seerapi.client.disease.PrimarySite;
 import com.imsweb.seerapi.client.disease.SamePrimaries;
 import com.imsweb.seerapi.client.disease.SiteCategory;
@@ -44,7 +53,33 @@ import com.imsweb.seerapi.client.siterecode.SiteRecode;
  */
 public final class SeerApi {
 
+    // default base URL
     private static final String _SEERAPI_URL = "https://api.seer.cancer.gov/rest";
+
+    // output all dates in ISO-8061 format and UTC time
+    private static final DateFormat _DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+    // define the JSON provider which uses Jackson and a customized ObjectMapper
+    private static final JacksonJsonProvider _JACKSON_PROVIDER = new JacksonJsonProvider();
+
+    static {
+        _DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        // do not write null values
+        mapper.configure(SerializationConfig.Feature.WRITE_NULL_MAP_VALUES, false);
+        mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
+
+        // set Date objects to output in readable customized format
+        mapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS, false);
+        mapper.setDateFormat(_DATE_FORMAT);
+
+        mapper.setVisibility(JsonMethod.ALL, JsonAutoDetect.Visibility.NONE);
+        mapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
+
+        _JACKSON_PROVIDER.setMapper(mapper);
+    }
 
     private Client _client;
     private String _baseUrl;
@@ -63,7 +98,7 @@ public final class SeerApi {
         this._baseUrl = baseUrl;
         this._apiKey = apiKey;
 
-        _client = ClientBuilder.newClient().register(JacksonFeature.class).register(GzipInterceptor.class).register(ErrorResponseFilter.class);
+        _client = ClientBuilder.newClient().register(_JACKSON_PROVIDER).register(GzipInterceptor.class).register(ErrorResponseFilter.class);
     }
 
     /**
@@ -292,12 +327,12 @@ public final class SeerApi {
 
     /**
      * Return a list of all disease versions and information about them
-     * @return a list of DiseaseVersionBean objects
+     * @return a list of DiseaseVersion objects
      */
-    public List<DiseaseVersionBean> diseaseVersions() {
+    public List<DiseaseVersion> diseaseVersions() {
         WebTarget target = createTarget("/disease/versions");
 
-        return getBuilder(target).get(new GenericType<List<DiseaseVersionBean>>() {});
+        return getBuilder(target).get(new GenericType<List<DiseaseVersion>>() {});
     }
 
     // TODO version changelog
@@ -367,6 +402,17 @@ public final class SeerApi {
         return getBuilder(target).get(SamePrimaries.class);
     }
 
-    // TODO reportability API...the first one to use a POST
+    /**
+     * Returns the reportable year range of the supplied disease.
+     * @param disease
+     * @return a Disease object with the reportability field filled in
+     */
+    public Disease diseaseReportability(Disease disease) {
+        WebTarget target = createTarget("/disease/reportability");
+
+        Entity<Disease> entity = Entity.json(disease);
+        return getBuilder(target).post(entity, Disease.class);
+
+    }
 
 }

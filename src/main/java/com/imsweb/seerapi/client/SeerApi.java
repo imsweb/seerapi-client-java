@@ -412,7 +412,6 @@ public final class SeerApi {
 
         Entity<Disease> entity = Entity.json(disease);
         return getBuilder(target).post(entity, Disease.class);
-
     }
 
 }

@@ -344,7 +344,7 @@ public final class SeerApi {
      * @param count if not null, limit the number returned
      * @return a list of DiseaseChangelog objects
      */
-    public List<DiseaseChangelog> _diseaseChangelogs(String version, String fromDate, String toDate, Integer count) {
+    public List<DiseaseChangelog> diseaseChangelogs(String version, String fromDate, String toDate, Integer count) {
         WebTarget target = createTarget("/disease/{version}/changelog").resolveTemplate("version", version).queryParam("from", fromDate).queryParam("to", toDate).queryParam("count", count);
 
         return getBuilder(target).get(new GenericType<List<DiseaseChangelog>>() {});

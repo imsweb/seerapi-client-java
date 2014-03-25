@@ -302,7 +302,7 @@ public class SeerApiTest {
 
     @Test
     public void testDiseaseChangelog() throws IOException {
-        List<DiseaseChangelog> changes = SeerApi.connect()._diseaseChangelogs("latest", null, null, 3);
+        List<DiseaseChangelog> changes = SeerApi.connect().diseaseChangelogs("latest", null, null, 3);
 
         Assert.assertNotNull(changes);
         Assert.assertEquals(3, changes.size());

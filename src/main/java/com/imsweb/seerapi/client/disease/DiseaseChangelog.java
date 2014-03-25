@@ -16,11 +16,11 @@ public class DiseaseChangelog implements Serializable {
     @JsonProperty("id")
     protected String _displayId;
     @JsonProperty("adds")
-    private List<DiseaseChangelogEntry> _adds;
+    private List<ChangelogEntry> _adds;
     @JsonProperty("deletes")
-    private List<DiseaseChangelogEntry> _deletes;
+    private List<ChangelogEntry> _deletes;
     @JsonProperty("mods")
-    private List<DiseaseChangelogEntry> _mods;
+    private List<ChangelogEntry> _mods;
     @JsonProperty("user")
     private String _user;
     @JsonProperty("date")
@@ -34,15 +34,15 @@ public class DiseaseChangelog implements Serializable {
         return _displayId;
     }
 
-    public List<DiseaseChangelogEntry> getAdds() {
+    public List<ChangelogEntry> getAdds() {
         return _adds;
     }
 
-    public List<DiseaseChangelogEntry> getDeletes() {
+    public List<ChangelogEntry> getDeletes() {
         return _deletes;
     }
 
-    public List<DiseaseChangelogEntry> getMods() {
+    public List<ChangelogEntry> getMods() {
         return _mods;
     }
 

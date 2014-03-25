@@ -5,7 +5,7 @@ package com.imsweb.seerapi.client.disease;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class DiseaseChangelogEntry {
+public class ChangelogEntry {
 
     @JsonProperty("id")
     private String _id;

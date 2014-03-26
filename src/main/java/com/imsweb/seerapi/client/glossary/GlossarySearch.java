@@ -5,7 +5,7 @@ package com.imsweb.seerapi.client.glossary;
 
 import java.util.Set;
 
-public class GlossarySearchParam {
+public class GlossarySearch {
 
     public enum OutputType {
         FULL,

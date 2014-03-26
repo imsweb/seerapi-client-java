@@ -43,6 +43,11 @@ import com.imsweb.seerapi.client.disease.DiseaseVersion;
 import com.imsweb.seerapi.client.disease.PrimarySite;
 import com.imsweb.seerapi.client.disease.SamePrimaries;
 import com.imsweb.seerapi.client.disease.SiteCategory;
+import com.imsweb.seerapi.client.glossary.Glossary;
+import com.imsweb.seerapi.client.glossary.GlossaryChangelog;
+import com.imsweb.seerapi.client.glossary.GlossarySearch;
+import com.imsweb.seerapi.client.glossary.GlossarySearchResults;
+import com.imsweb.seerapi.client.glossary.GlossaryVersion;
 import com.imsweb.seerapi.client.naaccr.NaaccrField;
 import com.imsweb.seerapi.client.naaccr.NaaccrFieldName;
 import com.imsweb.seerapi.client.naaccr.NaaccrVersion;
@@ -350,6 +355,12 @@ public final class SeerApi {
         return getBuilder(target).get(new GenericType<List<DiseaseChangelog>>() {});
     }
 
+    /**
+     * Return a list of matching diseases
+     * @param version
+     * @param search
+     * @return a DiseaseSearchResults object
+     */
     public DiseaseSearchResults diseaseSearch(String version, DiseaseSearch search) {
         WebTarget target = createTarget("/disease/{version}").resolveTemplate("version", version);
 
@@ -427,4 +438,53 @@ public final class SeerApi {
         return getBuilder(target).post(entity, Disease.class);
     }
 
+    /**
+     * Return a list of all glossary versions and information about them
+     * @return a list of GlossaryVersion objects
+     */
+    public List<GlossaryVersion> glossaryVersions() {
+        WebTarget target = createTarget("/glossary/versions");
+
+        return getBuilder(target).get(new GenericType<List<GlossaryVersion>>() {});
+    }
+
+    /**
+     * Return a complete glossary entity based in identifier
+     * @param version
+     * @param id
+     * @return a Glossary object
+     */
+    public Glossary glossaryById(String version, String id) {
+        WebTarget target = createTarget("/glossary/{version}/id/{id}").resolveTemplate("version", version).resolveTemplate("id", id);
+
+        return getBuilder(target).get(Glossary.class);
+    }
+
+    /**
+     * Return a list of matching glossaries
+     * @param version
+     * @param search
+     * @return a GlossarySearchResults object
+     */
+    public GlossarySearchResults glossarySearch(String version, GlossarySearch search) {
+        WebTarget target = createTarget("/glossary/{version}").resolveTemplate("version", version);
+
+        target = target.queryParam("q", search.getQuery()).queryParam("category", search.getCategory()).queryParam("mode", search.getMode()).queryParam("status", search.getStatus()).queryParam("assigned_to", search.getAssignedTo()).queryParam("modified_from", search.getModifiedFrom()).queryParam("modified_to", search.getModifiedTo()).queryParam("published_from", search.getPublishedFrom()).queryParam("published_to", search.getPublishedTo()).queryParam("been_published", search.getBeenPublished()).queryParam("hidden", search.getHidden()).queryParam("count", search.getCount()).queryParam("count_only", search.getCountOnly()).queryParam("glossary", search.getIncludeGlossary()).queryParam("output_type", search.getOutputType());
+
+        return getBuilder(target).get(GlossarySearchResults.class);
+    }
+
+    /**
+     * Return the changelog entries for the passed database version
+     * @param version
+     * @param fromDate if not null, only include changes from this date forward (YYYY-MM-DD)
+     * @param toDate if not null, only include changes prior to this date (YYYY-MM-DD)
+     * @param count if not null, limit the number returned
+     * @return a list of GlossaryChangelog objects
+     */
+    public List<GlossaryChangelog> glossaryChangelogs(String version, String fromDate, String toDate, Integer count) {
+        WebTarget target = createTarget("/glossary/{version}/changelog").resolveTemplate("version", version).queryParam("from", fromDate).queryParam("to", toDate).queryParam("count", count);
+
+        return getBuilder(target).get(new GenericType<List<GlossaryChangelog>>() {});
+    }
 }

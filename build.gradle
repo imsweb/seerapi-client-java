@@ -4,7 +4,6 @@ apply plugin: 'findbugs'
 apply plugin: 'nexus'
 
 group = 'com.imsweb'
-rootProject.name = 'seerapi-client-java'
 version = '1.0-SNAPSHOT'
 description = 'Java client library for SEER*API'
 

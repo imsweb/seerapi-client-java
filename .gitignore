@@ -9,3 +9,4 @@ src/main/resources/git.properties
 /.idea
 /.extract
 seerapi-client-java.iml
+gradle.properties

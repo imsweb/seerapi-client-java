@@ -11,9 +11,6 @@ description = 'Java client library for SEER*API'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 repositories {
-    maven {
-        url "http://cilantro.imsweb.com:8080/nexus/content/groups/public"
-    }
     mavenCentral()
 }
 
@@ -40,6 +37,38 @@ jar {
     }
 }
 
+modifyPom {
+    project {
+        name "SEER*API Java Client"
+        description "A complete API mapping for SEER*API in Java"
+        packaging "jar"
+        url "https://github.com/ctmay4/seerapi-client-java"
+        inceptionYear "2014"
+
+        scm {
+            url "https://github.com/ctmay4/seerapi-client-java"
+            connection "scm:https://github.com/ctmay4/seerapi-client-java.git"
+            developerConnection "scm:git@github.com:ctmay4/seerapi-client-java.git"
+        }
+
+        licenses {
+            license {
+                name "The MIT License (MIT)"
+                url "http://en.wikipedia.org/wiki/MIT_License"
+                distribution "repo"
+            }
+        }
+
+        developers {
+            developer {
+                id "ctmay4"
+                name "Chuck May"
+                email "mayc@imsweb.com"
+            }
+        }
+    }
+}
+
 // checkstyle plugin settings
 checkstyle {
     ignoreFailures = true
@@ -62,11 +91,6 @@ buildscript {
     dependencies {
         classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7'
     }
-}
-
-nexus {
-    repositoryUrl = 'http://cilantro.imsweb.com:8080/nexus/content/repositories/releases'
-    snapshotRepositoryUrl = 'http://cilantro.imsweb.com:8080/nexus/content/repositories/snapshots'
 }
 
 // Gradle wrapper, this allows to build the project without having to install Gradle!

@@ -9,7 +9,7 @@ makes them easy to incorporate into Java applications.
 
 Collaborative Stage is a unified data collection system designed to provide a common data set to meet the needs of all three staging systems (TNM, SEER EOD, and SEER SS). It provides a comprehensive system to improve data quality by standardizing rules for timing, clinical and pathologic assessments, and compatibility across all of the systems for all cancer sites.
 
-### Disease database (rest/disease)
+### Disease (rest/disease)
 
 A searchable database of hematopoietic and lymphoid neoplasms and solid tumor diseases.
 
@@ -17,7 +17,7 @@ A searchable database of hematopoietic and lymphoid neoplasms and solid tumor di
 
 A glossary of cancer-related terms.
 
-### NAACCR Documentation (rest/naaccr)
+### NAACCR (rest/naaccr)
 
 The NAACCR API provides programmatic access to documentation for the NAACCR Standards for Cancer Registries Volume II. It includes field level documentation as well as information about file layout.
 

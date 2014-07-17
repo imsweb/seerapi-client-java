@@ -44,7 +44,7 @@ Download [the latest JAR][1] or grab via Maven:
 ```xml
 <dependency>
     <groupId>com.imsweb</groupId>
-    <artifactId>seerapi-java-client</artifactId>
+    <artifactId>seerapi-client-java</artifactId>
     <version>(insert latest version)</version>
 </dependency>
 ```

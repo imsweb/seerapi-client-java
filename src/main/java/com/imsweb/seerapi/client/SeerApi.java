@@ -117,19 +117,16 @@ public final class SeerApi {
      */
     public static SeerApi connect() throws IOException {
         Properties props = new Properties();
-        FileInputStream in = new FileInputStream(new File(System.getProperty("user.home"), ".seerapi"));
 
-        try {
-            props.load(in);
-        }
-        finally {
+        File config = new File(System.getProperty("user.home"), ".seerapi");
+        if (config.exists()) {
+            FileInputStream in = new FileInputStream(config);
+
             try {
-                if (in != null) {
-                    in.close();
-                }
+                props.load(in);
             }
-            catch (IOException ioe) {
-                // ignore
+            finally {
+                in.close();
             }
         }
 

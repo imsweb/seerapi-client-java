@@ -66,7 +66,7 @@ Your API key will need to be supplied to make calls.  It can be supplied on each
 configuration file in your home directory called `.seerapi`.  The file should look like this
 
 ```
-apiKey=41191340ed02c1e8ee8a2ffa589123ba
+apiKey=your_api_key
 ```
 
 Making calls to the API is as simple as this if you use the local configuration
@@ -78,7 +78,7 @@ CsSchema schemaById = SeerApi.connect().csSchema("latest", 105);
 or the key can be passed in the `connect` call.
 
 ```java
-CsSchema schemaById = SeerApi.connect("41191340ed02c1e8ee8a2ffa589123ba").csSchema("latest", 105);
+CsSchema schemaById = SeerApi.connect("your_api_key").csSchema("latest", 105);
 ```
 
 For a complete description of all available API inputs and outputs, see the SEER*API

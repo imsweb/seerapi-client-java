@@ -1,2 +1,1 @@
-// Rename the project so it doesn't use the directory by default since integration builds sometimes use different names
 rootProject.name = 'seerapi-client-java'

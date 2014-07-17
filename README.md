@@ -66,7 +66,7 @@ Your API key will need to be supplied to make calls.  It can be supplied on each
 configuration file in your home directory called `.seerapi`.  The file should look like this
 
 ```
-apiKey=your_api_key
+apikey=your_api_key
 ```
 
 Making calls to the API is as simple as this if you use the local configuration

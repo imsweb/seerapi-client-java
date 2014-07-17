@@ -27,7 +27,7 @@ The values of SEER site recode variables are based on the primary site and histo
 
 ## SEER
 
-The Surveillance, Epidemiology and End Results (SEER) Program is a premier source for cancer statistics in the United States. The SEER Program collects information on incidence, prevalence and survival from specific geographic areas representing 28 percent of the US population and reports on all these data plus cancer mortality data for the entire country.
+The Surveillance, Epidemiology and End Results ([SEER](http://seer.cancer.gov)) Program is a premier source for cancer statistics in the United States. The SEER Program collects information on incidence, prevalence and survival from specific geographic areas representing 28 percent of the US population and reports on all these data plus cancer mortality data for the entire country.
 
 From the [SEER*API](https://api.seer.cancer.gov) website:
 

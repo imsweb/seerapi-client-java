@@ -1,7 +1,33 @@
 # seerapi-client-java
 
-A [SEER*API](https://api.seer.cancer.gov) client for Java applications.  This library supports all the APIs and 
+A [SEER*API](https://api.seer.cancer.gov) client for Java applications.  This library supports most of the APIs and 
 makes them easy to incorporate into Java applications.
+
+## Supported APIs
+
+### Collaborative Staging (rest/cstage)
+
+Collaborative Stage is a unified data collection system designed to provide a common data set to meet the needs of all three staging systems (TNM, SEER EOD, and SEER SS). It provides a comprehensive system to improve data quality by standardizing rules for timing, clinical and pathologic assessments, and compatibility across all of the systems for all cancer sites.
+
+### Disease database (rest/disease)
+
+A searchable database of hematopoietic and lymphoid neoplasms and solid tumor diseases.
+
+### Glossary (rest/glossary)
+
+A glossary of cancer-related terms.
+
+### NAACCR Documentation (rest/naaccr)
+
+The NAACCR API provides programmatic access to documentation for the NAACCR Standards for Cancer Registries Volume II. It includes field level documentation as well as information about file layout.
+
+### SEER Incidence Site Recode (rest/recode)
+
+The values of SEER site recode variables are based on the primary site and histology data fields submitted to SEER by the registries. The site recode variables define the major cancer site/histology groups that are commonly used in the reporting of cancer incidence data. For example, there is a section of the SEER Cancer Statistics Review for each major site corresponding to groupings in a site recode variable. The site recode variables are added to SEER databases as a convenience for researchers.
+
+## SEER
+
+The Surveillance, Epidemiology and End Results (SEER) Program is a premier source for cancer statistics in the United States. The SEER Program collects information on incidence, prevalence and survival from specific geographic areas representing 28 percent of the US population and reports on all these data plus cancer mortality data for the entire country.
 
 From the [SEER*API](https://api.seer.cancer.gov) website:
 
@@ -10,8 +36,6 @@ From the [SEER*API](https://api.seer.cancer.gov) website:
 > to their own  systems. These resources include databases and tools developed to enhance registry operations and quality 
 > improvement. The [SEER*API](https://api.seer.cancer.gov) is designed for integration into registry computer
 > stems and is not designed to be accessed by end-users.
-
-The Surveillance, Epidemiology and End Results (SEER) Program is a premier source for cancer statistics in the United States. The SEER Program collects information on incidence, prevalence and survival from specific geographic areas representing 28 percent of the US population and reports on all these data plus cancer mortality data for the entire country.
 
 ## Download
 

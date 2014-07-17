@@ -8,7 +8,7 @@ before_install:
 
 env:
   global:
-    - secure: "ZYRFlM1I5G2NE8zf6MlXp7wleDDlt0DXFbjhDWSEokC10IZfTZrf9Kwm6dTIv1ELQbPiAQHYh+CaALP+DsmA3TpGYxDPHj9m3h9fCCo/ZByZf1qUvLLTaR7QJjCVKWf2UimG4xJ1AFd71i7Y1bndhR40l1wxGqBhJrvM3x8Ocl4="
+    - secure: "ahfNxDTQyt3G0nI/XQZHTUQUzlv4z0FLk8OycmxbK2HzX29d/XyyF0EJKDJ4IqjsIR3++i/DP9j6BSW4Rrl7WpuvkKjArwIVXgs0vHHsII0CKPMi3D+7KxreWutONGNuxfJoW17vl9Sp/2lwGP7s0asFGdt/C3F6sj23l/dobiQ="
 
 notifications:
   email:

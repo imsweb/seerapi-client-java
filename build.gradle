@@ -42,13 +42,13 @@ modifyPom {
         name "SEER*API Java Client"
         description "A complete API mapping for SEER*API in Java"
         packaging "jar"
-        url "https://github.com/ctmay4/seerapi-client-java"
+        url "https://github.com/imsweb/seerapi-client-java"
         inceptionYear "2014"
 
         scm {
-            url "https://github.com/ctmay4/seerapi-client-java"
-            connection "scm:https://github.com/ctmay4/seerapi-client-java.git"
-            developerConnection "scm:git@github.com:ctmay4/seerapi-client-java.git"
+            url "https://github.com/imsweb/seerapi-client-java"
+            connection "scm:https://github.com/imsweb/seerapi-client-java.git"
+            developerConnection "scm:git@github.com:imsweb/seerapi-client-java.git"
         }
 
         licenses {

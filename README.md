@@ -57,6 +57,31 @@ compile 'com.imsweb.com:seerapi-client-java:(insert latest version)'
 
 ## Usage
 
-TODO Still need to write documentation
+SEER*API usage is free, but requires an API key.  To get started,
+
+1. Create a free account from the [Account Creation](https://api.seer.cancer.gov/showNewAccount.do) page
+2. Locate your API key on your Account page
+
+Your API key will need to be supplied to make calls.  It can be supplied on each call, or it can be stored in a 
+configuration file in your home directory called `.seerapi`.  The file should look like this
+
+```
+apiKey=41191340ed02c1e8ee8a2ffa589123ba
+```
+
+Making calls to the API is as simple as this if you use the local configuration
+
+```java
+CsSchema schemaById = SeerApi.connect().csSchema("latest", 105);
+```
+
+or the key can be passed in the `connect` call.
+
+```java
+CsSchema schemaById = SeerApi.connect("41191340ed02c1e8ee8a2ffa589123ba").csSchema("latest", 105);
+```
+
+For a complete description of all available API inputs and outputs, see the SEER*API
+[Documentation](https://api.seer.cancer.gov/api.do) page.
 
 [1]: http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=com.imsweb&a=seerapi-client-java&v=LATEST

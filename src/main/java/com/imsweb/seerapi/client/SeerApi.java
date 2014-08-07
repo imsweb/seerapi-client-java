@@ -96,8 +96,8 @@ public final class SeerApi {
 
     /**
      * Creates a client API root object
-     * @param baseUrl
-     * @param apiKey
+     * @param baseUrl base URL for API
+     * @param apiKey API key
      * @throws IOException
      */
     private SeerApi(String baseUrl, String apiKey) throws IOException {
@@ -140,7 +140,7 @@ public final class SeerApi {
 
     /**
      * Creates a connection to the API
-     * @param apiKey
+     * @param apiKey API key
      * @return a new SeerApi instance
      * @throws IOException
      */
@@ -150,8 +150,8 @@ public final class SeerApi {
 
     /**
      * Creates a connection to the API
-     * @param baseUrl
-     * @param apiKey
+     * @param baseUrl base URL for API
+     * @param apiKey API key
      * @return a new SeerApi instance
      * @throws IOException
      */
@@ -161,7 +161,7 @@ public final class SeerApi {
 
     /**
      * Helper method to return a base web target
-     * @param path
+     * @param path the API path which is added onto the base URL
      * @return a WebTarget using the base URL and the passed path
      */
     private WebTarget createTarget(String path) {
@@ -173,7 +173,7 @@ public final class SeerApi {
 
     /**
      * Builds the default invocation builder.  All requests are currently JSON and are GZIP encoded.
-     * @param target
+     * @param target the WebTarget for the API call
      * @return a Builder instance using the passed target and including default header information that is used on all our calls
      */
     private Invocation.Builder getBuilder(WebTarget target) {
@@ -192,8 +192,8 @@ public final class SeerApi {
 
     /**
      * Return the SEER Site Group for the site/histology combination, or 99999 if the combination is unknown.
-     * @param site
-     * @param histology
+     * @param site Primary Site O3
+     * @param histology Histology O3
      * @return a SiteRecode object based on the site and histology
      * @throws IOException
      */
@@ -215,7 +215,7 @@ public final class SeerApi {
 
     /**
      * Return a list of all the field identifiers and names from a specified NAACCR version
-     * @param version
+     * @param version NAACCR version
      * @return a list of NaaccrFieldName objects
      */
     public List<NaaccrFieldName> naaccrFieldNames(String version) {
@@ -226,7 +226,7 @@ public final class SeerApi {
 
     /**
      * Return a list of all the field identifiers and names from a specified NAACCR version
-     * @param version
+     * @param version NAACCR version
      * @return a list of NaaccrFieldName objects
      */
     public NaaccrField naaccrField(String version, Integer item) {
@@ -247,7 +247,7 @@ public final class SeerApi {
 
     /**
      * Return the list of schema names and identifiers for the specifid version
-     * @param version
+     * @param version CS version
      * @return a list of CsCschemaName objects
      */
     public List<CsSchemaName> csSchemas(String version) {
@@ -258,9 +258,9 @@ public final class SeerApi {
 
     /**
      * Checks whether a site/histology combination maps to an existing schema for the passed CS version
-     * @param version
-     * @param site
-     * @param histology
+     * @param version CS version
+     * @param site Primary Site O3
+     * @param histology Histology O3
      * @return a CsSchemaExistence object which includes information about the matching schema
      */
     public CsSchemaExistence csSchemaExists(String version, String site, String histology) {
@@ -271,8 +271,8 @@ public final class SeerApi {
 
     /**
      * Return a full schema based on schema number
-     * @param version
-     * @param schemaNumber
+     * @param version CS version
+     * @param schemaNumber CS schema number
      * @return a csSchema object
      */
     public CsSchema csSchema(String version, Integer schemaNumber) {
@@ -283,10 +283,10 @@ public final class SeerApi {
 
     /**
      * Return a full schema based on primary site, histology and site-specific factor 25
-     * @param version
-     * @param site
-     * @param histology
-     * @param ssf25
+     * @param version CS version
+     * @param site Primary Site O3
+     * @param histology Histology O3
+     * @param ssf25 Site-specific Factor 25
      * @return a CsSchema object
      */
     public CsSchema csSchema(String version, String site, String histology, String ssf25) {
@@ -297,10 +297,10 @@ public final class SeerApi {
 
     /**
      * Tests whether a code is valid or obsolete.
-     * @param version
-     * @param schemaNumber
-     * @param tableNumber
-     * @param code
+     * @param version CS version
+     * @param schemaNumber CS schema number
+     * @param tableNumber CS table number
+     * @param code code to check for validity
      * @return a CsCodeValidity object indicating validity and whether the code is obsolete
      */
     public CsCodeValidity csValidCode(String version, Integer schemaNumber, Integer tableNumber, String code) {
@@ -311,9 +311,9 @@ public final class SeerApi {
 
     /**
      * Return the specified CS table
-     * @param version
-     * @param schemaNumber
-     * @param tableNumber
+     * @param version CS version
+     * @param schemaNumber CS schema number
+     * @param tableNumber CS table number
      * @return a CsTable object
      */
     public CsTable csTable(String version, Integer schemaNumber, Integer tableNumber) {
@@ -324,8 +324,8 @@ public final class SeerApi {
 
     /**
      * Calculate collaborative stage
-     * @param version
-     * @param input
+     * @param version CS version
+     * @param input Input properties used in calculation
      * @return a CsResult object containing the staging results
      */
     public CsResult csCalculate(String version, CsInput input) {
@@ -357,7 +357,7 @@ public final class SeerApi {
 
     /**
      * Return the changelog entries for the passed database version
-     * @param version
+     * @param version Disease version
      * @param fromDate if not null, only include changes from this date forward (YYYY-MM-DD)
      * @param toDate if not null, only include changes prior to this date (YYYY-MM-DD)
      * @param count if not null, limit the number returned
@@ -371,8 +371,8 @@ public final class SeerApi {
 
     /**
      * Return a list of matching diseases
-     * @param version
-     * @param search
+     * @param version Disease version
+     * @param search DiseaseSearch object
      * @return a DiseaseSearchResults object
      */
     public DiseaseSearchResults diseaseSearch(String version, DiseaseSearch search) {
@@ -389,8 +389,8 @@ public final class SeerApi {
 
     /**
      * Return a complete disease entity based in identifier
-     * @param version
-     * @param id
+     * @param version Disease version
+     * @param id Disease identifier
      * @return a Disease object
      */
     public Disease diseaseById(String version, String id) {
@@ -411,7 +411,7 @@ public final class SeerApi {
 
     /**
      * Return a single primary site and label
-     * @param primarySite
+     * @param primarySite Primary Site O3
      * @return a PrimarySite object
      */
     public List<PrimarySite> diseasePrimarySiteCode(String primarySite) {
@@ -432,10 +432,10 @@ public final class SeerApi {
 
     /**
      * Return whether the 2 morphologies represent the same primary for the given year.
-     * @param version
-     * @param morphology1
-     * @param morphology2
-     * @param year
+     * @param version Disease version
+     * @param morphology1 ICD O3 Morphology
+     * @param morphology2 ICD O3 Morphology
+     * @param year Year of Diagnosis
      * @return a SamePrimary object
      */
     public SamePrimaries diseaseSamePrimaries(String version, String morphology1, String morphology2, String year) {
@@ -446,7 +446,7 @@ public final class SeerApi {
 
     /**
      * Returns the reportable year range of the supplied disease.
-     * @param disease
+     * @param disease Disease object
      * @return a Disease object with the reportability field filled in
      */
     public Disease diseaseReportability(Disease disease) {
@@ -468,8 +468,8 @@ public final class SeerApi {
 
     /**
      * Return a complete glossary entity based in identifier
-     * @param version
-     * @param id
+     * @param version Glossary version
+     * @param id Glossary identifier
      * @return a Glossary object
      */
     public Glossary glossaryById(String version, String id) {
@@ -480,8 +480,8 @@ public final class SeerApi {
 
     /**
      * Return a list of matching glossaries
-     * @param version
-     * @param search
+     * @param version Glossary version
+     * @param search GlossarySearch object
      * @return a GlossarySearchResults object
      */
     public GlossarySearchResults glossarySearch(String version, GlossarySearch search) {
@@ -498,7 +498,7 @@ public final class SeerApi {
 
     /**
      * Return the changelog entries for the passed database version
-     * @param version
+     * @param version Glossary version
      * @param fromDate if not null, only include changes from this date forward (YYYY-MM-DD)
      * @param toDate if not null, only include changes prior to this date (YYYY-MM-DD)
      * @param count if not null, limit the number returned

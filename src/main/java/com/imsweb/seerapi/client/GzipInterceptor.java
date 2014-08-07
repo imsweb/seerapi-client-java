@@ -26,7 +26,7 @@ public class GzipInterceptor implements WriterInterceptor, ReaderInterceptor {
         Object encoding = context.getHeaders().getFirst(HttpHeaders.CONTENT_ENCODING);
 
         if (encoding != null && encoding.toString().equalsIgnoreCase("gzip")) {
-            final OutputStream outputStream = context.getOutputStream();
+            OutputStream outputStream = context.getOutputStream();
             context.setOutputStream(new GZIPOutputStream(outputStream));
         }
 
@@ -38,7 +38,7 @@ public class GzipInterceptor implements WriterInterceptor, ReaderInterceptor {
         Object encoding = context.getHeaders().getFirst(HttpHeaders.CONTENT_ENCODING);
 
         if (encoding != null && encoding.toString().equalsIgnoreCase("gzip")) {
-            final InputStream originalInputStream = context.getInputStream();
+            InputStream originalInputStream = context.getInputStream();
             context.setInputStream(new GZIPInputStream(originalInputStream));
         }
 

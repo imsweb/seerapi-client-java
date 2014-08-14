@@ -98,9 +98,8 @@ public final class SeerApi {
      * Creates a client API root object
      * @param baseUrl base URL for API
      * @param apiKey API key
-     * @throws IOException
      */
-    private SeerApi(String baseUrl, String apiKey) throws IOException {
+    private SeerApi(String baseUrl, String apiKey) {
         if (baseUrl.endsWith("/"))
             baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
 
@@ -113,7 +112,7 @@ public final class SeerApi {
     /**
      * Creates a connection to the API using the key stored in ~/.seerapi or the environment variable SEER_API_KEY
      * @return a new SeerApi instance
-     * @throws IOException
+     * @throws IOException if there is an error reading local .seerapi file
      */
     public static SeerApi connect() throws IOException {
         Properties props = new Properties();
@@ -142,9 +141,8 @@ public final class SeerApi {
      * Creates a connection to the API
      * @param apiKey API key
      * @return a new SeerApi instance
-     * @throws IOException
      */
-    public static SeerApi connect(String apiKey) throws IOException {
+    public static SeerApi connect(String apiKey) {
         return new SeerApi(_SEERAPI_URL, apiKey);
     }
 
@@ -153,9 +151,8 @@ public final class SeerApi {
      * @param baseUrl base URL for API
      * @param apiKey API key
      * @return a new SeerApi instance
-     * @throws IOException
      */
-    public static SeerApi connect(String baseUrl, String apiKey) throws IOException {
+    public static SeerApi connect(String baseUrl, String apiKey) {
         return new SeerApi(baseUrl, apiKey);
     }
 
@@ -195,9 +192,8 @@ public final class SeerApi {
      * @param site Primary Site O3
      * @param histology Histology O3
      * @return a SiteRecode object based on the site and histology
-     * @throws IOException
      */
-    public SiteRecode siteRecode(String site, String histology) throws IOException {
+    public SiteRecode siteRecode(String site, String histology) {
         WebTarget target = createTarget("/recode/sitegroup").queryParam("site", site).queryParam("hist", histology);
 
         return getBuilder(target).get(SiteRecode.class);
@@ -227,6 +223,7 @@ public final class SeerApi {
     /**
      * Return a list of all the field identifiers and names from a specified NAACCR version
      * @param version NAACCR version
+     * @param item NAACCR item number
      * @return a list of NaaccrFieldName objects
      */
     public NaaccrField naaccrField(String version, Integer item) {

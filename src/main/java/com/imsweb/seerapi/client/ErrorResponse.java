@@ -16,7 +16,9 @@ public class ErrorResponse {
     }
 
     /**
-     * Constucts with an identifier and message
+     * Constructor with id and message
+     * @param id error identifier
+     * @param message message
      */
     public ErrorResponse(Integer id, String message) {
         this._id = id;

@@ -13,8 +13,4 @@ public class YearRangeString extends YearRange {
     public String getValue() {
         return _value;
     }
-
-    public void setValue(String value) {
-        _value = value;
-    }
 }

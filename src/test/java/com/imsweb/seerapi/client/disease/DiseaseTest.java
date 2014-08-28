@@ -15,6 +15,11 @@ import com.imsweb.seerapi.client.SeerApi;
 public class DiseaseTest {
 
     @Test
+    public void testDiseaseTypeCategory() {
+        Assert.assertEquals(Disease.Type.SOLID_TUMOR, Disease.Type.valueOf("SOLID_TUMOR"));
+    }
+
+    @Test
     public void testDiseaseVersions() throws IOException {
         List<DiseaseVersion> versions = SeerApi.connect().diseaseVersions();
 
@@ -51,6 +56,9 @@ public class DiseaseTest {
         Assert.assertTrue(categories.size() > 0);
         Assert.assertEquals("head-and-neck", categories.get(0).getId());
         Assert.assertEquals("Head and Neck", categories.get(0).getLabel());
+        Assert.assertEquals(2, categories.get(0).getSites().size());
+        Assert.assertEquals("C000", categories.get(0).getSites().get(0).getLow());
+        Assert.assertEquals("C148", categories.get(0).getSites().get(0).getHigh());
     }
 
     @Test
@@ -62,6 +70,52 @@ public class DiseaseTest {
         Assert.assertEquals(Disease.Type.HEMATO, disease.getType());
         Assert.assertEquals("9840/3", disease.getIcdO3Morphology());
         Assert.assertEquals(10, disease.getSamePrimaries().size());
+
+        Assert.assertEquals(7, disease.getHistory().size());
+
+        DiseaseHistoryEvent event = disease.getHistory().get(0);
+        Assert.assertEquals("mayc@imsweb.com", event.getUser());
+        Assert.assertNotNull(event.getDate());
+        Assert.assertNull(event.getOld());
+        Assert.assertNull(event.getNew());
+
+        Assert.assertEquals(1, disease.getPrimarySite().size());
+        Assert.assertEquals("C421", disease.getPrimarySite().get(0).getLow());
+        Assert.assertEquals("C421", disease.getPrimarySite().get(0).getHigh());
+        Assert.assertNull(disease.getSiteCategory());
+        Assert.assertEquals(2001, disease.getValid().getStartYear().longValue());
+        Assert.assertNull(disease.getValid().getEndYear());
+        Assert.assertNull(disease.getObsoleteNewCode());
+        Assert.assertEquals(1, disease.getAbstractorNote().size());
+        Assert.assertEquals(2, disease.getTreatment().size());
+        Assert.assertNull(disease.getGenetics());
+        Assert.assertEquals(12, disease.getAlternateName().size());
+        Assert.assertEquals("Acute erythremia [OBS]", disease.getAlternateName().get(0).getValue());
+        Assert.assertTrue(disease.getDefinition().get(0).getValue().startsWith("Acute erythroid leukemia is characterized by a predominant erythroid"));
+        Assert.assertEquals("9840/3", disease.getIcdO2Morphology());
+        Assert.assertEquals("9840/3", disease.getIcdO1Morphology());
+        Assert.assertEquals("C94.0 Acute erythroid leukemia", disease.getIcd10CmCode().get(0));
+        Assert.assertEquals("C94.0 Acute erythremia and erythroleukemia", disease.getIcd10Code().get(0));
+        Assert.assertEquals("207.0 Acute erythremia and erythroleukemia", disease.getIcd9Code().get(0));
+        Assert.assertNull(disease.getSigns());
+        Assert.assertNull(disease.getExams());
+        Assert.assertNull(disease.getRecurrence());
+        Assert.assertNull(disease.getMortality());
+        Assert.assertEquals(2001, disease.getIcdO3Effective().getStartYear().longValue());
+        Assert.assertNull(disease.getIcdO3Effective().getEndYear());
+        Assert.assertEquals(1992, disease.getIcdO2Effective().getStartYear().longValue());
+        Assert.assertEquals(2000, disease.getIcdO2Effective().getEndYear().longValue());
+        Assert.assertEquals(1978, disease.getIcdO1Effective().getStartYear().longValue());
+        Assert.assertEquals(1991, disease.getIcdO1Effective().getEndYear().longValue());
+        Assert.assertNull(disease.getMissingPrimarySiteMessage());
+        Assert.assertNull(disease.getGrade());
+        Assert.assertNull(disease.getTransformFrom());
+        Assert.assertNull(disease.getTransformTo());
+        Assert.assertNull(disease.getImmunophenotype());
+        Assert.assertEquals("Bone marrow biopsy", disease.getDiagnosisMethod().get(0).getValue());
+        Assert.assertEquals("M3 Module 5: PH10", disease.getModuleId().get(0).getValue());
+        Assert.assertNull(disease.getBiomarkers());
+        Assert.assertNull(disease.getTreatmentText());
     }
 
     @Test
@@ -70,6 +124,9 @@ public class DiseaseTest {
 
         Assert.assertNotNull(same);
         Assert.assertEquals(false, same.isSame());
+        Assert.assertEquals(2010, same.getYear().longValue());
+        Assert.assertEquals("9870/3", same.getDisease1());
+        Assert.assertEquals("9872/3", same.getDisease2());
     }
 
     @Test
@@ -84,6 +141,13 @@ public class DiseaseTest {
         Assert.assertEquals(3, results.getCount().longValue());
         Assert.assertEquals(3, results.getResults().size());
         Assert.assertEquals(Arrays.asList("basophilic"), results.getTerms());
+
+        search.setSiteCategory("BAD_VALUE");
+        results = SeerApi.connect().diseaseSearch("latest", search);
+
+        Assert.assertNotNull(results);
+        Assert.assertEquals(0, results.getCount().longValue());
+        Assert.assertEquals(0, results.getResults().size());
     }
 
     @Test
@@ -107,12 +171,28 @@ public class DiseaseTest {
 
     @Test
     public void testDiseaseChangelog() throws IOException {
-        List<DiseaseChangelog> changes = SeerApi.connect().diseaseChangelogs("latest", null, null, 3);
+        List<DiseaseChangelog> changes = SeerApi.connect().diseaseChangelogs("latest", null, "2013-07-30", 1);
 
         Assert.assertNotNull(changes);
-        Assert.assertEquals(3, changes.size());
+        Assert.assertEquals(1, changes.size());
         Assert.assertNotNull(changes.get(0).getUser());
-        Assert.assertEquals("latest", changes.get(0).getVersion());
+
+        DiseaseChangelog changelog = changes.get(0);
+
+        Assert.assertNotNull(changelog.getUser());
+        Assert.assertEquals("latest", changelog.getVersion());
+        Assert.assertTrue(changelog.getId().length() > 0);
+        Assert.assertEquals(300, changelog.getAdds().size());
+        Assert.assertNull(changelog.getMods());
+        Assert.assertNull(changelog.getDeletes());
+        Assert.assertNotNull(changelog.getDate());
+        Assert.assertEquals("Initial migration", changelog.getDescription());
+
+        DiseaseChangelogEntry entry = changelog.getAdds().get(0);
+        Assert.assertTrue(entry.getId().length() > 0);
+        Assert.assertTrue(entry.getName().length() > 0);
+        Assert.assertNull(entry.getOldVersion());
+        Assert.assertNull(entry.getNewVersion());
     }
 
 }

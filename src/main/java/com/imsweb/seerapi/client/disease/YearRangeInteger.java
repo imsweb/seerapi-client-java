@@ -13,8 +13,4 @@ public class YearRangeInteger extends YearRange {
     public Integer getValue() {
         return _value;
     }
-
-    public void setValue(Integer value) {
-        _value = value;
-    }
 }

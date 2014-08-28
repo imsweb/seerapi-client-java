@@ -13,8 +13,4 @@ public class YearRangeBoolean extends YearRange {
     public Boolean getValue() {
         return _value;
     }
-
-    public void setValue(Boolean value) {
-        _value = value;
-    }
 }

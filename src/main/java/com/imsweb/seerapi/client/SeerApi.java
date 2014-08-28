@@ -489,11 +489,16 @@ public final class SeerApi {
     public GlossarySearchResults glossarySearch(String version, GlossarySearch search) {
         WebTarget target = createTarget("/glossary/{version}").resolveTemplate("version", version);
 
-        target = target.queryParam("q", search.getQuery()).queryParam("category", search.getCategory()).queryParam("mode", search.getMode()).queryParam("status", search.getStatus()).queryParam(
+        target = target.queryParam("q", search.getQuery()).queryParam("mode", search.getMode()).queryParam("status", search.getStatus()).queryParam(
                 "assigned_to", search.getAssignedTo()).queryParam("modified_from", search.getModifiedFrom()).queryParam("modified_to", search.getModifiedTo()).queryParam("published_from",
                 search.getPublishedFrom()).queryParam("published_to", search.getPublishedTo()).queryParam("been_published", search.getBeenPublished()).queryParam("hidden", search.getHidden())
                 .queryParam("count", search.getCount()).queryParam("count_only", search.getCountOnly()).queryParam("glossary", search.getIncludeGlossary()).queryParam("output_type",
                         search.getOutputType());
+
+        // list parameters need to passed as an object array to get multiple query parameters; otherwise there is a single query
+        // parameter with a list of values, which the API won't understand
+        if (search.getCategory() != null)
+            target = target.queryParam("category", search.getCategory().toArray());
 
         return getBuilder(target).get(GlossarySearchResults.class);
     }
@@ -528,6 +533,7 @@ public final class SeerApi {
      * @param id Rx identifier
      * @return a Rx object
      */
+
     public Rx rxById(String version, String id) {
         WebTarget target = createTarget("/rx/{version}/id/{id}").resolveTemplate("version", version).resolveTemplate("id", id);
 

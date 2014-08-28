@@ -19,6 +19,7 @@ public class NaaccrTest {
 
         Assert.assertTrue(versions.size() > 0);
         for (NaaccrVersion version : versions) {
+            Assert.assertTrue(version.getVersion().length() > 0);
             Assert.assertTrue(version.getName().length() > 0);
             Assert.assertEquals(22824, version.getLength().longValue());
             Assert.assertTrue(version.getDescription().length() > 0);
@@ -42,6 +43,10 @@ public class NaaccrTest {
         NaaccrField name = SeerApi.connect().naaccrField("latest", 521);
 
         Assert.assertNotNull(name);
+        Assert.assertEquals("Morph--Type&Behav ICD-O-3", name.getName());
+        Assert.assertEquals("LEFT", name.getAlign());
+        Assert.assertEquals(" ", name.getPadChar());
+        Assert.assertTrue(name.getDocumentation().startsWith("<table class=\"naaccr-summary-table naaccr-borders\">"));
         Assert.assertEquals(521, name.getItem().longValue());
         Assert.assertEquals(550, name.getStart().longValue());
         Assert.assertEquals(554, name.getEnd().longValue());
@@ -49,6 +54,13 @@ public class NaaccrTest {
         Assert.assertEquals(2, name.getSubFields().size());
         Assert.assertEquals(522, name.getSubFields().get(0).getItem().longValue());
         Assert.assertEquals(523, name.getSubFields().get(1).getItem().longValue());
+
+        NaaccrSubField sub = name.getSubFields().get(0);
+        Assert.assertEquals("Histologic Type ICD-O-3", sub.getName());
+        Assert.assertEquals(550, sub.getStart().longValue());
+        Assert.assertEquals(553, sub.getEnd().longValue());
+        Assert.assertEquals("LEFT", sub.getAlign());
+        Assert.assertEquals(" ", sub.getPadChar());
     }
 
 }

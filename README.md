@@ -1,5 +1,6 @@
 # seerapi-client-java
 [![Build Status](https://travis-ci.org/imsweb/seerapi-client-java.svg?branch=master)](https://travis-ci.org/imsweb/seerapi-client-java)
+[![Coverage Status](https://coveralls.io/repos/imsweb/seerapi-client-java/badge.png?branch=master)](https://coveralls.io/r/imsweb/seerapi-client-java?branch=master)
 
 A [SEER*API](https://api.seer.cancer.gov) client for Java applications.  This library supports most of the APIs and 
 makes them easy to incorporate into Java applications.

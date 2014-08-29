@@ -261,7 +261,10 @@ public final class SeerApi {
      * @return a CsSchemaExistence object which includes information about the matching schema
      */
     public CsSchemaExistence csSchemaExists(String version, String site, String histology) {
-        WebTarget target = createTarget("/cstage/{version}/check_schema_exists").resolveTemplate("version", version).queryParam("site", site).queryParam("hist", histology);
+        WebTarget target = createTarget("/cstage/{version}/check_schema_exists")
+                .resolveTemplate("version", version)
+                .queryParam("site", site)
+                .queryParam("hist", histology);
 
         return getBuilder(target).get(CsSchemaExistence.class);
     }
@@ -287,7 +290,10 @@ public final class SeerApi {
      * @return a CsSchema object
      */
     public CsSchema csSchema(String version, String site, String histology, String ssf25) {
-        WebTarget target = createTarget("/cstage/{version}/schema").resolveTemplate("version", version).queryParam("site", site).queryParam("hist", histology).queryParam("ssf25", ssf25);
+        WebTarget target = createTarget("/cstage/{version}/schema")
+                .resolveTemplate("version", version)
+                .queryParam("site", site).queryParam("hist", histology)
+                .queryParam("ssf25", ssf25);
 
         return getBuilder(target).get(CsSchema.class);
     }
@@ -301,7 +307,11 @@ public final class SeerApi {
      * @return a CsCodeValidity object indicating validity and whether the code is obsolete
      */
     public CsCodeValidity csValidCode(String version, Integer schemaNumber, Integer tableNumber, String code) {
-        WebTarget target = createTarget("/cstage/{version}/is_code_valid").resolveTemplate("version", version).queryParam("id", schemaNumber).queryParam("table", tableNumber).queryParam("code", code);
+        WebTarget target = createTarget("/cstage/{version}/is_code_valid")
+                .resolveTemplate("version", version)
+                .queryParam("id", schemaNumber)
+                .queryParam("table", tableNumber)
+                .queryParam("code", code);
 
         return getBuilder(target).get(CsCodeValidity.class);
     }
@@ -314,7 +324,10 @@ public final class SeerApi {
      * @return a CsTable object
      */
     public CsTable csTable(String version, Integer schemaNumber, Integer tableNumber) {
-        WebTarget target = createTarget("/cstage/{version}/table").resolveTemplate("version", version).queryParam("id", schemaNumber).queryParam("table", tableNumber);
+        WebTarget target = createTarget("/cstage/{version}/table")
+                .resolveTemplate("version", version)
+                .queryParam("id", schemaNumber)
+                .queryParam("table", tableNumber);
 
         return getBuilder(target).get(CsTable.class);
     }
@@ -328,16 +341,48 @@ public final class SeerApi {
     public CsResult csCalculate(String version, CsInput input) {
         WebTarget target = createTarget("/cstage/{version}/calculate").resolveTemplate("version", version);
 
-        target = target.queryParam("site", input.getSite()).queryParam("hist", input.getHistology()).queryParam("diagnosis_year", input.getDiagnosisYear()).queryParam("csver_original",
-                input.getCsVersionOriginal()).queryParam("behav", input.getBehavior()).queryParam("grade", input.getGrade()).queryParam("age", input.getAge()).queryParam("lvi", input.getLvi())
-                .queryParam("size", input.getTumorSize()).queryParam("ext", input.getExtension()).queryParam("exteval", input.getExtensionEval()).queryParam("nodes", input.getLymphNodes()).queryParam(
-                        "nodeseval", input.getLymphNodesEval()).queryParam("lnpos", input.getLymphNodesPositive()).queryParam("lnexam", input.getLymphNodesExamined()).queryParam("mets",
-                        input.getMetsAtDx()).queryParam("metseval", input.getMetsEval()).queryParam("ssf1", input.getSsf1()).queryParam("ssf2", input.getSsf2()).queryParam("ssf3", input.getSsf3())
-                .queryParam("ssf4", input.getSsf4()).queryParam("ssf5", input.getSsf5()).queryParam("ssf6", input.getSsf6()).queryParam("ssf7", input.getSsf7()).queryParam("ssf8", input.getSsf8())
-                .queryParam("ssf9", input.getSsf9()).queryParam("ssf10", input.getSsf10()).queryParam("ssf11", input.getSsf11()).queryParam("ssf12", input.getSsf12()).queryParam("ssf13",
-                        input.getSsf13()).queryParam("ssf14", input.getSsf14()).queryParam("ssf15", input.getSsf15()).queryParam("ssf16", input.getSsf16()).queryParam("ssf17", input.getSsf17())
-                .queryParam("ssf18", input.getSsf18()).queryParam("ssf19", input.getSsf19()).queryParam("ssf10", input.getSsf20()).queryParam("ssf21", input.getSsf21()).queryParam("ssf22",
-                        input.getSsf22()).queryParam("ssf23", input.getSsf23()).queryParam("ssf24", input.getSsf24()).queryParam("ssf25", input.getSsf25());
+        target = target.queryParam("site", input.getSite())
+                .queryParam("hist", input.getHistology())
+                .queryParam("diagnosis_year", input.getDiagnosisYear())
+                .queryParam("csver_original", input.getCsVersionOriginal())
+                .queryParam("behav", input.getBehavior())
+                .queryParam("grade", input.getGrade())
+                .queryParam("age", input.getAge())
+                .queryParam("lvi", input.getLvi())
+                .queryParam("size", input.getTumorSize())
+                .queryParam("ext", input.getExtension())
+                .queryParam("exteval", input.getExtensionEval())
+                .queryParam("nodes", input.getLymphNodes())
+                .queryParam("nodeseval", input.getLymphNodesEval())
+                .queryParam("lnpos", input.getLymphNodesPositive())
+                .queryParam("lnexam", input.getLymphNodesExamined())
+                .queryParam("mets", input.getMetsAtDx())
+                .queryParam("metseval", input.getMetsEval())
+                .queryParam("ssf1", input.getSsf1())
+                .queryParam("ssf2", input.getSsf2())
+                .queryParam("ssf3", input.getSsf3())
+                .queryParam("ssf4", input.getSsf4())
+                .queryParam("ssf5", input.getSsf5())
+                .queryParam("ssf6", input.getSsf6())
+                .queryParam("ssf7", input.getSsf7())
+                .queryParam("ssf8", input.getSsf8())
+                .queryParam("ssf9", input.getSsf9())
+                .queryParam("ssf10", input.getSsf10())
+                .queryParam("ssf11", input.getSsf11())
+                .queryParam("ssf12", input.getSsf12())
+                .queryParam("ssf13", input.getSsf13())
+                .queryParam("ssf14", input.getSsf14())
+                .queryParam("ssf15", input.getSsf15())
+                .queryParam("ssf16", input.getSsf16())
+                .queryParam("ssf17", input.getSsf17())
+                .queryParam("ssf18", input.getSsf18())
+                .queryParam("ssf19", input.getSsf19())
+                .queryParam("ssf10", input.getSsf20())
+                .queryParam("ssf21", input.getSsf21())
+                .queryParam("ssf22", input.getSsf22())
+                .queryParam("ssf23", input.getSsf23())
+                .queryParam("ssf24", input.getSsf24())
+                .queryParam("ssf25", input.getSsf25());
 
         return getBuilder(target).get(CsResult.class);
     }
@@ -361,7 +406,11 @@ public final class SeerApi {
      * @return a list of DiseaseChangelog objects
      */
     public List<DiseaseChangelog> diseaseChangelogs(String version, String fromDate, String toDate, Integer count) {
-        WebTarget target = createTarget("/disease/{version}/changelog").resolveTemplate("version", version).queryParam("from", fromDate).queryParam("to", toDate).queryParam("count", count);
+        WebTarget target = createTarget("/disease/{version}/changelog")
+                .resolveTemplate("version", version)
+                .queryParam("from", fromDate)
+                .queryParam("to", toDate)
+                .queryParam("count", count);
 
         return getBuilder(target).get(new GenericType<List<DiseaseChangelog>>() {});
     }
@@ -375,23 +424,48 @@ public final class SeerApi {
     public DiseaseSearchResults diseaseSearch(String version, DiseaseSearch search) {
         WebTarget target = createTarget("/disease/{version}").resolveTemplate("version", version);
 
-        target = target.queryParam("q", search.getQuery()).queryParam("type", search.getType()).queryParam("site_category", search.getSiteCategory()).queryParam("mode", search.getMode()).queryParam(
-                "status", search.getStatus()).queryParam("assigned_to", search.getAssignedTo()).queryParam("modified_from", search.getModifiedFrom()).queryParam("modified_to", search.getModifiedTo())
-                .queryParam("published_from", search.getPublishedFrom()).queryParam("published_to", search.getPublishedTo()).queryParam("been_published", search.getBeenPublished()).queryParam(
-                        "hidden", search.getHidden()).queryParam("count", search.getCount()).queryParam("count_only", search.getCountOnly()).queryParam("glossary", search.getIncludeGlossary())
+        target = target.queryParam("q", search.getQuery())
+                .queryParam("type", search.getType())
+                .queryParam("site_category", search.getSiteCategory())
+                .queryParam("mode", search.getMode())
+                .queryParam("status", search.getStatus())
+                .queryParam("assigned_to", search.getAssignedTo())
+                .queryParam("modified_from", search.getModifiedFrom())
+                .queryParam("modified_to", search.getModifiedTo())
+                .queryParam("published_from", search.getPublishedFrom())
+                .queryParam("published_to", search.getPublishedTo())
+                .queryParam("been_published", search.getBeenPublished())
+                .queryParam("hidden", search.getHidden())
+                .queryParam("count", search.getCount())
+                .queryParam("count_only", search.getCountOnly())
+                .queryParam("glossary", search.getIncludeGlossary())
                 .queryParam("output_type", search.getOutputType());
 
         return getBuilder(target).get(DiseaseSearchResults.class);
     }
 
     /**
-     * Return a complete disease entity based in identifier
+     * Return a complete disease entity based in identifier.  Not that be default the disease does not include relevant glossary references.
      * @param version Disease version
      * @param id Disease identifier
      * @return a Disease object
      */
     public Disease diseaseById(String version, String id) {
-        WebTarget target = createTarget("/disease/{version}/id/{id}").resolveTemplate("version", version).resolveTemplate("id", id);
+        return diseaseById(version, id, false);
+    }
+
+    /**
+     * Return a complete disease entity based in identifier
+     * @param version Disease version
+     * @param id Disease identifier
+     * @param includeGlossary if true, include the glossary
+     * @return a Disease object
+     */
+    public Disease diseaseById(String version, String id, boolean includeGlossary) {
+        WebTarget target = createTarget("/disease/{version}/id/{id}")
+                .resolveTemplate("version", version)
+                .resolveTemplate("id", id)
+                .queryParam("glossary", includeGlossary);
 
         return getBuilder(target).get(Disease.class);
     }
@@ -436,7 +510,11 @@ public final class SeerApi {
      * @return a SamePrimary object
      */
     public SamePrimaries diseaseSamePrimaries(String version, String morphology1, String morphology2, String year) {
-        WebTarget target = createTarget("/disease/{version}/same_primary").resolveTemplate("version", version).queryParam("d1", morphology1).queryParam("d2", morphology2).queryParam("year", year);
+        WebTarget target = createTarget("/disease/{version}/same_primary")
+                .resolveTemplate("version", version)
+                .queryParam("d1", morphology1)
+                .queryParam("d2", morphology2)
+                .queryParam("year", year);
 
         return getBuilder(target).get(SamePrimaries.class);
     }
@@ -484,11 +562,20 @@ public final class SeerApi {
     public GlossarySearchResults glossarySearch(String version, GlossarySearch search) {
         WebTarget target = createTarget("/glossary/{version}").resolveTemplate("version", version);
 
-        target = target.queryParam("q", search.getQuery()).queryParam("mode", search.getMode()).queryParam("status", search.getStatus()).queryParam(
-                "assigned_to", search.getAssignedTo()).queryParam("modified_from", search.getModifiedFrom()).queryParam("modified_to", search.getModifiedTo()).queryParam("published_from",
-                search.getPublishedFrom()).queryParam("published_to", search.getPublishedTo()).queryParam("been_published", search.getBeenPublished()).queryParam("hidden", search.getHidden())
-                .queryParam("count", search.getCount()).queryParam("count_only", search.getCountOnly()).queryParam("glossary", search.getIncludeGlossary()).queryParam("output_type",
-                        search.getOutputType());
+        target = target.queryParam("q", search.getQuery())
+                .queryParam("mode", search.getMode())
+                .queryParam("status", search.getStatus())
+                .queryParam("assigned_to", search.getAssignedTo())
+                .queryParam("modified_from", search.getModifiedFrom())
+                .queryParam("modified_to", search.getModifiedTo())
+                .queryParam("published_from", search.getPublishedFrom())
+                .queryParam("published_to", search.getPublishedTo())
+                .queryParam("been_published", search.getBeenPublished())
+                .queryParam("hidden", search.getHidden())
+                .queryParam("count", search.getCount())
+                .queryParam("count_only", search.getCountOnly())
+                .queryParam("glossary", search.getIncludeGlossary())
+                .queryParam("output_type", search.getOutputType());
 
         // list parameters need to passed as an object array to get multiple query parameters; otherwise there is a single query
         // parameter with a list of values, which the API won't understand
@@ -507,7 +594,11 @@ public final class SeerApi {
      * @return a list of GlossaryChangelog objects
      */
     public List<GlossaryChangelog> glossaryChangelogs(String version, String fromDate, String toDate, Integer count) {
-        WebTarget target = createTarget("/glossary/{version}/changelog").resolveTemplate("version", version).queryParam("from", fromDate).queryParam("to", toDate).queryParam("count", count);
+        WebTarget target = createTarget("/glossary/{version}/changelog")
+                .resolveTemplate("version", version)
+                .queryParam("from", fromDate)
+                .queryParam("to", toDate)
+                .queryParam("count", count);
 
         return getBuilder(target).get(new GenericType<List<GlossaryChangelog>>() {});
     }

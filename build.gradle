@@ -79,6 +79,7 @@ checkstyle {
 
 // findbugs plugin settings
 findbugs {
+    toolVersion = '3.0.0'
     sourceSets = [sourceSets.main]
     ignoreFailures = true
     effort = 'max'

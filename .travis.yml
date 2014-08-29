@@ -5,7 +5,7 @@ jdk:
 
 before_install:
 - chmod +x gradlew
-- chmod +x config/initiate-publish.sh
+- chmod +x config/publish.sh
 
 env:
   global:
@@ -20,4 +20,4 @@ notifications:
 
 after_success:
 - ./gradlew jacocoTestReport coveralls
-- config/initiate-publish.sh
+- config/publish.sh

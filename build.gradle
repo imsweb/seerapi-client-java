@@ -3,7 +3,6 @@ apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
-apply plugin: 'nexus'
 
 group = 'com.imsweb'
 version = '1.1-SNAPSHOT'
@@ -12,9 +11,25 @@ description = 'Java client library for SEER*API'
 // UTF-8 for all compilation tasks
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
+// plugins
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.0'
+    }
+}
+
+// repositories
 repositories {
     mavenCentral()
 }
+
+// load other gradle files
+apply from: 'gradle/publish.gradle'
 
 dependencies {
     compile 'org.glassfish.jersey.core:jersey-client:2.7'
@@ -23,6 +38,7 @@ dependencies {
     testCompile 'junit:junit:4.11'
 }
 
+// build jar file
 jar {
     // specify the archive name; otherwise the version is appended to the war file
     archiveName = 'seerapi-java.jar'
@@ -36,38 +52,6 @@ jar {
                 'Built-Date': new Date(),
                 'Built-JDK': System.getProperty('java.version'),
         )
-    }
-}
-
-modifyPom {
-    project {
-        name 'SEER*API Java Client'
-        description 'A complete API mapping for SEER*API in Java'
-        packaging 'jar'
-        url 'https://github.com/imsweb/seerapi-client-java'
-        inceptionYear '2014'
-
-        scm {
-            url 'https://github.com/imsweb/seerapi-client-java'
-            connection 'scm:https://github.com/imsweb/seerapi-client-java.git'
-            developerConnection 'scm:git@github.com:imsweb/seerapi-client-java.git'
-        }
-
-        licenses {
-            license {
-                name 'The MIT License (MIT)'
-                url 'http://www.opensource.org/licenses/mit-license.php'
-                distribution 'repo'
-            }
-        }
-
-        developers {
-            developer {
-                id 'ctmay4'
-                name 'Chuck May'
-                email 'mayc@imsweb.com'
-            }
-        }
     }
 }
 
@@ -86,22 +70,17 @@ findbugs {
     excludeFilter = file("config/findbugs/findbugs-exclude.xml")
 }
 
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.0'
-    }
-}
-
+// code coverage plugin
 jacocoTestReport {
     reports {
         xml.enabled = true // coveralls plugin depends on xml format report
         html.enabled = true
     }
+}
+
+// simple task to return the version
+task getVersion << {
+    println version
 }
 
 // Gradle wrapper, this allows to build the project without having to install Gradle!

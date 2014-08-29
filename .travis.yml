@@ -1,19 +1,23 @@
 language: java
 
 jdk:
-  - oraclejdk7
+- oraclejdk7
 
 before_install:
-  - chmod +x gradlew
+- chmod +x gradlew
+- chmod +x config/initiate-publish.sh
 
 env:
   global:
-    - secure: "ahfNxDTQyt3G0nI/XQZHTUQUzlv4z0FLk8OycmxbK2HzX29d/XyyF0EJKDJ4IqjsIR3++i/DP9j6BSW4Rrl7WpuvkKjArwIVXgs0vHHsII0CKPMi3D+7KxreWutONGNuxfJoW17vl9Sp/2lwGP7s0asFGdt/C3F6sj23l/dobiQ="
+  - secure: ahfNxDTQyt3G0nI/XQZHTUQUzlv4z0FLk8OycmxbK2HzX29d/XyyF0EJKDJ4IqjsIR3++i/DP9j6BSW4Rrl7WpuvkKjArwIVXgs0vHHsII0CKPMi3D+7KxreWutONGNuxfJoW17vl9Sp/2lwGP7s0asFGdt/C3F6sj23l/dobiQ=
+  - secure: UVrNawbPTOKIq1C6VL+TUhejaW2arAjqj099R8uF28L2PZvG5qKQ93QeYt529W4lyjuzyIKxPP/75uxWvtJJftPn0hIDCr+H8sVvSw2sgby1GZSP6cmDAJQ8QXsi9wLDRngjCImmyHtC3svYjIG2jlqXTUN7WPkzXX/4MtrZMLw=
+  - secure: kzI7mnrDNiSF9F3OlG+e3O/F1pte5FtAGzaq2XpYdBnIvqLDHe1nI8KPUpB3AzrPOXuDHKKn+UsYYEEo6HD/pjLXoAWfZuQwaU6O8QSVnl+gKY4iNcVqjxLxdjce24iM/NzEuenyHuq5oObj1EU5TS0yTzWdk4mZ66aQwWGvCLc=
 
 notifications:
   email:
-    - mayc@imsweb.com
-    - depryf@imsweb.com
+  - mayc@imsweb.com
+  - depryf@imsweb.com
 
 after_success:
-  - ./gradlew jacocoTestReport coveralls
+- ./gradlew jacocoTestReport coveralls
+- config/initiate-publish.sh

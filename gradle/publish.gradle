@@ -1,0 +1,34 @@
+apply plugin: 'nexus'
+
+modifyPom {
+    project {
+        name 'SEER*API Java Client'
+        description 'A complete API mapping for SEER*API in Java'
+        packaging 'jar'
+        url 'https://github.com/imsweb/seerapi-client-java'
+        inceptionYear '2014'
+
+        scm {
+            url 'https://github.com/imsweb/seerapi-client-java'
+            connection 'scm:https://github.com/imsweb/seerapi-client-java.git'
+            developerConnection 'scm:git@github.com:imsweb/seerapi-client-java.git'
+        }
+
+        licenses {
+            license {
+                name 'The MIT License (MIT)'
+                url 'http://www.opensource.org/licenses/mit-license.php'
+                distribution 'repo'
+            }
+        }
+
+        developers {
+            developer {
+                id 'ctmay4'
+                name 'Chuck May'
+                email 'mayc@imsweb.com'
+            }
+        }
+    }
+}
+

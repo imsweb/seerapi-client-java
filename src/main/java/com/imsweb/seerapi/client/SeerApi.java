@@ -445,7 +445,7 @@ public final class SeerApi {
     }
 
     /**
-     * Return a complete disease entity based in identifier.  Not that be default the disease does not include relevant glossary references.
+     * Return a complete disease entity based in identifier.  Note that by default the disease entity does not include relevant glossary references.
      * @param version Disease version
      * @param id Disease identifier
      * @return a Disease object

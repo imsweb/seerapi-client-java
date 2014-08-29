@@ -518,7 +518,7 @@ public final class SeerApi {
     }
 
     /**
-     * Return a list of all Rx versions and information about them
+     * Return a list of all Rx versions and information about them.  Note that be default the Rx entity does not include relevant glossary references.
      * @return a list of RxVersion objects
      */
     public List<RxVersion> rxVersions() {
@@ -533,9 +533,23 @@ public final class SeerApi {
      * @param id Rx identifier
      * @return a Rx object
      */
-
     public Rx rxById(String version, String id) {
-        WebTarget target = createTarget("/rx/{version}/id/{id}").resolveTemplate("version", version).resolveTemplate("id", id);
+        return rxById(version, id, false);
+    }
+
+    /**
+     * Return a complete Rx entity based in identifier
+     * @param version Rx version
+     * @param id Rx identifier
+     * @param includeGlossary if true, include the glossary
+     * @return a Rx object
+     */
+
+    public Rx rxById(String version, String id, boolean includeGlossary) {
+        WebTarget target = createTarget("/rx/{version}/id/{id}")
+                .resolveTemplate("version", version)
+                .resolveTemplate("id", id)
+                .queryParam("glossary", includeGlossary);
 
         return getBuilder(target).get(Rx.class);
     }
@@ -549,12 +563,23 @@ public final class SeerApi {
     public RxSearchResults rxSearch(String version, RxSearch search) {
         WebTarget target = createTarget("/rx/{version}").resolveTemplate("version", version);
 
-        target = target.queryParam("q", search.getQuery()).queryParam("type", search.getType()).queryParam("do_not_code", search.getDoNotCode())
-                .queryParam("category", search.getCategory()).queryParam("mode", search.getMode()).queryParam("status", search.getStatus())
-                .queryParam("assigned_to", search.getAssignedTo()).queryParam("modified_from", search.getModifiedFrom()).queryParam("modified_to", search.getModifiedTo())
-                .queryParam("published_from", search.getPublishedFrom()).queryParam("published_to", search.getPublishedTo())
-                .queryParam("been_published", search.getBeenPublished()).queryParam("hidden", search.getHidden()).queryParam("count", search.getCount())
-                .queryParam("count_only", search.getCountOnly()).queryParam("glossary", search.getIncludeGlossary()).queryParam("output_type", search.getOutputType());
+        target = target.queryParam("q", search.getQuery())
+                .queryParam("type", search.getType())
+                .queryParam("do_not_code", search.getDoNotCode())
+                .queryParam("category", search.getCategory())
+                .queryParam("mode", search.getMode())
+                .queryParam("status", search.getStatus())
+                .queryParam("assigned_to", search.getAssignedTo())
+                .queryParam("modified_from", search.getModifiedFrom())
+                .queryParam("modified_to", search.getModifiedTo())
+                .queryParam("published_from", search.getPublishedFrom())
+                .queryParam("published_to", search.getPublishedTo())
+                .queryParam("been_published", search.getBeenPublished())
+                .queryParam("hidden", search.getHidden())
+                .queryParam("count", search.getCount())
+                .queryParam("count_only", search.getCountOnly())
+                .queryParam("glossary", search.getIncludeGlossary())
+                .queryParam("output_type", search.getOutputType());
 
         return getBuilder(target).get(RxSearchResults.class);
     }
@@ -568,7 +593,11 @@ public final class SeerApi {
      * @return a list of RxChangelog objects
      */
     public List<RxChangelog> rxChangelogs(String version, String fromDate, String toDate, Integer count) {
-        WebTarget target = createTarget("/rx/{version}/changelog").resolveTemplate("version", version).queryParam("from", fromDate).queryParam("to", toDate).queryParam("count", count);
+        WebTarget target = createTarget("/rx/{version}/changelog")
+                .resolveTemplate("version", version)
+                .queryParam("from", fromDate)
+                .queryParam("to", toDate)
+                .queryParam("count", count);
 
         return getBuilder(target).get(new GenericType<List<RxChangelog>>() {});
     }

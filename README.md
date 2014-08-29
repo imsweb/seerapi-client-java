@@ -15,6 +15,10 @@ Collaborative Stage is a unified data collection system designed to provide a co
 
 A searchable database of hematopoietic and lymphoid neoplasms and solid tumor diseases.
 
+### RX (rest/rx)
+
+A searchable database for coding oncology drug and regimen treatment categories in cancer registries.
+
 ### Glossary (rest/glossary)
 
 A glossary of cancer-related terms.

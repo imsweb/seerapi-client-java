@@ -11,7 +11,6 @@ if [ "$TRAVIS_REPO_SLUG" == "imsweb/seerapi-client-java" ] && [ "$TRAVIS_PULL_RE
   fi
 
   echo -e "Starting publish to Sonatype...\n"
-  echo -e "${NEXUS_USERNAME}\n"
 
   ./gradlew uploadArchives -PnexusUsername="${NEXUS_USERNAME}" -PnexusPassword="${NEXUS_PASSWORD}"
   RETVAL=$?

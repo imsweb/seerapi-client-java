@@ -26,6 +26,7 @@ import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.glassfish.jersey.message.GZipEncoder;
 
 import com.imsweb.seerapi.client.cs.CsCodeValidity;
 import com.imsweb.seerapi.client.cs.CsInput;
@@ -106,7 +107,10 @@ public final class SeerApi {
         this._baseUrl = baseUrl;
         this._apiKey = apiKey;
 
-        _client = ClientBuilder.newClient().register(_JACKSON_PROVIDER).register(GzipInterceptor.class).register(ErrorResponseFilter.class);
+        _client = ClientBuilder.newClient()
+                .register(_JACKSON_PROVIDER)
+                .register(GZipEncoder.class)
+                .register(ErrorResponseFilter.class);
     }
 
     /**
@@ -174,7 +178,7 @@ public final class SeerApi {
      * @return a Builder instance using the passed target and including default header information that is used on all our calls
      */
     private Invocation.Builder getBuilder(WebTarget target) {
-        return target.request().header("X-SEERAPI-Key", _apiKey).accept(MediaType.APPLICATION_JSON_TYPE).acceptEncoding("gzip");
+        return target.request(MediaType.APPLICATION_JSON_TYPE).header("X-SEERAPI-Key", _apiKey).acceptEncoding("gzip");
     }
 
     /**

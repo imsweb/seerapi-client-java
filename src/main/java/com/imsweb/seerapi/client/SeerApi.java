@@ -518,7 +518,7 @@ public final class SeerApi {
     }
 
     /**
-     * Return a list of all Rx versions and information about them.  Note that be default the Rx entity does not include relevant glossary references.
+     * Return a list of all Rx versions and information about them.  Note that by default the Rx entity does not include relevant glossary references.
      * @return a list of RxVersion objects
      */
     public List<RxVersion> rxVersions() {

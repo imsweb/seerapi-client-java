@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
+import com.imsweb.seerapi.client.publishable.PublishableSearch;
 
 public class DiseaseTest {
 
@@ -28,6 +29,11 @@ public class DiseaseTest {
             Assert.assertTrue(version.getName().length() > 0);
             Assert.assertTrue(version.getType().length() > 0);
             Assert.assertNotNull(version.getLastModified());
+            if (version.getName().equals("latest")) {
+                Assert.assertNotNull(version.getType());
+                Assert.assertNotNull(version.getFirstPublished());
+                Assert.assertNotNull(version.getCount());
+            }
         }
     }
 
@@ -70,6 +76,19 @@ public class DiseaseTest {
         Assert.assertEquals(Disease.Type.HEMATO, disease.getType());
         Assert.assertEquals("9840/3", disease.getIcdO3Morphology());
         Assert.assertEquals(10, disease.getSamePrimaries().size());
+
+        Assert.assertNotNull(disease.getId());
+        Assert.assertEquals("latest", disease.getVersion());
+        Assert.assertNull(disease.getHidden());
+        Assert.assertNull(disease.getStatus());
+        Assert.assertNull(disease.getAssignedTo());
+        Assert.assertNotNull(disease.getFirstPublished());
+        Assert.assertNotNull(disease.getLastModified());
+        Assert.assertNotNull(disease.getFingerprint());
+        Assert.assertNull(disease.getNote());
+        Assert.assertNull(disease.getFieldNotes());
+        Assert.assertNull(disease.getScore());
+        Assert.assertNull(disease.getGlossaryMatches());
 
         Assert.assertEquals(7, disease.getHistory().size());
 
@@ -143,6 +162,26 @@ public class DiseaseTest {
         Assert.assertEquals(Arrays.asList("basophilic"), results.getTerms());
 
         search.setSiteCategory("BAD_VALUE");
+        results = SeerApi.connect().diseaseSearch("latest", search);
+
+        Assert.assertNotNull(results);
+        Assert.assertEquals(0, results.getCount().longValue());
+        Assert.assertEquals(0, results.getResults().size());
+
+        // test a case where all search options are set
+        search.setMode(PublishableSearch.SearchMode.OR);
+        search.setStatus("TEST");
+        search.setAssignedTo("user");
+        search.setModifiedFrom("2014-01-01");
+        search.setModifiedTo("2014-05-31");
+        search.setPublishedFrom("2014-01-01");
+        search.setPublishedTo("2014-05-31");
+        search.setBeenPublished(true);
+        search.setHidden(false);
+        search.setCount(100);
+        search.setCountOnly(false);
+        search.setIncludeGlossary(true);
+        search.setOutputType(PublishableSearch.OutputType.MIN);
         results = SeerApi.connect().diseaseSearch("latest", search);
 
         Assert.assertNotNull(results);

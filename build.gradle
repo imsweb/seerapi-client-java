@@ -3,8 +3,6 @@ apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
-apply plugin: 'maven-publish'
-apply plugin: 'com.jfrog.bintray'
 
 group = 'com.imsweb'
 version = '1.1-SNAPSHOT'
@@ -13,9 +11,23 @@ description = 'Java client library for SEER*API'
 // UTF-8 for all compilation tasks
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:0.5'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.0'
+    }
+}
+
 repositories {
     mavenCentral()
 }
+
+// load other gradle files
+apply from: 'gradle/publish.gradle'
 
 dependencies {
     compile 'org.glassfish.jersey.core:jersey-client:2.7'
@@ -40,15 +52,21 @@ jar {
     }
 }
 
-buildscript {
-    repositories {
-        jcenter()
-    }
+// custom tasks for creating source/javadoc jars
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
 
-    dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:0.5'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.0'
-    }
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+// add javadoc/source jar tasks as artifacts
+artifacts {
+    archives sourcesJar
+    archives javadocJar
 }
 
 // checkstyle plugin settings
@@ -71,84 +89,6 @@ jacocoTestReport {
         xml.enabled = true // coveralls plugin depends on xml format report
         html.enabled = true
     }
-}
-
-// custom tasks for creating source/javadoc jars
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-// add javadoc/source jar tasks as artifacts
-artifacts {
-    archives sourcesJar
-    archives javadocJar
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            artifact sourcesJar
-            artifact javadocJar
-
-            pom.withXml {
-                def root = asNode()
-                root.appendNode('name', 'SEER*API Java Client')
-                root.appendNode('description', 'API mapping for SEER*API in Java')
-                root.appendNode('inceptionYear', '2014')
-
-                def scm = root.appendNode('scm')
-                scm.appendNode('url', 'https://github.com/imsweb/seerapi-client-java')
-                scm.appendNode('connection', 'scm:https://github.com/imsweb/seerapi-client-java.git')
-                scm.appendNode('developerConnection', 'scm:git@github.com:imsweb/seerapi-client-java.git')
-
-                def license = root.appendNode('licenses').appendNode('license')
-                license.appendNode('name', 'The MIT License (MIT)')
-                license.appendNode('url', 'http://www.opensource.org/licenses/mit-license.php')
-                license.appendNode('distribution', 'repo')
-
-                def developers = root.appendNode('developers')
-                def ctmay4 = developers.appendNode('developer')
-                ctmay4.appendNode('id', 'ctmay4')
-                ctmay4.appendNode('name', 'Charles May')
-                ctmay4.appendNode('email', 'mayc@imsweb.com')
-                def depryf = developers.appendNode('developer')
-                depryf.appendNode('id', 'depryf')
-                depryf.appendNode('name', 'Fabian Depry')
-                depryf.appendNode('email', 'depryf@imsweb.com')
-            }
-        }
-    }
-}
-
-bintray {
-    user = bintrayUser // comes from gradle.properties file in ~/.gradle
-    key = bintrayKey   // comes from gradle.properties file in ~/.gradle
-    publications = ['mavenJava']
-    publish = true
-    pkg {
-        repo = 'seer'
-        userOrg = 'imsweb'
-        name = 'seerapi-client-java'
-        desc = 'API mapping for SEER*API in Java'
-        licenses = ['MIT']
-        labels = ['seerapi', 'imsweb']
-
-        websiteUrl = 'https://github.com/imsweb/seerapi-client-java'
-        issueTrackerUrl = 'https://github.com/imsweb/seerapi-client-java/issues'
-        vcsUrl = 'https://github.com/imsweb/seerapi-client-java.git'
-    }
-}
-
-// simple task to return the version
-task getVersion << {
-    println version
 }
 
 // Gradle wrapper, this allows to build the project without having to install Gradle!

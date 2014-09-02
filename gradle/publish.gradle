@@ -1,46 +1,47 @@
+apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
-
-// simple task to return the version
-task getVersion << {
-    println version
-}
-
-// custom tasks for creating source/javadoc jars
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-// add javadoc/source jar tasks as artifacts
-artifacts {
-    archives sourcesJar, javadocJar
-}
 
 publishing {
     publications {
-        mavenStuff(MavenPublication) {
+        mavenJava(MavenPublication) {
             from components.java
+            artifact sourcesJar
+            artifact javadocJar
 
-            artifact sourcesJar {
-                classifier "sources"
-            }
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('name', 'SEER*API Java Client')
+                root.appendNode('description', 'API mapping for SEER*API in Java')
+                root.appendNode('inceptionYear', '2014')
 
-            artifact javadocJar {
-                classifier "javadoc"
+                def scm = root.appendNode('scm')
+                scm.appendNode('url', 'https://github.com/imsweb/seerapi-client-java')
+                scm.appendNode('connection', 'scm:https://github.com/imsweb/seerapi-client-java.git')
+                scm.appendNode('developerConnection', 'scm:git@github.com:imsweb/seerapi-client-java.git')
+
+                def license = root.appendNode('licenses').appendNode('license')
+                license.appendNode('name', 'The MIT License (MIT)')
+                license.appendNode('url', 'http://www.opensource.org/licenses/mit-license.php')
+                license.appendNode('distribution', 'repo')
+
+                def developers = root.appendNode('developers')
+                def ctmay4 = developers.appendNode('developer')
+                ctmay4.appendNode('id', 'ctmay4')
+                ctmay4.appendNode('name', 'Charles May')
+                ctmay4.appendNode('email', 'mayc@imsweb.com')
+                def depryf = developers.appendNode('developer')
+                depryf.appendNode('id', 'depryf')
+                depryf.appendNode('name', 'Fabian Depry')
+                depryf.appendNode('email', 'depryf@imsweb.com')
             }
         }
     }
 }
 
 bintray {
-    user = bintrayUser // comes from gradle.properties file in ~/.gradle
-    key = bintrayKey   // comes from gradle.properties file in ~/.gradle
-    publications = ['mavenStuff']
+    user = bintrayUser
+    key = bintrayKey
+    publications = ['mavenJava']
     publish = true
     pkg {
         repo = 'seer'
@@ -54,4 +55,9 @@ bintray {
         issueTrackerUrl = 'https://github.com/imsweb/seerapi-client-java/issues'
         vcsUrl = 'https://github.com/imsweb/seerapi-client-java.git'
     }
+}
+
+// simple task to return the version
+task getVersion << {
+    println version
 }

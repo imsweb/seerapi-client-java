@@ -7,9 +7,9 @@ if [ "$TRAVIS_REPO_SLUG" == "imsweb/seerapi-client-java" ] && [ "$TRAVIS_PULL_RE
       exit 0
   fi
 
-  echo -e "Starting publish to Sonatype...\n"
+  echo -e "Starting publish to Bintray...\n"
 
-  ./gradlew uploadBintray -PbintrayUser="${BINTRAY_USER}" -PbintrayKey="${BINTRAY_KEY}"
+  ./gradlew bintrayUpload
   RETVAL=$?
 
   if [ $RETVAL -eq 0 ]; then

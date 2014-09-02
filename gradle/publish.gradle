@@ -12,6 +12,7 @@ publishing {
                 def root = asNode()
                 root.appendNode('name', 'SEER*API Java Client')
                 root.appendNode('description', 'API mapping for SEER*API in Java')
+                root.appendNode('url', 'https://github.com/imsweb/seerapi-client-java')
                 root.appendNode('inceptionYear', '2014')
 
                 def scm = root.appendNode('scm')

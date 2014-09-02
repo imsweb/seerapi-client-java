@@ -1,40 +1,57 @@
-apply plugin: 'nexus'
+apply plugin: 'com.jfrog.bintray'
 
 // simple task to return the version
 task getVersion << {
     println version
 }
 
-// build the pom file
-modifyPom {
-    project {
-        name 'SEER*API Java Client'
-        description 'A complete API mapping for SEER*API in Java'
-        packaging 'jar'
-        url 'https://github.com/imsweb/seerapi-client-java'
-        inceptionYear '2014'
+// custom tasks for creating source/javadoc jars
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
 
-        scm {
-            url 'https://github.com/imsweb/seerapi-client-java'
-            connection 'scm:https://github.com/imsweb/seerapi-client-java.git'
-            developerConnection 'scm:git@github.com:imsweb/seerapi-client-java.git'
-        }
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
 
-        licenses {
-            license {
-                name 'The MIT License (MIT)'
-                url 'http://www.opensource.org/licenses/mit-license.php'
-                distribution 'repo'
+// add javadoc/source jar tasks as artifacts
+artifacts {
+    archives sourcesJar, javadocJar
+}
+
+publishing {
+    publications {
+        mavenStuff(MavenPublication) {
+            from components.java
+
+            artifact sourcesJar {
+                classifier "sources"
             }
-        }
 
-        developers {
-            developer {
-                id 'ctmay4'
-                name 'Chuck May'
-                email 'mayc@imsweb.com'
+            artifact javadocJar {
+                classifier "javadoc"
             }
         }
     }
 }
 
+bintray {
+    user = bintrayUser // comes from gradle.properties file in ~/.gradle
+    key = bintrayKey   // comes from gradle.properties file in ~/.gradle
+    publications = ['mavenStuff']
+    publish = true
+    pkg {
+        repo = 'seer'
+        userOrg = 'imsweb'
+        name = 'seerapi-client-java'
+        desc = 'API mapping for SEER*API in Java'
+        licenses = ['MIT']
+        labels = ['seerapi', 'imsweb']
+
+        websiteUrl = 'https://github.com/imsweb/seerapi-client-java'
+        issueTrackerUrl = 'https://github.com/imsweb/seerapi-client-java/issues'
+        vcsUrl = 'https://github.com/imsweb/seerapi-client-java.git'
+    }
+}

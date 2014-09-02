@@ -10,14 +10,14 @@ before_install:
 env:
   global:
   - secure: ahfNxDTQyt3G0nI/XQZHTUQUzlv4z0FLk8OycmxbK2HzX29d/XyyF0EJKDJ4IqjsIR3++i/DP9j6BSW4Rrl7WpuvkKjArwIVXgs0vHHsII0CKPMi3D+7KxreWutONGNuxfJoW17vl9Sp/2lwGP7s0asFGdt/C3F6sj23l/dobiQ=
-  - secure: gLG9v3nlnW61qM03vkwFeuNzsObJWga+q2sky7D0DgGP00uQ7/25NVLtWX1z0XC4E0mwoOZtQYVKFwRPipsY5TwmO/xYcGqeFfXjmXQ+cWGuY7wlZqrNZZV1o0M3SssCuz36C0SfTIymWOqkREEdIUVfNcXI2/KjlCojF2WZCb8=
-  - secure: TUH3IMdqlZU+erDODlL0euGZfF0COhf+6QJcDRE/vvqOt4cs9xP7QlO8m3WrqW9s1jIAMUyZrSgXmjAIeawoa2cBEkPEh3akx8ac+ajXSiCfhcY1oGXle/7bSEmFzHzcLZLHSBatEK2ZRbxzxFGMrV/cMhjN33laRlUIJBUH2ew=
+  - secure: jtZeqKbojMA9+zPEGz31enDde7xfnQUgjUmxRdisydPxW/rtKghKamoZFWw7sGimrHPg6TMbRpj5gxLnUoUNV++ss5OtrCPyvDtpWDN4EcYpygq0bKZfD8NzvJ0+ghN89BLQcuCXOYP9+5RY+ZJYpb2knaPAWb4ZKZd965VSj+Q=
+  - secure: JxDiUJYS8mRrBcobIHLe8glr69ileuYWG7MySdb5xuDnXwGgjilBA7f8H6rGfxzhWgWzL9ReF+5hXBL4Czmj+s0ZhBBmP6BChL/bLTZWtcrvAAhopfvUxNnf9LkPg9i0qdh155LA30KNRBlp2V7oqGiyV1WL2QqE7nygA4ZGifE=
 
 notifications:
   email:
   - mayc@imsweb.com
   - depryf@imsweb.com
-  
+
 after_success:
 - ./gradlew jacocoTestReport coveralls
 - config/publish.sh

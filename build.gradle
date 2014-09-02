@@ -78,11 +78,6 @@ jacocoTestReport {
     }
 }
 
-// simple task to return the version
-task getVersion << {
-    println version
-}
-
 // Gradle wrapper, this allows to build the project without having to install Gradle!
 task wrapper(type: Wrapper) {
     gradleVersion = '2.0'

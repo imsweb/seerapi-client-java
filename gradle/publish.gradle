@@ -1,5 +1,11 @@
 apply plugin: 'nexus'
 
+// simple task to return the version
+task getVersion << {
+    println version
+}
+
+// build the pom file
 modifyPom {
     project {
         name 'SEER*API Java Client'

@@ -17,6 +17,16 @@ public class RxSearch extends PublishableSearch {
     private Boolean _doNotCode;
 
     public RxSearch() {
+        super();
+    }
+
+    public RxSearch(String query) {
+        setQuery(query);
+    }
+
+    public RxSearch(String query, Rx.Type type) {
+        setQuery(query);
+        setType(type);
     }
 
     public Rx.Type getType() {

@@ -13,6 +13,23 @@ public class DiseaseSearch extends PublishableSearch {
     private Disease.Type _type;
     private String _siteCategory;
 
+    public DiseaseSearch() {
+        super();
+    }
+
+    public DiseaseSearch(String query) {
+        super();
+
+        setQuery(query);
+    }
+
+    public DiseaseSearch(String query, Disease.Type type) {
+        super();
+
+        setQuery(query);
+        setType(type);
+    }
+
     public Disease.Type getType() {
         return _type;
     }

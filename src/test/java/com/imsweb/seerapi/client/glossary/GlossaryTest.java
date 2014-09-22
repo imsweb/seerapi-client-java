@@ -82,9 +82,8 @@ public class GlossaryTest {
 
     @Test
     public void testGlossarySearch() throws IOException {
-        GlossarySearch search = new GlossarySearch();
+        GlossarySearch search = new GlossarySearch("stem");
 
-        search.setQuery("stem");
         GlossarySearchResults results = SeerApi.connect().glossarySearch("latest", search);
 
         Assert.assertNotNull(results);

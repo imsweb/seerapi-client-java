@@ -27,6 +27,10 @@ The NAACCR API provides programmatic access to documentation for the NAACCR Stan
 
 The values of SEER site recode variables are based on the primary site and histology data fields submitted to SEER by the registries. The site recode variables define the major cancer site/histology groups that are commonly used in the reporting of cancer incidence data. For example, there is a section of the SEER Cancer Statistics Review for each major site corresponding to groupings in a site recode variable. The site recode variables are added to SEER databases as a convenience for researchers.
 
+### Site-specific Surgery Codes (rest/surgery)
+
+The site-specific surgery tables available on the SEER website.
+
 ## SEER
 
 The Surveillance, Epidemiology and End Results ([SEER](http://seer.cancer.gov)) Program is a premier source for cancer statistics in the United States. The SEER Program collects information on incidence, prevalence and survival from specific geographic areas representing 28 percent of the US population and reports on all these data plus cancer mortality data for the entire country.

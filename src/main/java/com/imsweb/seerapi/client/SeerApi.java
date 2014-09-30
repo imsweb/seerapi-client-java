@@ -54,6 +54,7 @@ import com.imsweb.seerapi.client.naaccr.NaaccrFieldName;
 import com.imsweb.seerapi.client.naaccr.NaaccrVersion;
 import com.imsweb.seerapi.client.shared.Version;
 import com.imsweb.seerapi.client.siterecode.SiteRecode;
+import com.imsweb.seerapi.client.surgery.SurgeryTable;
 
 /**
  * Entry point for Java API into SEER*API.
@@ -605,6 +606,45 @@ public final class SeerApi {
                 .queryParam("count", count);
 
         return getBuilder(target).get(new GenericType<List<GlossaryChangelog>>() {});
+    }
+
+    /**
+     * Return a collection of Version objects which descibe the available versions
+     * @return a list of the available site-specific surgery versions and information about each of them
+     */
+    public List<Version> siteSpecificSurgeryVersions() {
+        WebTarget target = createTarget("/surgery/versions");
+
+        return getBuilder(target).get(new GenericType<List<Version>>() {});
+    }
+
+    /**
+     * Return a list of all the site-specific surgery table titles from a specific version
+     * @param version version
+     * @return a list of site-specific surgery table titles
+     */
+    public List<String> siteSpecificSurgeryTables(String version) {
+        WebTarget target = createTarget("/surgery/{version}/tables").resolveTemplate("version", version);
+
+        return getBuilder(target).get(new GenericType<List<String>>() {});
+    }
+
+    /**
+     * Return a specific site-specific surgary table from a specific version
+     * @param version version
+     * @param title site title (optional if the site/histology is provided)
+     * @param site primary site (optional if the title is provided)
+     * @param histology histology (optional if the title is provided)
+     * @return a site-specific surgery table
+     */
+    public SurgeryTable siteSpecificSurgeryTable(String version, String title, String site, String histology) {
+        WebTarget target = createTarget("/surgery/{version}/table")
+                .resolveTemplate("version", version)
+                .queryParam("title", title)
+                .queryParam("site", site)
+                .queryParam("hist", histology);
+
+        return getBuilder(target).get(SurgeryTable.class);
     }
 
 }

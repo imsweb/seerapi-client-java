@@ -26,6 +26,7 @@ import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.glassfish.jersey.message.GZipEncoder;
 
 import com.imsweb.seerapi.client.cs.CsCodeValidity;
 import com.imsweb.seerapi.client.cs.CsInput;
@@ -58,6 +59,7 @@ import com.imsweb.seerapi.client.rx.RxSearchResults;
 import com.imsweb.seerapi.client.rx.RxVersion;
 import com.imsweb.seerapi.client.shared.Version;
 import com.imsweb.seerapi.client.siterecode.SiteRecode;
+import com.imsweb.seerapi.client.surgery.SurgeryTable;
 
 /**
  * Entry point for Java API into SEER*API.
@@ -111,7 +113,10 @@ public final class SeerApi {
         this._baseUrl = baseUrl;
         this._apiKey = apiKey;
 
-        _client = ClientBuilder.newClient().register(_JACKSON_PROVIDER).register(GzipInterceptor.class).register(ErrorResponseFilter.class);
+        _client = ClientBuilder.newClient()
+                .register(_JACKSON_PROVIDER)
+                .register(GZipEncoder.class)
+                .register(ErrorResponseFilter.class);
     }
 
     /**
@@ -179,7 +184,7 @@ public final class SeerApi {
      * @return a Builder instance using the passed target and including default header information that is used on all our calls
      */
     private Invocation.Builder getBuilder(WebTarget target) {
-        return target.request().header("X-SEERAPI-Key", _apiKey).accept(MediaType.APPLICATION_JSON_TYPE).acceptEncoding("gzip");
+        return target.request(MediaType.APPLICATION_JSON_TYPE).header("X-SEERAPI-Key", _apiKey).acceptEncoding("gzip");
     }
 
     /**
@@ -266,7 +271,10 @@ public final class SeerApi {
      * @return a CsSchemaExistence object which includes information about the matching schema
      */
     public CsSchemaExistence csSchemaExists(String version, String site, String histology) {
-        WebTarget target = createTarget("/cstage/{version}/check_schema_exists").resolveTemplate("version", version).queryParam("site", site).queryParam("hist", histology);
+        WebTarget target = createTarget("/cstage/{version}/check_schema_exists")
+                .resolveTemplate("version", version)
+                .queryParam("site", site)
+                .queryParam("hist", histology);
 
         return getBuilder(target).get(CsSchemaExistence.class);
     }
@@ -292,7 +300,10 @@ public final class SeerApi {
      * @return a CsSchema object
      */
     public CsSchema csSchema(String version, String site, String histology, String ssf25) {
-        WebTarget target = createTarget("/cstage/{version}/schema").resolveTemplate("version", version).queryParam("site", site).queryParam("hist", histology).queryParam("ssf25", ssf25);
+        WebTarget target = createTarget("/cstage/{version}/schema")
+                .resolveTemplate("version", version)
+                .queryParam("site", site).queryParam("hist", histology)
+                .queryParam("ssf25", ssf25);
 
         return getBuilder(target).get(CsSchema.class);
     }
@@ -306,7 +317,11 @@ public final class SeerApi {
      * @return a CsCodeValidity object indicating validity and whether the code is obsolete
      */
     public CsCodeValidity csValidCode(String version, Integer schemaNumber, Integer tableNumber, String code) {
-        WebTarget target = createTarget("/cstage/{version}/is_code_valid").resolveTemplate("version", version).queryParam("id", schemaNumber).queryParam("table", tableNumber).queryParam("code", code);
+        WebTarget target = createTarget("/cstage/{version}/is_code_valid")
+                .resolveTemplate("version", version)
+                .queryParam("id", schemaNumber)
+                .queryParam("table", tableNumber)
+                .queryParam("code", code);
 
         return getBuilder(target).get(CsCodeValidity.class);
     }
@@ -319,7 +334,10 @@ public final class SeerApi {
      * @return a CsTable object
      */
     public CsTable csTable(String version, Integer schemaNumber, Integer tableNumber) {
-        WebTarget target = createTarget("/cstage/{version}/table").resolveTemplate("version", version).queryParam("id", schemaNumber).queryParam("table", tableNumber);
+        WebTarget target = createTarget("/cstage/{version}/table")
+                .resolveTemplate("version", version)
+                .queryParam("id", schemaNumber)
+                .queryParam("table", tableNumber);
 
         return getBuilder(target).get(CsTable.class);
     }
@@ -333,16 +351,48 @@ public final class SeerApi {
     public CsResult csCalculate(String version, CsInput input) {
         WebTarget target = createTarget("/cstage/{version}/calculate").resolveTemplate("version", version);
 
-        target = target.queryParam("site", input.getSite()).queryParam("hist", input.getHistology()).queryParam("diagnosis_year", input.getDiagnosisYear()).queryParam("csver_original",
-                input.getCsVersionOriginal()).queryParam("behav", input.getBehavior()).queryParam("grade", input.getGrade()).queryParam("age", input.getAge()).queryParam("lvi", input.getLvi())
-                .queryParam("size", input.getTumorSize()).queryParam("ext", input.getExtension()).queryParam("exteval", input.getExtensionEval()).queryParam("nodes", input.getLymphNodes()).queryParam(
-                        "nodeseval", input.getLymphNodesEval()).queryParam("lnpos", input.getLymphNodesPositive()).queryParam("lnexam", input.getLymphNodesExamined()).queryParam("mets",
-                        input.getMetsAtDx()).queryParam("metseval", input.getMetsEval()).queryParam("ssf1", input.getSsf1()).queryParam("ssf2", input.getSsf2()).queryParam("ssf3", input.getSsf3())
-                .queryParam("ssf4", input.getSsf4()).queryParam("ssf5", input.getSsf5()).queryParam("ssf6", input.getSsf6()).queryParam("ssf7", input.getSsf7()).queryParam("ssf8", input.getSsf8())
-                .queryParam("ssf9", input.getSsf9()).queryParam("ssf10", input.getSsf10()).queryParam("ssf11", input.getSsf11()).queryParam("ssf12", input.getSsf12()).queryParam("ssf13",
-                        input.getSsf13()).queryParam("ssf14", input.getSsf14()).queryParam("ssf15", input.getSsf15()).queryParam("ssf16", input.getSsf16()).queryParam("ssf17", input.getSsf17())
-                .queryParam("ssf18", input.getSsf18()).queryParam("ssf19", input.getSsf19()).queryParam("ssf10", input.getSsf20()).queryParam("ssf21", input.getSsf21()).queryParam("ssf22",
-                        input.getSsf22()).queryParam("ssf23", input.getSsf23()).queryParam("ssf24", input.getSsf24()).queryParam("ssf25", input.getSsf25());
+        target = target.queryParam("site", input.getSite())
+                .queryParam("hist", input.getHistology())
+                .queryParam("diagnosis_year", input.getDiagnosisYear())
+                .queryParam("csver_original", input.getCsVersionOriginal())
+                .queryParam("behav", input.getBehavior())
+                .queryParam("grade", input.getGrade())
+                .queryParam("age", input.getAge())
+                .queryParam("lvi", input.getLvi())
+                .queryParam("size", input.getTumorSize())
+                .queryParam("ext", input.getExtension())
+                .queryParam("exteval", input.getExtensionEval())
+                .queryParam("nodes", input.getLymphNodes())
+                .queryParam("nodeseval", input.getLymphNodesEval())
+                .queryParam("lnpos", input.getLymphNodesPositive())
+                .queryParam("lnexam", input.getLymphNodesExamined())
+                .queryParam("mets", input.getMetsAtDx())
+                .queryParam("metseval", input.getMetsEval())
+                .queryParam("ssf1", input.getSsf1())
+                .queryParam("ssf2", input.getSsf2())
+                .queryParam("ssf3", input.getSsf3())
+                .queryParam("ssf4", input.getSsf4())
+                .queryParam("ssf5", input.getSsf5())
+                .queryParam("ssf6", input.getSsf6())
+                .queryParam("ssf7", input.getSsf7())
+                .queryParam("ssf8", input.getSsf8())
+                .queryParam("ssf9", input.getSsf9())
+                .queryParam("ssf10", input.getSsf10())
+                .queryParam("ssf11", input.getSsf11())
+                .queryParam("ssf12", input.getSsf12())
+                .queryParam("ssf13", input.getSsf13())
+                .queryParam("ssf14", input.getSsf14())
+                .queryParam("ssf15", input.getSsf15())
+                .queryParam("ssf16", input.getSsf16())
+                .queryParam("ssf17", input.getSsf17())
+                .queryParam("ssf18", input.getSsf18())
+                .queryParam("ssf19", input.getSsf19())
+                .queryParam("ssf10", input.getSsf20())
+                .queryParam("ssf21", input.getSsf21())
+                .queryParam("ssf22", input.getSsf22())
+                .queryParam("ssf23", input.getSsf23())
+                .queryParam("ssf24", input.getSsf24())
+                .queryParam("ssf25", input.getSsf25());
 
         return getBuilder(target).get(CsResult.class);
     }
@@ -366,7 +416,11 @@ public final class SeerApi {
      * @return a list of DiseaseChangelog objects
      */
     public List<DiseaseChangelog> diseaseChangelogs(String version, String fromDate, String toDate, Integer count) {
-        WebTarget target = createTarget("/disease/{version}/changelog").resolveTemplate("version", version).queryParam("from", fromDate).queryParam("to", toDate).queryParam("count", count);
+        WebTarget target = createTarget("/disease/{version}/changelog")
+                .resolveTemplate("version", version)
+                .queryParam("from", fromDate)
+                .queryParam("to", toDate)
+                .queryParam("count", count);
 
         return getBuilder(target).get(new GenericType<List<DiseaseChangelog>>() {});
     }
@@ -380,23 +434,48 @@ public final class SeerApi {
     public DiseaseSearchResults diseaseSearch(String version, DiseaseSearch search) {
         WebTarget target = createTarget("/disease/{version}").resolveTemplate("version", version);
 
-        target = target.queryParam("q", search.getQuery()).queryParam("type", search.getType()).queryParam("site_category", search.getSiteCategory()).queryParam("mode", search.getMode()).queryParam(
-                "status", search.getStatus()).queryParam("assigned_to", search.getAssignedTo()).queryParam("modified_from", search.getModifiedFrom()).queryParam("modified_to", search.getModifiedTo())
-                .queryParam("published_from", search.getPublishedFrom()).queryParam("published_to", search.getPublishedTo()).queryParam("been_published", search.getBeenPublished()).queryParam(
-                        "hidden", search.getHidden()).queryParam("count", search.getCount()).queryParam("count_only", search.getCountOnly()).queryParam("glossary", search.getIncludeGlossary())
+        target = target.queryParam("q", search.getQuery())
+                .queryParam("type", search.getType())
+                .queryParam("site_category", search.getSiteCategory())
+                .queryParam("mode", search.getMode())
+                .queryParam("status", search.getStatus())
+                .queryParam("assigned_to", search.getAssignedTo())
+                .queryParam("modified_from", search.getModifiedFrom())
+                .queryParam("modified_to", search.getModifiedTo())
+                .queryParam("published_from", search.getPublishedFrom())
+                .queryParam("published_to", search.getPublishedTo())
+                .queryParam("been_published", search.getBeenPublished())
+                .queryParam("hidden", search.getHidden())
+                .queryParam("count", search.getCount())
+                .queryParam("count_only", search.getCountOnly())
+                .queryParam("glossary", search.getIncludeGlossary())
                 .queryParam("output_type", search.getOutputType());
 
         return getBuilder(target).get(DiseaseSearchResults.class);
     }
 
     /**
-     * Return a complete disease entity based in identifier
+     * Return a complete disease entity based in identifier.  Note that by default the disease entity does not include relevant glossary references.
      * @param version Disease version
      * @param id Disease identifier
      * @return a Disease object
      */
     public Disease diseaseById(String version, String id) {
-        WebTarget target = createTarget("/disease/{version}/id/{id}").resolveTemplate("version", version).resolveTemplate("id", id);
+        return diseaseById(version, id, false);
+    }
+
+    /**
+     * Return a complete disease entity based in identifier
+     * @param version Disease version
+     * @param id Disease identifier
+     * @param includeGlossary if true, include the glossary
+     * @return a Disease object
+     */
+    public Disease diseaseById(String version, String id, boolean includeGlossary) {
+        WebTarget target = createTarget("/disease/{version}/id/{id}")
+                .resolveTemplate("version", version)
+                .resolveTemplate("id", id)
+                .queryParam("glossary", includeGlossary);
 
         return getBuilder(target).get(Disease.class);
     }
@@ -441,7 +520,11 @@ public final class SeerApi {
      * @return a SamePrimary object
      */
     public SamePrimaries diseaseSamePrimaries(String version, String morphology1, String morphology2, String year) {
-        WebTarget target = createTarget("/disease/{version}/same_primary").resolveTemplate("version", version).queryParam("d1", morphology1).queryParam("d2", morphology2).queryParam("year", year);
+        WebTarget target = createTarget("/disease/{version}/same_primary")
+                .resolveTemplate("version", version)
+                .queryParam("d1", morphology1)
+                .queryParam("d2", morphology2)
+                .queryParam("year", year);
 
         return getBuilder(target).get(SamePrimaries.class);
     }
@@ -489,11 +572,20 @@ public final class SeerApi {
     public GlossarySearchResults glossarySearch(String version, GlossarySearch search) {
         WebTarget target = createTarget("/glossary/{version}").resolveTemplate("version", version);
 
-        target = target.queryParam("q", search.getQuery()).queryParam("mode", search.getMode()).queryParam("status", search.getStatus()).queryParam(
-                "assigned_to", search.getAssignedTo()).queryParam("modified_from", search.getModifiedFrom()).queryParam("modified_to", search.getModifiedTo()).queryParam("published_from",
-                search.getPublishedFrom()).queryParam("published_to", search.getPublishedTo()).queryParam("been_published", search.getBeenPublished()).queryParam("hidden", search.getHidden())
-                .queryParam("count", search.getCount()).queryParam("count_only", search.getCountOnly()).queryParam("glossary", search.getIncludeGlossary()).queryParam("output_type",
-                        search.getOutputType());
+        target = target.queryParam("q", search.getQuery())
+                .queryParam("mode", search.getMode())
+                .queryParam("status", search.getStatus())
+                .queryParam("assigned_to", search.getAssignedTo())
+                .queryParam("modified_from", search.getModifiedFrom())
+                .queryParam("modified_to", search.getModifiedTo())
+                .queryParam("published_from", search.getPublishedFrom())
+                .queryParam("published_to", search.getPublishedTo())
+                .queryParam("been_published", search.getBeenPublished())
+                .queryParam("hidden", search.getHidden())
+                .queryParam("count", search.getCount())
+                .queryParam("count_only", search.getCountOnly())
+                .queryParam("glossary", search.getIncludeGlossary())
+                .queryParam("output_type", search.getOutputType());
 
         // list parameters need to passed as an object array to get multiple query parameters; otherwise there is a single query
         // parameter with a list of values, which the API won't understand
@@ -512,12 +604,55 @@ public final class SeerApi {
      * @return a list of GlossaryChangelog objects
      */
     public List<GlossaryChangelog> glossaryChangelogs(String version, String fromDate, String toDate, Integer count) {
-        WebTarget target = createTarget("/glossary/{version}/changelog").resolveTemplate("version", version).queryParam("from", fromDate).queryParam("to", toDate).queryParam("count", count);
+        WebTarget target = createTarget("/glossary/{version}/changelog")
+                .resolveTemplate("version", version)
+                .queryParam("from", fromDate)
+                .queryParam("to", toDate)
+                .queryParam("count", count);
 
         return getBuilder(target).get(new GenericType<List<GlossaryChangelog>>() {});
     }
 
     /**
+     * Return a collection of Version objects which descibe the available versions
+     * @return a list of the available site-specific surgery versions and information about each of them
+     */
+    public List<Version> siteSpecificSurgeryVersions() {
+        WebTarget target = createTarget("/surgery/versions");
+
+        return getBuilder(target).get(new GenericType<List<Version>>() {});
+    }
+
+    /**
+     * Return a list of all the site-specific surgery table titles from a specific version
+     * @param version version
+     * @return a list of site-specific surgery table titles
+     */
+    public List<String> siteSpecificSurgeryTables(String version) {
+        WebTarget target = createTarget("/surgery/{version}/tables").resolveTemplate("version", version);
+
+        return getBuilder(target).get(new GenericType<List<String>>() {});
+    }
+
+    /**
+     * Return a specific site-specific surgary table from a specific version
+     * @param version version
+     * @param title site title (optional if the site/histology is provided)
+     * @param site primary site (optional if the title is provided)
+     * @param histology histology (optional if the title is provided)
+     * @return a site-specific surgery table
+     */
+    public SurgeryTable siteSpecificSurgeryTable(String version, String title, String site, String histology) {
+        WebTarget target = createTarget("/surgery/{version}/table")
+                .resolveTemplate("version", version)
+                .queryParam("title", title)
+                .queryParam("site", site)
+                .queryParam("hist", histology);
+
+        return getBuilder(target).get(SurgeryTable.class);
+    }
+
+    /**
      * Return a list of all Rx versions and information about them.  Note that by default the Rx entity does not include relevant glossary references.
      * @return a list of RxVersion objects
      */
@@ -601,90 +736,4 @@ public final class SeerApi {
 
         return getBuilder(target).get(new GenericType<List<RxChangelog>>() {});
     }
-
-    /**
-     * Return a list of all Rx versions and information about them.  Note that by default the Rx entity does not include relevant glossary references.
-     * @return a list of RxVersion objects
-     */
-    public List<RxVersion> rxVersions() {
-        WebTarget target = createTarget("/rx/versions");
-
-        return getBuilder(target).get(new GenericType<List<RxVersion>>() {});
-    }
-
-    /**
-     * Return a complete Rx entity based in identifier
-     * @param version Rx version
-     * @param id Rx identifier
-     * @return a Rx object
-     */
-    public Rx rxById(String version, String id) {
-        return rxById(version, id, false);
-    }
-
-    /**
-     * Return a complete Rx entity based in identifier
-     * @param version Rx version
-     * @param id Rx identifier
-     * @param includeGlossary if true, include the glossary
-     * @return a Rx object
-     */
-
-    public Rx rxById(String version, String id, boolean includeGlossary) {
-        WebTarget target = createTarget("/rx/{version}/id/{id}")
-                .resolveTemplate("version", version)
-                .resolveTemplate("id", id)
-                .queryParam("glossary", includeGlossary);
-
-        return getBuilder(target).get(Rx.class);
-    }
-
-    /**
-     * Return a list of matching Rx entities
-     * @param version Rx version
-     * @param search RxSearch object
-     * @return a RxSearchResults object
-     */
-    public RxSearchResults rxSearch(String version, RxSearch search) {
-        WebTarget target = createTarget("/rx/{version}").resolveTemplate("version", version);
-
-        target = target.queryParam("q", search.getQuery())
-                .queryParam("type", search.getType())
-                .queryParam("do_not_code", search.getDoNotCode())
-                .queryParam("category", search.getCategory())
-                .queryParam("mode", search.getMode())
-                .queryParam("status", search.getStatus())
-                .queryParam("assigned_to", search.getAssignedTo())
-                .queryParam("modified_from", search.getModifiedFrom())
-                .queryParam("modified_to", search.getModifiedTo())
-                .queryParam("published_from", search.getPublishedFrom())
-                .queryParam("published_to", search.getPublishedTo())
-                .queryParam("been_published", search.getBeenPublished())
-                .queryParam("hidden", search.getHidden())
-                .queryParam("count", search.getCount())
-                .queryParam("count_only", search.getCountOnly())
-                .queryParam("glossary", search.getIncludeGlossary())
-                .queryParam("output_type", search.getOutputType());
-
-        return getBuilder(target).get(RxSearchResults.class);
-    }
-
-    /**
-     * Return the changelog entries for the passed database version
-     * @param version Rx version
-     * @param fromDate if not null, only include changes from this date forward (YYYY-MM-DD)
-     * @param toDate if not null, only include changes prior to this date (YYYY-MM-DD)
-     * @param count if not null, limit the number returned
-     * @return a list of RxChangelog objects
-     */
-    public List<RxChangelog> rxChangelogs(String version, String fromDate, String toDate, Integer count) {
-        WebTarget target = createTarget("/rx/{version}/changelog")
-                .resolveTemplate("version", version)
-                .queryParam("from", fromDate)
-                .queryParam("to", toDate)
-                .queryParam("count", count);
-
-        return getBuilder(target).get(new GenericType<List<RxChangelog>>() {});
-    }
-
 }

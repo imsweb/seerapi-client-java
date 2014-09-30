@@ -642,7 +642,7 @@ public final class SeerApi {
                 .resolveTemplate("version", version)
                 .queryParam("title", title)
                 .queryParam("site", site)
-                .queryParam("histology", histology);
+                .queryParam("hist", histology);
 
         return getBuilder(target).get(SurgeryTable.class);
     }

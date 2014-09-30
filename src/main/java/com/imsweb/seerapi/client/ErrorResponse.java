@@ -16,16 +16,6 @@ public class ErrorResponse {
     }
 
     /**
-     * Constructor with id and message
-     * @param id error identifier
-     * @param message message
-     */
-    public ErrorResponse(Integer id, String message) {
-        this._id = id;
-        this._message = message;
-    }
-
-    /**
      * Return the error identifier
      * @return an error identifier
      */

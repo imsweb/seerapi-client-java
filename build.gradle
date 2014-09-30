@@ -3,18 +3,31 @@ apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
-apply plugin: 'nexus'
 
 group = 'com.imsweb'
-version = '1.1-SNAPSHOT'
+version = '1.2-SNAPSHOT'
 description = 'Java client library for SEER*API'
 
 // UTF-8 for all compilation tasks
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:0.6'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.0'
+    }
+}
+
 repositories {
     mavenCentral()
 }
+
+// load other gradle files
+apply from: 'gradle/publish.gradle'
 
 dependencies {
     compile 'org.glassfish.jersey.core:jersey-client:2.7'
@@ -39,36 +52,21 @@ jar {
     }
 }
 
-modifyPom {
-    project {
-        name 'SEER*API Java Client'
-        description 'A complete API mapping for SEER*API in Java'
-        packaging 'jar'
-        url 'https://github.com/imsweb/seerapi-client-java'
-        inceptionYear '2014'
+// custom tasks for creating source/javadoc jars
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
 
-        scm {
-            url 'https://github.com/imsweb/seerapi-client-java'
-            connection 'scm:https://github.com/imsweb/seerapi-client-java.git'
-            developerConnection 'scm:git@github.com:imsweb/seerapi-client-java.git'
-        }
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
 
-        licenses {
-            license {
-                name 'The MIT License (MIT)'
-                url 'http://www.opensource.org/licenses/mit-license.php'
-                distribution 'repo'
-            }
-        }
-
-        developers {
-            developer {
-                id 'ctmay4'
-                name 'Chuck May'
-                email 'mayc@imsweb.com'
-            }
-        }
-    }
+// add javadoc/source jar tasks as artifacts
+artifacts {
+    archives sourcesJar
+    archives javadocJar
 }
 
 // checkstyle plugin settings
@@ -79,21 +77,11 @@ checkstyle {
 
 // findbugs plugin settings
 findbugs {
+    toolVersion = '3.0.0'
     sourceSets = [sourceSets.main]
     ignoreFailures = true
     effort = 'max'
     excludeFilter = file("config/findbugs/findbugs-exclude.xml")
-}
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.0'
-    }
 }
 
 jacocoTestReport {
@@ -105,5 +93,5 @@ jacocoTestReport {
 
 // Gradle wrapper, this allows to build the project without having to install Gradle!
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
+    gradleVersion = '2.1'
 }

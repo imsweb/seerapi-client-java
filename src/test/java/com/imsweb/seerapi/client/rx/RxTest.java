@@ -55,6 +55,14 @@ public class RxTest {
         Assert.assertNull(rx.getFieldNotes());
         Assert.assertNull(rx.getScore());
         Assert.assertEquals(Arrays.asList("neuroblastoma", "Pediatric ALL"), rx.getPrimarySite());
+
+        Assert.assertEquals(1, rx.getHistory().size());
+
+        RxHistoryEvent event = rx.getHistory().get(0);
+        Assert.assertEquals("cyrj@imsweb.com", event.getUser());
+        Assert.assertNotNull(event.getDate());
+        Assert.assertNull(event.getOld());
+        Assert.assertNull(event.getNew());
     }
 
     @Test

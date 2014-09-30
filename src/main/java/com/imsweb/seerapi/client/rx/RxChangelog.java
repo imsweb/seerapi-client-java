@@ -27,4 +27,35 @@ public class RxChangelog {
     @JsonProperty("description")
     private String _description;
 
+    public String getId() {
+        return _displayId;
+    }
+
+    public List<RxChangelogEntry> getAdds() {
+        return _adds;
+    }
+
+    public List<RxChangelogEntry> getDeletes() {
+        return _deletes;
+    }
+
+    public List<RxChangelogEntry> getMods() {
+        return _mods;
+    }
+
+    public String getUser() {
+        return _user;
+    }
+
+    public Date getDate() {
+        return _date;
+    }
+
+    public String getVersion() {
+        return _version;
+    }
+
+    public String getDescription() {
+        return _description;
+    }
 }

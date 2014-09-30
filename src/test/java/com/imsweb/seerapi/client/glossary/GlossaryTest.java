@@ -34,7 +34,10 @@ public class GlossaryTest {
 
     @Test
     public void testGlossaryById() throws IOException {
-        Glossary glossary = SeerApi.connect().glossaryById("latest", "51f6cf85e3e2d4d91c7a7296");
+        GlossarySearchResults results = SeerApi.connect().glossarySearch("latest", new GlossarySearch("stem"));
+        Assert.assertTrue(results.getCount() > 0);
+
+        Glossary glossary = SeerApi.connect().glossaryById("latest", results.getResults().get(0).getId());
 
         Assert.assertNotNull(glossary);
         Assert.assertEquals("Brain stem", glossary.getName());
@@ -82,9 +85,8 @@ public class GlossaryTest {
 
     @Test
     public void testGlossarySearch() throws IOException {
-        GlossarySearch search = new GlossarySearch();
+        GlossarySearch search = new GlossarySearch("stem");
 
-        search.setQuery("stem");
         GlossarySearchResults results = SeerApi.connect().glossarySearch("latest", search);
 
         Assert.assertNotNull(results);

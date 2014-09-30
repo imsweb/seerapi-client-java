@@ -9,6 +9,16 @@ import com.imsweb.seerapi.client.publishable.PublishableSearch;
 
 public class GlossarySearch extends PublishableSearch {
 
+    public GlossarySearch() {
+        super();
+    }
+
+    public GlossarySearch(String query) {
+        super();
+
+        setQuery(query);
+    }
+
     /**
      * Glossary-specific parameters
      */

@@ -4,6 +4,8 @@
 package com.imsweb.seerapi.client;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.zip.GZIPInputStream;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ForbiddenException;
@@ -18,6 +20,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.client.ClientResponseContext;
 import javax.ws.rs.client.ClientResponseFilter;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
@@ -40,7 +43,12 @@ public class ErrorResponseFilter implements ClientResponseFilter {
         if (responseContext.getStatus() != Response.Status.OK.getStatusCode()) {
             if (responseContext.hasEntity()) {
                 // get the "real" error message
-                ErrorResponse error = _MAPPER.readValue(responseContext.getEntityStream(), ErrorResponse.class);
+                InputStream fullResponse = responseContext.getEntityStream();
+                String encoding = responseContext.getHeaderString(HttpHeaders.CONTENT_ENCODING);
+                if (encoding != null && encoding.contains("gzip"))
+                    fullResponse = new GZIPInputStream(fullResponse);
+
+                ErrorResponse error = _MAPPER.readValue(fullResponse, ErrorResponse.class);
                 String message = error.getMessage();
 
                 Response.Status status = Response.Status.fromStatusCode(responseContext.getStatus());

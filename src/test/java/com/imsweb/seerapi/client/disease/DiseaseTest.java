@@ -150,10 +150,8 @@ public class DiseaseTest {
 
     @Test
     public void testDiseaseSearch() throws IOException {
-        DiseaseSearch search = new DiseaseSearch();
+        DiseaseSearch search = new DiseaseSearch("basophilic", Disease.Type.HEMATO);
 
-        search.setType(Disease.Type.HEMATO);
-        search.setQuery("basophilic");
         DiseaseSearchResults results = SeerApi.connect().diseaseSearch("latest", search);
 
         Assert.assertNotNull(results);
@@ -187,6 +185,15 @@ public class DiseaseTest {
         Assert.assertNotNull(results);
         Assert.assertEquals(0, results.getCount().longValue());
         Assert.assertEquals(0, results.getResults().size());
+
+        // test searching without type
+        results = SeerApi.connect().diseaseSearch("latest", new DiseaseSearch("basophilic"));
+
+        Assert.assertNotNull(results);
+        Assert.assertEquals(4, results.getCount().longValue());
+        Assert.assertEquals(4, results.getResults().size());
+        Assert.assertEquals(Arrays.asList("basophilic"), results.getTerms());
+
     }
 
     @Test

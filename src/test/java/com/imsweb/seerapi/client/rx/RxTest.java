@@ -5,6 +5,7 @@ package com.imsweb.seerapi.client.rx;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import org.junit.Assert;
@@ -58,20 +59,34 @@ public class RxTest {
 
     @Test
     public void testRxChangelog() throws IOException {
-        List<RxChangelog> changes = SeerApi.connect().rxChangelogs("latest", null, null, 1);
+        List<RxChangelog> changes = SeerApi.connect().rxChangelogs("latest", "2013-07-30", null, 1);
 
         Assert.assertNotNull(changes);
         Assert.assertEquals(1, changes.size());
         Assert.assertNotNull(changes.get(0).getUser());
         Assert.assertEquals("latest", changes.get(0).getVersion());
+
+        RxChangelog changelog = changes.get(0);
+
+        Assert.assertNotNull(changelog.getUser());
+        Assert.assertEquals("latest", changelog.getVersion());
+        Assert.assertTrue(changelog.getId().length() > 0);
+        Assert.assertNull(changelog.getAdds());
+        Assert.assertTrue(changelog.getMods().size() > 0);
+        Assert.assertNull(changelog.getDeletes());
+        Assert.assertNotNull(changelog.getDate());
+        Assert.assertNull(changelog.getDescription());
+
+        RxChangelogEntry entry = changelog.getMods().get(0);
+        Assert.assertTrue(entry.getId().length() > 0);
+        Assert.assertTrue(entry.getName().length() > 0);
+        Assert.assertNotNull(entry.getOldVersion());
+        Assert.assertNotNull(entry.getNewVersion());
     }
 
     @Test
     public void testRxSearch() throws IOException {
-        RxSearch search = new RxSearch();
-
-        search.setQuery("abt");
-        search.setType(Rx.Type.DRUG);
+        RxSearch search = new RxSearch("abt", Rx.Type.DRUG);
         RxSearchResults results = SeerApi.connect().rxSearch("latest", search);
 
         Assert.assertNotNull(results);
@@ -92,6 +107,8 @@ public class RxTest {
         search.setCountOnly(false);
         search.setIncludeGlossary(true);
         search.setOutputType(PublishableSearch.OutputType.MIN);
+        search.setCategory(new HashSet<String>(Arrays.asList("category")));
+        search.setDoNotCode(true);
         results = SeerApi.connect().rxSearch("latest", search);
 
         Assert.assertNotNull(results);

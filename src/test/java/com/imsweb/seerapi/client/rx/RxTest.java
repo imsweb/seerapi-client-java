@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
+import com.imsweb.seerapi.client.publishable.PublishableSearch;
 
 public class RxTest {
 
@@ -77,5 +78,25 @@ public class RxTest {
         Assert.assertEquals(7, results.getCount().longValue());
         Assert.assertEquals(7, results.getResults().size());
         Assert.assertEquals(Arrays.asList("abt"), results.getTerms());
+
+        search.setMode(PublishableSearch.SearchMode.OR);
+        search.setStatus("TEST");
+        search.setAssignedTo("user");
+        search.setModifiedFrom("2014-01-01");
+        search.setModifiedTo("2014-05-31");
+        search.setPublishedFrom("2014-01-01");
+        search.setPublishedTo("2014-05-31");
+        search.setBeenPublished(true);
+        search.setHidden(false);
+        search.setCount(100);
+        search.setCountOnly(false);
+        search.setIncludeGlossary(true);
+        search.setOutputType(PublishableSearch.OutputType.MIN);
+        results = SeerApi.connect().rxSearch("latest", search);
+
+        Assert.assertNotNull(results);
+        Assert.assertEquals(0, results.getCount().longValue());
+        Assert.assertEquals(0, results.getResults().size());
+
     }
 }

@@ -3,9 +3,17 @@
  */
 package com.imsweb.seerapi.client.rx;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import com.imsweb.seerapi.client.SeerApi;
+
 public class RxTest {
 
-    /*
     @Test
     public void testRxVersions() throws IOException {
         List<RxVersion> versions = SeerApi.connect().rxVersions();
@@ -20,12 +28,31 @@ public class RxTest {
 
     @Test
     public void testRxById() throws IOException {
-        Rx Rx = SeerApi.connect().rxById("latest", "51f6cf85e3e2d4d91c7a7296");
+        Rx rx = SeerApi.connect().rxById("latest", "53c44afe102c1290262dc672");
 
-        Assert.assertNotNull(Rx);
-        Assert.assertEquals("Brain stem", Rx.getName());
-        Assert.assertEquals(Arrays.asList(Rx.Category.SOLID_TUMOR), Rx.getCategories());
-        Assert.assertEquals(Arrays.asList("C717"), Rx.getPrimarySite());
+        Assert.assertNotNull(rx);
+        Assert.assertEquals("ABT-751", rx.getName());
+        Assert.assertTrue(rx.getAlternateName().size() > 1);
+        Assert.assertEquals(Rx.Type.DRUG, rx.getType());
+        Assert.assertNull(rx.getHistology());
+        Assert.assertTrue(rx.getRemarks().startsWith("Phase II ALL"));
+        Assert.assertNull(rx.getEvsId());
+        Assert.assertNull(rx.getAbbreviation());
+        Assert.assertEquals(Arrays.asList("Chemotherapy"), rx.getCategory());
+        Assert.assertTrue(rx.getSubcategory().size() > 0);
+        Assert.assertNull(rx.getNscNumber());
+        Assert.assertNull(rx.getDrugs());
+        Assert.assertNull(rx.getRadiation());
+        Assert.assertNull(rx.getHidden());
+        Assert.assertNull(rx.getStatus());
+        Assert.assertNull(rx.getAssignedTo());
+        Assert.assertNotNull(rx.getFirstPublished());
+        Assert.assertNotNull(rx.getLastModified());
+        Assert.assertNotNull(rx.getFingerprint());
+        Assert.assertNull(rx.getNote());
+        Assert.assertNull(rx.getFieldNotes());
+        Assert.assertNull(rx.getScore());
+        Assert.assertEquals(Arrays.asList("neuroblastoma", "Pediatric ALL"), rx.getPrimarySite());
     }
 
     @Test
@@ -42,13 +69,13 @@ public class RxTest {
     public void testRxSearch() throws IOException {
         RxSearch search = new RxSearch();
 
-        search.setQuery("stem");
+        search.setQuery("abt");
+        search.setType(Rx.Type.DRUG);
         RxSearchResults results = SeerApi.connect().rxSearch("latest", search);
 
         Assert.assertNotNull(results);
-        Assert.assertEquals(2, results.getCount().longValue());
-        Assert.assertEquals(2, results.getResults().size());
-        Assert.assertEquals(Arrays.asList("stem"), results.getTerms());
+        Assert.assertEquals(7, results.getCount().longValue());
+        Assert.assertEquals(7, results.getResults().size());
+        Assert.assertEquals(Arrays.asList("abt"), results.getTerms());
     }
-    */
 }

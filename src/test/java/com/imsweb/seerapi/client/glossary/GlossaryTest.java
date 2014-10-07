@@ -34,10 +34,10 @@ public class GlossaryTest {
 
     @Test
     public void testGlossaryById() throws IOException {
-        GlossarySearchResults results = SeerApi.connect().glossarySearch("latest", new GlossarySearch("stem"));
+        GlossarySearchResults results = SeerApi.connect().glossarySearch("latest_dev", new GlossarySearch("stem"));
         Assert.assertTrue(results.getCount() > 0);
 
-        Glossary glossary = SeerApi.connect().glossaryById("latest", results.getResults().get(0).getId());
+        Glossary glossary = SeerApi.connect().glossaryById("latest_dev", results.getResults().get(0).getId());
 
         Assert.assertNotNull(glossary);
         Assert.assertEquals("Brain stem", glossary.getName());
@@ -48,7 +48,7 @@ public class GlossaryTest {
         Assert.assertNull(glossary.getAbstractorNote());
         Assert.assertEquals(1, glossary.getAlternateName().size());
         Assert.assertTrue(glossary.getDefinition().startsWith("The brain stem is the posterior part of the brain"));
-        Assert.assertEquals(1, glossary.getHistory().size());
+        Assert.assertTrue(glossary.getHistory().size() >= 1);
 
         GlossaryHistoryEvent event = glossary.getHistory().get(0);
         Assert.assertEquals("mayc@imsweb.com", event.getUser());
@@ -62,12 +62,16 @@ public class GlossaryTest {
         List<GlossaryChangelog> changes = SeerApi.connect().glossaryChangelogs("latest", null, null, 1);
 
         Assert.assertNotNull(changes);
+
+        // TODO since all the glossary items were removed from the production database, this needs to be commented out; it will return when they are published again
+
+        /*
         Assert.assertEquals(1, changes.size());
 
         GlossaryChangelog changelog = changes.get(0);
 
         Assert.assertNotNull(changelog.getUser());
-        Assert.assertEquals("latest", changelog.getVersion());
+        Assert.assertEquals("latest_dev", changelog.getVersion());
         Assert.assertTrue(changelog.getId().length() > 0);
         Assert.assertTrue(changelog.getAdds().size() > 0);
 
@@ -81,13 +85,14 @@ public class GlossaryTest {
         Assert.assertNull(changelog.getDeletes());
         Assert.assertNotNull(changelog.getDate());
         Assert.assertEquals("Initial migration", changelog.getDescription());
+        */
     }
 
     @Test
     public void testGlossarySearch() throws IOException {
         GlossarySearch search = new GlossarySearch("stem");
 
-        GlossarySearchResults results = SeerApi.connect().glossarySearch("latest", search);
+        GlossarySearchResults results = SeerApi.connect().glossarySearch("latest_dev", search);
 
         Assert.assertNotNull(results);
         Assert.assertEquals(2, results.getCount().longValue());
@@ -96,7 +101,7 @@ public class GlossaryTest {
 
         // add the category and verify there are no results
         search.setCategory(EnumSet.of(Glossary.Category.GENERAL));
-        results = SeerApi.connect().glossarySearch("latest", search);
+        results = SeerApi.connect().glossarySearch("latest_dev", search);
 
         Assert.assertNotNull(results);
         Assert.assertEquals(0, results.getCount().longValue());
@@ -104,7 +109,7 @@ public class GlossaryTest {
 
         // add a second category and verify there are we get the results again
         search.setCategory(EnumSet.of(Glossary.Category.GENERAL, Glossary.Category.SOLID_TUMOR));
-        results = SeerApi.connect().glossarySearch("latest", search);
+        results = SeerApi.connect().glossarySearch("latest_dev", search);
 
         Assert.assertNotNull(results);
         Assert.assertEquals(2, results.getCount().longValue());

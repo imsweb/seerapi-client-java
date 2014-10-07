@@ -177,8 +177,7 @@ public class DiseaseTest {
         search.setBeenPublished(true);
         search.setHidden(false);
         search.setCount(100);
-        search.setCountOnly(false);
-        search.setIncludeGlossary(true);
+        search.setOffset(0);
         search.setOutputType(PublishableSearch.OutputType.MIN);
         results = SeerApi.connect().diseaseSearch("latest", search);
 

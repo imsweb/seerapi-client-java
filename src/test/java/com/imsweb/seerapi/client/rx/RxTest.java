@@ -112,8 +112,7 @@ public class RxTest {
         search.setBeenPublished(true);
         search.setHidden(false);
         search.setCount(100);
-        search.setCountOnly(false);
-        search.setIncludeGlossary(true);
+        search.setOffset(0);
         search.setOutputType(PublishableSearch.OutputType.MIN);
         search.setCategory(new HashSet<String>(Arrays.asList("category")));
         search.setDoNotCode(true);

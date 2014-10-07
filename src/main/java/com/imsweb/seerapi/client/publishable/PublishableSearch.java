@@ -30,8 +30,7 @@ public class PublishableSearch {
     private Boolean _beenPublished;
     private Boolean _hidden;
     private Integer _count;
-    private Boolean _countOnly;
-    private Boolean _includeGlossary;
+    private Integer _offset;
     private OutputType _outputType;
 
     public String getQuery() {
@@ -122,20 +121,12 @@ public class PublishableSearch {
         _count = count;
     }
 
-    public Boolean getCountOnly() {
-        return _countOnly;
+    public Integer getOffset() {
+        return _offset;
     }
 
-    public void setCountOnly(Boolean countOnly) {
-        _countOnly = countOnly;
-    }
-
-    public Boolean getIncludeGlossary() {
-        return _includeGlossary;
-    }
-
-    public void setIncludeGlossary(Boolean includeGlossary) {
-        _includeGlossary = includeGlossary;
+    public void setOffset(Integer offset) {
+        _offset = offset;
     }
 
     public OutputType getOutputType() {

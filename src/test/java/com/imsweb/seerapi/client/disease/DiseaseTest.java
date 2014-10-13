@@ -155,7 +155,8 @@ public class DiseaseTest {
         DiseaseSearchResults results = SeerApi.connect().diseaseSearch("latest", search);
 
         Assert.assertNotNull(results);
-        Assert.assertEquals(3, results.getCount().longValue());
+        Assert.assertEquals(25, results.getCount().longValue());
+        Assert.assertEquals(3, results.getTotal().longValue());
         Assert.assertEquals(3, results.getResults().size());
         Assert.assertEquals(Arrays.asList("basophilic"), results.getTerms());
 
@@ -163,7 +164,8 @@ public class DiseaseTest {
         results = SeerApi.connect().diseaseSearch("latest", search);
 
         Assert.assertNotNull(results);
-        Assert.assertEquals(0, results.getCount().longValue());
+        Assert.assertEquals(25, results.getCount().longValue());
+        Assert.assertEquals(0, results.getTotal().longValue());
         Assert.assertEquals(0, results.getResults().size());
 
         // test a case where all search options are set
@@ -182,14 +184,16 @@ public class DiseaseTest {
         results = SeerApi.connect().diseaseSearch("latest", search);
 
         Assert.assertNotNull(results);
-        Assert.assertEquals(0, results.getCount().longValue());
+        Assert.assertEquals(100, results.getCount().longValue());
+        Assert.assertEquals(0, results.getTotal().longValue());
         Assert.assertEquals(0, results.getResults().size());
 
         // test searching without type
         results = SeerApi.connect().diseaseSearch("latest", new DiseaseSearch("basophilic"));
 
         Assert.assertNotNull(results);
-        Assert.assertEquals(4, results.getCount().longValue());
+        Assert.assertEquals(25, results.getCount().longValue());
+        Assert.assertEquals(4, results.getTotal().longValue());
         Assert.assertEquals(4, results.getResults().size());
         Assert.assertEquals(Arrays.asList("basophilic"), results.getTerms());
 

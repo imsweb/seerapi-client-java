@@ -11,6 +11,8 @@ public class PublishableSearchResults {
 
     @JsonProperty("terms")
     protected List<String> _terms;
+    @JsonProperty("total")
+    protected Integer _total;
     @JsonProperty("count")
     protected Integer _count;
     @JsonProperty("offset")
@@ -20,6 +22,10 @@ public class PublishableSearchResults {
 
     public List<String> getTerms() {
         return _terms;
+    }
+
+    public Integer getTotal() {
+        return _total;
     }
 
     public Integer getCount() {

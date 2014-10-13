@@ -95,8 +95,9 @@ public class GlossaryTest {
         GlossarySearchResults results = SeerApi.connect().glossarySearch("latest_dev", search);
 
         Assert.assertNotNull(results);
-        Assert.assertEquals(2, results.getCount().longValue());
-        Assert.assertEquals(2, results.getResults().size());
+        Assert.assertEquals(25, results.getCount().longValue());
+        Assert.assertEquals(21, results.getTotal().longValue());
+        Assert.assertEquals(21, results.getResults().size());
         Assert.assertEquals(Arrays.asList("stem"), results.getTerms());
 
         // add the category and verify there are no results
@@ -104,7 +105,8 @@ public class GlossaryTest {
         results = SeerApi.connect().glossarySearch("latest_dev", search);
 
         Assert.assertNotNull(results);
-        Assert.assertEquals(0, results.getCount().longValue());
+        Assert.assertEquals(25, results.getCount().longValue());
+        Assert.assertEquals(0, results.getTotal().longValue());
         Assert.assertEquals(0, results.getResults().size());
 
         // add a second category and verify there are we get the results again
@@ -112,8 +114,9 @@ public class GlossaryTest {
         results = SeerApi.connect().glossarySearch("latest_dev", search);
 
         Assert.assertNotNull(results);
-        Assert.assertEquals(2, results.getCount().longValue());
-        Assert.assertEquals(2, results.getResults().size());
+        Assert.assertEquals(25, results.getCount().longValue());
+        Assert.assertEquals(21, results.getTotal().longValue());
+        Assert.assertEquals(21, results.getResults().size());
         Assert.assertEquals(Arrays.asList("stem"), results.getTerms());
     }
 

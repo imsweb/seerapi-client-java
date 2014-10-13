@@ -120,31 +120,55 @@ public final class SeerApi {
     }
 
     /**
-     * Creates a connection to the API using the key stored in ~/.seerapi or the environment variable SEER_API_KEY
-     * @return a new SeerApi instance
-     * @throws IOException if there is an error reading local .seerapi file
+     * Return a list of user properties from the local .seerapi file
+     * @return
      */
-    public static SeerApi connect() throws IOException {
+    private static Properties getProperties() {
         Properties props = new Properties();
 
         File config = new File(System.getProperty("user.home"), ".seerapi");
         if (config.exists()) {
-            FileInputStream in = new FileInputStream(config);
+            FileInputStream in = null;
 
             try {
+                in = new FileInputStream(config);
                 props.load(in);
             }
+            catch (IOException e) {
+                // error reading
+            }
             finally {
-                in.close();
+                try {
+                    if (in != null)
+                        in.close();
+                }
+                catch (IOException e) {
+                    // do nothing if error closing stream
+                }
             }
         }
+
+        return props;
+    }
+
+    /**
+     * Creates a connection to the API using the key stored in ~/.seerapi or the environment variable SEER_API_KEY
+     * @return a new SeerApi instance
+     */
+    public static SeerApi connect() {
+        Properties props = getProperties();
+
+        // if the URL is specified, use it, otherwise use the default
+        String url = props.getProperty("url");
+        if (url == null)
+            url = _SEERAPI_URL;
 
         // if the apikey does not exist, try to read it from the environment
         String apiKey = props.getProperty("apikey");
         if (apiKey == null)
             apiKey = System.getenv(_ENV_API_KEY);
 
-        return new SeerApi(_SEERAPI_URL, apiKey);
+        return new SeerApi(url, apiKey);
     }
 
     /**
@@ -153,7 +177,14 @@ public final class SeerApi {
      * @return a new SeerApi instance
      */
     public static SeerApi connect(String apiKey) {
-        return new SeerApi(_SEERAPI_URL, apiKey);
+        Properties props = getProperties();
+
+        // if the URL is specified, use it, otherwise use the default
+        String url = props.getProperty("url");
+        if (url == null)
+            url = _SEERAPI_URL;
+
+        return new SeerApi(url, apiKey);
     }
 
     /**

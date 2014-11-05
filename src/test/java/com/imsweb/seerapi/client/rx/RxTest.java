@@ -98,7 +98,8 @@ public class RxTest {
         RxSearchResults results = SeerApi.connect().rxSearch("latest", search);
 
         Assert.assertNotNull(results);
-        Assert.assertEquals(7, results.getCount().longValue());
+        Assert.assertEquals(25, results.getCount().longValue());
+        Assert.assertEquals(7, results.getTotal().longValue());
         Assert.assertEquals(7, results.getResults().size());
         Assert.assertEquals(Arrays.asList("abt"), results.getTerms());
 
@@ -112,15 +113,16 @@ public class RxTest {
         search.setBeenPublished(true);
         search.setHidden(false);
         search.setCount(100);
-        search.setCountOnly(false);
-        search.setIncludeGlossary(true);
+        search.setOffset(0);
+        search.setOrderBy("name");
         search.setOutputType(PublishableSearch.OutputType.MIN);
         search.setCategory(new HashSet<String>(Arrays.asList("category")));
         search.setDoNotCode(true);
         results = SeerApi.connect().rxSearch("latest", search);
 
         Assert.assertNotNull(results);
-        Assert.assertEquals(0, results.getCount().longValue());
+        Assert.assertEquals(100, results.getCount().longValue());
+        Assert.assertEquals(0, results.getTotal().longValue());
         Assert.assertEquals(0, results.getResults().size());
 
     }

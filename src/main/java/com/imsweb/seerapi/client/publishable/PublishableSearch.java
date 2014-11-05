@@ -30,9 +30,9 @@ public class PublishableSearch {
     private Boolean _beenPublished;
     private Boolean _hidden;
     private Integer _count;
-    private Boolean _countOnly;
-    private Boolean _includeGlossary;
+    private Integer _offset;
     private OutputType _outputType;
+    private String _orderBy;
 
     public String getQuery() {
         return _query;
@@ -122,20 +122,12 @@ public class PublishableSearch {
         _count = count;
     }
 
-    public Boolean getCountOnly() {
-        return _countOnly;
+    public Integer getOffset() {
+        return _offset;
     }
 
-    public void setCountOnly(Boolean countOnly) {
-        _countOnly = countOnly;
-    }
-
-    public Boolean getIncludeGlossary() {
-        return _includeGlossary;
-    }
-
-    public void setIncludeGlossary(Boolean includeGlossary) {
-        _includeGlossary = includeGlossary;
+    public void setOffset(Integer offset) {
+        _offset = offset;
     }
 
     public OutputType getOutputType() {
@@ -144,5 +136,13 @@ public class PublishableSearch {
 
     public void setOutputType(OutputType outputType) {
         _outputType = outputType;
+    }
+
+    public String getOrderBy() {
+        return _orderBy;
+    }
+
+    public void setOrderBy(String orderBy) {
+        _orderBy = orderBy;
     }
 }

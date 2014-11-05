@@ -7,22 +7,12 @@ import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class RxSearchResults {
+import com.imsweb.seerapi.client.publishable.PublishableSearchResults;
 
-    @JsonProperty("count")
-    protected Integer _count;
+public class RxSearchResults extends PublishableSearchResults {
+
     @JsonProperty("results")
     protected List<Rx> _results;
-    @JsonProperty("terms")
-    protected List<String> _terms;
-
-    public List<String> getTerms() {
-        return _terms;
-    }
-
-    public Integer getCount() {
-        return _count;
-    }
 
     public List<Rx> getResults() {
         return _results;

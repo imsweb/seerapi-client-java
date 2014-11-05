@@ -180,6 +180,7 @@ public class DiseaseTest {
         search.setHidden(false);
         search.setCount(100);
         search.setOffset(0);
+        search.setOrderBy("name");
         search.setOutputType(PublishableSearch.OutputType.MIN);
         results = SeerApi.connect().diseaseSearch("latest", search);
 

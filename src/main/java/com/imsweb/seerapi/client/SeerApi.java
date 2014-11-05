@@ -479,6 +479,7 @@ public final class SeerApi {
                 .queryParam("hidden", search.getHidden())
                 .queryParam("count", search.getCount())
                 .queryParam("offset", search.getOffset())
+                .queryParam("order", search.getOrderBy())
                 .queryParam("output_type", search.getOutputType());
 
         return getBuilder(target).get(DiseaseSearchResults.class);
@@ -614,6 +615,7 @@ public final class SeerApi {
                 .queryParam("hidden", search.getHidden())
                 .queryParam("count", search.getCount())
                 .queryParam("offset", search.getOffset())
+                .queryParam("order", search.getOrderBy())
                 .queryParam("output_type", search.getOutputType());
 
         // list parameters need to passed as an object array to get multiple query parameters; otherwise there is a single query
@@ -742,6 +744,7 @@ public final class SeerApi {
                 .queryParam("hidden", search.getHidden())
                 .queryParam("count", search.getCount())
                 .queryParam("offset", search.getOffset())
+                .queryParam("order", search.getOrderBy())
                 .queryParam("output_type", search.getOutputType());
 
         return getBuilder(target).get(RxSearchResults.class);

@@ -19,6 +19,8 @@ public class PublishableSearchResults {
     protected Integer _offset;
     @JsonProperty("max_score")
     protected Integer _maxScore;
+    @JsonProperty("order")
+    protected String _order;
 
     public List<String> getTerms() {
         return _terms;
@@ -38,5 +40,9 @@ public class PublishableSearchResults {
 
     public Integer getMaxScore() {
         return _maxScore;
+    }
+
+    public String getOrder() {
+        return _order;
     }
 }

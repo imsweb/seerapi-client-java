@@ -114,6 +114,7 @@ public class RxTest {
         search.setHidden(false);
         search.setCount(100);
         search.setOffset(0);
+        search.setOrderBy("name");
         search.setOutputType(PublishableSearch.OutputType.MIN);
         search.setCategory(new HashSet<String>(Arrays.asList("category")));
         search.setDoNotCode(true);

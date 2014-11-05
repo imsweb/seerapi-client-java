@@ -32,6 +32,7 @@ public class PublishableSearch {
     private Integer _count;
     private Integer _offset;
     private OutputType _outputType;
+    private String _orderBy;
 
     public String getQuery() {
         return _query;
@@ -135,5 +136,13 @@ public class PublishableSearch {
 
     public void setOutputType(OutputType outputType) {
         _outputType = outputType;
+    }
+
+    public String getOrderBy() {
+        return _orderBy;
+    }
+
+    public void setOrderBy(String orderBy) {
+        _orderBy = orderBy;
     }
 }

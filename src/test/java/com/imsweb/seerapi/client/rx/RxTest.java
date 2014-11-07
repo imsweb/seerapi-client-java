@@ -12,7 +12,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
-import com.imsweb.seerapi.client.publishable.PublishableSearch;
+import com.imsweb.seerapi.client.publishable.PublishableSearch.OutputType;
+import com.imsweb.seerapi.client.publishable.PublishableSearch.SearchMode;
+import com.imsweb.seerapi.client.rx.Rx.Type;
 
 public class RxTest {
 
@@ -35,7 +37,7 @@ public class RxTest {
         Assert.assertNotNull(rx);
         Assert.assertEquals("ABT-751", rx.getName());
         Assert.assertTrue(rx.getAlternateName().size() > 1);
-        Assert.assertEquals(Rx.Type.DRUG, rx.getType());
+        Assert.assertEquals(Type.DRUG, rx.getType());
         Assert.assertNull(rx.getHistology());
         Assert.assertTrue(rx.getRemarks().startsWith("Phase II ALL"));
         Assert.assertNull(rx.getEvsId());
@@ -94,7 +96,7 @@ public class RxTest {
 
     @Test
     public void testRxSearch() throws IOException {
-        RxSearch search = new RxSearch("abt", Rx.Type.DRUG);
+        RxSearch search = new RxSearch("abt", Type.DRUG);
         RxSearchResults results = SeerApi.connect().rxSearch("latest", search);
 
         Assert.assertNotNull(results);
@@ -103,7 +105,7 @@ public class RxTest {
         Assert.assertEquals(7, results.getResults().size());
         Assert.assertEquals(Arrays.asList("abt"), results.getTerms());
 
-        search.setMode(PublishableSearch.SearchMode.OR);
+        search.setMode(SearchMode.OR);
         search.setStatus("TEST");
         search.setAssignedTo("user");
         search.setModifiedFrom("2014-01-01");
@@ -115,7 +117,7 @@ public class RxTest {
         search.setCount(100);
         search.setOffset(0);
         search.setOrderBy("name");
-        search.setOutputType(PublishableSearch.OutputType.MIN);
+        search.setOutputType(OutputType.MIN);
         search.setCategory(new HashSet<String>(Arrays.asList("category")));
         search.setDoNotCode(true);
         results = SeerApi.connect().rxSearch("latest", search);

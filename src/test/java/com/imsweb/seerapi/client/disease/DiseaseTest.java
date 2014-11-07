@@ -11,13 +11,15 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
-import com.imsweb.seerapi.client.publishable.PublishableSearch;
+import com.imsweb.seerapi.client.disease.Disease.Type;
+import com.imsweb.seerapi.client.publishable.PublishableSearch.OutputType;
+import com.imsweb.seerapi.client.publishable.PublishableSearch.SearchMode;
 
 public class DiseaseTest {
 
     @Test
     public void testDiseaseTypeCategory() {
-        Assert.assertEquals(Disease.Type.SOLID_TUMOR, Disease.Type.valueOf("SOLID_TUMOR"));
+        Assert.assertEquals(Type.SOLID_TUMOR, Type.valueOf("SOLID_TUMOR"));
     }
 
     @Test
@@ -73,7 +75,7 @@ public class DiseaseTest {
 
         Assert.assertNotNull(disease);
         Assert.assertEquals("Acute erythroid leukemia", disease.getName());
-        Assert.assertEquals(Disease.Type.HEMATO, disease.getType());
+        Assert.assertEquals(Type.HEMATO, disease.getType());
         Assert.assertEquals("9840/3", disease.getIcdO3Morphology());
         Assert.assertEquals(10, disease.getSamePrimaries().size());
 
@@ -150,7 +152,7 @@ public class DiseaseTest {
 
     @Test
     public void testDiseaseSearch() throws IOException {
-        DiseaseSearch search = new DiseaseSearch("basophilic", Disease.Type.HEMATO);
+        DiseaseSearch search = new DiseaseSearch("basophilic", Type.HEMATO);
 
         DiseaseSearchResults results = SeerApi.connect().diseaseSearch("latest", search);
 
@@ -169,7 +171,7 @@ public class DiseaseTest {
         Assert.assertEquals(0, results.getResults().size());
 
         // test a case where all search options are set
-        search.setMode(PublishableSearch.SearchMode.OR);
+        search.setMode(SearchMode.OR);
         search.setStatus("TEST");
         search.setAssignedTo("user");
         search.setModifiedFrom("2014-01-01");
@@ -181,7 +183,7 @@ public class DiseaseTest {
         search.setCount(100);
         search.setOffset(0);
         search.setOrderBy("name");
-        search.setOutputType(PublishableSearch.OutputType.MIN);
+        search.setOutputType(OutputType.MIN);
         results = SeerApi.connect().diseaseSearch("latest", search);
 
         Assert.assertNotNull(results);
@@ -204,7 +206,7 @@ public class DiseaseTest {
     public void testDiseaseReportability() throws IOException {
         Disease partial = new Disease();
 
-        partial.setType(Disease.Type.HEMATO);
+        partial.setType(Type.HEMATO);
         partial.setIcdO3Morphology("9840/3");
         partial.setIcdO2Morphology("9840/3");
         partial.setIcdO1Morphology("9840/3");

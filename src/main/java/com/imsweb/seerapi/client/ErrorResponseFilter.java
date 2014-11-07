@@ -21,7 +21,7 @@ import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.client.ClientResponseContext;
 import javax.ws.rs.client.ClientResponseFilter;
 import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.Provider;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -40,7 +40,7 @@ public class ErrorResponseFilter implements ClientResponseFilter {
     @Override
     public void filter(ClientRequestContext requestContext, ClientResponseContext responseContext) throws IOException {
         // for non-200 response, deal with the custom error messages
-        if (responseContext.getStatus() != Response.Status.OK.getStatusCode()) {
+        if (responseContext.getStatus() != Status.OK.getStatusCode()) {
             if (responseContext.hasEntity()) {
                 // get the "real" error message
                 InputStream fullResponse = responseContext.getEntityStream();
@@ -51,7 +51,7 @@ public class ErrorResponseFilter implements ClientResponseFilter {
                 ErrorResponse error = _MAPPER.readValue(fullResponse, ErrorResponse.class);
                 String message = error.getMessage();
 
-                Response.Status status = Response.Status.fromStatusCode(responseContext.getStatus());
+                Status status = Status.fromStatusCode(responseContext.getStatus());
                 WebApplicationException webAppException;
                 switch (status) {
                     case BAD_REQUEST:

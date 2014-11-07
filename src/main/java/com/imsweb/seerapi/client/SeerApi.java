@@ -15,17 +15,17 @@ import java.util.TimeZone;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
-import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
 import org.codehaus.jackson.annotate.JsonMethod;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.codehaus.jackson.map.SerializationConfig.Feature;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.glassfish.jersey.message.GZipEncoder;
 
 import com.imsweb.seerapi.client.cs.CsCodeValidity;
@@ -84,15 +84,15 @@ public final class SeerApi {
         ObjectMapper mapper = new ObjectMapper();
 
         // do not write null values
-        mapper.configure(SerializationConfig.Feature.WRITE_NULL_MAP_VALUES, false);
-        mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
+        mapper.configure(Feature.WRITE_NULL_MAP_VALUES, false);
+        mapper.setSerializationInclusion(Inclusion.NON_NULL);
 
         // set Date objects to output in readable customized format
-        mapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS, false);
+        mapper.configure(Feature.WRITE_DATES_AS_TIMESTAMPS, false);
         mapper.setDateFormat(_DATE_FORMAT);
 
-        mapper.setVisibility(JsonMethod.ALL, JsonAutoDetect.Visibility.NONE);
-        mapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
+        mapper.setVisibility(JsonMethod.ALL, Visibility.NONE);
+        mapper.setVisibility(JsonMethod.FIELD, Visibility.ANY);
 
         _JACKSON_PROVIDER.setMapper(mapper);
     }
@@ -214,7 +214,7 @@ public final class SeerApi {
      * @param target the WebTarget for the API call
      * @return a Builder instance using the passed target and including default header information that is used on all our calls
      */
-    private Invocation.Builder getBuilder(WebTarget target) {
+    private Builder getBuilder(WebTarget target) {
         return target.request(MediaType.APPLICATION_JSON_TYPE).header("X-SEERAPI-Key", _apiKey).acceptEncoding("gzip");
     }
 

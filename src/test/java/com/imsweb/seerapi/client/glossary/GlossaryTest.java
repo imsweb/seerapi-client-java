@@ -12,12 +12,13 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
+import com.imsweb.seerapi.client.glossary.Glossary.Category;
 
 public class GlossaryTest {
 
     @Test
     public void testGlossaryCategory() {
-        Assert.assertEquals(Glossary.Category.SOLID_TUMOR, Glossary.Category.valueOf("SOLID_TUMOR"));
+        Assert.assertEquals(Category.SOLID_TUMOR, Category.valueOf("SOLID_TUMOR"));
     }
 
     @Test
@@ -41,7 +42,7 @@ public class GlossaryTest {
 
         Assert.assertNotNull(glossary);
         Assert.assertEquals("Brain stem", glossary.getName());
-        Assert.assertEquals(Arrays.asList(Glossary.Category.SOLID_TUMOR), glossary.getCategories());
+        Assert.assertEquals(Arrays.asList(Category.SOLID_TUMOR), glossary.getCategories());
         Assert.assertEquals(Arrays.asList("C717"), glossary.getPrimarySite());
 
         Assert.assertNull(glossary.getHistology());
@@ -101,7 +102,7 @@ public class GlossaryTest {
         Assert.assertEquals(Arrays.asList("stem"), results.getTerms());
 
         // add the category and verify there are no results
-        search.setCategory(EnumSet.of(Glossary.Category.GENERAL));
+        search.setCategory(EnumSet.of(Category.GENERAL));
         results = SeerApi.connect().glossarySearch("latest_dev", search);
 
         Assert.assertNotNull(results);
@@ -110,7 +111,7 @@ public class GlossaryTest {
         Assert.assertEquals(0, results.getResults().size());
 
         // add a second category and verify there are we get the results again
-        search.setCategory(EnumSet.of(Glossary.Category.GENERAL, Glossary.Category.SOLID_TUMOR));
+        search.setCategory(EnumSet.of(Category.GENERAL, Category.SOLID_TUMOR));
         results = SeerApi.connect().glossarySearch("latest_dev", search);
 
         Assert.assertNotNull(results);

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 public class StagingSchema {
 
     private String _displayId;
@@ -29,6 +31,7 @@ public class StagingSchema {
     public StagingSchema() {
     }
 
+    @JsonProperty("id")
     public String getId() {
         return _displayId;
     }
@@ -37,6 +40,7 @@ public class StagingSchema {
         _displayId = id;
     }
 
+    @JsonProperty("algorithm")
     public String getAlgorithm() {
         return _algorithm;
     }
@@ -45,6 +49,7 @@ public class StagingSchema {
         _algorithm = algorithm;
     }
 
+    @JsonProperty("version")
     public String getVersion() {
         return _version;
     }
@@ -53,6 +58,7 @@ public class StagingSchema {
         _version = version;
     }
 
+    @JsonProperty("name")
     public String getName() {
         return _name;
     }
@@ -61,6 +67,7 @@ public class StagingSchema {
         _name = name;
     }
 
+    @JsonProperty("title")
     public String getTitle() {
         return _title;
     }
@@ -69,6 +76,7 @@ public class StagingSchema {
         _title = title;
     }
 
+    @JsonProperty("description")
     public String getDescription() {
         return _description;
     }
@@ -77,6 +85,7 @@ public class StagingSchema {
         _description = description;
     }
 
+    @JsonProperty("subtitle")
     public String getSubtitle() {
         return _subtitle;
     }
@@ -85,6 +94,7 @@ public class StagingSchema {
         _subtitle = subtitle;
     }
 
+    @JsonProperty("notes")
     public String getNotes() {
         return _notes;
     }
@@ -93,6 +103,7 @@ public class StagingSchema {
         _notes = notes;
     }
 
+    @JsonProperty("last_modified")
     public Date getLastModified() {
         return _lastModified;
     }
@@ -101,6 +112,7 @@ public class StagingSchema {
         _lastModified = lastModified;
     }
 
+    @JsonProperty("schema_selection")
     public List<StagingSchemaSelection> getSchemaSelection() {
         return _schemaSelection;
     }
@@ -109,6 +121,7 @@ public class StagingSchema {
         _schemaSelection = schemaSelection;
     }
 
+    @JsonProperty("inputs")
     public List<StagingSchemaInput> getInputs() {
         return _inputs;
     }
@@ -117,6 +130,7 @@ public class StagingSchema {
         _inputs = inputs;
     }
 
+    @JsonProperty("initial_context")
     public List<StagingKeyValue> getInitialContext() {
         return _initialContext;
     }
@@ -132,6 +146,7 @@ public class StagingSchema {
         _initialContext.add(new StagingKeyValue(key, value));
     }
 
+    @JsonProperty("mappings")
     public List<StagingMapping> getMappings() {
         return _mappings;
     }

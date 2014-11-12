@@ -10,6 +10,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class StagingMapping {
 
+    private String _id;
     private String _name;
     private List<StagingTablePath> _inclusionTables;
     private List<StagingTablePath> _exclusionTables;
@@ -20,6 +21,15 @@ public class StagingMapping {
      * Default constructor
      */
     public StagingMapping() {
+    }
+
+    @JsonProperty("id")
+    public String getId() {
+        return _id;
+    }
+
+    public void setId(String id) {
+        _id = id;
     }
 
     @JsonProperty("name")

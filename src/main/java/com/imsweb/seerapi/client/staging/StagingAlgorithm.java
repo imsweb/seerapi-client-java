@@ -1,0 +1,51 @@
+/*
+ * Copyright (C) 2014 Information Management Services, Inc.
+ */
+package com.imsweb.seerapi.client.staging;
+
+import org.codehaus.jackson.annotate.JsonProperty;
+
+public class StagingAlgorithm {
+
+    private String _algorithm;
+    private String _name;
+    private String _description;
+
+    /**
+     * Morphia requires a default constructor
+     */
+    public StagingAlgorithm() {
+    }
+
+    public StagingAlgorithm(String algorithm) {
+        setAlgorithm(algorithm);
+    }
+
+    @JsonProperty("algorithm")
+    public String getAlgorithm() {
+        return _algorithm;
+    }
+
+    public void setAlgorithm(String algorithm) {
+        _algorithm = algorithm;
+    }
+
+    @JsonProperty("name")
+    public String getName() {
+        return _name;
+    }
+
+    public void setName(String name) {
+        _name = name;
+    }
+
+    @JsonProperty("description")
+    public String getDescription() {
+        return _description;
+    }
+
+    public void setDescription(String description) {
+        _description = description;
+    }
+
+}

@@ -16,7 +16,9 @@ public class StagingCode {
     }
 
     /**
-     * Constuctor
+     * @param table Table identifier
+     * @param code Code
+     * @param isValid Boolean indicating whether code is value
      */
     public StagingCode(String table, String code, Boolean isValid) {
         setTable(table);

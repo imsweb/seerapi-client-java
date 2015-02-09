@@ -3,10 +3,12 @@
  */
 package com.imsweb.seerapi.client.staging;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 public class StagingSchema {
@@ -20,10 +22,13 @@ public class StagingSchema {
     private String _subtitle;
     private String _notes;
     private Date _lastModified;
-    private List<StagingSchemaSelection> _schemaSelection;
+    private Integer _schemaNum;
+    private String _schemaSelectionTable;
+    private Set<String> _schemaDiscriminators;
     private List<StagingSchemaInput> _inputs;
     private List<StagingKeyValue> _initialContext;
     private List<StagingMapping> _mappings;
+    Set<String> _involvedTables;
 
     /**
      * Morphia requires a default constructor
@@ -112,13 +117,31 @@ public class StagingSchema {
         _lastModified = lastModified;
     }
 
-    @JsonProperty("schema_selection")
-    public List<StagingSchemaSelection> getSchemaSelection() {
-        return _schemaSelection;
+    @JsonProperty("schema_num")
+    public Integer getSchemaNum() {
+        return _schemaNum;
     }
 
-    public void setSchemaSelection(List<StagingSchemaSelection> schemaSelection) {
-        _schemaSelection = schemaSelection;
+    public void setSchemaNum(Integer schemaNum) {
+        _schemaNum = schemaNum;
+    }
+
+    @JsonProperty("schema_selection_table")
+    public String getSchemaSelectionTable() {
+        return _schemaSelectionTable;
+    }
+
+    public void setSchemaSelectionTable(String schemaSelectionTable) {
+        _schemaSelectionTable = schemaSelectionTable;
+    }
+
+    @JsonProperty("schema_discriminators")
+    public Set<String> getSchemaDiscriminators() {
+        return _schemaDiscriminators;
+    }
+
+    public void setSchemaDiscriminators(Set<String> schemaDiscriminators) {
+        _schemaDiscriminators = schemaDiscriminators;
     }
 
     @JsonProperty("inputs")
@@ -139,13 +162,6 @@ public class StagingSchema {
         _initialContext = initialContext;
     }
 
-    public void addInitialContext(String key, String value) {
-        if (_initialContext == null)
-            _initialContext = new ArrayList<>();
-
-        _initialContext.add(new StagingKeyValue(key, value));
-    }
-
     @JsonProperty("mappings")
     public List<StagingMapping> getMappings() {
         return _mappings;
@@ -155,4 +171,17 @@ public class StagingSchema {
         _mappings = mapping;
     }
 
+    @JsonIgnore
+    public Map<String, StagingSchemaInput> getInputMap() {
+        return null;
+    }
+
+    @JsonProperty("involved_tables")
+    public Set<String> getInvolvedTables() {
+        return _involvedTables;
+    }
+
+    public void setInvolvedTables(Set<String> involvedTables) {
+        _involvedTables = involvedTables;
+    }
 }

@@ -3,28 +3,23 @@
  */
 package com.imsweb.seerapi.client.staging;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
 public class StagingSchemaInput {
 
-    // agencies
-    public enum Agency {
-        SEER,
-        AJCC,
-        NPCR,
-        COC
-    }
-
     private String _key;
     private String _name;
     private Integer _naaccrItem;
-    List<Agency> _agencyRequirement;
     private String _values;
     private String _default;
     private String _table;
+    private Boolean _usedForStaging;
+    private String _unit;
+    private Integer _decimalPlaces;
+    private Set<String> _metadata;
 
     /**
      * Morphia requires a default constructor
@@ -45,17 +40,20 @@ public class StagingSchemaInput {
 
     /**
      * Copy constructor
-     * @param other
+     * @param other other StagingSchemaInput
      */
     public StagingSchemaInput(StagingSchemaInput other) {
         setKey(other.getKey());
         setName(other.getName());
         setNaaccrItem(other.getNaaccrItem());
-        if (other.getAgencyRequirement() != null)
-            setAgencyRequirement(new ArrayList<>(other.getAgencyRequirement()));
         setRawValues(other.getRawValues());
         setDefault(other.getDefault());
         setTable(other.getTable());
+        if (other.getMetadata() != null)
+            setMetadata(new HashSet<String>(other.getMetadata()));
+        setUsedForStaging(other.getUsedForStaging());
+        setUnit(other.getUnit());
+        setDecimalPlaces(other.getDecimalPlaces());
         setRawValues(other.getRawValues());
     }
 
@@ -86,15 +84,6 @@ public class StagingSchemaInput {
         _naaccrItem = naaccrItem;
     }
 
-    @JsonProperty("agency_requirement")
-    public List<Agency> getAgencyRequirement() {
-        return _agencyRequirement;
-    }
-
-    public void setAgencyRequirement(List<Agency> agencyRequirement) {
-        _agencyRequirement = agencyRequirement;
-    }
-
     @JsonProperty("values")
     public String getRawValues() {
         return _values;
@@ -120,6 +109,42 @@ public class StagingSchemaInput {
 
     public void setTable(String table) {
         _table = table;
+    }
+
+    @JsonProperty("used_for_staging")
+    public Boolean getUsedForStaging() {
+        return _usedForStaging;
+    }
+
+    public void setUsedForStaging(Boolean usedForStaging) {
+        _usedForStaging = usedForStaging;
+    }
+
+    @JsonProperty("decimal_places")
+    public Integer getDecimalPlaces() {
+        return _decimalPlaces;
+    }
+
+    public void setDecimalPlaces(Integer decimalPlaces) {
+        _decimalPlaces = decimalPlaces;
+    }
+
+    @JsonProperty("unit")
+    public String getUnit() {
+        return _unit;
+    }
+
+    public void setUnit(String unit) {
+        _unit = unit;
+    }
+
+    @JsonProperty("metadata")
+    public Set<String> getMetadata() {
+        return _metadata;
+    }
+
+    public void setMetadata(Set<String> metadata) {
+        _metadata = metadata;
     }
 
 }

@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
 
@@ -61,7 +60,7 @@ import com.imsweb.seerapi.client.rx.RxVersion;
 import com.imsweb.seerapi.client.shared.Version;
 import com.imsweb.seerapi.client.siterecode.SiteRecode;
 import com.imsweb.seerapi.client.staging.StagingAlgorithm;
-import com.imsweb.seerapi.client.staging.StagingOutput;
+import com.imsweb.seerapi.client.staging.StagingData;
 import com.imsweb.seerapi.client.staging.StagingSchema;
 import com.imsweb.seerapi.client.staging.StagingSchemaInfo;
 import com.imsweb.seerapi.client.staging.StagingTable;
@@ -800,21 +799,30 @@ public final class SeerApi {
      * @param algorithm an algorithm identifier
      * @param version a version
      * @param query an optional text query
-     * @param site primary site O3
-     * @param hist histology O3
-     * @param ssf25 site-specific factor 25, only if needed for schema selection
-     * @return
+     * @return a list of schemas
      */
-    public List<StagingSchemaInfo> stagingSchemas(String algorithm, String version, String query, String site, String hist, String ssf25) {
+    public List<StagingSchemaInfo> stagingSchemas(String algorithm, String version, String query) {
         WebTarget target = createTarget("/staging/{algorithm}/{version}/schemas")
                 .resolveTemplate("algorithm", algorithm)
                 .resolveTemplate("version", version)
-                .queryParam("q", query)
-                .queryParam("site", site)
-                .queryParam("hist", hist)
-                .queryParam("ssf25", ssf25);
+                .queryParam("q", query);
 
         return getBuilder(target).get(new GenericType<List<StagingSchemaInfo>>() {});
+    }
+
+    /**
+     * Perform a schema lookup
+     * @param algorithm an algorithm identifier
+     * @param version a version
+     * @param data a StagingData object containing the input for the lookup
+     * @return
+     */
+    public List<StagingSchemaInfo> stagingSchemaLookup(String algorithm, String version, StagingData data) {
+        WebTarget target = createTarget("/staging/{algorithm}/{version}/schemas/lookup")
+                .resolveTemplate("algorithm", algorithm)
+                .resolveTemplate("version", version);
+
+        return getBuilder(target).post(Entity.json(data.getInput()), new GenericType<List<StagingSchemaInfo>>() {});
     }
 
     /**
@@ -822,7 +830,7 @@ public final class SeerApi {
      * @param algorithm an algorithm identifier
      * @param version a version
      * @param id a schema identifier
-     * @return
+     * @return a schema object
      */
     public StagingSchema stagingSchemaById(String algorithm, String version, String id) {
         WebTarget target = createTarget("/staging/{algorithm}/{version}/schema/{id}")
@@ -896,17 +904,18 @@ public final class SeerApi {
     }
 
     /**
+     * Stage the passed input
      * @param algorithm an algorithm identifier
      * @param version a version
-     * @param input a map if input for the staging calculation; for a list of input see the specific schema for reference
+     * @param data a StagingData object containing the input for the staging call
      * @return
      */
-    public StagingOutput stagingStage(String algorithm, String version, Map<String, String> input) {
+    public StagingData stagingStage(String algorithm, String version, StagingData data) {
         WebTarget target = createTarget("/staging/{algorithm}/{version}/stage")
                 .resolveTemplate("algorithm", algorithm)
                 .resolveTemplate("version", version);
 
-        return getBuilder(target).post(Entity.json(input), StagingOutput.class);
+        return getBuilder(target).post(Entity.json(data.getInput()), StagingData.class);
     }
 
 }

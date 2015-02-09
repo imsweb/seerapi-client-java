@@ -23,6 +23,16 @@ public class StagingMapping {
     public StagingMapping() {
     }
 
+    /**
+     * Constructs with a name and title
+     * @param id identifier
+     * @param name name
+     */
+    public StagingMapping(String id, String name) {
+        setId(id);
+        setName(name);
+    }
+
     @JsonProperty("id")
     public String getId() {
         return _id;
@@ -70,7 +80,7 @@ public class StagingMapping {
 
     public void addInitialContext(String key, String value) {
         if (_initialContext == null)
-            _initialContext = new ArrayList<>();
+            _initialContext = new ArrayList<StagingKeyValue>();
 
         _initialContext.add(new StagingKeyValue(key, value));
     }

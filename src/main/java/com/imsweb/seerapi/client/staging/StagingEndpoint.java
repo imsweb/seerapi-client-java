@@ -11,6 +11,14 @@ public class StagingEndpoint {
     private String _value;
     private String _resultKey;
 
+    enum EndpointType {
+        JUMP,
+        VALUE,
+        MATCH,
+        STOP,
+        ERROR
+    }
+
     public StagingEndpoint() {
     }
 
@@ -44,14 +52,6 @@ public class StagingEndpoint {
 
     public void setResultKey(String resultKey) {
         _resultKey = resultKey;
-    }
-
-    enum EndpointType {
-        JUMP,
-        VALUE,
-        MATCH,
-        STOP,
-        ERROR
     }
 
 }

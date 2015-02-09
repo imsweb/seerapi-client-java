@@ -10,29 +10,21 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class StagingVersion {
 
-    public enum Type {
-        PRODUCTION,
-        BETA,
-        DEVELOPMENT
-    }
-
-    /**
-     * Default constructor is required by Morphia
-     */
-    public StagingVersion() {
-    }
-
-    public StagingVersion(String algorithm, String version) {
-        setAlgorithm(algorithm);
-        setVersion(version);
-    }
-
     private String _algorithm;
     private String _version;
     private Type _type;
     private Integer _yearFrom;
     private Integer _yearTo;
     private Date _lastModified;
+    /**
+     * Default constructor is required by Morphia
+     */
+    public StagingVersion() {
+    }
+    public StagingVersion(String algorithm, String version) {
+        setAlgorithm(algorithm);
+        setVersion(version);
+    }
 
     @JsonProperty("algorithm")
     public String getAlgorithm() {
@@ -101,6 +93,12 @@ public class StagingVersion {
     @JsonIgnore
     public boolean isDevelopment() {
         return Type.DEVELOPMENT.equals(getType());
+    }
+
+    public enum Type {
+        PRODUCTION,
+        BETA,
+        DEVELOPMENT
     }
 
 }

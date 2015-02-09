@@ -3,9 +3,7 @@
  */
 package com.imsweb.seerapi.client.staging;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -41,9 +39,32 @@ public class StagingTest {
 
     @Test
     public void testListSchemas() {
-        List<StagingSchemaInfo> schemaInfos = _SEERAPI.stagingSchemas(_ALGORITHM, _VERSION, null, null, null, null);
+        List<StagingSchemaInfo> schemaInfos = _SEERAPI.stagingSchemas(_ALGORITHM, _VERSION, null);
 
         Assert.assertTrue(schemaInfos.size() > 0);
+    }
+
+    @Test
+    public void testSchemaLookup() {
+        // first test simple lookup that returns a single schema with site/hist only
+        List<StagingSchemaInfo> schemas = _SEERAPI.stagingSchemaLookup(_ALGORITHM, _VERSION, new StagingData("C509", "8000"));
+        Assert.assertEquals(1, schemas.size());
+        Assert.assertEquals("breast", schemas.get(0).getId());
+
+        // now test just site
+        StagingData data = new StagingData();
+        data.setInput(StagingData.PRIMARY_SITE_KEY, "C111");
+        Assert.assertEquals(7, _SEERAPI.stagingSchemaLookup(_ALGORITHM, _VERSION, data).size());
+
+        // add histology
+        data.setInput(StagingData.HISTOLOGY_KEY, "8000");
+        Assert.assertEquals(2, _SEERAPI.stagingSchemaLookup(_ALGORITHM, _VERSION, data).size());
+
+        // add discriminator
+        data.setInput("ssf25", "010");
+        schemas = _SEERAPI.stagingSchemaLookup(_ALGORITHM, _VERSION, data);
+        Assert.assertEquals(1, schemas.size());
+        Assert.assertEquals("nasopharynx", schemas.get(0).getId());
     }
 
     @Test
@@ -88,28 +109,28 @@ public class StagingTest {
     @Test
     public void testStaging() {
         // test this case:  http://seer.cancer.gov/seertools/cstest/?mets=10&lnexam=99&diagnosis_year=2013&grade=9&exteval=9&age=060&site=C680&metseval=9&hist=8000&ext=100&version=020550&nodeseval=9&behav=3&lnpos=99&nodes=100&csver_original=020440&lvi=9&ssf1=020&size=075
-        Map<String, String> inputs = new HashMap<>();
-        inputs.put("site", "C680");
-        inputs.put("hist", "8000");
-        inputs.put("behavior", "3");
-        inputs.put("grade", "9");
-        inputs.put("year_dx", "2013");
-        inputs.put("cs_input_version_original", "020550");
-        inputs.put("size", "075");
-        inputs.put("extension", "100");
-        inputs.put("extension_eval", "9");
-        inputs.put("nodes", "100");
-        inputs.put("nodes_eval", "9");
-        inputs.put("nodes_pos", "99");
-        inputs.put("nodes_exam", "99");
-        inputs.put("mets", "10");
-        inputs.put("mets_eval", "9");
-        inputs.put("lvi", "9");
-        inputs.put("age_dx", "060");
-        inputs.put("ssf1", "020");
+        StagingData data = new StagingData();
+        data.setInput("site", "C680");
+        data.setInput("hist", "8000");
+        data.setInput("behavior", "3");
+        data.setInput("grade", "9");
+        data.setInput("year_dx", "2013");
+        data.setInput("cs_input_version_original", "020550");
+        data.setInput("size", "075");
+        data.setInput("extension", "100");
+        data.setInput("extension_eval", "9");
+        data.setInput("nodes", "100");
+        data.setInput("nodes_eval", "9");
+        data.setInput("nodes_pos", "99");
+        data.setInput("nodes_exam", "99");
+        data.setInput("mets", "10");
+        data.setInput("mets_eval", "9");
+        data.setInput("lvi", "9");
+        data.setInput("age_dx", "060");
+        data.setInput("ssf1", "020");
 
         // perform the staging
-        StagingOutput output = _SEERAPI.stagingStage(_ALGORITHM, _VERSION, inputs);
+        StagingData output = _SEERAPI.stagingStage(_ALGORITHM, _VERSION, data);
 
         Assert.assertEquals(0, output.getErrors().size());
         Assert.assertEquals(37, output.getPath().size());

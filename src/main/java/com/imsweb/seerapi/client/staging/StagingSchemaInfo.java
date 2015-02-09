@@ -3,7 +3,6 @@
  */
 package com.imsweb.seerapi.client.staging;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
@@ -13,17 +12,24 @@ public class StagingSchemaInfo {
     private String _id;
     private String _name;
     private String _title;
-    private String _discriminatorTable;
-    private List<StagingSchemaSelection> _schemaSelection = new ArrayList<>();
-    private List<String> _mappings = new ArrayList<>();
+    private Integer _schemaNum;
+    private List<StagingSchemaInput> _discriminators;
 
+    /**
+     * Default constructor
+     */
     public StagingSchemaInfo() {
     }
 
-    public StagingSchemaInfo(String id, String name, String title) {
-        setId(id);
-        setName(name);
-        setTitle(title);
+    /**
+     * Constructor
+     * @param schema
+     */
+    public StagingSchemaInfo(StagingSchema schema) {
+        setId(schema.getId());
+        setName(schema.getName());
+        setTitle(schema.getTitle());
+        setSchemaNum(schema.getSchemaNum());
     }
 
     @JsonProperty("id")
@@ -53,30 +59,21 @@ public class StagingSchemaInfo {
         _title = title;
     }
 
-    @JsonProperty("discriminator_table")
-    public String getDiscriminatorTable() {
-        return _discriminatorTable;
+    @JsonProperty("schema_num")
+    public Integer getSchemaNum() {
+        return _schemaNum;
     }
 
-    public void setDiscriminatorTable(String discriminatorTable) {
-        _discriminatorTable = discriminatorTable;
+    public void setSchemaNum(Integer schemaNum) {
+        _schemaNum = schemaNum;
     }
 
-    @JsonProperty("schema_selection")
-    public List<StagingSchemaSelection> getSchemaSelection() {
-        return _schemaSelection;
+    @JsonProperty("discriminators")
+    public List<StagingSchemaInput> getDiscriminators() {
+        return _discriminators;
     }
 
-    public void setSchemaSelection(List<StagingSchemaSelection> schemaSelection) {
-        _schemaSelection = schemaSelection;
-    }
-
-    @JsonProperty("mappings")
-    public List<String> getMappings() {
-        return _mappings;
-    }
-
-    public void setMappings(List<String> algorithms) {
-        _mappings = algorithms;
+    public void setDiscriminators(List<StagingSchemaInput> discriminators) {
+        _discriminators = discriminators;
     }
 }

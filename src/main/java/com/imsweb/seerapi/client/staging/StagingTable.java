@@ -5,6 +5,7 @@ package com.imsweb.seerapi.client.staging;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
@@ -21,6 +22,7 @@ public class StagingTable {
     private String _footnotes;
     private Date _lastModified;
     private List<StagingColumnDefinition> _definition;
+    private Set<String> _extraInput;
     private List<List<String>> _rows;
 
     /**
@@ -126,6 +128,15 @@ public class StagingTable {
 
     public void setColumnDefinitions(List<StagingColumnDefinition> definition) {
         _definition = definition;
+    }
+
+    @JsonProperty("extra_input")
+    public Set<String> getExtraInput() {
+        return _extraInput;
+    }
+
+    public void setExtraInput(Set<String> extraInput) {
+        _extraInput = extraInput;
     }
 
     @JsonProperty("rows")

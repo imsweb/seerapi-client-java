@@ -10,6 +10,13 @@ public class StagingColumnDefinition {
     private String _key;
     private String _name;
     private ColumnType _type;
+    private String _source;
+
+    enum ColumnType {
+        INPUT,
+        DESCRIPTION,
+        ENDPOINT
+    }
 
     /**
      * Morphia requires a default constructor
@@ -19,9 +26,9 @@ public class StagingColumnDefinition {
 
     /**
      * Constructor
-     * @param key
-     * @param name
-     * @param type
+     * @param key input key
+     * @param name column name
+     * @param type column type
      */
     public StagingColumnDefinition(String key, String name, ColumnType type) {
         setKey(key);
@@ -56,10 +63,12 @@ public class StagingColumnDefinition {
         _type = type;
     }
 
-    enum ColumnType {
-        INPUT,
-        DESCRIPTION,
-        ENDPOINT
+    @JsonProperty("source")
+    public String getSource() {
+        return _source;
     }
 
+    public void setSource(String source) {
+        _source = source;
+    }
 }

@@ -24,6 +24,8 @@ public class Disease extends Publishable {
     protected String _icdO3Morphology;
     @JsonProperty("primary_site")
     protected List<SiteRange> _primarySite;
+    @JsonProperty("primary_site_text")
+    protected String _primarySiteText;
     @JsonProperty("site_category")
     protected String _siteCategory;
     @JsonProperty("type")
@@ -90,8 +92,12 @@ public class Disease extends Publishable {
     protected List<YearRangeInteger> _grade;
     @JsonProperty("transform_to")
     protected List<YearRangeString> _transformTo;
+    @JsonProperty("transform_to_text")
+    protected List<YearRangeString> _transformToText;
     @JsonProperty("transform_from")
     protected List<YearRangeString> _transformFrom;
+    @JsonProperty("transform_from_text")
+    protected List<YearRangeString> _transformFromText;
     @JsonProperty("immunophenotype")
     protected List<YearRangeString> _immunophenotype;
     @JsonProperty("diagnosis_method")
@@ -100,6 +106,8 @@ public class Disease extends Publishable {
     protected List<YearRangeString> _moduleId;
     @JsonProperty("same_primary")
     protected List<YearRangeString> _samePrimaries;
+    @JsonProperty("same_primaries_text")
+    protected List<YearRangeString> _samePrimariesText;
 
     /**
      * Solid tumor specific
@@ -119,6 +127,10 @@ public class Disease extends Publishable {
 
     public List<SiteRange> getPrimarySite() {
         return _primarySite;
+    }
+
+    public String getPrimarySiteText() {
+        return _primarySiteText;
     }
 
     public String getSiteCategory() {
@@ -225,6 +237,14 @@ public class Disease extends Publishable {
         return _transformFrom;
     }
 
+    public List<YearRangeString> getTransformFromText() {
+        return _transformFromText;
+    }
+
+    public List<YearRangeString> getTransformToText() {
+        return _transformToText;
+    }
+
     public List<YearRangeString> getImmunophenotype() {
         return _immunophenotype;
     }
@@ -239,6 +259,10 @@ public class Disease extends Publishable {
 
     public List<YearRangeString> getSamePrimaries() {
         return _samePrimaries;
+    }
+
+    public List<YearRangeString> getSamePrimariesText() {
+        return _samePrimariesText;
     }
 
     public List<YearRangeString> getBiomarkers() {

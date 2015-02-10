@@ -55,14 +55,14 @@ Download [the latest JAR][1] or grab via Maven:
 <dependency>
     <groupId>com.imsweb</groupId>
     <artifactId>seerapi-client-java</artifactId>
-    <version>1.4</version>
+    <version>1.5</version>
 </dependency>
 ```
 
 or via Gradle:
 
 ```
-compile 'com.imsweb.com:seerapi-client-java:1.4'
+compile 'com.imsweb.com:seerapi-client-java:1.5'
 ```
 
 ## Usage

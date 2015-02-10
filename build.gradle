@@ -5,7 +5,7 @@ apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
 
 group = 'com.imsweb'
-version = '1.5'
+version = '1.6-SNAPSHOT'
 description = 'Java client library for SEER*API'
 
 // UTF-8 for all compilation tasks

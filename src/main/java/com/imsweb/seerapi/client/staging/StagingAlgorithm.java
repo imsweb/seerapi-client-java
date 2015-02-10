@@ -4,7 +4,9 @@
 package com.imsweb.seerapi.client.staging;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
+@JsonPropertyOrder({"algorithm", "name", "description"})
 public class StagingAlgorithm {
 
     private String _algorithm;

@@ -4,13 +4,18 @@
 package com.imsweb.seerapi.client.staging;
 
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 
+@JsonPropertyOrder({"id", "algorithm", "version", "name", "title", "subtitle", "description", "notes", "schema_num", "schema_selection_table",
+        "schema_discriminators", "initial_context", "inputs", "mappings", "involved_tables", "last_modified"})
 public class StagingSchema {
 
     private String _displayId;
@@ -28,7 +33,7 @@ public class StagingSchema {
     private List<StagingSchemaInput> _inputs;
     private List<StagingKeyValue> _initialContext;
     private List<StagingMapping> _mappings;
-    Set<String> _involvedTables;
+    private Set<String> _involvedTables;
 
     /**
      * Morphia requires a default constructor
@@ -140,6 +145,7 @@ public class StagingSchema {
         return _schemaDiscriminators;
     }
 
+    @JsonDeserialize(as = LinkedHashSet.class)
     public void setSchemaDiscriminators(Set<String> schemaDiscriminators) {
         _schemaDiscriminators = schemaDiscriminators;
     }
@@ -181,6 +187,7 @@ public class StagingSchema {
         return _involvedTables;
     }
 
+    @JsonDeserialize(as = LinkedHashSet.class)
     public void setInvolvedTables(Set<String> involvedTables) {
         _involvedTables = involvedTables;
     }

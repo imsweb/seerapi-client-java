@@ -3,10 +3,14 @@
  */
 package com.imsweb.seerapi.client.staging;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
+
 /**
  * An error object
  */
-public class Error {
+@JsonPropertyOrder({"table", "key", "message"})
+public class StagingError {
 
     private String _table;
     private String _key;
@@ -15,9 +19,10 @@ public class Error {
     /**
      * Default constructor
      */
-    public Error() {
+    public StagingError() {
     }
 
+    @JsonProperty("table")
     public String getTable() {
         return _table;
     }
@@ -26,6 +31,7 @@ public class Error {
         _table = table;
     }
 
+    @JsonProperty("key")
     public String getKey() {
         return _key;
     }
@@ -34,6 +40,7 @@ public class Error {
         _key = key;
     }
 
+    @JsonProperty("message")
     public String getMessage() {
         return _message;
     }
@@ -47,10 +54,10 @@ public class Error {
      */
     public static class ErrorBuilder {
 
-        private Error _error;
+        private StagingError _error;
 
         public ErrorBuilder(String message) {
-            _error = new Error();
+            _error = new StagingError();
             _error.setMessage(message);
         }
 
@@ -64,7 +71,12 @@ public class Error {
             return this;
         }
 
-        public Error build() {
+        public ErrorBuilder message(String message) {
+            _error.setMessage(message);
+            return this;
+        }
+
+        public StagingError build() {
             return _error;
         }
     }

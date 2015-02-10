@@ -6,7 +6,9 @@ package com.imsweb.seerapi.client.staging;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
+@JsonPropertyOrder({"id", "name", "title", "schema_num", "discriminators"})
 public class StagingSchemaInfo {
 
     private String _id;

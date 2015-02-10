@@ -10,7 +10,9 @@ import java.util.Map;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
+@JsonPropertyOrder({"input", "output", "errors", "path"})
 public class StagingData {
 
     // key definitions
@@ -19,7 +21,7 @@ public class StagingData {
 
     private Map<String, String> _input = new HashMap<String, String>();
     private Map<String, String> _output = new HashMap<String, String>();
-    private List<Error> _errors = new ArrayList<Error>();
+    private List<StagingError> _errors = new ArrayList<StagingError>();
     private List<String> _path = new ArrayList<String>();
 
     /**
@@ -79,11 +81,11 @@ public class StagingData {
     // errors
 
     @JsonProperty("errors")
-    public List<Error> getErrors() {
+    public List<StagingError> getErrors() {
         return _errors;
     }
 
-    public void setErrors(List<Error> errors) {
+    public void setErrors(List<StagingError> errors) {
         _errors = errors;
     }
 

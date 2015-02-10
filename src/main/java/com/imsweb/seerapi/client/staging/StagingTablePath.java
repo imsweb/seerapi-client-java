@@ -3,11 +3,15 @@
  */
 package com.imsweb.seerapi.client.staging;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 
+@JsonPropertyOrder({"id", "input_mapping", "output_mapping", "inputs", "outputs"})
 public class StagingTablePath {
 
     private String _id;
@@ -58,6 +62,7 @@ public class StagingTablePath {
         return _inputs;
     }
 
+    @JsonDeserialize(as = LinkedHashSet.class)
     public void setInputs(Set<String> inputs) {
         _inputs = inputs;
     }
@@ -67,6 +72,7 @@ public class StagingTablePath {
         return _outputs;
     }
 
+    @JsonDeserialize(as = LinkedHashSet.class)
     public void setOutputs(Set<String> outputs) {
         _outputs = outputs;
     }

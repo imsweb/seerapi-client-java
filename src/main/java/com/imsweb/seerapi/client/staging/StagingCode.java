@@ -1,7 +1,9 @@
 package com.imsweb.seerapi.client.staging;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
+@JsonPropertyOrder({"table", "code", "is_valid"})
 public class StagingCode {
 
     protected String _table;

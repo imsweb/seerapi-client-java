@@ -4,10 +4,14 @@
 package com.imsweb.seerapi.client.staging;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 
+@JsonPropertyOrder({"key", "name", "naaccr_item", "values", "default", "table", "used_for_staging", "unit", "decimal_places", "metadata"})
 public class StagingSchemaInput {
 
     private String _key;
@@ -143,6 +147,7 @@ public class StagingSchemaInput {
         return _metadata;
     }
 
+    @JsonDeserialize(as = LinkedHashSet.class)
     public void setMetadata(Set<String> metadata) {
         _metadata = metadata;
     }

@@ -10,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
+import com.imsweb.seerapi.client.staging.cs.CsStagingData;
 
 public class StagingTest {
 
@@ -63,6 +64,11 @@ public class StagingTest {
         // add discriminator
         data.setInput("ssf25", "010");
         schemas = _SEERAPI.stagingSchemaLookup(_ALGORITHM, _VERSION, data);
+        Assert.assertEquals(1, schemas.size());
+        Assert.assertEquals("nasopharynx", schemas.get(0).getId());
+
+        // test with the CsStaging class
+        schemas = _SEERAPI.stagingSchemaLookup(_ALGORITHM, _VERSION, new CsStagingData("C111", "8000", "010"));
         Assert.assertEquals(1, schemas.size());
         Assert.assertEquals("nasopharynx", schemas.get(0).getId());
     }

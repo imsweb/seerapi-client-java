@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
+@JsonPropertyOrder({"id", "algorithm", "version", "name", "title", "subtitle", "description", "notes", "footnotes", "last_modified", "definition", "extra_input", "rows"})
 public class StagingTable {
 
     private String _displayId;

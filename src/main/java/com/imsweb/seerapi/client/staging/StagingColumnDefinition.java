@@ -4,7 +4,9 @@
 package com.imsweb.seerapi.client.staging;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
+@JsonPropertyOrder({"key", "name", "type", "source"})
 public class StagingColumnDefinition {
 
     private String _key;

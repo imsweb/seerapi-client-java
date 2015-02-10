@@ -4,7 +4,9 @@
 package com.imsweb.seerapi.client.staging;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
+@JsonPropertyOrder({"type", "value", "result_key"})
 public class StagingEndpoint {
 
     private EndpointType _type;

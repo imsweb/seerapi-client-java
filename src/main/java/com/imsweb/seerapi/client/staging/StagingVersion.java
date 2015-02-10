@@ -7,7 +7,9 @@ import java.util.Date;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
+@JsonPropertyOrder({"algorithm", "version", "type", "year_from", "year_to", "last_modified"})
 public class StagingVersion {
 
     private String _algorithm;
@@ -16,11 +18,13 @@ public class StagingVersion {
     private Integer _yearFrom;
     private Integer _yearTo;
     private Date _lastModified;
+
     /**
      * Default constructor is required by Morphia
      */
     public StagingVersion() {
     }
+
     public StagingVersion(String algorithm, String version) {
         setAlgorithm(algorithm);
         setVersion(version);

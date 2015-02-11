@@ -59,6 +59,7 @@ import com.imsweb.seerapi.client.rx.RxSearchResults;
 import com.imsweb.seerapi.client.rx.RxVersion;
 import com.imsweb.seerapi.client.shared.Version;
 import com.imsweb.seerapi.client.siterecode.SiteRecode;
+import com.imsweb.seerapi.client.staging.SchemaLookup;
 import com.imsweb.seerapi.client.staging.StagingAlgorithm;
 import com.imsweb.seerapi.client.staging.StagingData;
 import com.imsweb.seerapi.client.staging.StagingSchema;
@@ -817,12 +818,12 @@ public final class SeerApi {
      * @param data a StagingData object containing the input for the lookup
      * @return
      */
-    public List<StagingSchemaInfo> stagingSchemaLookup(String algorithm, String version, StagingData data) {
+    public List<StagingSchemaInfo> stagingSchemaLookup(String algorithm, String version, SchemaLookup data) {
         WebTarget target = createTarget("/staging/{algorithm}/{version}/schemas/lookup")
                 .resolveTemplate("algorithm", algorithm)
                 .resolveTemplate("version", version);
 
-        return getBuilder(target).post(Entity.json(data.getInput()), new GenericType<List<StagingSchemaInfo>>() {});
+        return getBuilder(target).post(Entity.json(data.getInputs()), new GenericType<List<StagingSchemaInfo>>() {});
     }
 
     /**

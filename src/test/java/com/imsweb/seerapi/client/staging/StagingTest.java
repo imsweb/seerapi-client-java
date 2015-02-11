@@ -10,7 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
-import com.imsweb.seerapi.client.staging.cs.CsStagingData;
+import com.imsweb.seerapi.client.staging.cs.CsSchemaLookup;
 
 public class StagingTest {
 
@@ -48,12 +48,12 @@ public class StagingTest {
     @Test
     public void testSchemaLookup() {
         // first test simple lookup that returns a single schema with site/hist only
-        List<StagingSchemaInfo> schemas = _SEERAPI.stagingSchemaLookup(_ALGORITHM, _VERSION, new StagingData("C509", "8000"));
+        List<StagingSchemaInfo> schemas = _SEERAPI.stagingSchemaLookup(_ALGORITHM, _VERSION, new CsSchemaLookup("C509", "8000"));
         Assert.assertEquals(1, schemas.size());
         Assert.assertEquals("breast", schemas.get(0).getId());
 
         // now test just site
-        StagingData data = new StagingData();
+        SchemaLookup data = new SchemaLookup();
         data.setInput(StagingData.PRIMARY_SITE_KEY, "C111");
         Assert.assertEquals(7, _SEERAPI.stagingSchemaLookup(_ALGORITHM, _VERSION, data).size());
 
@@ -68,7 +68,7 @@ public class StagingTest {
         Assert.assertEquals("nasopharynx", schemas.get(0).getId());
 
         // test with the CsStaging class
-        schemas = _SEERAPI.stagingSchemaLookup(_ALGORITHM, _VERSION, new CsStagingData("C111", "8000", "010"));
+        schemas = _SEERAPI.stagingSchemaLookup(_ALGORITHM, _VERSION, new CsSchemaLookup("C111", "8000", "010"));
         Assert.assertEquals(1, schemas.size());
         Assert.assertEquals("nasopharynx", schemas.get(0).getId());
     }

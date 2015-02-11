@@ -7,10 +7,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
+
+import jersey.repackaged.com.google.common.collect.Sets;
 
 @JsonPropertyOrder({"input", "output", "errors", "path"})
 public class StagingData {
@@ -18,6 +21,9 @@ public class StagingData {
     // key definitions
     public static final String PRIMARY_SITE_KEY = "site";
     public static final String HISTOLOGY_KEY = "hist";
+
+    // set of keys that are standard for all schema lookups; any other keys are considered a discriminator
+    public static final Set<String> STANDARD_LOOKUP_KEYS = Sets.newHashSet(PRIMARY_SITE_KEY, HISTOLOGY_KEY);
 
     private Map<String, String> _input = new HashMap<String, String>();
     private Map<String, String> _output = new HashMap<String, String>();

@@ -1,33 +1,26 @@
-apply plugin: 'java'
-apply plugin: 'checkstyle'
-apply plugin: 'findbugs'
-apply plugin: 'jacoco'
-apply plugin: 'com.github.kt3k.coveralls'
+import org.gradle.internal.jvm.Jvm
+
+plugins {
+    id 'java'
+    id 'checkstyle'
+    id 'findbugs'
+    id 'jacoco'
+    id 'com.github.kt3k.coveralls' version '2.3.1'
+    id 'com.bmuschko.nexus' version '2.3'
+}
 
 group = 'com.imsweb'
 version = '1.6-SNAPSHOT'
 description = 'Java client library for SEER*API'
 
+println "Starting build using ${Jvm.current()}"
+
 // UTF-8 for all compilation tasks
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:0.6'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.0'
-    }
-}
 
 repositories {
     mavenCentral()
 }
-
-// load other gradle files
-apply from: 'gradle/publish.gradle'
 
 dependencies {
     compile 'org.glassfish.jersey.core:jersey-client:2.7'
@@ -50,23 +43,6 @@ jar {
                 'Built-JDK': System.getProperty('java.version'),
         )
     }
-}
-
-// custom tasks for creating source/javadoc jars
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-// add javadoc/source jar tasks as artifacts
-artifacts {
-    archives sourcesJar
-    archives javadocJar
 }
 
 // checkstyle plugin settings
@@ -93,5 +69,41 @@ jacocoTestReport {
 
 // Gradle wrapper, this allows to build the project without having to install Gradle!
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.2.1'
+    gradleVersion = '2.3'
+}
+
+modifyPom {
+    project {
+        name 'SEER*API Java Client'
+        description 'API mapping for SEER*API in Java'
+        url 'https://github.com/imsweb/seerapi-client-java'
+        inceptionYear '2014'
+
+        scm {
+            url 'https://github.com/imsweb/seerapi-client-java'
+            connection 'scm:https://github.com/imsweb/seerapi-client-java.git'
+            developerConnection 'scm:git@github.com:imsweb/seerapi-client-java.git'
+        }
+
+        licenses {
+            license {
+                name 'The MIT License (MIT)'
+                url 'http://www.opensource.org/licenses/mit-license.php'
+                distribution 'repo'
+            }
+        }
+
+        developers {
+            developer {
+                id 'ctmay4'
+                name 'Chuck May'
+                email 'mayc@imsweb.com'
+            }
+            developer {
+                id 'depryf'
+                name 'Fabian Depry'
+                email 'depryf@imsweb.com'
+            }
+        }
+    }
 }

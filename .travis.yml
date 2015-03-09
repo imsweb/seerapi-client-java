@@ -15,6 +15,4 @@ notifications:
   - mayc@imsweb.com
   - depryf@imsweb.com
 
-after_success:
-- ./gradlew jacocoTestReport coveralls
 

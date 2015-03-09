@@ -1,18 +1,20 @@
 language: java
+
 jdk:
 - oraclejdk7
+
 before_install:
 - chmod +x gradlew
-- chmod +x config/publish.sh
+
 env:
   global:
   - secure: ahfNxDTQyt3G0nI/XQZHTUQUzlv4z0FLk8OycmxbK2HzX29d/XyyF0EJKDJ4IqjsIR3++i/DP9j6BSW4Rrl7WpuvkKjArwIVXgs0vHHsII0CKPMi3D+7KxreWutONGNuxfJoW17vl9Sp/2lwGP7s0asFGdt/C3F6sj23l/dobiQ=
-  - secure: SvW9p5Zws5mf+TkQpkRXwXVNk5bCT6gW8MT8dFibm/YzClk++N4SJaGfu655gRrySUMc954ZLwZyHwTVxQ4mZfjDSpD8VN2kK8Mk2AWQnhw+nZHy3wH22zaGhUd6LLTuO0OjoH66NtaPlDaTuCKlRZXIaf/4H+qwtdabooTRmjw=
-  - secure: OhXWNkpS3Avk+5SR/wLC4jc6Vw37bgTMa8wOVHslYEM7cpGbIzfqKd4KRK9pqQTZur8WJOKRsQPADGYaYUSawApzq6m5YBHHBX9MGq14/OOQVNC43/tLzP8yGsZdedmls70n+2vDnfbHl8zWkE/72tWJnR7Vu43mgaQ8zlf5ICE=
+
 notifications:
   email:
   - mayc@imsweb.com
   - depryf@imsweb.com
+
 after_success:
 - ./gradlew jacocoTestReport coveralls
-- config/publish.sh
+

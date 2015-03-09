@@ -81,7 +81,7 @@ public class RxTest {
         Assert.assertNotNull(changelog.getUser());
         Assert.assertEquals("latest", changelog.getVersion());
         Assert.assertTrue(changelog.getId().length() > 0);
-        Assert.assertNotNull(changelog.getAdds());
+        Assert.assertNull(changelog.getAdds());
         Assert.assertTrue(changelog.getMods().size() > 0);
         Assert.assertNull(changelog.getDeletes());
         Assert.assertNotNull(changelog.getDate());

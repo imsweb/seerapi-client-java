@@ -6,6 +6,10 @@ jdk:
 before_install:
 - chmod +x gradlew
 
+env:
+  global:
+  - secure: ahfNxDTQyt3G0nI/XQZHTUQUzlv4z0FLk8OycmxbK2HzX29d/XyyF0EJKDJ4IqjsIR3++i/DP9j6BSW4Rrl7WpuvkKjArwIVXgs0vHHsII0CKPMi3D+7KxreWutONGNuxfJoW17vl9Sp/2lwGP7s0asFGdt/C3F6sj23l/dobiQ=
+
 notifications:
   email:
   - mayc@imsweb.com

@@ -76,7 +76,8 @@ public final class SeerApi {
     // default base URL
     private static final String _SEERAPI_URL = "https://api.seer.cancer.gov/rest";
 
-    // environment variable for API key
+    // environment variable for URL and API key
+    private static final String _ENV_URL = "SEER_API_URL";
     private static final String _ENV_API_KEY = "SEER_API_KEY";
 
     // output all dates in ISO-8061 format and UTC time
@@ -165,8 +166,10 @@ public final class SeerApi {
     public static SeerApi connect() {
         Properties props = getProperties();
 
-        // if the URL is specified, use it, otherwise use the default
+        // if the URL is specified (either in properties file or environment), use it, otherwise use the default
         String url = props.getProperty("url");
+        if (url == null)
+            url = System.getenv(_ENV_URL);
         if (url == null)
             url = _SEERAPI_URL;
 

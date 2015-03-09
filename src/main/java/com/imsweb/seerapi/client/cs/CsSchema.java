@@ -26,7 +26,7 @@ public class CsSchema {
     @JsonProperty("note")
     protected List<String> _notes;
     @JsonProperty("ssf")
-    protected List<CsSiteSpecificFactor> _siteSpecificFactors = new ArrayList<>();
+    protected List<CsSiteSpecificFactor> _siteSpecificFactors = new ArrayList<CsSiteSpecificFactor>();
     @JsonProperty("num_tables")
     protected int _numTables;
     @JsonProperty("revision_date")

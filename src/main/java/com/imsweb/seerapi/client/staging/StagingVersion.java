@@ -9,14 +9,12 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
-@JsonPropertyOrder({"algorithm", "version", "type", "year_from", "year_to", "last_modified"})
+@JsonPropertyOrder({"algorithm", "version", "type", "last_modified"})
 public class StagingVersion {
 
     private String _algorithm;
     private String _version;
     private Type _type;
-    private Integer _yearFrom;
-    private Integer _yearTo;
     private Date _lastModified;
 
     /**
@@ -55,24 +53,6 @@ public class StagingVersion {
 
     public void setType(Type type) {
         _type = type;
-    }
-
-    @JsonProperty("year_from")
-    public Integer getYearFrom() {
-        return _yearFrom;
-    }
-
-    public void setYearFrom(Integer yearFrom) {
-        _yearFrom = yearFrom;
-    }
-
-    @JsonProperty("year_to")
-    public Integer getYearTo() {
-        return _yearTo;
-    }
-
-    public void setYearTo(Integer yearTo) {
-        _yearTo = yearTo;
     }
 
     @JsonProperty("last_modified")

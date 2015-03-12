@@ -11,7 +11,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 
-@JsonPropertyOrder({"key", "name", "naaccr_item", "values", "default", "table", "used_for_staging", "unit", "decimal_places", "metadata"})
+@JsonPropertyOrder({"key", "name", "naaccr_item", "values", "default", "table", "used_for_staging", "fail_on_invalid", "unit", "decimal_places", "metadata"})
 public class StagingSchemaInput {
 
     private String _key;
@@ -21,6 +21,7 @@ public class StagingSchemaInput {
     private String _default;
     private String _table;
     private Boolean _usedForStaging;
+    private Boolean _failOnInvalid;
     private String _unit;
     private Integer _decimalPlaces;
     private Set<String> _metadata;
@@ -56,6 +57,7 @@ public class StagingSchemaInput {
         if (other.getMetadata() != null)
             setMetadata(new HashSet<String>(other.getMetadata()));
         setUsedForStaging(other.getUsedForStaging());
+        setFailOnInvalid(other.getFailOnInvalid());
         setUnit(other.getUnit());
         setDecimalPlaces(other.getDecimalPlaces());
         setRawValues(other.getRawValues());
@@ -122,6 +124,15 @@ public class StagingSchemaInput {
 
     public void setUsedForStaging(Boolean usedForStaging) {
         _usedForStaging = usedForStaging;
+    }
+
+    @JsonProperty("fail_on_invalid")
+    public Boolean getFailOnInvalid() {
+        return _failOnInvalid;
+    }
+
+    public void setFailOnInvalid(Boolean failOnInvalid) {
+        _failOnInvalid = failOnInvalid;
     }
 
     @JsonProperty("decimal_places")

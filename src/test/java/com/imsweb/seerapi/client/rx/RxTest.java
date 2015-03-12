@@ -14,6 +14,7 @@ import org.junit.Test;
 import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.publishable.PublishableSearch.OutputType;
 import com.imsweb.seerapi.client.publishable.PublishableSearch.SearchMode;
+import com.imsweb.seerapi.client.rx.Rx.DoNoCodeValue;
 import com.imsweb.seerapi.client.rx.Rx.Type;
 
 public class RxTest {
@@ -57,14 +58,15 @@ public class RxTest {
         Assert.assertNull(rx.getFieldNotes());
         Assert.assertNull(rx.getScore());
         Assert.assertEquals(Arrays.asList("neuroblastoma", "Pediatric ALL"), rx.getPrimarySite());
+        Assert.assertNull(rx.getHistory());
 
-        Assert.assertEquals(1, rx.getHistory().size());
-
-        RxHistoryEvent event = rx.getHistory().get(0);
-        Assert.assertEquals("cyrj@imsweb.com", event.getUser());
-        Assert.assertNotNull(event.getDate());
-        Assert.assertNull(event.getOld());
-        Assert.assertNull(event.getNew());
+        //        Assert.assertEquals(1, rx.getHistory().size());
+        //
+        //        RxHistoryEvent event = rx.getHistory().get(0);
+        //        Assert.assertEquals("cyrj@imsweb.com", event.getUser());
+        //        Assert.assertNotNull(event.getDate());
+        //        Assert.assertNull(event.getOld());
+        //        Assert.assertNull(event.getNew());
     }
 
     @Test
@@ -119,7 +121,7 @@ public class RxTest {
         search.setOrderBy("name");
         search.setOutputType(OutputType.MIN);
         search.setCategory(new HashSet<String>(Arrays.asList("category")));
-        search.setDoNotCode(true);
+        search.setDoNotCode(DoNoCodeValue.YES);
         results = SeerApi.connect().rxSearch("latest", search);
 
         Assert.assertNotNull(results);

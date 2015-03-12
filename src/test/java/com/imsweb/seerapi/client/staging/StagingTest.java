@@ -10,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
+import com.imsweb.seerapi.client.staging.StagingData.Result;
 import com.imsweb.seerapi.client.staging.cs.CsSchemaLookup;
 
 public class StagingTest {
@@ -138,12 +139,13 @@ public class StagingTest {
         // perform the staging
         StagingData output = _SEERAPI.stagingStage(_ALGORITHM, _VERSION, data);
 
+        Assert.assertEquals(Result.STAGED, output.getResult());
         Assert.assertEquals(0, output.getErrors().size());
         Assert.assertEquals(37, output.getPath().size());
 
         // check output
         Assert.assertEquals("129", output.getOutput("schema_number"));
-        Assert.assertEquals("urethra", output.getOutput("schema_id"));
+        Assert.assertEquals("urethra", output.getSchemaId());
         Assert.assertEquals("020550", output.getOutput("csver_derived"));
 
         // AJCC 6

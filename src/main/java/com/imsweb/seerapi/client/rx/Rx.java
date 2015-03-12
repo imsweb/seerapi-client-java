@@ -14,6 +14,12 @@ public class Rx extends Publishable {
         REGIMEN
     }
 
+    public enum DoNoCodeValue {
+        YES,
+        NO,
+        SEE_REMARKS
+    }
+
     @JsonProperty("history")
     protected List<RxHistoryEvent> _history;
 
@@ -41,7 +47,7 @@ public class Rx extends Publishable {
     @JsonProperty("nsc_number")
     protected List<String> _nscNumber;
     @JsonProperty("do_not_code")
-    protected Boolean _doNotCode;
+    protected DoNoCodeValue _doNotCode;
 
     // regimen only
     @JsonProperty("drugs")
@@ -99,7 +105,7 @@ public class Rx extends Publishable {
         return _nscNumber;
     }
 
-    public Boolean getDoNotCode() {
+    public DoNoCodeValue getDoNotCode() {
         return _doNotCode;
     }
 

@@ -49,13 +49,13 @@ public class GlossaryTest {
         Assert.assertTrue(glossary.getDefinition().startsWith("An x-ray of the lymphatic system."));
         Assert.assertTrue(glossary.getAbstractorNote().startsWith("This procedure may be done to determine the extent"));
         Assert.assertNull(glossary.getAlternateName());
-        Assert.assertTrue(glossary.getHistory().size() >= 1);
+        Assert.assertNull(glossary.getHistory());
 
-        GlossaryHistoryEvent event = glossary.getHistory().get(0);
-        Assert.assertNotNull(event.getUser());
-        Assert.assertNotNull(event.getDate());
-        Assert.assertNull(event.getOld());
-        Assert.assertNull(event.getNew());
+        //        GlossaryHistoryEvent event = glossary.getHistory().get(0);
+        //        Assert.assertNotNull(event.getUser());
+        //        Assert.assertNotNull(event.getDate());
+        //        Assert.assertNull(event.getOld());
+        //        Assert.assertNull(event.getNew());
     }
 
     @Test

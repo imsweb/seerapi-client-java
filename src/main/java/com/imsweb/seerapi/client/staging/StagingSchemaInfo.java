@@ -4,11 +4,12 @@
 package com.imsweb.seerapi.client.staging;
 
 import java.util.List;
+import java.util.Set;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
-@JsonPropertyOrder({"id", "name", "title", "schema_num", "discriminators"})
+@JsonPropertyOrder({"id", "name", "title", "schema_num", "discriminators", "staging_inputs", "staging_outputs"})
 public class StagingSchemaInfo {
 
     private String _id;
@@ -16,12 +17,8 @@ public class StagingSchemaInfo {
     private String _title;
     private Integer _schemaNum;
     private List<StagingSchemaInput> _discriminators;
-
-    /**
-     * Default constructor
-     */
-    public StagingSchemaInfo() {
-    }
+    private Set<String> _stagingInputs;
+    private Set<String> _stagingOutputs;
 
     /**
      * Constructor
@@ -77,5 +74,23 @@ public class StagingSchemaInfo {
 
     public void setDiscriminators(List<StagingSchemaInput> discriminators) {
         _discriminators = discriminators;
+    }
+
+    @JsonProperty("staging_inputs")
+    public Set<String> getStagingInputs() {
+        return _stagingInputs;
+    }
+
+    public void setStagingInputs(Set<String> stagingInputs) {
+        _stagingInputs = stagingInputs;
+    }
+
+    @JsonProperty("staging_outputs")
+    public Set<String> getStagingOutputs() {
+        return _stagingOutputs;
+    }
+
+    public void setStagingOutputs(Set<String> stagingOutputs) {
+        _stagingOutputs = stagingOutputs;
     }
 }

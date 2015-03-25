@@ -6,21 +6,37 @@ package com.imsweb.seerapi.client.glossary;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
-@JsonPropertyOrder({"url", "edition", "year", "page"})
+@JsonPropertyOrder({"name", "url", "edition", "year", "page"})
 public class GlossaryResource {
 
+    private String _name;
+    private String _url;
     private String _page;
     private String _edition;
     private String _year;
-    private String _url;
 
     public GlossaryResource() {
     }
 
-    public GlossaryResource(String page, String edition, String year, String url) {
-        _page = page;
-        _edition = edition;
-        _year = year;
+    public GlossaryResource(String name) {
+        _name = name;
+    }
+
+    @JsonProperty("name")
+    public String getName() {
+        return _name;
+    }
+
+    public void setName(String name) {
+        _name = name;
+    }
+
+    @JsonProperty("url")
+    public String getUrl() {
+        return _url;
+    }
+
+    public void setUrl(String url) {
         _url = url;
     }
 
@@ -51,12 +67,4 @@ public class GlossaryResource {
         _year = year;
     }
 
-    @JsonProperty("url")
-    public String getUrl() {
-        return _url;
-    }
-
-    public void setUrl(String url) {
-        _url = url;
-    }
 }

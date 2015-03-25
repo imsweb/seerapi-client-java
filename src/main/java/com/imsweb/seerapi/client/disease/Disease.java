@@ -68,8 +68,6 @@ public class Disease extends Publishable {
     protected List<YearRangeString> _signs;
     @JsonProperty("exams")
     protected List<YearRangeString> _exams;
-    @JsonProperty("recurrence")
-    protected List<YearRangeString> _recurrence;
     @JsonProperty("mortality")
     protected List<YearRangeString> _mortality;
 
@@ -108,6 +106,9 @@ public class Disease extends Publishable {
     protected List<YearRangeString> _samePrimaries;
     @JsonProperty("same_primaries_text")
     protected List<YearRangeString> _samePrimariesText;
+    @JsonProperty("progression")
+    protected List<YearRangeString> _progression;
+
 
     /**
      * Solid tumor specific
@@ -116,6 +117,8 @@ public class Disease extends Publishable {
     protected List<YearRangeString> _biomarkers;
     @JsonProperty("treatment_text")
     protected List<YearRangeString> _treatmentText;
+    @JsonProperty("recurrence")
+    protected List<YearRangeString> _recurrence;
 
     public List<DiseaseHistoryEvent> getHistory() {
         return _history;
@@ -305,5 +308,13 @@ public class Disease extends Publishable {
 
     public void setIcdO1Effective(YearRange icdO1Effective) {
         _icdO1Effective = icdO1Effective;
+    }
+
+    public List<YearRangeString> getProgression() {
+        return _progression;
+    }
+
+    public void setProgression(List<YearRangeString> progression) {
+        _progression = progression;
     }
 }

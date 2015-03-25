@@ -13,7 +13,9 @@ public class Glossary extends Publishable {
         GENERAL,
         SOLID_TUMOR,
         HEMATO,
-        SEERRX
+        SEERRX,
+        SEER_TRAINING,
+        LYMPH_NODES
     }
 
     @JsonProperty("history")
@@ -34,6 +36,8 @@ public class Glossary extends Publishable {
     protected List<String> _primarySite;
     @JsonProperty("category")
     protected List<Category> _categories;
+    @JsonProperty("resource")
+    protected List<GlossaryResource> _resources;
 
     public List<GlossaryHistoryEvent> getHistory() {
         return _history;
@@ -61,5 +65,13 @@ public class Glossary extends Publishable {
 
     public List<Category> getCategories() {
         return _categories;
+    }
+
+    public List<GlossaryResource> getResources() {
+        return _resources;
+    }
+
+    public void setResources(List<GlossaryResource> resources) {
+        _resources = resources;
     }
 }

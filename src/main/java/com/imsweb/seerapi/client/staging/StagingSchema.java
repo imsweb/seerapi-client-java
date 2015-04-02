@@ -31,7 +31,7 @@ public class StagingSchema {
     private String _schemaSelectionTable;
     private Set<String> _schemaDiscriminators;
     private List<StagingSchemaInput> _inputs;
-    private List<StagingKeyValue> _initialContext;
+    private Set<StagingKeyValue> _initialContext;
     private List<StagingMapping> _mappings;
     private Set<String> _involvedTables;
 
@@ -160,11 +160,12 @@ public class StagingSchema {
     }
 
     @JsonProperty("initial_context")
-    public List<StagingKeyValue> getInitialContext() {
+    public Set<StagingKeyValue> getInitialContext() {
         return _initialContext;
     }
 
-    public void setInitialContext(List<StagingKeyValue> initialContext) {
+    @JsonDeserialize(as = LinkedHashSet.class)
+    public void setInitialContext(Set<StagingKeyValue> initialContext) {
         _initialContext = initialContext;
     }
 

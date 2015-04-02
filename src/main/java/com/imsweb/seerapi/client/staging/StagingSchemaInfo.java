@@ -21,6 +21,12 @@ public class StagingSchemaInfo {
     private Set<String> _stagingOutputs;
 
     /**
+     * Default constructor
+     */
+    public StagingSchemaInfo() {
+    }
+
+    /**
      * Constructor
      * @param schema
      */

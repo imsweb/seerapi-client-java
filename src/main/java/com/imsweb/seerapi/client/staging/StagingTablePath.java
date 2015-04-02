@@ -4,7 +4,6 @@
 package com.imsweb.seerapi.client.staging;
 
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.codehaus.jackson.annotate.JsonProperty;
@@ -15,8 +14,8 @@ import org.codehaus.jackson.map.annotate.JsonDeserialize;
 public class StagingTablePath {
 
     private String _id;
-    private List<StagingKeyMapping> _inputMapping;
-    private List<StagingKeyMapping> _outputMapping;
+    private Set<StagingKeyMapping> _inputMapping;
+    private Set<StagingKeyMapping> _outputMapping;
     private Set<String> _inputs;
     private Set<String> _outputs;
 
@@ -40,20 +39,22 @@ public class StagingTablePath {
     }
 
     @JsonProperty("input_mapping")
-    public List<StagingKeyMapping> getInputMapping() {
+    public Set<StagingKeyMapping> getInputMapping() {
         return _inputMapping;
     }
 
-    public void setInputMapping(List<StagingKeyMapping> input) {
+    @JsonDeserialize(as = LinkedHashSet.class)
+    public void setInputMapping(Set<StagingKeyMapping> input) {
         _inputMapping = input;
     }
 
     @JsonProperty("output_mapping")
-    public List<StagingKeyMapping> getOutputMapping() {
+    public Set<StagingKeyMapping> getOutputMapping() {
         return _outputMapping;
     }
 
-    public void setOutputMapping(List<StagingKeyMapping> output) {
+    @JsonDeserialize(as = LinkedHashSet.class)
+    public void setOutputMapping(Set<StagingKeyMapping> output) {
         _outputMapping = output;
     }
 

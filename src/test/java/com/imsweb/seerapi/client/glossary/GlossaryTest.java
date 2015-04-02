@@ -4,7 +4,7 @@
 package com.imsweb.seerapi.client.glossary;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -42,7 +42,7 @@ public class GlossaryTest {
 
         Assert.assertNotNull(glossary);
         Assert.assertEquals("Lymphangiogram", glossary.getName());
-        Assert.assertEquals(Arrays.asList(Category.HEMATO), glossary.getCategories());
+        Assert.assertEquals(Collections.singletonList(Category.HEMATO), glossary.getCategories());
         Assert.assertNull(glossary.getPrimarySite());
 
         Assert.assertNull(glossary.getHistology());
@@ -99,10 +99,10 @@ public class GlossaryTest {
         Assert.assertEquals(25, results.getCount().longValue());
         Assert.assertTrue(results.getTotal().longValue() > 0);
         Assert.assertTrue(results.getResults().size() > 0);
-        Assert.assertEquals(Arrays.asList("cell"), results.getTerms());
+        Assert.assertEquals(Collections.singletonList("cell"), results.getTerms());
 
         // add the category and verify there are no results
-        search.setCategory(EnumSet.of(Category.GENERAL));
+        search.setCategory(EnumSet.of(Category.SOLID_TUMOR));
         results = SeerApi.connect().glossarySearch("latest", search);
 
         Assert.assertNotNull(results);
@@ -111,14 +111,14 @@ public class GlossaryTest {
         Assert.assertEquals(0, results.getResults().size());
 
         // add a second category and verify there are we get the results again
-        search.setCategory(EnumSet.of(Category.GENERAL, Category.HEMATO));
+        search.setCategory(EnumSet.of(Category.SOLID_TUMOR, Category.HEMATO));
         results = SeerApi.connect().glossarySearch("latest", search);
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());
         Assert.assertTrue(results.getTotal().longValue() > 0);
         Assert.assertTrue(results.getResults().size() > 0);
-        Assert.assertEquals(Arrays.asList("cell"), results.getTerms());
+        Assert.assertEquals(Collections.singletonList("cell"), results.getTerms());
     }
 
 }

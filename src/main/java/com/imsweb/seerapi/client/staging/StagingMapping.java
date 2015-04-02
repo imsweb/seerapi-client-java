@@ -3,11 +3,14 @@
  */
 package com.imsweb.seerapi.client.staging;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 
 @JsonPropertyOrder({"id", "name", "inclusion_tables", "exclusion_tables", "initial_context", "tables"})
 public class StagingMapping {
@@ -16,7 +19,7 @@ public class StagingMapping {
     private String _name;
     private List<StagingTablePath> _inclusionTables;
     private List<StagingTablePath> _exclusionTables;
-    private List<StagingKeyValue> _initialContext;
+    private Set<StagingKeyValue> _initialContext;
     private List<StagingTablePath> _tablePaths;
 
     /**
@@ -72,17 +75,18 @@ public class StagingMapping {
     }
 
     @JsonProperty("initial_context")
-    public List<StagingKeyValue> getInitialContext() {
+    public Set<StagingKeyValue> getInitialContext() {
         return _initialContext;
     }
 
-    public void setInitialContext(List<StagingKeyValue> initialContext) {
+    @JsonDeserialize(as = LinkedHashSet.class)
+    public void setInitialContext(Set<StagingKeyValue> initialContext) {
         _initialContext = initialContext;
     }
 
     public void addInitialContext(String key, String value) {
         if (_initialContext == null)
-            _initialContext = new ArrayList<StagingKeyValue>();
+            _initialContext = new HashSet<StagingKeyValue>();
 
         _initialContext.add(new StagingKeyValue(key, value));
     }

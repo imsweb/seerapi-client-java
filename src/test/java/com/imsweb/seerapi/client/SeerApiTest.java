@@ -13,12 +13,12 @@ public class SeerApiTest {
 
     @Test(expected = NotAuthorizedException.class)
     public void testBadApiKeyAndURL() throws IOException {
-        SeerApi.connect("https://api.seer.cancer.gov/rest/", "BAD KEY").csVersions();
+        SeerApi.connect("https://api.seer.cancer.gov/rest/", "BAD KEY").diseaseVersions();
     }
 
     @Test(expected = NotAuthorizedException.class)
     public void testBadApiKey() throws IOException {
-        SeerApi.connect("BAD KEY").csVersions();
+        SeerApi.connect("BAD KEY").diseaseVersions();
     }
 
 }

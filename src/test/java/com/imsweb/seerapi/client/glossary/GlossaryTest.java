@@ -60,9 +60,9 @@ public class GlossaryTest {
 
     @Test
     public void testGlossaryChangelog() throws IOException {
-        List<GlossaryChangelog> changes = SeerApi.connect().glossaryChangelogs("latest", null, null, 1);
+        GlossaryChangelogResults results = SeerApi.connect().glossaryChangelogs("latest", null, null, 1);
 
-        Assert.assertNotNull(changes);
+        Assert.assertNotNull(results);
 
         // TODO since all the glossary items were removed from the production database, this needs to be commented out; it will return when they are published again
 

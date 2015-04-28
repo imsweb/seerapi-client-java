@@ -5,6 +5,7 @@ package com.imsweb.seerapi.client.rx;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class RxTest {
         Assert.assertTrue(rx.getRemarks().startsWith("Phase II ALL"));
         Assert.assertNull(rx.getEvsId());
         Assert.assertNull(rx.getAbbreviation());
-        Assert.assertEquals(Arrays.asList("Chemotherapy"), rx.getCategory());
+        Assert.assertEquals(Collections.singletonList("Chemotherapy"), rx.getCategory());
         Assert.assertTrue(rx.getSubcategory().size() > 0);
         Assert.assertNull(rx.getNscNumber());
         Assert.assertNull(rx.getDrugs());
@@ -59,21 +60,16 @@ public class RxTest {
         Assert.assertNull(rx.getScore());
         Assert.assertEquals(Arrays.asList("neuroblastoma", "Pediatric ALL"), rx.getPrimarySite());
         Assert.assertNull(rx.getHistory());
-
-        //        Assert.assertEquals(1, rx.getHistory().size());
-        //
-        //        RxHistoryEvent event = rx.getHistory().get(0);
-        //        Assert.assertEquals("cyrj@imsweb.com", event.getUser());
-        //        Assert.assertNotNull(event.getDate());
-        //        Assert.assertNull(event.getOld());
-        //        Assert.assertNull(event.getNew());
     }
 
     @Test
     public void testRxChangelog() throws IOException {
-        List<RxChangelog> changes = SeerApi.connect().rxChangelogs("latest", "2013-07-30", null, 1);
+        RxChangelogResults results = SeerApi.connect().rxChangelogs("latest", "2013-07-30", null, 1);
 
-        Assert.assertNotNull(changes);
+        Assert.assertNotNull(results);
+
+        List<RxChangelog> changes = results.getChangelogs();
+
         Assert.assertEquals(1, changes.size());
         Assert.assertNotNull(changes.get(0).getUser());
         Assert.assertEquals("latest", changes.get(0).getVersion());
@@ -82,8 +78,7 @@ public class RxTest {
 
         Assert.assertNotNull(changelog.getUser());
         Assert.assertEquals("latest", changelog.getVersion());
-        Assert.assertTrue(changelog.getId().length() > 0);
-        Assert.assertNull(changelog.getAdds());
+        Assert.assertTrue(changelog.getAdds().size() > 0);
         Assert.assertTrue(changelog.getMods().size() > 0);
         Assert.assertNull(changelog.getDeletes());
         Assert.assertNotNull(changelog.getDate());
@@ -105,7 +100,7 @@ public class RxTest {
         Assert.assertEquals(25, results.getCount().longValue());
         Assert.assertEquals(7, results.getTotal().longValue());
         Assert.assertEquals(7, results.getResults().size());
-        Assert.assertEquals(Arrays.asList("abt"), results.getTerms());
+        Assert.assertEquals(Collections.singletonList("abt"), results.getTerms());
 
         search.setMode(SearchMode.OR);
         search.setStatus("TEST");
@@ -120,7 +115,7 @@ public class RxTest {
         search.setOffset(0);
         search.setOrderBy("name");
         search.setOutputType(OutputType.MIN);
-        search.setCategory(new HashSet<String>(Arrays.asList("category")));
+        search.setCategory(new HashSet<String>(Collections.singletonList("category")));
         search.setDoNotCode(DoNoCodeValue.YES);
         results = SeerApi.connect().rxSearch("latest", search);
 

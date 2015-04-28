@@ -10,8 +10,6 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class RxChangelog {
 
-    @JsonProperty("id")
-    protected String _displayId;
     @JsonProperty("adds")
     private List<RxChangelogEntry> _adds;
     @JsonProperty("deletes")
@@ -26,10 +24,6 @@ public class RxChangelog {
     private String _version;
     @JsonProperty("description")
     private String _description;
-
-    public String getId() {
-        return _displayId;
-    }
 
     public List<RxChangelogEntry> getAdds() {
         return _adds;

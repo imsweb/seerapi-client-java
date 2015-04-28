@@ -10,8 +10,6 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class DiseaseChangelog {
 
-    @JsonProperty("id")
-    protected String _displayId;
     @JsonProperty("adds")
     private List<DiseaseChangelogEntry> _adds;
     @JsonProperty("deletes")
@@ -26,10 +24,6 @@ public class DiseaseChangelog {
     private String _version;
     @JsonProperty("description")
     private String _description;
-
-    public String getId() {
-        return _displayId;
-    }
 
     public List<DiseaseChangelogEntry> getAdds() {
         return _adds;

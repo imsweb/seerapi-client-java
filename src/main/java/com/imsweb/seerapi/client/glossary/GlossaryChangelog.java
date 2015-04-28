@@ -3,7 +3,6 @@
  */
 package com.imsweb.seerapi.client.glossary;
 
-
 import java.util.Date;
 import java.util.List;
 
@@ -11,8 +10,6 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class GlossaryChangelog {
 
-    @JsonProperty("id")
-    protected String _displayId;
     @JsonProperty("adds")
     private List<GlossaryChangelogEntry> _adds;
     @JsonProperty("deletes")
@@ -27,10 +24,6 @@ public class GlossaryChangelog {
     private String _version;
     @JsonProperty("description")
     private String _description;
-
-    public String getId() {
-        return _displayId;
-    }
 
     public List<GlossaryChangelogEntry> getAdds() {
         return _adds;

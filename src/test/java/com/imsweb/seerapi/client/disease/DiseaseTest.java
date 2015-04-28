@@ -4,7 +4,7 @@
 package com.imsweb.seerapi.client.disease;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -161,7 +161,7 @@ public class DiseaseTest {
         Assert.assertEquals(25, results.getCount().longValue());
         Assert.assertEquals(3, results.getTotal().longValue());
         Assert.assertEquals(3, results.getResults().size());
-        Assert.assertEquals(Arrays.asList("basophilic"), results.getTerms());
+        Assert.assertEquals(Collections.singletonList("basophilic"), results.getTerms());
 
         search.setSiteCategory("BAD_VALUE");
         results = SeerApi.connect().diseaseSearch("latest", search);
@@ -199,7 +199,7 @@ public class DiseaseTest {
         Assert.assertEquals(25, results.getCount().longValue());
         Assert.assertEquals(4, results.getTotal().longValue());
         Assert.assertEquals(4, results.getResults().size());
-        Assert.assertEquals(Arrays.asList("basophilic"), results.getTerms());
+        Assert.assertEquals(Collections.singletonList("basophilic"), results.getTerms());
 
     }
 
@@ -214,7 +214,7 @@ public class DiseaseTest {
         partial.setIcdO3Effective(new YearRange(2001, null));
         partial.setIcdO2Effective(new YearRange(1992, 2000));
         partial.setIcdO1Effective(new YearRange(1978, 2001));
-        partial.setPrimarySite(Arrays.asList(new SiteRange("C421", "C421")));
+        partial.setPrimarySite(Collections.singletonList(new SiteRange("C421", "C421")));
 
         Disease result = SeerApi.connect().diseaseReportability(partial);
 
@@ -224,17 +224,16 @@ public class DiseaseTest {
 
     @Test
     public void testDiseaseChangelog() throws IOException {
-        List<DiseaseChangelog> changes = SeerApi.connect().diseaseChangelogs("latest", null, "2013-07-30", 1);
+        DiseaseChangelogResults results = SeerApi.connect().diseaseChangelogs("latest", null, "2013-07-30", 1);
 
-        Assert.assertNotNull(changes);
-        Assert.assertEquals(1, changes.size());
-        Assert.assertNotNull(changes.get(0).getUser());
+        Assert.assertNotNull(results);
+        Assert.assertEquals(1, results.getChangelogs().size());
+        Assert.assertNotNull(results.getChangelogs().get(0).getUser());
 
-        DiseaseChangelog changelog = changes.get(0);
+        DiseaseChangelog changelog = results.getChangelogs().get(0);
 
         Assert.assertNotNull(changelog.getUser());
         Assert.assertEquals("latest", changelog.getVersion());
-        Assert.assertTrue(changelog.getId().length() > 0);
         Assert.assertEquals(300, changelog.getAdds().size());
         Assert.assertNull(changelog.getMods());
         Assert.assertNull(changelog.getDeletes());

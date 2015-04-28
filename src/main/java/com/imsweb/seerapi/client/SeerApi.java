@@ -29,7 +29,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.glassfish.jersey.message.GZipEncoder;
 
 import com.imsweb.seerapi.client.disease.Disease;
-import com.imsweb.seerapi.client.disease.DiseaseChangelog;
+import com.imsweb.seerapi.client.disease.DiseaseChangelogResults;
 import com.imsweb.seerapi.client.disease.DiseaseSearch;
 import com.imsweb.seerapi.client.disease.DiseaseSearchResults;
 import com.imsweb.seerapi.client.disease.DiseaseVersion;
@@ -37,7 +37,7 @@ import com.imsweb.seerapi.client.disease.PrimarySite;
 import com.imsweb.seerapi.client.disease.SamePrimaries;
 import com.imsweb.seerapi.client.disease.SiteCategory;
 import com.imsweb.seerapi.client.glossary.Glossary;
-import com.imsweb.seerapi.client.glossary.GlossaryChangelog;
+import com.imsweb.seerapi.client.glossary.GlossaryChangelogResults;
 import com.imsweb.seerapi.client.glossary.GlossarySearch;
 import com.imsweb.seerapi.client.glossary.GlossarySearchResults;
 import com.imsweb.seerapi.client.glossary.GlossaryVersion;
@@ -45,7 +45,7 @@ import com.imsweb.seerapi.client.naaccr.NaaccrField;
 import com.imsweb.seerapi.client.naaccr.NaaccrFieldName;
 import com.imsweb.seerapi.client.naaccr.NaaccrVersion;
 import com.imsweb.seerapi.client.rx.Rx;
-import com.imsweb.seerapi.client.rx.RxChangelog;
+import com.imsweb.seerapi.client.rx.RxChangelogResults;
 import com.imsweb.seerapi.client.rx.RxSearch;
 import com.imsweb.seerapi.client.rx.RxSearchResults;
 import com.imsweb.seerapi.client.rx.RxVersion;
@@ -291,16 +291,16 @@ public final class SeerApi {
      * @param fromDate if not null, only include changes from this date forward (YYYY-MM-DD)
      * @param toDate if not null, only include changes prior to this date (YYYY-MM-DD)
      * @param count if not null, limit the number returned
-     * @return a list of DiseaseChangelog objects
+     * @return a list of DiseaseChangelogResults objects
      */
-    public List<DiseaseChangelog> diseaseChangelogs(String version, String fromDate, String toDate, Integer count) {
+    public DiseaseChangelogResults diseaseChangelogs(String version, String fromDate, String toDate, Integer count) {
         WebTarget target = createTarget("/disease/{version}/changelog")
                 .resolveTemplate("version", version)
                 .queryParam("from", fromDate)
                 .queryParam("to", toDate)
                 .queryParam("count", count);
 
-        return getBuilder(target).get(new GenericType<List<DiseaseChangelog>>() {});
+        return getBuilder(target).get(DiseaseChangelogResults.class);
     }
 
     /**
@@ -478,16 +478,16 @@ public final class SeerApi {
      * @param fromDate if not null, only include changes from this date forward (YYYY-MM-DD)
      * @param toDate if not null, only include changes prior to this date (YYYY-MM-DD)
      * @param count if not null, limit the number returned
-     * @return a list of GlossaryChangelog objects
+     * @return a list of GlossaryChangelogResults objects
      */
-    public List<GlossaryChangelog> glossaryChangelogs(String version, String fromDate, String toDate, Integer count) {
+    public GlossaryChangelogResults glossaryChangelogs(String version, String fromDate, String toDate, Integer count) {
         WebTarget target = createTarget("/glossary/{version}/changelog")
                 .resolveTemplate("version", version)
                 .queryParam("from", fromDate)
                 .queryParam("to", toDate)
                 .queryParam("count", count);
 
-        return getBuilder(target).get(new GenericType<List<GlossaryChangelog>>() {});
+        return getBuilder(target).get(GlossaryChangelogResults.class);
     }
 
     /**
@@ -602,16 +602,16 @@ public final class SeerApi {
      * @param fromDate if not null, only include changes from this date forward (YYYY-MM-DD)
      * @param toDate if not null, only include changes prior to this date (YYYY-MM-DD)
      * @param count if not null, limit the number returned
-     * @return a list of RxChangelog objects
+     * @return a list of RxChangelogResults objects
      */
-    public List<RxChangelog> rxChangelogs(String version, String fromDate, String toDate, Integer count) {
+    public RxChangelogResults rxChangelogs(String version, String fromDate, String toDate, Integer count) {
         WebTarget target = createTarget("/rx/{version}/changelog")
                 .resolveTemplate("version", version)
                 .queryParam("from", fromDate)
                 .queryParam("to", toDate)
                 .queryParam("count", count);
 
-        return getBuilder(target).get(new GenericType<List<RxChangelog>>() {});
+        return getBuilder(target).get(RxChangelogResults.class);
     }
 
     /**

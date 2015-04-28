@@ -84,13 +84,13 @@ apikey=your_api_key
 Making calls to the API is as simple as this if you use the local configuration
 
 ```java
-CsSchema schemaById = SeerApi.connect().csSchema("latest", 105);
+StagingSchema schema = SeerApi.connect().stagingSchemaById("cs", "02.05.50", "brain");
 ```
 
 or the key can be passed in the `connect` call.
 
 ```java
-CsSchema schemaById = SeerApi.connect("your_api_key").csSchema("latest", 105);
+StagingSchema schema = SeerApi.connect("your_api_key").stagingSchemaById("cs", "02.05.50", "brain");
 ```
 
 For a complete description of all available API inputs and outputs, see the SEER*API

@@ -18,6 +18,17 @@ import org.codehaus.jackson.map.annotate.JsonDeserialize;
         "schema_discriminators", "initial_context", "inputs", "mappings", "involved_tables", "last_modified"})
 public class StagingSchema {
 
+    public enum StagingInputErrorHandler {
+        // continue staging
+        CONTINUE,
+
+        // stop staging and return an failed result
+        FAIL,
+
+        // if the failed input is used for staging, stop staging and return an failed result; otherwise continue staging
+        FAIL_WHEN_USED_FOR_STAGING
+    }
+
     private String _displayId;
     private String _algorithm;
     private String _version;
@@ -34,6 +45,7 @@ public class StagingSchema {
     private Set<StagingKeyValue> _initialContext;
     private List<StagingMapping> _mappings;
     private Set<String> _involvedTables;
+    private StagingInputErrorHandler _onInvalidInput;
 
     /**
      * Morphia requires a default constructor
@@ -191,5 +203,14 @@ public class StagingSchema {
     @JsonDeserialize(as = LinkedHashSet.class)
     public void setInvolvedTables(Set<String> involvedTables) {
         _involvedTables = involvedTables;
+    }
+
+    @JsonProperty("on_invalid_input")
+    public StagingInputErrorHandler getOnInvalidInput() {
+        return _onInvalidInput;
+    }
+
+    public void setOnInvalidInput(StagingInputErrorHandler onInvalidInput) {
+        _onInvalidInput = onInvalidInput;
     }
 }

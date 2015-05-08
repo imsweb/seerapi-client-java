@@ -17,11 +17,9 @@ public class StagingSchemaInput {
     private String _key;
     private String _name;
     private Integer _naaccrItem;
-    private String _values;
     private String _default;
     private String _table;
     private Boolean _usedForStaging;
-    private Boolean _failOnInvalid;
     private String _unit;
     private Integer _decimalPlaces;
     private Set<String> _metadata;
@@ -51,16 +49,13 @@ public class StagingSchemaInput {
         setKey(other.getKey());
         setName(other.getName());
         setNaaccrItem(other.getNaaccrItem());
-        setRawValues(other.getRawValues());
         setDefault(other.getDefault());
         setTable(other.getTable());
         if (other.getMetadata() != null)
             setMetadata(new HashSet<String>(other.getMetadata()));
         setUsedForStaging(other.getUsedForStaging());
-        setFailOnInvalid(other.getFailOnInvalid());
         setUnit(other.getUnit());
         setDecimalPlaces(other.getDecimalPlaces());
-        setRawValues(other.getRawValues());
     }
 
     @JsonProperty("key")
@@ -90,15 +85,6 @@ public class StagingSchemaInput {
         _naaccrItem = naaccrItem;
     }
 
-    @JsonProperty("values")
-    public String getRawValues() {
-        return _values;
-    }
-
-    public void setRawValues(String values) {
-        _values = values;
-    }
-
     @JsonProperty("default")
     public String getDefault() {
         return _default;
@@ -124,15 +110,6 @@ public class StagingSchemaInput {
 
     public void setUsedForStaging(Boolean usedForStaging) {
         _usedForStaging = usedForStaging;
-    }
-
-    @JsonProperty("fail_on_invalid")
-    public Boolean getFailOnInvalid() {
-        return _failOnInvalid;
-    }
-
-    public void setFailOnInvalid(Boolean failOnInvalid) {
-        _failOnInvalid = failOnInvalid;
     }
 
     @JsonProperty("decimal_places")

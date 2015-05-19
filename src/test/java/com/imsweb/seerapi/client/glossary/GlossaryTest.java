@@ -9,12 +9,21 @@ import java.util.EnumSet;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
+import com.imsweb.seerapi.client.SeerApiBuilder;
 import com.imsweb.seerapi.client.glossary.Glossary.Category;
 
 public class GlossaryTest {
+
+    private static SeerApi _SEERAPI;
+
+    @BeforeClass
+    public static void setup() {
+        _SEERAPI = new SeerApiBuilder().connect();
+    }
 
     @Test
     public void testGlossaryCategory() {
@@ -23,7 +32,7 @@ public class GlossaryTest {
 
     @Test
     public void testGlossaryVersions() throws IOException {
-        List<GlossaryVersion> versions = SeerApi.connect().glossaryVersions();
+        List<GlossaryVersion> versions = _SEERAPI.glossaryVersions();
 
         Assert.assertTrue(versions.size() > 0);
         for (GlossaryVersion version : versions) {
@@ -35,10 +44,10 @@ public class GlossaryTest {
 
     @Test
     public void testGlossaryById() throws IOException {
-        GlossarySearchResults results = SeerApi.connect().glossarySearch("latest", new GlossarySearch("Lymphangiogram"));
+        GlossarySearchResults results = _SEERAPI.glossarySearch("latest", new GlossarySearch("Lymphangiogram"));
         Assert.assertTrue(results.getCount() > 0);
 
-        Glossary glossary = SeerApi.connect().glossaryById("latest", results.getResults().get(0).getId());
+        Glossary glossary = _SEERAPI.glossaryById("latest", results.getResults().get(0).getId());
 
         Assert.assertNotNull(glossary);
         Assert.assertEquals("Lymphangiogram", glossary.getName());
@@ -60,7 +69,7 @@ public class GlossaryTest {
 
     @Test
     public void testGlossaryChangelog() throws IOException {
-        GlossaryChangelogResults results = SeerApi.connect().glossaryChangelogs("latest", null, null, 1);
+        GlossaryChangelogResults results = _SEERAPI.glossaryChangelogs("latest", null, null, 1);
 
         Assert.assertNotNull(results);
 
@@ -93,7 +102,7 @@ public class GlossaryTest {
     public void testGlossarySearch() throws IOException {
         GlossarySearch search = new GlossarySearch("cell");
 
-        GlossarySearchResults results = SeerApi.connect().glossarySearch("latest", search);
+        GlossarySearchResults results = _SEERAPI.glossarySearch("latest", search);
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());
@@ -103,7 +112,7 @@ public class GlossaryTest {
 
         // add the category and verify there are no results
         search.setCategory(EnumSet.of(Category.SOLID_TUMOR));
-        results = SeerApi.connect().glossarySearch("latest", search);
+        results = _SEERAPI.glossarySearch("latest", search);
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());
@@ -112,7 +121,7 @@ public class GlossaryTest {
 
         // add a second category and verify there are we get the results again
         search.setCategory(EnumSet.of(Category.SOLID_TUMOR, Category.HEMATO));
-        results = SeerApi.connect().glossarySearch("latest", search);
+        results = _SEERAPI.glossarySearch("latest", search);
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());

@@ -7,16 +7,25 @@ import java.io.IOException;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
+import com.imsweb.seerapi.client.SeerApiBuilder;
 import com.imsweb.seerapi.client.shared.Version;
 
 public class SurgeryTest {
 
+    private static SeerApi _SEERAPI;
+
+    @BeforeClass
+    public static void setup() {
+        _SEERAPI = new SeerApiBuilder().connect();
+    }
+
     @Test
     public void testSiteSpecificSurgeryVersions() throws IOException {
-        List<Version> versions = SeerApi.connect().siteSpecificSurgeryVersions();
+        List<Version> versions = _SEERAPI.siteSpecificSurgeryVersions();
 
         Assert.assertTrue(versions.size() > 0);
         for (Version version : versions) {
@@ -27,7 +36,7 @@ public class SurgeryTest {
 
     @Test
     public void testSiteSpecificSurgeryTables() throws IOException {
-        List<String> titles = SeerApi.connect().siteSpecificSurgeryTables("2014");
+        List<String> titles = _SEERAPI.siteSpecificSurgeryTables("2014");
 
         Assert.assertTrue(titles.size() > 0);
         Assert.assertTrue(titles.contains("Oral Cavity"));
@@ -35,7 +44,7 @@ public class SurgeryTest {
 
     @Test
     public void testSiteSpecificSurgeryTable() throws IOException {
-        SurgeryTable table = SeerApi.connect().siteSpecificSurgeryTable("2014", "Oral Cavity", null, null);
+        SurgeryTable table = _SEERAPI.siteSpecificSurgeryTable("2014", "Oral Cavity", null, null);
 
         Assert.assertNotNull(table);
         Assert.assertEquals("Oral Cavity", table.getTitle());
@@ -49,8 +58,8 @@ public class SurgeryTest {
         Assert.assertNotNull(row.getDescription());
         Assert.assertEquals(Integer.valueOf(0), row.getLevel());
         Assert.assertFalse(row.getLineBreak());
-        
-        table = SeerApi.connect().siteSpecificSurgeryTable("2014", null, "C001", "8000");
+
+        table = _SEERAPI.siteSpecificSurgeryTable("2014", null, "C001", "8000");
         Assert.assertEquals("Oral Cavity", table.getTitle());
     }
 }

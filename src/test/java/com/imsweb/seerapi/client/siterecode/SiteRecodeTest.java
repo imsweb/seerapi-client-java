@@ -8,15 +8,24 @@ import java.io.IOException;
 import javax.ws.rs.BadRequestException;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
+import com.imsweb.seerapi.client.SeerApiBuilder;
 
 public class SiteRecodeTest {
 
+    private static SeerApi _SEERAPI;
+
+    @BeforeClass
+    public static void setup() {
+        _SEERAPI = new SeerApiBuilder().connect();
+    }
+
     @Test(expected = BadRequestException.class)
     public void testBadRequestExceptiion() throws IOException {
-        SeerApi.connect().siteRecode("C379", null);
+        _SEERAPI.siteRecode("C379", null);
     }
 
     @Test
@@ -24,7 +33,7 @@ public class SiteRecodeTest {
         String message = "";
 
         try {
-            SeerApi.connect().siteRecode("C379", null);
+            _SEERAPI.siteRecode("C379", null);
         }
         catch (BadRequestException e) {
             message = e.getMessage();
@@ -39,14 +48,14 @@ public class SiteRecodeTest {
 
     @Test
     public void testSiteRecordVersion() throws IOException {
-        String version = SeerApi.connect().siteRecodeVersion();
+        String version = _SEERAPI.siteRecodeVersion();
         Assert.assertNotNull(version);
         Assert.assertTrue(version.length() > 0);
     }
 
     @Test
     public void testSiteRecode() throws IOException {
-        SiteRecode recode = SeerApi.connect().siteRecode("C379", "9650");
+        SiteRecode recode = _SEERAPI.siteRecode("C379", "9650");
 
         Assert.assertEquals("C379", recode.getSite());
         Assert.assertEquals("9650", recode.getHist());

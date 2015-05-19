@@ -10,9 +10,11 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
+import com.imsweb.seerapi.client.SeerApiBuilder;
 import com.imsweb.seerapi.client.publishable.PublishableSearch.OutputType;
 import com.imsweb.seerapi.client.publishable.PublishableSearch.SearchMode;
 import com.imsweb.seerapi.client.rx.Rx.DoNoCodeValue;
@@ -20,9 +22,16 @@ import com.imsweb.seerapi.client.rx.Rx.Type;
 
 public class RxTest {
 
+    private static SeerApi _SEERAPI;
+
+    @BeforeClass
+    public static void setup() {
+        _SEERAPI = new SeerApiBuilder().connect();
+    }
+
     @Test
     public void testRxVersions() throws IOException {
-        List<RxVersion> versions = SeerApi.connect().rxVersions();
+        List<RxVersion> versions = _SEERAPI.rxVersions();
 
         Assert.assertTrue(versions.size() > 0);
         for (RxVersion version : versions) {
@@ -34,7 +43,7 @@ public class RxTest {
 
     @Test
     public void testRxById() throws IOException {
-        Rx rx = SeerApi.connect().rxById("latest", "53c44afe102c1290262dc672");
+        Rx rx = _SEERAPI.rxById("latest", "53c44afe102c1290262dc672");
 
         Assert.assertNotNull(rx);
         Assert.assertEquals("ABT-751", rx.getName());
@@ -64,7 +73,7 @@ public class RxTest {
 
     @Test
     public void testRxChangelog() throws IOException {
-        RxChangelogResults results = SeerApi.connect().rxChangelogs("latest", "2013-07-30", null, 1);
+        RxChangelogResults results = _SEERAPI.rxChangelogs("latest", "2013-07-30", null, 1);
 
         Assert.assertNotNull(results);
 
@@ -78,7 +87,7 @@ public class RxTest {
 
         Assert.assertNotNull(changelog.getUser());
         Assert.assertEquals("latest", changelog.getVersion());
-        Assert.assertTrue(changelog.getAdds().size() > 0);
+        Assert.assertNull(changelog.getAdds());
         Assert.assertTrue(changelog.getMods().size() > 0);
         Assert.assertNull(changelog.getDeletes());
         Assert.assertNotNull(changelog.getDate());
@@ -94,7 +103,7 @@ public class RxTest {
     @Test
     public void testRxSearch() throws IOException {
         RxSearch search = new RxSearch("abt", Type.DRUG);
-        RxSearchResults results = SeerApi.connect().rxSearch("latest", search);
+        RxSearchResults results = _SEERAPI.rxSearch("latest", search);
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());
@@ -117,7 +126,7 @@ public class RxTest {
         search.setOutputType(OutputType.MIN);
         search.setCategory(new HashSet<String>(Collections.singletonList("category")));
         search.setDoNotCode(DoNoCodeValue.YES);
-        results = SeerApi.connect().rxSearch("latest", search);
+        results = _SEERAPI.rxSearch("latest", search);
 
         Assert.assertNotNull(results);
         Assert.assertEquals(100, results.getCount().longValue());

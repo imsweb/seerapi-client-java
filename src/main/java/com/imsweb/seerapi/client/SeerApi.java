@@ -678,4 +678,114 @@ public final class SeerApi {
         return getBuilder(target).post(Entity.json(data.getInput()), StagingData.class);
     }
 
+    /**
+     * Save a new schema. You must have the appropriate permissions.
+     * @param algorithm an algorithm identifier
+     * @param version a version
+     * @param schema a schema object
+     * @param comment a comment for the history
+     * @return
+     */
+    public StagingSchema stagingCreateSchema(String algorithm, String version, StagingSchema schema, String comment) {
+        WebTarget target = createTarget("/staging/{algorithm}/{version}/schema")
+                .resolveTemplate("algorithm", algorithm)
+                .resolveTemplate("version", version);
+
+        target = target.queryParam("comment", comment);
+
+        return getBuilder(target).post(Entity.json(schema), StagingSchema.class);
+    }
+
+    /**
+     * Update an existing schema.  You must have appropriate permissions.
+     * @param algorithm an algorithm identifier
+     * @param version a version
+     * @param schema a schema object
+     * @param comment a comment for the history
+     * @return
+     */
+    public StagingSchema stagingUpdateSchema(String algorithm, String version, StagingSchema schema, String comment) {
+        WebTarget target = createTarget("/staging/{algorithm}/{version}/schema/{id}")
+                .resolveTemplate("algorithm", algorithm)
+                .resolveTemplate("version", version)
+                .resolveTemplate("id", schema.getId());
+
+        target = target.queryParam("comment", comment);
+
+        return getBuilder(target).put(Entity.json(schema), StagingSchema.class);
+    }
+
+    /**
+     * Delete an existing schema.  You must have appropriate permissions.
+     * @param algorithm an algorithm identifier
+     * @param version a version
+     * @param schema a schema object
+     * @param comment a comment for the history
+     */
+    public void stagingDeleteSchema(String algorithm, String version, StagingSchema schema, String comment) {
+        WebTarget target = createTarget("/staging/{algorithm}/{version}/schema/{id}")
+                .resolveTemplate("algorithm", algorithm)
+                .resolveTemplate("version", version)
+                .resolveTemplate("id", schema.getId());
+
+        target = target.queryParam("comment", comment);
+
+        getBuilder(target).delete();
+    }
+
+    /**
+     * Save a new table. You must have the appropriate permissions.
+     * @param algorithm an algorithm identifier
+     * @param version a version
+     * @param table a table object
+     * @param comment a comment for the history
+     * @return
+     */
+    public StagingTable stagingCreateTable(String algorithm, String version, StagingTable table, String comment) {
+        WebTarget target = createTarget("/staging/{algorithm}/{version}/table")
+                .resolveTemplate("algorithm", algorithm)
+                .resolveTemplate("version", version);
+
+        target = target.queryParam("comment", comment);
+
+        return getBuilder(target).post(Entity.json(table), StagingTable.class);
+    }
+
+    /**
+     * Update an existing table.  You must have appropriate permissions.
+     * @param algorithm an algorithm identifier
+     * @param version a version
+     * @param table a table object
+     * @param comment a comment for the history
+     * @return
+     */
+    public StagingTable stagingUpdateTable(String algorithm, String version, StagingTable table, String comment) {
+        WebTarget target = createTarget("/staging/{algorithm}/{version}/table/{id}")
+                .resolveTemplate("algorithm", algorithm)
+                .resolveTemplate("version", version)
+                .resolveTemplate("id", table.getId());
+
+        target = target.queryParam("comment", comment);
+
+        return getBuilder(target).put(Entity.json(table), StagingTable.class);
+    }
+
+    /**
+     * Delete an existing table.  You must have appropriate permissions.
+     * @param algorithm an algorithm identifier
+     * @param version a version
+     * @param table a table object
+     * @param comment a comment for the history
+     */
+    public void stagingDeleteTable(String algorithm, String version, StagingTable table, String comment) {
+        WebTarget target = createTarget("/staging/{algorithm}/{version}/table/{id}")
+                .resolveTemplate("algorithm", algorithm)
+                .resolveTemplate("version", version)
+                .resolveTemplate("id", table.getId());
+
+        target = target.queryParam("comment", comment);
+
+        getBuilder(target).delete();
+    }
+
 }

@@ -3,7 +3,7 @@
  */
 package com.imsweb.seerapi.client.rx;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class RxChangelogEntry {
 

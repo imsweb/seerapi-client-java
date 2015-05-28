@@ -21,8 +21,9 @@ repositories {
 }
 
 dependencies {
-    compile 'org.glassfish.jersey.core:jersey-client:2.7'
-    compile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.7'
+    compile 'com.squareup.okhttp:okhttp:2.4.0'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.squareup.retrofit:converter-jackson:1.9.0'
 
     testCompile 'junit:junit:4.11'
 }

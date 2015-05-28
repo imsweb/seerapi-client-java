@@ -5,7 +5,7 @@ package com.imsweb.seerapi.client.naaccr;
 
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class NaaccrField {
 

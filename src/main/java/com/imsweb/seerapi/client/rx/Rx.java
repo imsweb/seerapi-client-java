@@ -2,7 +2,7 @@ package com.imsweb.seerapi.client.rx;
 
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.imsweb.seerapi.client.publishable.Publishable;
 

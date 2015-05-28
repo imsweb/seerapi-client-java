@@ -5,7 +5,7 @@ package com.imsweb.seerapi.client.rx;
 
 import java.util.Date;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class RxHistoryEvent {
 

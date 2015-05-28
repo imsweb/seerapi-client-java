@@ -3,7 +3,7 @@
  */
 package com.imsweb.seerapi.client.disease;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class YearRangeString extends YearRange {
 

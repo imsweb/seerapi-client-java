@@ -5,7 +5,7 @@ package com.imsweb.seerapi.client.publishable;
 
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PublishableSearchResults {
 

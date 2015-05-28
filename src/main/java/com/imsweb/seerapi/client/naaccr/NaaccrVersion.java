@@ -1,6 +1,6 @@
 package com.imsweb.seerapi.client.naaccr;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class NaaccrVersion {
 

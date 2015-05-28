@@ -3,8 +3,8 @@
  */
 package com.imsweb.seerapi.client.glossary;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.annotate.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({"name", "url", "edition", "year", "page"})
 public class GlossaryResource {

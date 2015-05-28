@@ -10,7 +10,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.BadRequestException;
-import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.SeerApiBuilder;
 
 public class SiteRecodeTest {
@@ -19,8 +18,7 @@ public class SiteRecodeTest {
 
     @BeforeClass
     public static void setup() {
-        SeerApi api = new SeerApiBuilder().connect();
-        _SITE_RECODE = api.siteRecode();
+        _SITE_RECODE = new SeerApiBuilder().connect().siteRecode();
     }
 
     @Test(expected = BadRequestException.class)

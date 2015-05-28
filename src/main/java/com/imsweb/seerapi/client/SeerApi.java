@@ -17,6 +17,7 @@ import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.converter.JacksonConverter;
 
+import com.imsweb.seerapi.client.naaccr.NaaccrService;
 import com.imsweb.seerapi.client.siterecode.SiteRecodeService;
 
 /**
@@ -79,6 +80,14 @@ public final class SeerApi {
     }
 
     /**
+     * Return the NAACCR service
+     * @return
+     */
+    public NaaccrService naaccr() {
+        return _restAdapter.create(NaaccrService.class);
+    }
+
+    /**
      * Return the site recode service
      * @return
      */
@@ -86,38 +95,6 @@ public final class SeerApi {
         return _restAdapter.create(SiteRecodeService.class);
     }
 
-    //    /**
-    //     * Return a collection of NaaccrVersion objects which descibe the available versions
-    //     * @return a list of the available NAACCR versions and information about each of them
-    //     */
-    //    public List<NaaccrVersion> naaccrVersions() {
-    //        WebTarget target = createTarget("/naaccr/versions");
-    //
-    //        return getBuilder(target).get(new GenericType<List<NaaccrVersion>>() {});
-    //    }
-    //
-    //    /**
-    //     * Return a list of all the field identifiers and names from a specified NAACCR version
-    //     * @param version NAACCR version
-    //     * @return a list of NaaccrFieldName objects
-    //     */
-    //    public List<NaaccrFieldName> naaccrFieldNames(String version) {
-    //        WebTarget target = createTarget("/naaccr/{version}").resolveTemplate("version", version);
-    //
-    //        return getBuilder(target).get(new GenericType<List<NaaccrFieldName>>() {});
-    //    }
-    //
-    //    /**
-    //     * Return a list of all the field identifiers and names from a specified NAACCR version
-    //     * @param version NAACCR version
-    //     * @param item NAACCR item number
-    //     * @return a list of NaaccrFieldName objects
-    //     */
-    //    public NaaccrField naaccrField(String version, Integer item) {
-    //        WebTarget target = createTarget("/naaccr/{version}/item/{item}").resolveTemplate("version", version).resolveTemplate("item", item);
-    //
-    //        return getBuilder(target).get(NaaccrField.class);
-    //    }
     //
     //    /**
     //     * Return a list of all disease versions and information about them

@@ -33,4 +33,20 @@ public class DiseaseHistoryEvent {
     public Disease getNew() {
         return _new;
     }
+
+    public void setUser(String user) {
+        _user = user;
+    }
+
+    public void setDate(Date date) {
+        _date = date;
+    }
+
+    public void setOld(Disease old) {
+        _old = old;
+    }
+
+    public void setNew(Disease aNew) {
+        _new = aNew;
+    }
 }

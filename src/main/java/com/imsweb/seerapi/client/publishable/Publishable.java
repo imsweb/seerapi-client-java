@@ -91,4 +91,56 @@ public class Publishable {
     public Set<KeywordMatch> getGlossaryMatches() {
         return _glossaryMatches;
     }
+
+    public void setId(String id) {
+        _id = id;
+    }
+
+    public void setName(String name) {
+        _name = name;
+    }
+
+    public void setVersion(String version) {
+        _version = version;
+    }
+
+    public void setHidden(Boolean hidden) {
+        _hidden = hidden;
+    }
+
+    public void setStatus(String status) {
+        _status = status;
+    }
+
+    public void setAssignedTo(String assignedTo) {
+        _assignedTo = assignedTo;
+    }
+
+    public void setFirstPublished(Date firstPublished) {
+        _firstPublished = firstPublished;
+    }
+
+    public void setLastModified(Date lastModified) {
+        _lastModified = lastModified;
+    }
+
+    public void setFingerprint(String fingerprint) {
+        _fingerprint = fingerprint;
+    }
+
+    public void setNote(String note) {
+        _note = note;
+    }
+
+    public void setFieldNotes(Map<String, String> fieldNotes) {
+        _fieldNotes = fieldNotes;
+    }
+
+    public void setScore(Integer score) {
+        _score = score;
+    }
+
+    public void setGlossaryMatches(Set<KeywordMatch> glossaryMatches) {
+        _glossaryMatches = glossaryMatches;
+    }
 }

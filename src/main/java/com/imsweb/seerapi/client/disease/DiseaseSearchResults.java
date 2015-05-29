@@ -17,4 +17,8 @@ public class DiseaseSearchResults extends PublishableSearchResults {
     public List<Disease> getResults() {
         return _results;
     }
+
+    public void setResults(List<Disease> results) {
+        _results = results;
+    }
 }

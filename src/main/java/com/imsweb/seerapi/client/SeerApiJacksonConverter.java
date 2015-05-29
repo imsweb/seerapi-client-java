@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,8 +38,11 @@ public class SeerApiJacksonConverter implements Converter {
         _mapper.configure(SerializationFeature.WRITE_NULL_MAP_VALUES, false);
         _mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
-        _mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        _mapper.setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.ANY);
+        _mapper.setVisibilityChecker(_mapper.getSerializationConfig().getDefaultVisibilityChecker()
+                .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
+                .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
 
         // set Date objects to output in readable customized format
         _mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
@@ -69,5 +71,13 @@ public class SeerApiJacksonConverter implements Converter {
         catch (JsonProcessingException | UnsupportedEncodingException e) {
             throw new AssertionError(e);
         }
+    }
+
+    /**
+     * Return the internal ObjectMapper
+     * @return
+     */
+    protected ObjectMapper getMapper() {
+        return _mapper;
     }
 }

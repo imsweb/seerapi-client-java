@@ -52,4 +52,32 @@ public class RxChangelog {
     public String getDescription() {
         return _description;
     }
+
+    public void setAdds(List<RxChangelogEntry> adds) {
+        _adds = adds;
+    }
+
+    public void setDeletes(List<RxChangelogEntry> deletes) {
+        _deletes = deletes;
+    }
+
+    public void setMods(List<RxChangelogEntry> mods) {
+        _mods = mods;
+    }
+
+    public void setUser(String user) {
+        _user = user;
+    }
+
+    public void setDate(Date date) {
+        _date = date;
+    }
+
+    public void setVersion(String version) {
+        _version = version;
+    }
+
+    public void setDescription(String description) {
+        _description = description;
+    }
 }

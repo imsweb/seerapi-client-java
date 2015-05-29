@@ -33,4 +33,20 @@ public class RxHistoryEvent {
     public Rx getNew() {
         return _new;
     }
+
+    public void setUser(String user) {
+        _user = user;
+    }
+
+    public void setDate(Date date) {
+        _date = date;
+    }
+
+    public void setOld(Rx old) {
+        _old = old;
+    }
+
+    public void setNew(Rx aNew) {
+        _new = aNew;
+    }
 }

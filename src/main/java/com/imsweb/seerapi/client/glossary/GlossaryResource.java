@@ -9,10 +9,15 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({"name", "url", "edition", "year", "page"})
 public class GlossaryResource {
 
+    @JsonProperty("name")
     private String _name;
+    @JsonProperty("url")
     private String _url;
+    @JsonProperty("page")
     private String _page;
+    @JsonProperty("edition")
     private String _edition;
+    @JsonProperty("year")
     private String _year;
 
     public GlossaryResource() {
@@ -22,7 +27,6 @@ public class GlossaryResource {
         _name = name;
     }
 
-    @JsonProperty("name")
     public String getName() {
         return _name;
     }
@@ -31,7 +35,6 @@ public class GlossaryResource {
         _name = name;
     }
 
-    @JsonProperty("url")
     public String getUrl() {
         return _url;
     }
@@ -40,7 +43,6 @@ public class GlossaryResource {
         _url = url;
     }
 
-    @JsonProperty("page")
     public String getPage() {
         return _page;
     }
@@ -49,7 +51,6 @@ public class GlossaryResource {
         _page = page;
     }
 
-    @JsonProperty("edition")
     public String getEdition() {
         return _edition;
     }
@@ -58,7 +59,6 @@ public class GlossaryResource {
         _edition = edition;
     }
 
-    @JsonProperty("year")
     public String getYear() {
         return _year;
     }

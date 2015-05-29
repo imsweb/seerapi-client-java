@@ -27,4 +27,16 @@ public class KeywordMatch {
     public Set<String> getCategory() {
         return _category;
     }
+
+    public void setId(String id) {
+        _id = id;
+    }
+
+    public void setKeyword(String keyword) {
+        _keyword = keyword;
+    }
+
+    public void setCategory(Set<String> category) {
+        _category = category;
+    }
 }

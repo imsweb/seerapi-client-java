@@ -52,4 +52,32 @@ public class GlossaryChangelog {
     public String getDescription() {
         return _description;
     }
+
+    public void setAdds(List<GlossaryChangelogEntry> adds) {
+        _adds = adds;
+    }
+
+    public void setDeletes(List<GlossaryChangelogEntry> deletes) {
+        _deletes = deletes;
+    }
+
+    public void setMods(List<GlossaryChangelogEntry> mods) {
+        _mods = mods;
+    }
+
+    public void setUser(String user) {
+        _user = user;
+    }
+
+    public void setDate(Date date) {
+        _date = date;
+    }
+
+    public void setVersion(String version) {
+        _version = version;
+    }
+
+    public void setDescription(String description) {
+        _description = description;
+    }
 }

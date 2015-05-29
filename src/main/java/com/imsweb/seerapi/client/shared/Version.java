@@ -24,4 +24,12 @@ public class Version {
     public Long getCount() {
         return _count;
     }
+
+    public void setVersion(String version) {
+        _version = version;
+    }
+
+    public void setCount(Long count) {
+        _count = count;
+    }
 }

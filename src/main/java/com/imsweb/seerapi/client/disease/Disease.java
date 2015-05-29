@@ -276,18 +276,60 @@ public class Disease extends Publishable {
         return _treatmentText;
     }
 
-    // setters are only needed for the reportability call
+    public void setHistory(List<DiseaseHistoryEvent> history) {
+        _history = history;
+    }
 
-    public void setType(Type type) {
-        _type = type;
+    public void setIcdO3Morphology(String icdO3Morphology) {
+        _icdO3Morphology = icdO3Morphology;
     }
 
     public void setPrimarySite(List<SiteRange> primarySite) {
         _primarySite = primarySite;
     }
 
-    public void setIcdO3Morphology(String icdO3Morphology) {
-        _icdO3Morphology = icdO3Morphology;
+    public void setPrimarySiteText(String primarySiteText) {
+        _primarySiteText = primarySiteText;
+    }
+
+    public void setSiteCategory(String siteCategory) {
+        _siteCategory = siteCategory;
+    }
+
+    public void setType(Type type) {
+        _type = type;
+    }
+
+    public void setValid(YearRange valid) {
+        _valid = valid;
+    }
+
+    public void setObsoleteNewCode(List<String> obsoleteNewCode) {
+        _obsoleteNewCode = obsoleteNewCode;
+    }
+
+    public void setReportable(List<YearRange> reportable) {
+        _reportable = reportable;
+    }
+
+    public void setAbstractorNote(List<YearRangeString> abstractorNote) {
+        _abstractorNote = abstractorNote;
+    }
+
+    public void setTreatment(List<YearRangeString> treatment) {
+        _treatment = treatment;
+    }
+
+    public void setGenetics(List<YearRangeString> genetics) {
+        _genetics = genetics;
+    }
+
+    public void setAlternateName(List<YearRangeString> alternateName) {
+        _alternateName = alternateName;
+    }
+
+    public void setDefinition(List<YearRangeString> definition) {
+        _definition = definition;
     }
 
     public void setIcdO2Morphology(String icdO2Morphology) {
@@ -296,6 +338,30 @@ public class Disease extends Publishable {
 
     public void setIcdO1Morphology(String icdO1Morphology) {
         _icdO1Morphology = icdO1Morphology;
+    }
+
+    public void setIcd10CmCode(List<String> icd10CmCode) {
+        _icd10CmCode = icd10CmCode;
+    }
+
+    public void setIcd10Code(List<String> icd10Code) {
+        _icd10Code = icd10Code;
+    }
+
+    public void setIcd9Code(List<String> icd9Code) {
+        _icd9Code = icd9Code;
+    }
+
+    public void setSigns(List<YearRangeString> signs) {
+        _signs = signs;
+    }
+
+    public void setExams(List<YearRangeString> exams) {
+        _exams = exams;
+    }
+
+    public void setMortality(List<YearRangeString> mortality) {
+        _mortality = mortality;
     }
 
     public void setIcdO3Effective(YearRange icdO3Effective) {
@@ -310,11 +376,63 @@ public class Disease extends Publishable {
         _icdO1Effective = icdO1Effective;
     }
 
-    public List<YearRangeString> getProgression() {
-        return _progression;
+    public void setMissingPrimarySiteMessage(List<YearRangeString> missingPrimarySiteMessage) {
+        _missingPrimarySiteMessage = missingPrimarySiteMessage;
+    }
+
+    public void setGrade(List<YearRangeInteger> grade) {
+        _grade = grade;
+    }
+
+    public void setTransformTo(List<YearRangeString> transformTo) {
+        _transformTo = transformTo;
+    }
+
+    public void setTransformToText(List<YearRangeString> transformToText) {
+        _transformToText = transformToText;
+    }
+
+    public void setTransformFrom(List<YearRangeString> transformFrom) {
+        _transformFrom = transformFrom;
+    }
+
+    public void setTransformFromText(List<YearRangeString> transformFromText) {
+        _transformFromText = transformFromText;
+    }
+
+    public void setImmunophenotype(List<YearRangeString> immunophenotype) {
+        _immunophenotype = immunophenotype;
+    }
+
+    public void setDiagnosisMethod(List<YearRangeString> diagnosisMethod) {
+        _diagnosisMethod = diagnosisMethod;
+    }
+
+    public void setModuleId(List<YearRangeString> moduleId) {
+        _moduleId = moduleId;
+    }
+
+    public void setSamePrimaries(List<YearRangeString> samePrimaries) {
+        _samePrimaries = samePrimaries;
+    }
+
+    public void setSamePrimariesText(List<YearRangeString> samePrimariesText) {
+        _samePrimariesText = samePrimariesText;
     }
 
     public void setProgression(List<YearRangeString> progression) {
         _progression = progression;
+    }
+
+    public void setBiomarkers(List<YearRangeString> biomarkers) {
+        _biomarkers = biomarkers;
+    }
+
+    public void setTreatmentText(List<YearRangeString> treatmentText) {
+        _treatmentText = treatmentText;
+    }
+
+    public void setRecurrence(List<YearRangeString> recurrence) {
+        _recurrence = recurrence;
     }
 }

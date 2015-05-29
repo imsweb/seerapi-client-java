@@ -33,4 +33,20 @@ public class GlossaryHistoryEvent {
     public Glossary getNew() {
         return _new;
     }
+
+    public void setUser(String user) {
+        _user = user;
+    }
+
+    public void setDate(Date date) {
+        _date = date;
+    }
+
+    public void setOld(Glossary old) {
+        _old = old;
+    }
+
+    public void setNew(Glossary aNew) {
+        _new = aNew;
+    }
 }

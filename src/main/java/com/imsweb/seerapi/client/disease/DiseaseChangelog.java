@@ -52,4 +52,32 @@ public class DiseaseChangelog {
     public String getDescription() {
         return _description;
     }
+
+    public void setAdds(List<DiseaseChangelogEntry> adds) {
+        _adds = adds;
+    }
+
+    public void setDeletes(List<DiseaseChangelogEntry> deletes) {
+        _deletes = deletes;
+    }
+
+    public void setMods(List<DiseaseChangelogEntry> mods) {
+        _mods = mods;
+    }
+
+    public void setUser(String user) {
+        _user = user;
+    }
+
+    public void setDate(Date date) {
+        _date = date;
+    }
+
+    public void setVersion(String version) {
+        _version = version;
+    }
+
+    public void setDescription(String description) {
+        _description = description;
+    }
 }

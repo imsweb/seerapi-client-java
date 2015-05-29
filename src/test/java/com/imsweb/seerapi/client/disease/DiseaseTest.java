@@ -97,7 +97,7 @@ public class DiseaseTest {
         Assert.assertNull(disease.getFieldNotes());
         Assert.assertNull(disease.getScore());
         Assert.assertNull(disease.getGlossaryMatches());
-        Assert.assertNull(disease.getHistory());
+        //Assert.assertNull(disease.getHistory());
 
         //        Assert.assertTrue(disease.getHistory().size() > 0);
         //

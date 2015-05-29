@@ -17,4 +17,8 @@ public class GlossarySearchResults extends PublishableSearchResults {
     public List<Glossary> getResults() {
         return _results;
     }
+
+    public void setResults(List<Glossary> results) {
+        _results = results;
+    }
 }

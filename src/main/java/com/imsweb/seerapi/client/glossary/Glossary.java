@@ -71,6 +71,34 @@ public class Glossary extends Publishable {
         return _resources;
     }
 
+    public void setHistory(List<GlossaryHistoryEvent> history) {
+        _history = history;
+    }
+
+    public void setDefinition(String definition) {
+        _definition = definition;
+    }
+
+    public void setAlternateName(List<String> alternateName) {
+        _alternateName = alternateName;
+    }
+
+    public void setAbstractorNote(String abstractorNote) {
+        _abstractorNote = abstractorNote;
+    }
+
+    public void setHistology(List<String> histology) {
+        _histology = histology;
+    }
+
+    public void setPrimarySite(List<String> primarySite) {
+        _primarySite = primarySite;
+    }
+
+    public void setCategories(List<Category> categories) {
+        _categories = categories;
+    }
+
     public void setResources(List<GlossaryResource> resources) {
         _resources = resources;
     }

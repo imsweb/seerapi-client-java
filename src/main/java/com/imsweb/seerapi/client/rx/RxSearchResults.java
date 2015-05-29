@@ -17,4 +17,8 @@ public class RxSearchResults extends PublishableSearchResults {
     public List<Rx> getResults() {
         return _results;
     }
+
+    public void setResults(List<Rx> results) {
+        _results = results;
+    }
 }

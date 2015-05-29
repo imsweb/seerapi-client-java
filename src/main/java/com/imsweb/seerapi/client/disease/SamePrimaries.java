@@ -28,4 +28,24 @@ public class SamePrimaries {
     public Boolean isSame() {
         return _isSame;
     }
+
+    public void setDisease1(String disease1) {
+        _disease1 = disease1;
+    }
+
+    public void setDisease2(String disease2) {
+        _disease2 = disease2;
+    }
+
+    public void setYear(Integer year) {
+        _year = year;
+    }
+
+    public Boolean getIsSame() {
+        return _isSame;
+    }
+
+    public void setIsSame(Boolean isSame) {
+        _isSame = isSame;
+    }
 }

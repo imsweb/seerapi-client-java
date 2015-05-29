@@ -39,4 +39,24 @@ public class PublishableVersion {
     public Long getCount() {
         return _count;
     }
+
+    public void setName(String name) {
+        _name = name;
+    }
+
+    public void setType(String type) {
+        _type = type;
+    }
+
+    public void setFirstPublished(Date firstPublished) {
+        _firstPublished = firstPublished;
+    }
+
+    public void setLastModified(Date lastModified) {
+        _lastModified = lastModified;
+    }
+
+    public void setCount(Long count) {
+        _count = count;
+    }
 }

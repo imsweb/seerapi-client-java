@@ -31,4 +31,20 @@ public class RxChangelogEntry {
     public Rx getNewVersion() {
         return _newVersion;
     }
+
+    public void setId(String id) {
+        _id = id;
+    }
+
+    public void setName(String name) {
+        _name = name;
+    }
+
+    public void setOldVersion(Rx oldVersion) {
+        _oldVersion = oldVersion;
+    }
+
+    public void setNewVersion(Rx newVersion) {
+        _newVersion = newVersion;
+    }
 }

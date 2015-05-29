@@ -116,4 +116,60 @@ public class Rx extends Publishable {
     public String getRadiation() {
         return _radiation;
     }
+
+    public void setHistory(List<RxHistoryEvent> history) {
+        _history = history;
+    }
+
+    public void setType(Type type) {
+        _type = type;
+    }
+
+    public void setAlternateName(List<String> alternateName) {
+        _alternateName = alternateName;
+    }
+
+    public void setPrimarySite(List<String> primarySite) {
+        _primarySite = primarySite;
+    }
+
+    public void setHistology(String histology) {
+        _histology = histology;
+    }
+
+    public void setRemarks(String remarks) {
+        _remarks = remarks;
+    }
+
+    public void setEvsId(String evsId) {
+        _evsId = evsId;
+    }
+
+    public void setAbbreviation(List<String> abbreviation) {
+        _abbreviation = abbreviation;
+    }
+
+    public void setCategory(List<String> category) {
+        _category = category;
+    }
+
+    public void setSubcategory(List<String> subcategory) {
+        _subcategory = subcategory;
+    }
+
+    public void setNscNumber(List<String> nscNumber) {
+        _nscNumber = nscNumber;
+    }
+
+    public void setDoNotCode(DoNoCodeValue doNotCode) {
+        _doNotCode = doNotCode;
+    }
+
+    public void setDrugs(List<String> drugs) {
+        _drugs = drugs;
+    }
+
+    public void setRadiation(String radiation) {
+        _radiation = radiation;
+    }
 }

@@ -31,4 +31,20 @@ public class GlossaryChangelogEntry {
     public Glossary getNewVersion() {
         return _newVersion;
     }
+
+    public void setId(String id) {
+        _id = id;
+    }
+
+    public void setName(String name) {
+        _name = name;
+    }
+
+    public void setOldVersion(Glossary oldVersion) {
+        _oldVersion = oldVersion;
+    }
+
+    public void setNewVersion(Glossary newVersion) {
+        _newVersion = newVersion;
+    }
 }

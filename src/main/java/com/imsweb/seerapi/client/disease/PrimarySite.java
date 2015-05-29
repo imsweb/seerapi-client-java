@@ -19,4 +19,12 @@ public class PrimarySite {
     public String getLabel() {
         return _label;
     }
+
+    public void setValue(String value) {
+        _value = value;
+    }
+
+    public void setLabel(String label) {
+        _label = label;
+    }
 }

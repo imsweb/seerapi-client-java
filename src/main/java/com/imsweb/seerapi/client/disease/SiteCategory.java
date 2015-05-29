@@ -24,4 +24,16 @@ public class SiteCategory {
     public List<SiteRange> getSites() {
         return _sites;
     }
+
+    public void setId(String id) {
+        _id = id;
+    }
+
+    public void setLabel(String label) {
+        _label = label;
+    }
+
+    public void setSites(List<SiteRange> sites) {
+        _sites = sites;
+    }
 }

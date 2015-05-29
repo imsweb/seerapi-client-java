@@ -3,18 +3,7 @@
  */
 package com.imsweb.seerapi.client;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
-
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
 import retrofit.RestAdapter;
-import retrofit.converter.JacksonConverter;
 
 import com.imsweb.seerapi.client.disease.DiseaseService;
 import com.imsweb.seerapi.client.glossary.GlossaryService;
@@ -29,31 +18,6 @@ import com.imsweb.seerapi.client.surgery.SurgeryService;
  */
 public final class SeerApi {
 
-    // output all dates in ISO-8061 format and UTC time
-    private static final DateFormat _DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-
-    // define the JSON converter which uses Jackson and a customized ObjectMapper
-    private static final JacksonConverter _JACKSON_CONVERTER;
-
-    static {
-        _DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        // do not write null values
-        mapper.configure(SerializationFeature.WRITE_NULL_MAP_VALUES, false);
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-
-        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
-        mapper.setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.ANY);
-
-        // set Date objects to output in readable customized format
-        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-        mapper.setDateFormat(_DATE_FORMAT);
-
-        _JACKSON_CONVERTER = new JacksonConverter(mapper);
-    }
-
     RestAdapter _restAdapter;
 
     /**
@@ -67,7 +31,7 @@ public final class SeerApi {
 
         _restAdapter = new RestAdapter.Builder()
                 .setEndpoint(baseUrl)
-                .setConverter(_JACKSON_CONVERTER)
+                .setConverter(new SeerApiJacksonConverter())
                 .setRequestInterceptor(new SeerApiRequestInterceptor(apiKey))
                 .setErrorHandler(new SeerApiErrorHandler())
                 .build();

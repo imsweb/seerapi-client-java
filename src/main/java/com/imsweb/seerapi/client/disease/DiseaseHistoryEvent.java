@@ -22,28 +22,28 @@ public class DiseaseHistoryEvent {
         return _user;
     }
 
-    public Date getDate() {
-        return _date;
-    }
-
-    public Disease getOld() {
-        return _old;
-    }
-
-    public Disease getNew() {
-        return _new;
-    }
-
     public void setUser(String user) {
         _user = user;
+    }
+
+    public Date getDate() {
+        return _date;
     }
 
     public void setDate(Date date) {
         _date = date;
     }
 
+    public Disease getOld() {
+        return _old;
+    }
+
     public void setOld(Disease old) {
         _old = old;
+    }
+
+    public Disease getNew() {
+        return _new;
     }
 
     public void setNew(Disease aNew) {

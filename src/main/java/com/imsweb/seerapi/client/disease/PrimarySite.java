@@ -16,12 +16,12 @@ public class PrimarySite {
         return _value;
     }
 
-    public String getLabel() {
-        return _label;
-    }
-
     public void setValue(String value) {
         _value = value;
+    }
+
+    public String getLabel() {
+        return _label;
     }
 
     public void setLabel(String label) {

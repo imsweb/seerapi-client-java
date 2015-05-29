@@ -22,28 +22,28 @@ public class GlossaryHistoryEvent {
         return _user;
     }
 
-    public Date getDate() {
-        return _date;
-    }
-
-    public Glossary getOld() {
-        return _old;
-    }
-
-    public Glossary getNew() {
-        return _new;
-    }
-
     public void setUser(String user) {
         _user = user;
+    }
+
+    public Date getDate() {
+        return _date;
     }
 
     public void setDate(Date date) {
         _date = date;
     }
 
+    public Glossary getOld() {
+        return _old;
+    }
+
     public void setOld(Glossary old) {
         _old = old;
+    }
+
+    public Glossary getNew() {
+        return _new;
     }
 
     public void setNew(Glossary aNew) {

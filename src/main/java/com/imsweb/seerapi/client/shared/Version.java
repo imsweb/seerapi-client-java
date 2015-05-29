@@ -17,16 +17,16 @@ public class Version {
         return _version;
     }
 
+    public void setVersion(String version) {
+        _version = version;
+    }
+
     /**
      * Returns the count
      * @return count
      */
     public Long getCount() {
         return _count;
-    }
-
-    public void setVersion(String version) {
-        _version = version;
     }
 
     public void setCount(Long count) {

@@ -30,31 +30,63 @@ public class NaaccrField {
         return _item;
     }
 
+    public void setItem(Integer item) {
+        _item = item;
+    }
+
     public String getName() {
         return _name;
+    }
+
+    public void setName(String name) {
+        _name = name;
     }
 
     public Integer getStart() {
         return _start;
     }
 
+    public void setStart(Integer start) {
+        _start = start;
+    }
+
     public Integer getEnd() {
         return _end;
+    }
+
+    public void setEnd(Integer end) {
+        _end = end;
     }
 
     public String getAlign() {
         return _align;
     }
 
+    public void setAlign(String align) {
+        _align = align;
+    }
+
     public String getPadChar() {
         return _padChar;
+    }
+
+    public void setPadChar(String padChar) {
+        _padChar = padChar;
     }
 
     public String getDocumentation() {
         return _documentation;
     }
 
+    public void setDocumentation(String documentation) {
+        _documentation = documentation;
+    }
+
     public List<NaaccrSubField> getSubFields() {
         return _subFields;
+    }
+
+    public void setSubFields(List<NaaccrSubField> subFields) {
+        _subFields = subFields;
     }
 }

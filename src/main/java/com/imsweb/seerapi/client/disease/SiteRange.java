@@ -24,12 +24,12 @@ public class SiteRange {
         return _low;
     }
 
-    public String getHigh() {
-        return _high;
-    }
-
     public void setLow(String low) {
         _low = low;
+    }
+
+    public String getHigh() {
+        return _high;
     }
 
     public void setHigh(String high) {

@@ -17,20 +17,20 @@ public class SiteCategory {
         return _id;
     }
 
-    public String getLabel() {
-        return _label;
-    }
-
-    public List<SiteRange> getSites() {
-        return _sites;
-    }
-
     public void setId(String id) {
         _id = id;
     }
 
+    public String getLabel() {
+        return _label;
+    }
+
     public void setLabel(String label) {
         _label = label;
+    }
+
+    public List<SiteRange> getSites() {
+        return _sites;
     }
 
     public void setSites(List<SiteRange> sites) {

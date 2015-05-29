@@ -24,12 +24,12 @@ public class YearRange {
         return _startYear;
     }
 
-    public Integer getEndYear() {
-        return _endYear;
-    }
-
     public void setStartYear(Integer startYear) {
         _startYear = startYear;
+    }
+
+    public Integer getEndYear() {
+        return _endYear;
     }
 
     public void setEndYear(Integer endYear) {

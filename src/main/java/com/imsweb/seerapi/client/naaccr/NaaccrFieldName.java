@@ -16,7 +16,15 @@ public class NaaccrFieldName {
         return _item;
     }
 
+    public void setItem(Integer item) {
+        _item = item;
+    }
+
     public String getName() {
         return _name;
+    }
+
+    public void setName(String name) {
+        _name = name;
     }
 }

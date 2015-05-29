@@ -20,20 +20,20 @@ public class KeywordMatch {
         return _id;
     }
 
-    public String getKeyword() {
-        return _keyword;
-    }
-
-    public Set<String> getCategory() {
-        return _category;
-    }
-
     public void setId(String id) {
         _id = id;
     }
 
+    public String getKeyword() {
+        return _keyword;
+    }
+
     public void setKeyword(String keyword) {
         _keyword = keyword;
+    }
+
+    public Set<String> getCategory() {
+        return _category;
     }
 
     public void setCategory(Set<String> category) {

@@ -16,7 +16,9 @@ class SeerApiRequestInterceptor implements RequestInterceptor {
      * Constructor
      * @param apiKey
      */
-    public SeerApiRequestInterceptor(String apiKey) {_apiKey = apiKey;}
+    public SeerApiRequestInterceptor(String apiKey) {
+        _apiKey = apiKey;
+    }
 
     @Override
     public void intercept(RequestFacade request) {

@@ -22,7 +22,10 @@ repositories {
 
 dependencies {
     compile 'com.squareup.okhttp:okhttp:2.4.0'
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile('com.squareup.retrofit:retrofit:1.9.0') {
+        exclude module: 'gson'  // since Jackson is used, this is not needed
+    }
+
     compile 'com.fasterxml.jackson.core:jackson-databind:2.5.3'
 
     testCompile 'junit:junit:4.11'

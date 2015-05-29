@@ -118,9 +118,8 @@ public class RxTest {
         search.setOffset(0);
         search.setOrderBy("name");
         search.setOutputType(PublishableSearch.OutputType.MIN);
-        search.setCategory(new HashSet<String>(Collections.singletonList("category")));
         search.setDoNotCode(Rx.DoNoCodeValue.YES);
-        results = _RX.search("latest", search.paramMap());
+        results = _RX.search("latest", search.paramMap(), new HashSet<>(Collections.singletonList("category")));
 
         Assert.assertNotNull(results);
         Assert.assertEquals(100, results.getCount().longValue());

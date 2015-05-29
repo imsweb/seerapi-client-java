@@ -103,8 +103,7 @@ public class GlossaryTest {
         Assert.assertEquals(Collections.singletonList("cell"), results.getTerms());
 
         // add the category and verify there are no results
-        search.setCategory(EnumSet.of(Glossary.Category.SOLID_TUMOR));
-        results = _GLOSSARY.search("latest", search.paramMap());
+        results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(Glossary.Category.SOLID_TUMOR));
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());
@@ -112,8 +111,7 @@ public class GlossaryTest {
         Assert.assertEquals(0, results.getResults().size());
 
         // add a second category and verify there are we get the results again
-        search.setCategory(EnumSet.of(Glossary.Category.SOLID_TUMOR, Glossary.Category.HEMATO));
-        results = _GLOSSARY.search("latest", search.paramMap());
+        results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(Glossary.Category.SOLID_TUMOR, Glossary.Category.HEMATO));
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());

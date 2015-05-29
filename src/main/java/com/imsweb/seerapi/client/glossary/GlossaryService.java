@@ -5,6 +5,7 @@ package com.imsweb.seerapi.client.glossary;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import retrofit.http.GET;
 import retrofit.http.Path;
@@ -41,11 +42,31 @@ public interface GlossaryService {
     /**
      * Return a list of matching glossaries
      * @param version Glossary version
+     * @param query search query
+     * @param categories a list of categories
+     * @return a GlossarySearchResults object
+     */
+    @GET("/glossary/{version}")
+    GlossarySearchResults search(@Path("version") String version, @Query("q") String query, @Query("category") Set<Glossary.Category> categories);
+
+    /**
+     * Return a list of matching glossaries
+     * @param version Glossary version
      * @param searchParams A Map of search parameters.  Use GlossarySearch to easily build parameter list.
      * @return a GlossarySearchResults object
      */
     @GET("/glossary/{version}")
     GlossarySearchResults search(@Path("version") String version, @QueryMap Map<String, String> searchParams);
+
+    /**
+     * Return a list of matching glossaries
+     * @param version Glossary version
+     * @param searchParams A Map of search parameters.  Use GlossarySearch to easily build parameter list.
+     * @param categories a list of categories
+     * @return a GlossarySearchResults object
+     */
+    @GET("/glossary/{version}")
+    GlossarySearchResults search(@Path("version") String version, @QueryMap Map<String, String> searchParams, @Query("category") Set<Glossary.Category> categories);
 
     /**
      * Return the changelog entries for the passed database version

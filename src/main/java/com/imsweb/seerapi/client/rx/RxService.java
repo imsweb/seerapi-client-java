@@ -5,6 +5,7 @@ package com.imsweb.seerapi.client.rx;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import retrofit.http.GET;
 import retrofit.http.Path;
@@ -51,11 +52,31 @@ public interface RxService {
     /**
      * Return a list of matching Rx entities
      * @param version Rx version
+     * @param query search query
+     * @param categories limit to these categories
+     * @return a RxSearchResults object
+     */
+    @GET("/rx/{version}")
+    RxSearchResults search(@Path("version") String version, @Query("q") String query, @Query("category") Set<String> categories);
+
+    /**
+     * Return a list of matching Rx entities
+     * @param version Rx version
      * @param searchParams A Map of search parameters.  Use RxSearch to easily build parameter list.
      * @return a RxSearchResults object
      */
     @GET("/rx/{version}")
     RxSearchResults search(@Path("version") String version, @QueryMap Map<String, String> searchParams);
+
+    /**
+     * Return a list of matching Rx entities
+     * @param version Rx version
+     * @param searchParams A Map of search parameters.  Use RxSearch to easily build parameter list.
+     * @param categories limit to these categories
+     * @return a RxSearchResults object
+     */
+    @GET("/rx/{version}")
+    RxSearchResults search(@Path("version") String version, @QueryMap Map<String, String> searchParams, @Query("category") Set<String> categories);
 
     /**
      * Return the changelog entries for the passed database version

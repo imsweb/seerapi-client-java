@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @JsonPropertyOrder({"id", "algorithm", "version", "name", "title", "subtitle", "description", "notes", "schema_num", "schema_selection_table",
-        "schema_discriminators", "initial_context", "inputs", "mappings", "involved_tables", "last_modified"})
+        "schema_discriminators", "initial_context", "inputs", "outputs", "mappings", "involved_tables", "last_modified"})
 public class StagingSchema {
 
     public enum StagingInputErrorHandler {
@@ -42,6 +42,7 @@ public class StagingSchema {
     private String _schemaSelectionTable;
     private Set<String> _schemaDiscriminators;
     private List<StagingSchemaInput> _inputs;
+    private List<StagingSchemaOutput> _outputs;
     private Set<StagingKeyValue> _initialContext;
     private List<StagingMapping> _mappings;
     private Set<String> _involvedTables;
@@ -169,6 +170,15 @@ public class StagingSchema {
 
     public void setInputs(List<StagingSchemaInput> inputs) {
         _inputs = inputs;
+    }
+
+    @JsonProperty("outputs")
+    public List<StagingSchemaOutput> getOutputs() {
+        return _outputs;
+    }
+
+    public void setOutputs(List<StagingSchemaOutput> outputs) {
+        _outputs = outputs;
     }
 
     @JsonProperty("initial_context")

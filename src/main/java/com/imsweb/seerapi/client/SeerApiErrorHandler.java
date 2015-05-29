@@ -23,8 +23,10 @@ class SeerApiErrorHandler implements ErrorHandler {
         if (r != null) {
             // convert body to error response
             ErrorResponse error = null;
+
             try {
-                error = new ObjectMapper().readValue(r.getBody().in(), ErrorResponse.class);
+                if (r.getBody() != null)
+                    error = new ObjectMapper().readValue(r.getBody().in(), ErrorResponse.class);
             }
             catch (IOException e) {
                 // if there was an error reading the body InputStream, default to the original error

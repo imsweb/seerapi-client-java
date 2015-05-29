@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.imsweb.seerapi.client.SeerApiBuilder;
+import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.publishable.PublishableSearch;
 
 public class DiseaseTest {
@@ -20,7 +20,7 @@ public class DiseaseTest {
 
     @BeforeClass
     public static void setup() {
-        _DISEASE = new SeerApiBuilder().connect().disease();
+        _DISEASE = new SeerApi.Builder().connect().disease();
     }
 
     @Test

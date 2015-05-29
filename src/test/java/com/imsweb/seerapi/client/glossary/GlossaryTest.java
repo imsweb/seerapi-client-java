@@ -12,7 +12,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.imsweb.seerapi.client.SeerApiBuilder;
+import com.imsweb.seerapi.client.SeerApi;
 
 public class GlossaryTest {
 
@@ -20,7 +20,7 @@ public class GlossaryTest {
 
     @BeforeClass
     public static void setup() {
-        _GLOSSARY = new SeerApiBuilder().connect().glossary();
+        _GLOSSARY = new SeerApi.Builder().connect().glossary();
     }
 
     @Test

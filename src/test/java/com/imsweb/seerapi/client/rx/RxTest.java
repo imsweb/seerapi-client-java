@@ -13,7 +13,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.imsweb.seerapi.client.SeerApiBuilder;
+import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.publishable.PublishableSearch;
 
 public class RxTest {
@@ -22,7 +22,7 @@ public class RxTest {
 
     @BeforeClass
     public static void setup() {
-        _RX = new SeerApiBuilder().connect().rx();
+        _RX = new SeerApi.Builder().connect().rx();
     }
 
     @Test

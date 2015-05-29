@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.imsweb.seerapi.client.SeerApiBuilder;
+import com.imsweb.seerapi.client.SeerApi;
 
 public class NaaccrTest {
 
@@ -18,7 +18,7 @@ public class NaaccrTest {
 
     @BeforeClass
     public static void setup() {
-        _NAACCR = new SeerApiBuilder().connect().naaccr();
+        _NAACCR = new SeerApi.Builder().connect().naaccr();
     }
 
     @Test

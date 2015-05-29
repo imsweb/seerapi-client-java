@@ -11,12 +11,12 @@ public class SeerApiTest {
 
     @Test(expected = NotAuthorizedException.class)
     public void testBadApiKeyAndURL() throws IOException {
-        new SeerApiBuilder().url("https://api.seer.cancer.gov/rest/").apiKey("BAD KEY").connect().siteRecode().version();
+        new SeerApi.Builder().url("https://api.seer.cancer.gov/rest/").apiKey("BAD KEY").connect().siteRecode().version();
     }
 
     @Test(expected = NotAuthorizedException.class)
     public void testBadApiKey() throws IOException {
-        new SeerApiBuilder().apiKey("BAD KEY").connect().siteRecode().version();
+        new SeerApi.Builder().apiKey("BAD KEY").connect().siteRecode().version();
     }
 
 }

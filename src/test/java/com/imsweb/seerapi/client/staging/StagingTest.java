@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.imsweb.seerapi.client.SeerApiBuilder;
+import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.staging.cs.CsSchemaLookup;
 
 public class StagingTest {
@@ -21,7 +21,7 @@ public class StagingTest {
 
     @BeforeClass
     public static void setup() {
-        _STAGING = new SeerApiBuilder().connect().staging();
+        _STAGING = new SeerApi.Builder().connect().staging();
     }
 
     @Test

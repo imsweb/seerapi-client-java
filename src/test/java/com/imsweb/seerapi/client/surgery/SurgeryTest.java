@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.imsweb.seerapi.client.SeerApiBuilder;
+import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.shared.Version;
 
 public class SurgeryTest {
@@ -19,7 +19,7 @@ public class SurgeryTest {
 
     @BeforeClass
     public static void setup() {
-        _SURGERY = new SeerApiBuilder().connect().surgery();
+        _SURGERY = new SeerApi.Builder().connect().surgery();
     }
 
     @Test

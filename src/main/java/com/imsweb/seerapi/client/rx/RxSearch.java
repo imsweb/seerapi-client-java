@@ -3,6 +3,7 @@
  */
 package com.imsweb.seerapi.client.rx;
 
+import java.util.Map;
 import java.util.Set;
 
 import com.imsweb.seerapi.client.publishable.PublishableSearch;
@@ -53,5 +54,19 @@ public class RxSearch extends PublishableSearch {
 
     public void setDoNotCode(DoNoCodeValue doNotCode) {
         _doNotCode = doNotCode;
+    }
+
+    @Override
+    public Map<String, String> paramMap() {
+        Map<String, String> params = super.paramMap();
+
+        if (getType() != null)
+            params.put("type", getType().toString());
+        if (getCategory() != null && !getCategory().isEmpty())
+            params.put("category", getCategory().iterator().next());
+        if (getDoNotCode() != null)
+            params.put("do_not_code", getDoNotCode().toString());
+
+        return params;
     }
 }

@@ -3,6 +3,9 @@
  */
 package com.imsweb.seerapi.client.publishable;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PublishableSearch {
 
     public enum OutputType {
@@ -27,8 +30,6 @@ public class PublishableSearch {
     private String _modifiedTo;
     private String _publishedFrom;
     private String _publishedTo;
-    private Boolean _beenPublished;
-    private Boolean _hidden;
     private Integer _count;
     private Integer _offset;
     private OutputType _outputType;
@@ -98,22 +99,6 @@ public class PublishableSearch {
         _publishedTo = publishedTo;
     }
 
-    public Boolean getBeenPublished() {
-        return _beenPublished;
-    }
-
-    public void setBeenPublished(Boolean beenPublished) {
-        _beenPublished = beenPublished;
-    }
-
-    public Boolean getHidden() {
-        return _hidden;
-    }
-
-    public void setHidden(Boolean hidden) {
-        _hidden = hidden;
-    }
-
     public Integer getCount() {
         return _count;
     }
@@ -144,5 +129,40 @@ public class PublishableSearch {
 
     public void setOrderBy(String orderBy) {
         _orderBy = orderBy;
+    }
+
+    /**
+     * Return a map of parameters to be used in the API calls
+     * @return a Map of parameters
+     */
+    public Map<String, String> paramMap() {
+        Map<String, String> params = new HashMap<>();
+
+        if (getQuery() != null)
+            params.put("q", getQuery());
+        if (getMode() != null)
+            params.put("mode", getMode().toString());
+        if (getStatus() != null)
+            params.put("status", getStatus());
+        if (getAssignedTo() != null)
+            params.put("assigned_to", getAssignedTo());
+        if (getModifiedFrom() != null)
+            params.put("modified_from", getModifiedFrom());
+        if (getModifiedTo() != null)
+            params.put("modified_to", getModifiedTo());
+        if (getPublishedFrom() != null)
+            params.put("published_from", getPublishedFrom());
+        if (getPublishedTo() != null)
+            params.put("published_to", getPublishedTo());
+        if (getCount() != null)
+            params.put("count", getCount().toString());
+        if (getOffset() != null)
+            params.put("offset", getOffset().toString());
+        if (getOrderBy() != null)
+            params.put("order", getOrderBy());
+        if (getOutputType() != null)
+            params.put("output_type", getOutputType().toString());
+
+        return params;
     }
 }

@@ -55,7 +55,6 @@ checkstyle {
 
 // findbugs plugin settings
 findbugs {
-    toolVersion = '2.0.1'
     ignoreFailures = true
     effort = 'max'
     excludeFilter = file("config/findbugs/findbugs-exclude.xml")
@@ -63,7 +62,7 @@ findbugs {
 
 // Gradle wrapper, this allows to build the project without having to install Gradle!
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
+    gradleVersion = '2.4'
 }
 
 modifyPom {

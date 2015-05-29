@@ -43,16 +43,6 @@ public final class SeerApi {
     }
 
     /**
-     * Creates a connection to the API
-     * @param baseUrl base URL for API
-     * @param apiKey API key
-     * @return a new SeerApi instance
-     */
-    protected static SeerApi connect(String baseUrl, String apiKey) {
-        return new SeerApi(baseUrl, apiKey);
-    }
-
-    /**
      * Return the disease service
      * @return an interface to all the disease APIs
      */
@@ -185,7 +175,7 @@ public final class SeerApi {
         }
 
         public SeerApi connect() {
-            return SeerApi.connect(_url, _apiKey);
+            return new SeerApi(_url, _apiKey);
         }
     }
 

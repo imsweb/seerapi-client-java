@@ -50,27 +50,27 @@ public class StagingTest {
     @Test
     public void testSchemaLookup() {
         // first test simple lookup that returns a single schema with site/hist only
-        List<StagingSchemaInfo> schemas = _STAGING.schemaLookup(_ALGORITHM, _VERSION, new CsSchemaLookup("C509", "8000"));
+        List<StagingSchemaInfo> schemas = _STAGING.schemaLookup(_ALGORITHM, _VERSION, new CsSchemaLookup("C509", "8000").getInputs());
         Assert.assertEquals(1, schemas.size());
         Assert.assertEquals("breast", schemas.get(0).getId());
 
         // now test just site
         SchemaLookup data = new SchemaLookup();
         data.setInput(StagingData.PRIMARY_SITE_KEY, "C111");
-        Assert.assertEquals(7, _STAGING.schemaLookup(_ALGORITHM, _VERSION, data).size());
+        Assert.assertEquals(7, _STAGING.schemaLookup(_ALGORITHM, _VERSION, data.getInputs()).size());
 
         // add histology
         data.setInput(StagingData.HISTOLOGY_KEY, "8000");
-        Assert.assertEquals(2, _STAGING.schemaLookup(_ALGORITHM, _VERSION, data).size());
+        Assert.assertEquals(2, _STAGING.schemaLookup(_ALGORITHM, _VERSION, data.getInputs()).size());
 
         // add discriminator
         data.setInput("ssf25", "010");
-        schemas = _STAGING.schemaLookup(_ALGORITHM, _VERSION, data);
+        schemas = _STAGING.schemaLookup(_ALGORITHM, _VERSION, data.getInputs());
         Assert.assertEquals(1, schemas.size());
         Assert.assertEquals("nasopharynx", schemas.get(0).getId());
 
         // test with the CsStaging class
-        schemas = _STAGING.schemaLookup(_ALGORITHM, _VERSION, new CsSchemaLookup("C111", "8000", "010"));
+        schemas = _STAGING.schemaLookup(_ALGORITHM, _VERSION, new CsSchemaLookup("C111", "8000", "010").getInputs());
         Assert.assertEquals(1, schemas.size());
         Assert.assertEquals("nasopharynx", schemas.get(0).getId());
     }
@@ -138,7 +138,7 @@ public class StagingTest {
         data.setInput("ssf1", "020");
 
         // perform the staging
-        StagingData output = _STAGING.stage(_ALGORITHM, _VERSION, data);
+        StagingData output = _STAGING.stage(_ALGORITHM, _VERSION, data.getInput());
 
         Assert.assertEquals(StagingData.Result.STAGED, output.getResult());
         Assert.assertEquals(0, output.getErrors().size());

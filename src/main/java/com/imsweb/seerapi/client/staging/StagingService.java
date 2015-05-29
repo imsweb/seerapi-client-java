@@ -4,6 +4,7 @@
 package com.imsweb.seerapi.client.staging;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit.http.Body;
 import retrofit.http.GET;
@@ -51,11 +52,11 @@ public interface StagingService {
      * Perform a schema lookup
      * @param algorithm an algorithm identifier
      * @param version a version
-     * @param data a StagingData object containing the input for the lookup
+     * @param data a map of key/value pairs containing the input for the lookup
      * @return
      */
     @POST("/staging/{algorithm}/{version}/schemas/lookup")
-    List<StagingSchemaInfo> schemaLookup(@Path("algorithm") String algorithm, @Path("version") String version, @Body SchemaLookup data);
+    List<StagingSchemaInfo> schemaLookup(@Path("algorithm") String algorithm, @Path("version") String version, @Body Map<String, String> data);
 
     /**
      * Return a single schema definition by schema identifier
@@ -118,10 +119,10 @@ public interface StagingService {
      * Stage the passed input
      * @param algorithm an algorithm identifier
      * @param version a version
-     * @param data a StagingData object containing the input for the staging call
+     * @param input a map of key/value pairs containing the input for the staging call
      * @return
      */
     @POST("/staging/{algorithm}/{version}/stage")
-    StagingData stage(@Path("algorithm") String algorithm, @Path("version") String version, @Body StagingData data);
+    StagingData stage(@Path("algorithm") String algorithm, @Path("version") String version, @Body Map<String, String> input);
 
 }

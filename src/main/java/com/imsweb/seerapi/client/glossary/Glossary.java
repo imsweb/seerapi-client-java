@@ -99,6 +99,7 @@ public class Glossary extends Publishable {
         HEMATO,
         SEERRX,
         SEER_TRAINING,
-        LYMPH_NODES
+        LYMPH_NODES,
+        STAGING
     }
 }

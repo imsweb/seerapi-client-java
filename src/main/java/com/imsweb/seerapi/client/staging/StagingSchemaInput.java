@@ -7,15 +7,16 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.annotate.JsonPropertyOrder;
-import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-@JsonPropertyOrder({"key", "name", "naaccr_item", "values", "default", "table", "used_for_staging", "fail_on_invalid", "unit", "decimal_places", "metadata"})
+@JsonPropertyOrder({"key", "name", "description", "naaccr_item", "values", "default", "table", "used_for_staging", "fail_on_invalid", "unit", "decimal_places", "metadata"})
 public class StagingSchemaInput {
 
     private String _key;
     private String _name;
+    private String _description;
     private Integer _naaccrItem;
     private String _default;
     private String _table;
@@ -48,6 +49,7 @@ public class StagingSchemaInput {
     public StagingSchemaInput(StagingSchemaInput other) {
         setKey(other.getKey());
         setName(other.getName());
+        setDescription(other.getDescription());
         setNaaccrItem(other.getNaaccrItem());
         setDefault(other.getDefault());
         setTable(other.getTable());
@@ -74,6 +76,15 @@ public class StagingSchemaInput {
 
     public void setName(String name) {
         _name = name;
+    }
+
+    @JsonProperty("description")
+    public String getDescription() {
+        return _description;
+    }
+
+    public void setDescription(String description) {
+        _description = description;
     }
 
     @JsonProperty("naaccr_item")

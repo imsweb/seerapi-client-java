@@ -3,7 +3,7 @@
  */
 package com.imsweb.seerapi.client.siterecode;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SiteRecode {
 
@@ -18,11 +18,23 @@ public class SiteRecode {
         return _site;
     }
 
+    public void setSite(String site) {
+        _site = site;
+    }
+
     public String getHist() {
         return _hist;
     }
 
+    public void setHist(String hist) {
+        _hist = hist;
+    }
+
     public String getSiteGroup() {
         return _siteGroup;
+    }
+
+    public void setSiteGroup(String siteGroup) {
+        _siteGroup = siteGroup;
     }
 }

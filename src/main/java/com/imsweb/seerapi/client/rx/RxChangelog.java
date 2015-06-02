@@ -6,7 +6,7 @@ package com.imsweb.seerapi.client.rx;
 import java.util.Date;
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class RxChangelog {
 
@@ -29,27 +29,55 @@ public class RxChangelog {
         return _adds;
     }
 
+    public void setAdds(List<RxChangelogEntry> adds) {
+        _adds = adds;
+    }
+
     public List<RxChangelogEntry> getDeletes() {
         return _deletes;
+    }
+
+    public void setDeletes(List<RxChangelogEntry> deletes) {
+        _deletes = deletes;
     }
 
     public List<RxChangelogEntry> getMods() {
         return _mods;
     }
 
+    public void setMods(List<RxChangelogEntry> mods) {
+        _mods = mods;
+    }
+
     public String getUser() {
         return _user;
+    }
+
+    public void setUser(String user) {
+        _user = user;
     }
 
     public Date getDate() {
         return _date;
     }
 
+    public void setDate(Date date) {
+        _date = date;
+    }
+
     public String getVersion() {
         return _version;
     }
 
+    public void setVersion(String version) {
+        _version = version;
+    }
+
     public String getDescription() {
         return _description;
+    }
+
+    public void setDescription(String description) {
+        _description = description;
     }
 }

@@ -14,24 +14,20 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
-import com.imsweb.seerapi.client.SeerApiBuilder;
-import com.imsweb.seerapi.client.publishable.PublishableSearch.OutputType;
-import com.imsweb.seerapi.client.publishable.PublishableSearch.SearchMode;
-import com.imsweb.seerapi.client.rx.Rx.DoNoCodeValue;
-import com.imsweb.seerapi.client.rx.Rx.Type;
+import com.imsweb.seerapi.client.publishable.PublishableSearch;
 
 public class RxTest {
 
-    private static SeerApi _SEERAPI;
+    private static RxService _RX;
 
     @BeforeClass
     public static void setup() {
-        _SEERAPI = new SeerApiBuilder().connect();
+        _RX = new SeerApi.Builder().connect().rx();
     }
 
     @Test
     public void testRxVersions() throws IOException {
-        List<RxVersion> versions = _SEERAPI.rxVersions();
+        List<RxVersion> versions = _RX.versions();
 
         Assert.assertTrue(versions.size() > 0);
         for (RxVersion version : versions) {
@@ -43,12 +39,12 @@ public class RxTest {
 
     @Test
     public void testRxById() throws IOException {
-        Rx rx = _SEERAPI.rxById("latest", "53c44afe102c1290262dc672");
+        Rx rx = _RX.getById("latest", "53c44afe102c1290262dc672");
 
         Assert.assertNotNull(rx);
         Assert.assertEquals("ABT-751", rx.getName());
         Assert.assertTrue(rx.getAlternateName().size() > 1);
-        Assert.assertEquals(Type.DRUG, rx.getType());
+        Assert.assertEquals(Rx.Type.DRUG, rx.getType());
         Assert.assertNull(rx.getHistology());
         Assert.assertTrue(rx.getRemarks().startsWith("Phase II ALL"));
         Assert.assertNull(rx.getEvsId());
@@ -73,7 +69,7 @@ public class RxTest {
 
     @Test
     public void testRxChangelog() throws IOException {
-        RxChangelogResults results = _SEERAPI.rxChangelogs("latest", "2013-07-30", null, 1);
+        RxChangelogResults results = _RX.changelogs("latest", "2013-07-30", null, 1);
 
         Assert.assertNotNull(results);
 
@@ -102,8 +98,8 @@ public class RxTest {
 
     @Test
     public void testRxSearch() throws IOException {
-        RxSearch search = new RxSearch("abt", Type.DRUG);
-        RxSearchResults results = _SEERAPI.rxSearch("latest", search);
+        RxSearch search = new RxSearch("abt", Rx.Type.DRUG);
+        RxSearchResults results = _RX.search("latest", search.paramMap());
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());
@@ -111,22 +107,19 @@ public class RxTest {
         Assert.assertEquals(7, results.getResults().size());
         Assert.assertEquals(Collections.singletonList("abt"), results.getTerms());
 
-        search.setMode(SearchMode.OR);
+        search.setMode(PublishableSearch.SearchMode.OR);
         search.setStatus("TEST");
         search.setAssignedTo("user");
         search.setModifiedFrom("2014-01-01");
         search.setModifiedTo("2014-05-31");
         search.setPublishedFrom("2014-01-01");
         search.setPublishedTo("2014-05-31");
-        search.setBeenPublished(true);
-        search.setHidden(false);
         search.setCount(100);
         search.setOffset(0);
         search.setOrderBy("name");
-        search.setOutputType(OutputType.MIN);
-        search.setCategory(new HashSet<String>(Collections.singletonList("category")));
-        search.setDoNotCode(DoNoCodeValue.YES);
-        results = _SEERAPI.rxSearch("latest", search);
+        search.setOutputType(PublishableSearch.OutputType.MIN);
+        search.setDoNotCode(Rx.DoNoCodeValue.YES);
+        results = _RX.search("latest", search.paramMap(), new HashSet<>(Collections.singletonList("category")));
 
         Assert.assertNotNull(results);
         Assert.assertEquals(100, results.getCount().longValue());

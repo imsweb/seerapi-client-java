@@ -3,7 +3,7 @@
  */
 package com.imsweb.seerapi.client.surgery;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SurgeryRow {
 
@@ -20,16 +20,32 @@ public class SurgeryRow {
         return _code;
     }
 
+    public void setCode(String code) {
+        _code = code;
+    }
+
     public String getDescription() {
         return _description;
+    }
+
+    public void setDescription(String description) {
+        _description = description;
     }
 
     public Integer getLevel() {
         return _level;
     }
 
+    public void setLevel(Integer level) {
+        _level = level;
+    }
+
     public Boolean getLineBreak() {
         return _lineBreak;
+    }
+
+    public void setLineBreak(Boolean lineBreak) {
+        _lineBreak = lineBreak;
     }
 }
 

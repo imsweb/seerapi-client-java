@@ -11,20 +11,19 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
-import com.imsweb.seerapi.client.SeerApiBuilder;
 
 public class NaaccrTest {
 
-    private static SeerApi _SEERAPI;
+    private static NaaccrService _NAACCR;
 
     @BeforeClass
     public static void setup() {
-        _SEERAPI = new SeerApiBuilder().connect();
+        _NAACCR = new SeerApi.Builder().connect().naaccr();
     }
 
     @Test
     public void testNaaccrVersions() throws IOException {
-        List<NaaccrVersion> versions = _SEERAPI.naaccrVersions();
+        List<NaaccrVersion> versions = _NAACCR.versions();
 
         Assert.assertTrue(versions.size() > 0);
         for (NaaccrVersion version : versions) {
@@ -38,7 +37,7 @@ public class NaaccrTest {
 
     @Test
     public void testNaaccrFieldNames() throws IOException {
-        List<NaaccrFieldName> names = _SEERAPI.naaccrFieldNames("latest");
+        List<NaaccrFieldName> names = _NAACCR.fieldNames("latest");
 
         Assert.assertTrue(names.size() > 0);
         for (NaaccrFieldName name : names) {
@@ -49,7 +48,7 @@ public class NaaccrTest {
 
     @Test
     public void testNaaccrField() throws IOException {
-        NaaccrField name = _SEERAPI.naaccrField("latest", 521);
+        NaaccrField name = _NAACCR.field("latest", 521);
 
         Assert.assertNotNull(name);
         Assert.assertEquals("Morph--Type&Behav ICD-O-3", name.getName());

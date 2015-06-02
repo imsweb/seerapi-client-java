@@ -1,6 +1,6 @@
 package com.imsweb.seerapi.client.shared;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Version {
 
@@ -17,11 +17,19 @@ public class Version {
         return _version;
     }
 
+    public void setVersion(String version) {
+        _version = version;
+    }
+
     /**
      * Returns the count
      * @return count
      */
     public Long getCount() {
         return _count;
+    }
+
+    public void setCount(Long count) {
+        _count = count;
     }
 }

@@ -3,7 +3,7 @@
  */
 package com.imsweb.seerapi.client.glossary;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class GlossaryChangelogEntry {
 
@@ -20,15 +20,31 @@ public class GlossaryChangelogEntry {
         return _id;
     }
 
+    public void setId(String id) {
+        _id = id;
+    }
+
     public String getName() {
         return _name;
+    }
+
+    public void setName(String name) {
+        _name = name;
     }
 
     public Glossary getOldVersion() {
         return _oldVersion;
     }
 
+    public void setOldVersion(Glossary oldVersion) {
+        _oldVersion = oldVersion;
+    }
+
     public Glossary getNewVersion() {
         return _newVersion;
+    }
+
+    public void setNewVersion(Glossary newVersion) {
+        _newVersion = newVersion;
     }
 }

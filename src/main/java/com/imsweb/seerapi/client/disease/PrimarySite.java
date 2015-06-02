@@ -3,7 +3,7 @@
  */
 package com.imsweb.seerapi.client.disease;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PrimarySite {
 
@@ -16,7 +16,15 @@ public class PrimarySite {
         return _value;
     }
 
+    public void setValue(String value) {
+        _value = value;
+    }
+
     public String getLabel() {
         return _label;
+    }
+
+    public void setLabel(String label) {
+        _label = label;
     }
 }

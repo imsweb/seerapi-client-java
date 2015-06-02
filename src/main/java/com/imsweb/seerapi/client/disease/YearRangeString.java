@@ -3,7 +3,7 @@
  */
 package com.imsweb.seerapi.client.disease;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class YearRangeString extends YearRange {
 
@@ -12,5 +12,9 @@ public class YearRangeString extends YearRange {
 
     public String getValue() {
         return _value;
+    }
+
+    public void setValue(String value) {
+        _value = value;
     }
 }

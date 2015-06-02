@@ -11,21 +11,20 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
-import com.imsweb.seerapi.client.SeerApiBuilder;
 import com.imsweb.seerapi.client.shared.Version;
 
 public class SurgeryTest {
 
-    private static SeerApi _SEERAPI;
+    private static SurgeryService _SURGERY;
 
     @BeforeClass
     public static void setup() {
-        _SEERAPI = new SeerApiBuilder().connect();
+        _SURGERY = new SeerApi.Builder().connect().surgery();
     }
 
     @Test
     public void testSiteSpecificSurgeryVersions() throws IOException {
-        List<Version> versions = _SEERAPI.siteSpecificSurgeryVersions();
+        List<Version> versions = _SURGERY.versions();
 
         Assert.assertTrue(versions.size() > 0);
         for (Version version : versions) {
@@ -36,7 +35,7 @@ public class SurgeryTest {
 
     @Test
     public void testSiteSpecificSurgeryTables() throws IOException {
-        List<String> titles = _SEERAPI.siteSpecificSurgeryTables("2014");
+        List<String> titles = _SURGERY.tables("2014");
 
         Assert.assertTrue(titles.size() > 0);
         Assert.assertTrue(titles.contains("Oral Cavity"));
@@ -44,7 +43,7 @@ public class SurgeryTest {
 
     @Test
     public void testSiteSpecificSurgeryTable() throws IOException {
-        SurgeryTable table = _SEERAPI.siteSpecificSurgeryTable("2014", "Oral Cavity", null, null);
+        SurgeryTable table = _SURGERY.table("2014", "Oral Cavity", null, null);
 
         Assert.assertNotNull(table);
         Assert.assertEquals("Oral Cavity", table.getTitle());
@@ -59,7 +58,7 @@ public class SurgeryTest {
         Assert.assertEquals(Integer.valueOf(0), row.getLevel());
         Assert.assertFalse(row.getLineBreak());
 
-        table = _SEERAPI.siteSpecificSurgeryTable("2014", null, "C001", "8000");
+        table = _SURGERY.table("2014", null, "C001", "8000");
         Assert.assertEquals("Oral Cavity", table.getTitle());
     }
 }

@@ -5,7 +5,7 @@ package com.imsweb.seerapi.client.surgery;
 
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SurgeryTable {
 
@@ -28,27 +28,55 @@ public class SurgeryTable {
         return _title;
     }
 
+    public void setTitle(String title) {
+        _title = title;
+    }
+
     public String getSiteInclusions() {
         return _siteInclusions;
+    }
+
+    public void setSiteInclusions(String siteInclusions) {
+        _siteInclusions = siteInclusions;
     }
 
     public String getHistExclusions() {
         return _histExclusions;
     }
 
+    public void setHistExclusions(String histExclusions) {
+        _histExclusions = histExclusions;
+    }
+
     public String getHistInclusions() {
         return _histInclusions;
+    }
+
+    public void setHistInclusions(String histInclusions) {
+        _histInclusions = histInclusions;
     }
 
     public String getPreNote() {
         return _preNote;
     }
 
+    public void setPreNote(String preNote) {
+        _preNote = preNote;
+    }
+
     public String getPostNote() {
         return _postNote;
     }
 
+    public void setPostNote(String postNote) {
+        _postNote = postNote;
+    }
+
     public List<SurgeryRow> getRows() {
         return _rows;
+    }
+
+    public void setRows(List<SurgeryRow> rows) {
+        _rows = rows;
     }
 }

@@ -13,26 +13,24 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
-import com.imsweb.seerapi.client.SeerApiBuilder;
-import com.imsweb.seerapi.client.glossary.Glossary.Category;
 
 public class GlossaryTest {
 
-    private static SeerApi _SEERAPI;
+    private static GlossaryService _GLOSSARY;
 
     @BeforeClass
     public static void setup() {
-        _SEERAPI = new SeerApiBuilder().connect();
+        _GLOSSARY = new SeerApi.Builder().connect().glossary();
     }
 
     @Test
     public void testGlossaryCategory() {
-        Assert.assertEquals(Category.SOLID_TUMOR, Category.valueOf("SOLID_TUMOR"));
+        Assert.assertEquals(Glossary.Category.SOLID_TUMOR, Glossary.Category.valueOf("SOLID_TUMOR"));
     }
 
     @Test
     public void testGlossaryVersions() throws IOException {
-        List<GlossaryVersion> versions = _SEERAPI.glossaryVersions();
+        List<GlossaryVersion> versions = _GLOSSARY.versions();
 
         Assert.assertTrue(versions.size() > 0);
         for (GlossaryVersion version : versions) {
@@ -44,14 +42,14 @@ public class GlossaryTest {
 
     @Test
     public void testGlossaryById() throws IOException {
-        GlossarySearchResults results = _SEERAPI.glossarySearch("latest", new GlossarySearch("Lymphangiogram"));
+        GlossarySearchResults results = _GLOSSARY.search("latest", "Lymphangiogram");
         Assert.assertTrue(results.getCount() > 0);
 
-        Glossary glossary = _SEERAPI.glossaryById("latest", results.getResults().get(0).getId());
+        Glossary glossary = _GLOSSARY.getById("latest", results.getResults().get(0).getId());
 
         Assert.assertNotNull(glossary);
         Assert.assertEquals("Lymphangiogram", glossary.getName());
-        Assert.assertEquals(Collections.singletonList(Category.HEMATO), glossary.getCategories());
+        Assert.assertEquals(Collections.singletonList(Glossary.Category.HEMATO), glossary.getCategories());
         Assert.assertNull(glossary.getPrimarySite());
 
         Assert.assertNull(glossary.getHistology());
@@ -59,50 +57,44 @@ public class GlossaryTest {
         Assert.assertTrue(glossary.getAbstractorNote().startsWith("This procedure may be done to determine the extent"));
         Assert.assertNull(glossary.getAlternateName());
         Assert.assertNull(glossary.getHistory());
-
-        //        GlossaryHistoryEvent event = glossary.getHistory().get(0);
-        //        Assert.assertNotNull(event.getUser());
-        //        Assert.assertNotNull(event.getDate());
-        //        Assert.assertNull(event.getOld());
-        //        Assert.assertNull(event.getNew());
     }
 
     @Test
     public void testGlossaryChangelog() throws IOException {
-        GlossaryChangelogResults results = _SEERAPI.glossaryChangelogs("latest", null, null, 1);
+        GlossaryChangelogResults results = _GLOSSARY.changelogs("latest", null, null, 1);
 
         Assert.assertNotNull(results);
 
         // TODO since all the glossary items were removed from the production database, this needs to be commented out; it will return when they are published again
 
-        /*
-        Assert.assertEquals(1, changes.size());
+            /*
+            Assert.assertEquals(1, changes.size());
 
-        GlossaryChangelog changelog = changes.get(0);
+            GlossaryChangelog changelog = changes.get(0);
 
-        Assert.assertNotNull(changelog.getUser());
-        Assert.assertEquals("latest_dev", changelog.getVersion());
-        Assert.assertTrue(changelog.getId().length() > 0);
-        Assert.assertTrue(changelog.getAdds().size() > 0);
+            Assert.assertNotNull(changelog.getUser());
+            Assert.assertEquals("latest_dev", changelog.getVersion());
+            Assert.assertTrue(changelog.getId().length() > 0);
+            Assert.assertTrue(changelog.getAdds().size() > 0);
 
-        GlossaryChangelogEntry entry = changelog.getAdds().get(0);
-        Assert.assertTrue(entry.getId().length() > 0);
-        Assert.assertTrue(entry.getName().length() > 0);
-        Assert.assertNull(entry.getOldVersion());
-        Assert.assertNull(entry.getNewVersion());
+            GlossaryChangelogEntry entry = changelog.getAdds().get(0);
+            Assert.assertTrue(entry.getId().length() > 0);
+            Assert.assertTrue(entry.getName().length() > 0);
+            Assert.assertNull(entry.getOldVersion());
+            Assert.assertNull(entry.getNewVersion());
 
-        Assert.assertNull(changelog.getMods());
-        Assert.assertNull(changelog.getDeletes());
-        Assert.assertNotNull(changelog.getDate());
-        Assert.assertEquals("Initial migration", changelog.getDescription());
-        */
+            Assert.assertNull(changelog.getMods());
+            Assert.assertNull(changelog.getDeletes());
+            Assert.assertNotNull(changelog.getDate());
+            Assert.assertEquals("Initial migration", changelog.getDescription());
+            */
     }
 
     @Test
     public void testGlossarySearch() throws IOException {
         GlossarySearch search = new GlossarySearch("cell");
 
-        GlossarySearchResults results = _SEERAPI.glossarySearch("latest", search);
+        GlossarySearchResults results = _GLOSSARY.search("latest", search.paramMap());
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());
@@ -111,8 +103,7 @@ public class GlossaryTest {
         Assert.assertEquals(Collections.singletonList("cell"), results.getTerms());
 
         // add the category and verify there are no results
-        search.setCategory(EnumSet.of(Category.SOLID_TUMOR));
-        results = _SEERAPI.glossarySearch("latest", search);
+        results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(Glossary.Category.SOLID_TUMOR));
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());
@@ -120,8 +111,7 @@ public class GlossaryTest {
         Assert.assertEquals(0, results.getResults().size());
 
         // add a second category and verify there are we get the results again
-        search.setCategory(EnumSet.of(Category.SOLID_TUMOR, Category.HEMATO));
-        results = _SEERAPI.glossarySearch("latest", search);
+        results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(Glossary.Category.SOLID_TUMOR, Glossary.Category.HEMATO));
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());

@@ -3,7 +3,7 @@
  */
 package com.imsweb.seerapi.client.disease;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SiteRange {
 
@@ -24,7 +24,15 @@ public class SiteRange {
         return _low;
     }
 
+    public void setLow(String low) {
+        _low = low;
+    }
+
     public String getHigh() {
         return _high;
+    }
+
+    public void setHigh(String high) {
+        _high = high;
     }
 }

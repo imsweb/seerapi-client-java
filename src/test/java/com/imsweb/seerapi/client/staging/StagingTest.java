@@ -10,8 +10,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
-import com.imsweb.seerapi.client.SeerApiBuilder;
-import com.imsweb.seerapi.client.staging.StagingData.Result;
 import com.imsweb.seerapi.client.staging.cs.CsSchemaLookup;
 
 public class StagingTest {
@@ -19,65 +17,67 @@ public class StagingTest {
     private static final String _ALGORITHM = "cs";
     private static final String _VERSION = "02.05.50";
 
-    private static SeerApi _SEERAPI;
+    private static StagingService _STAGING;
 
     @BeforeClass
     public static void setup() {
-        _SEERAPI = new SeerApiBuilder().connect();
+        _STAGING = new SeerApi.Builder().connect().staging();
     }
 
     @Test
     public void testGetAlgorithms() {
-        List<StagingAlgorithm> algorithms = _SEERAPI.stagingAlgorithms();
+        List<StagingAlgorithm> algorithms = _STAGING.algorithms();
 
         Assert.assertTrue(algorithms.size() > 0);
     }
 
     @Test
     public void testGetAlgorithmVersions() {
-        List<StagingVersion> versions = _SEERAPI.stagingAlgorithmVersions(_ALGORITHM);
+        List<StagingVersion> versions = _STAGING.versions(_ALGORITHM);
 
         Assert.assertTrue(versions.size() > 0);
     }
 
     @Test
     public void testListSchemas() {
-        List<StagingSchemaInfo> schemaInfos = _SEERAPI.stagingSchemas(_ALGORITHM, _VERSION, null);
+        List<StagingSchemaInfo> schemaInfos = _STAGING.schemas(_ALGORITHM, _VERSION);
+        Assert.assertTrue(schemaInfos.size() > 0);
 
+        schemaInfos = _STAGING.schemas(_ALGORITHM, _VERSION, "skin");
         Assert.assertTrue(schemaInfos.size() > 0);
     }
 
     @Test
     public void testSchemaLookup() {
         // first test simple lookup that returns a single schema with site/hist only
-        List<StagingSchemaInfo> schemas = _SEERAPI.stagingSchemaLookup(_ALGORITHM, _VERSION, new CsSchemaLookup("C509", "8000"));
+        List<StagingSchemaInfo> schemas = _STAGING.schemaLookup(_ALGORITHM, _VERSION, new CsSchemaLookup("C509", "8000").getInputs());
         Assert.assertEquals(1, schemas.size());
         Assert.assertEquals("breast", schemas.get(0).getId());
 
         // now test just site
         SchemaLookup data = new SchemaLookup();
         data.setInput(StagingData.PRIMARY_SITE_KEY, "C111");
-        Assert.assertEquals(7, _SEERAPI.stagingSchemaLookup(_ALGORITHM, _VERSION, data).size());
+        Assert.assertEquals(7, _STAGING.schemaLookup(_ALGORITHM, _VERSION, data.getInputs()).size());
 
         // add histology
         data.setInput(StagingData.HISTOLOGY_KEY, "8000");
-        Assert.assertEquals(2, _SEERAPI.stagingSchemaLookup(_ALGORITHM, _VERSION, data).size());
+        Assert.assertEquals(2, _STAGING.schemaLookup(_ALGORITHM, _VERSION, data.getInputs()).size());
 
         // add discriminator
         data.setInput("ssf25", "010");
-        schemas = _SEERAPI.stagingSchemaLookup(_ALGORITHM, _VERSION, data);
+        schemas = _STAGING.schemaLookup(_ALGORITHM, _VERSION, data.getInputs());
         Assert.assertEquals(1, schemas.size());
         Assert.assertEquals("nasopharynx", schemas.get(0).getId());
 
         // test with the CsStaging class
-        schemas = _SEERAPI.stagingSchemaLookup(_ALGORITHM, _VERSION, new CsSchemaLookup("C111", "8000", "010"));
+        schemas = _STAGING.schemaLookup(_ALGORITHM, _VERSION, new CsSchemaLookup("C111", "8000", "010").getInputs());
         Assert.assertEquals(1, schemas.size());
         Assert.assertEquals("nasopharynx", schemas.get(0).getId());
     }
 
     @Test
     public void testSchemaById() {
-        StagingSchema schema = _SEERAPI.stagingSchemaById(_ALGORITHM, _VERSION, "brain");
+        StagingSchema schema = _STAGING.schemaById(_ALGORITHM, _VERSION, "brain");
 
         Assert.assertEquals("cs", schema.getAlgorithm());
         Assert.assertEquals("02.05.50", schema.getVersion());
@@ -86,21 +86,21 @@ public class StagingTest {
 
     @Test
     public void testSchemaInvolvedTables() {
-        List<StagingTable> tables = _SEERAPI.stagingSchemaInvolvedTables(_ALGORITHM, _VERSION, "brain");
+        List<StagingTable> tables = _STAGING.involvedTables(_ALGORITHM, _VERSION, "brain");
 
         Assert.assertTrue(tables.size() > 0);
     }
 
     @Test
     public void testListTables() {
-        List<StagingTable> tables = _SEERAPI.stagingTables(_ALGORITHM, _VERSION, "ssf1");
+        List<StagingTable> tables = _STAGING.tables(_ALGORITHM, _VERSION, "ssf1");
 
         Assert.assertTrue(tables.size() > 0);
     }
 
     @Test
     public void testTableById() {
-        StagingTable table = _SEERAPI.stagingTableById(_ALGORITHM, _VERSION, "primary_site");
+        StagingTable table = _STAGING.tableById(_ALGORITHM, _VERSION, "primary_site");
 
         Assert.assertEquals("cs", table.getAlgorithm());
         Assert.assertEquals("02.05.50", table.getVersion());
@@ -109,7 +109,7 @@ public class StagingTest {
 
     @Test
     public void testTableInvoledSchemas() {
-        List<StagingSchema> schemas = _SEERAPI.stagingTableInvolvedSchemas(_ALGORITHM, _VERSION, "extension_baa");
+        List<StagingSchema> schemas = _STAGING.involvedSchemas(_ALGORITHM, _VERSION, "extension_baa");
 
         Assert.assertTrue(schemas.size() > 0);
     }
@@ -138,9 +138,9 @@ public class StagingTest {
         data.setInput("ssf1", "020");
 
         // perform the staging
-        StagingData output = _SEERAPI.stagingStage(_ALGORITHM, _VERSION, data);
+        StagingData output = _STAGING.stage(_ALGORITHM, _VERSION, data.getInput());
 
-        Assert.assertEquals(Result.STAGED, output.getResult());
+        Assert.assertEquals(StagingData.Result.STAGED, output.getResult());
         Assert.assertEquals(0, output.getErrors().size());
         Assert.assertEquals(37, output.getPath().size());
 

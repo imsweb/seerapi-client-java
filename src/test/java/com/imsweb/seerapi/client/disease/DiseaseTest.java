@@ -12,28 +12,25 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
-import com.imsweb.seerapi.client.SeerApiBuilder;
-import com.imsweb.seerapi.client.disease.Disease.Type;
-import com.imsweb.seerapi.client.publishable.PublishableSearch.OutputType;
-import com.imsweb.seerapi.client.publishable.PublishableSearch.SearchMode;
+import com.imsweb.seerapi.client.publishable.PublishableSearch;
 
 public class DiseaseTest {
 
-    private static SeerApi _SEERAPI;
+    private static DiseaseService _DISEASE;
 
     @BeforeClass
     public static void setup() {
-        _SEERAPI = new SeerApiBuilder().connect();
+        _DISEASE = new SeerApi.Builder().connect().disease();
     }
 
     @Test
     public void testDiseaseTypeCategory() {
-        Assert.assertEquals(Type.SOLID_TUMOR, Type.valueOf("SOLID_TUMOR"));
+        Assert.assertEquals(Disease.Type.SOLID_TUMOR, Disease.Type.valueOf("SOLID_TUMOR"));
     }
 
     @Test
     public void testDiseaseVersions() throws IOException {
-        List<DiseaseVersion> versions = _SEERAPI.diseaseVersions();
+        List<DiseaseVersion> versions = _DISEASE.versions();
 
         Assert.assertTrue(versions.size() > 0);
         for (DiseaseVersion version : versions) {
@@ -50,7 +47,7 @@ public class DiseaseTest {
 
     @Test
     public void testDiseasePrimarySites() throws IOException {
-        List<PrimarySite> sites = _SEERAPI.diseasePrimarySites();
+        List<PrimarySite> sites = _DISEASE.primarySites();
 
         Assert.assertTrue(sites.size() > 0);
         Assert.assertEquals("C000", sites.get(0).getValue());
@@ -59,7 +56,7 @@ public class DiseaseTest {
 
     @Test
     public void testDiseasePrimarySiteCode() throws IOException {
-        List<PrimarySite> sites = _SEERAPI.diseasePrimarySiteCode("C021");
+        List<PrimarySite> sites = _DISEASE.primarySiteCode("C021");
 
         Assert.assertTrue(sites.size() > 0);
         Assert.assertEquals("C021", sites.get(0).getValue());
@@ -68,7 +65,7 @@ public class DiseaseTest {
 
     @Test
     public void testDiseaseSiteCateogires() throws IOException {
-        List<SiteCategory> categories = _SEERAPI.diseaseSiteCategories();
+        List<SiteCategory> categories = _DISEASE.siteCategories();
 
         Assert.assertTrue(categories.size() > 0);
         Assert.assertEquals("head-and-neck", categories.get(0).getId());
@@ -80,11 +77,11 @@ public class DiseaseTest {
 
     @Test
     public void testDiseaseById() throws IOException {
-        Disease disease = _SEERAPI.diseaseById("latest", "51f6cf58e3e27c3994bd5408");
+        Disease disease = _DISEASE.getById("latest", "51f6cf58e3e27c3994bd5408");
 
         Assert.assertNotNull(disease);
         Assert.assertEquals("Acute erythroid leukemia", disease.getName());
-        Assert.assertEquals(Type.HEMATO, disease.getType());
+        Assert.assertEquals(Disease.Type.HEMATO, disease.getType());
         Assert.assertEquals("9840/3", disease.getIcdO3Morphology());
         Assert.assertTrue(disease.getSamePrimaries().size() > 0);
 
@@ -100,7 +97,7 @@ public class DiseaseTest {
         Assert.assertNull(disease.getFieldNotes());
         Assert.assertNull(disease.getScore());
         Assert.assertNull(disease.getGlossaryMatches());
-        Assert.assertNull(disease.getHistory());
+        //Assert.assertNull(disease.getHistory());
 
         //        Assert.assertTrue(disease.getHistory().size() > 0);
         //
@@ -151,7 +148,7 @@ public class DiseaseTest {
 
     @Test
     public void testDiseaseSamePrimary() throws IOException {
-        SamePrimaries same = _SEERAPI.diseaseSamePrimaries("latest", "9870/3", "9872/3", "2010");
+        SamePrimaries same = _DISEASE.samePrimaries("latest", "9870/3", "9872/3", "2010");
 
         Assert.assertNotNull(same);
         Assert.assertEquals(false, same.isSame());
@@ -162,9 +159,9 @@ public class DiseaseTest {
 
     @Test
     public void testDiseaseSearch() throws IOException {
-        DiseaseSearch search = new DiseaseSearch("basophilic", Type.HEMATO);
+        DiseaseSearch search = new DiseaseSearch("basophilic", Disease.Type.HEMATO);
 
-        DiseaseSearchResults results = _SEERAPI.diseaseSearch("latest", search);
+        DiseaseSearchResults results = _DISEASE.search("latest", search.paramMap());
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());
@@ -173,7 +170,7 @@ public class DiseaseTest {
         Assert.assertEquals(Collections.singletonList("basophilic"), results.getTerms());
 
         search.setSiteCategory("BAD_VALUE");
-        results = _SEERAPI.diseaseSearch("latest", search);
+        results = _DISEASE.search("latest", search.paramMap());
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());
@@ -181,20 +178,18 @@ public class DiseaseTest {
         Assert.assertEquals(0, results.getResults().size());
 
         // test a case where all search options are set
-        search.setMode(SearchMode.OR);
+        search.setMode(PublishableSearch.SearchMode.OR);
         search.setStatus("TEST");
         search.setAssignedTo("user");
         search.setModifiedFrom("2014-01-01");
         search.setModifiedTo("2014-05-31");
         search.setPublishedFrom("2014-01-01");
         search.setPublishedTo("2014-05-31");
-        search.setBeenPublished(true);
-        search.setHidden(false);
         search.setCount(100);
         search.setOffset(0);
         search.setOrderBy("name");
-        search.setOutputType(OutputType.MIN);
-        results = _SEERAPI.diseaseSearch("latest", search);
+        search.setOutputType(PublishableSearch.OutputType.MIN);
+        results = _DISEASE.search("latest", search.paramMap());
 
         Assert.assertNotNull(results);
         Assert.assertEquals(100, results.getCount().longValue());
@@ -202,7 +197,7 @@ public class DiseaseTest {
         Assert.assertEquals(0, results.getResults().size());
 
         // test searching without type
-        results = _SEERAPI.diseaseSearch("latest", new DiseaseSearch("basophilic"));
+        results = _DISEASE.search("latest", "basophilic");
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());
@@ -216,7 +211,7 @@ public class DiseaseTest {
     public void testDiseaseReportability() throws IOException {
         Disease partial = new Disease();
 
-        partial.setType(Type.HEMATO);
+        partial.setType(Disease.Type.HEMATO);
         partial.setIcdO3Morphology("9840/3");
         partial.setIcdO2Morphology("9840/3");
         partial.setIcdO1Morphology("9840/3");
@@ -225,7 +220,7 @@ public class DiseaseTest {
         partial.setIcdO1Effective(new YearRange(1978, 2001));
         partial.setPrimarySite(Collections.singletonList(new SiteRange("C421", "C421")));
 
-        Disease result = _SEERAPI.diseaseReportability(partial);
+        Disease result = _DISEASE.reportability(partial);
 
         Assert.assertNotNull(result);
         Assert.assertNotNull(result.getReportable());
@@ -233,7 +228,7 @@ public class DiseaseTest {
 
     @Test
     public void testDiseaseChangelog() throws IOException {
-        DiseaseChangelogResults results = _SEERAPI.diseaseChangelogs("latest", null, "2013-07-30", 1);
+        DiseaseChangelogResults results = _DISEASE.diseaseChangelogs("latest", null, "2013-07-30", 1);
 
         Assert.assertNotNull(results);
         Assert.assertEquals(1, results.getChangelogs().size());

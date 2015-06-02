@@ -3,6 +3,8 @@
  */
 package com.imsweb.seerapi.client.disease;
 
+import java.util.Map;
+
 import com.imsweb.seerapi.client.disease.Disease.Type;
 import com.imsweb.seerapi.client.publishable.PublishableSearch;
 
@@ -45,5 +47,17 @@ public class DiseaseSearch extends PublishableSearch {
 
     public void setSiteCategory(String siteCategory) {
         _siteCategory = siteCategory;
+    }
+
+    @Override
+    public Map<String, String> paramMap() {
+        Map<String, String> params = super.paramMap();
+
+        if (getType() != null)
+            params.put("type", getType().toString());
+        if (getSiteCategory() != null)
+            params.put("site_category", getSiteCategory());
+
+        return params;
     }
 }

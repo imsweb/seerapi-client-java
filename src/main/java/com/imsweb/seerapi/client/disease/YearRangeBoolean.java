@@ -3,7 +3,7 @@
  */
 package com.imsweb.seerapi.client.disease;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class YearRangeBoolean extends YearRange {
 
@@ -12,5 +12,9 @@ public class YearRangeBoolean extends YearRange {
 
     public Boolean getValue() {
         return _value;
+    }
+
+    public void setValue(Boolean value) {
+        _value = value;
     }
 }

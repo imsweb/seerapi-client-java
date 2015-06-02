@@ -3,7 +3,7 @@
  */
 package com.imsweb.seerapi.client.rx;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class RxChangelogEntry {
 
@@ -20,15 +20,31 @@ public class RxChangelogEntry {
         return _id;
     }
 
+    public void setId(String id) {
+        _id = id;
+    }
+
     public String getName() {
         return _name;
+    }
+
+    public void setName(String name) {
+        _name = name;
     }
 
     public Rx getOldVersion() {
         return _oldVersion;
     }
 
+    public void setOldVersion(Rx oldVersion) {
+        _oldVersion = oldVersion;
+    }
+
     public Rx getNewVersion() {
         return _newVersion;
+    }
+
+    public void setNewVersion(Rx newVersion) {
+        _newVersion = newVersion;
     }
 }

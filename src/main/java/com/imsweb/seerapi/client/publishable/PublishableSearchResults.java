@@ -5,7 +5,7 @@ package com.imsweb.seerapi.client.publishable;
 
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PublishableSearchResults {
 
@@ -26,23 +26,47 @@ public class PublishableSearchResults {
         return _terms;
     }
 
+    public void setTerms(List<String> terms) {
+        _terms = terms;
+    }
+
     public Integer getTotal() {
         return _total;
+    }
+
+    public void setTotal(Integer total) {
+        _total = total;
     }
 
     public Integer getCount() {
         return _count;
     }
 
+    public void setCount(Integer count) {
+        _count = count;
+    }
+
     public Integer getOffset() {
         return _offset;
+    }
+
+    public void setOffset(Integer offset) {
+        _offset = offset;
     }
 
     public Integer getMaxScore() {
         return _maxScore;
     }
 
+    public void setMaxScore(Integer maxScore) {
+        _maxScore = maxScore;
+    }
+
     public String getOrder() {
         return _order;
+    }
+
+    public void setOrder(String order) {
+        _order = order;
     }
 }

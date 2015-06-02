@@ -5,7 +5,7 @@ package com.imsweb.seerapi.client.shared;
 
 import java.util.Set;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class KeywordMatch {
 
@@ -20,11 +20,23 @@ public class KeywordMatch {
         return _id;
     }
 
+    public void setId(String id) {
+        _id = id;
+    }
+
     public String getKeyword() {
         return _keyword;
     }
 
+    public void setKeyword(String keyword) {
+        _keyword = keyword;
+    }
+
     public Set<String> getCategory() {
         return _category;
+    }
+
+    public void setCategory(Set<String> category) {
+        _category = category;
     }
 }

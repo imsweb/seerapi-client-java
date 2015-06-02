@@ -5,7 +5,7 @@ package com.imsweb.seerapi.client.rx;
 
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.imsweb.seerapi.client.publishable.PublishableSearchResults;
 
@@ -16,5 +16,9 @@ public class RxSearchResults extends PublishableSearchResults {
 
     public List<Rx> getResults() {
         return _results;
+    }
+
+    public void setResults(List<Rx> results) {
+        _results = results;
     }
 }

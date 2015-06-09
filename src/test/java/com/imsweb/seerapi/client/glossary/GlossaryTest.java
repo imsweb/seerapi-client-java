@@ -140,7 +140,6 @@ public class GlossaryTest {
             if (total == null)
                 total = results.getTotal();
 
-            System.out.println("Read " + results.getResults().size() + " Glossary entities.");
             search.setOffset(search.getOffset() + results.getResults().size());
         }
     }

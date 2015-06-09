@@ -146,7 +146,6 @@ public class RxTest {
             if (total == null)
                 total = results.getTotal();
 
-            System.out.println("Read " + results.getResults().size() + " Rx entities.");
             search.setOffset(search.getOffset() + results.getResults().size());
         }
     }

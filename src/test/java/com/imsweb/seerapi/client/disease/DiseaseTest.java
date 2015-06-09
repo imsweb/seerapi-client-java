@@ -225,7 +225,6 @@ public class DiseaseTest {
             if (total == null)
                 total = results.getTotal();
 
-            System.out.println("Read " + results.getResults().size() + " diseases.");
             search.setOffset(search.getOffset() + results.getResults().size());
         }
     }

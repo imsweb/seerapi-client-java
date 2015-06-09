@@ -125,6 +125,29 @@ public class RxTest {
         Assert.assertEquals(100, results.getCount().longValue());
         Assert.assertEquals(0, results.getTotal().longValue());
         Assert.assertEquals(0, results.getResults().size());
+    }
 
+    @Test
+    public void testRxSearchIterate() {
+        RxSearch search = new RxSearch();
+        search.setOutputType(PublishableSearch.OutputType.FULL);
+        search.setCount(100);
+        search.setOffset(0);
+
+        Integer total = null;
+
+        while (total == null || search.getOffset() < total) {
+            RxSearchResults results = _RX.search("latest", search.paramMap());
+            Assert.assertNotNull(results);
+            Assert.assertTrue(results.getTotal() > 0);
+            Assert.assertTrue(results.getResults().size() > 0);
+
+            // the first time through, set the total
+            if (total == null)
+                total = results.getTotal();
+
+            System.out.println("Read " + results.getResults().size() + " Rx entities.");
+            search.setOffset(search.getOffset() + results.getResults().size());
+        }
     }
 }

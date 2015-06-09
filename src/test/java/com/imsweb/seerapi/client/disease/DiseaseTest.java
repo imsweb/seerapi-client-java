@@ -204,7 +204,30 @@ public class DiseaseTest {
         Assert.assertEquals(4, results.getTotal().longValue());
         Assert.assertEquals(4, results.getResults().size());
         Assert.assertEquals(Collections.singletonList("basophilic"), results.getTerms());
+    }
 
+    @Test
+    public void testDiseaseSearchIterate() {
+        DiseaseSearch search = new DiseaseSearch();
+        search.setOutputType(PublishableSearch.OutputType.FULL);
+        search.setCount(100);
+        search.setOffset(0);
+
+        Integer total = null;
+
+        while (total == null || search.getOffset() < total) {
+            DiseaseSearchResults results = _DISEASE.search("latest", search.paramMap());
+            Assert.assertNotNull(results);
+            Assert.assertTrue(results.getTotal() > 0);
+            Assert.assertTrue(results.getResults().size() > 0);
+
+            // the first time through, set the total
+            if (total == null)
+                total = results.getTotal();
+
+            System.out.println("Read " + results.getResults().size() + " diseases.");
+            search.setOffset(search.getOffset() + results.getResults().size());
+        }
     }
 
     @Test

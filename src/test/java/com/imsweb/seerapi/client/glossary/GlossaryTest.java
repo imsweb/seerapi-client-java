@@ -13,6 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
+import com.imsweb.seerapi.client.publishable.PublishableSearch;
 
 public class GlossaryTest {
 
@@ -118,6 +119,30 @@ public class GlossaryTest {
         Assert.assertTrue(results.getTotal().longValue() > 0);
         Assert.assertTrue(results.getResults().size() > 0);
         Assert.assertEquals(Collections.singletonList("cell"), results.getTerms());
+    }
+
+    @Test
+    public void testGlossarySearchIterate() {
+        GlossarySearch search = new GlossarySearch();
+        search.setOutputType(PublishableSearch.OutputType.FULL);
+        search.setCount(100);
+        search.setOffset(0);
+
+        Integer total = null;
+
+        while (total == null || search.getOffset() < total) {
+            GlossarySearchResults results = _GLOSSARY.search("latest", search.paramMap());
+            Assert.assertNotNull(results);
+            Assert.assertTrue(results.getTotal() > 0);
+            Assert.assertTrue(results.getResults().size() > 0);
+
+            // the first time through, set the total
+            if (total == null)
+                total = results.getTotal();
+
+            System.out.println("Read " + results.getResults().size() + " Glossary entities.");
+            search.setOffset(search.getOffset() + results.getResults().size());
+        }
     }
 
 }

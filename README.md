@@ -57,13 +57,13 @@ To make calls to the API, first get an instance of `SeerApi`.  If your local con
 connection.
 
 ```java
-SeerApi api = new SeerApi.Builder().connect;
+SeerApi api = new SeerApi.Builder().connect();
 ```
 
 or the key can be supplied when constructing the instance.
 
 ```java
-SeerApi api = new SeerApi.Builder().apiKey("your_api_key").connect;
+SeerApi api = new SeerApi.Builder().apiKey("your_api_key").connect();
 ```
 
 Each set of APIs are broken into their own service.  Here are the services:

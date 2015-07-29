@@ -124,7 +124,7 @@ public class RxTest {
         Assert.assertNotNull(results);
         Assert.assertEquals(100, results.getCount().longValue());
         Assert.assertEquals(0, results.getTotal().longValue());
-        Assert.assertEquals(0, results.getResults().size());
+        Assert.assertNull(results.getResults());
     }
 
     @Test

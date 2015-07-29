@@ -50,12 +50,11 @@ public class GlossaryTest {
 
         Assert.assertNotNull(glossary);
         Assert.assertEquals("Lymphangiogram", glossary.getName());
-        Assert.assertEquals(Collections.singletonList(Glossary.Category.HEMATO), glossary.getCategories());
+        Assert.assertEquals(Collections.singletonList(Glossary.Category.GENERAL), glossary.getCategories());
         Assert.assertNull(glossary.getPrimarySite());
 
         Assert.assertNull(glossary.getHistology());
         Assert.assertTrue(glossary.getDefinition().startsWith("An x-ray of the lymphatic system."));
-        Assert.assertTrue(glossary.getAbstractorNote().startsWith("This procedure may be done to determine the extent"));
         Assert.assertNull(glossary.getAlternateName());
         Assert.assertNull(glossary.getHistory());
     }
@@ -93,7 +92,8 @@ public class GlossaryTest {
 
     @Test
     public void testGlossarySearch() throws IOException {
-        GlossarySearch search = new GlossarySearch("cell");
+        String term = "killer";
+        GlossarySearch search = new GlossarySearch(term);
 
         GlossarySearchResults results = _GLOSSARY.search("latest", search.paramMap());
 
@@ -101,7 +101,7 @@ public class GlossaryTest {
         Assert.assertEquals(25, results.getCount().longValue());
         Assert.assertTrue(results.getTotal().longValue() > 0);
         Assert.assertTrue(results.getResults().size() > 0);
-        Assert.assertEquals(Collections.singletonList("cell"), results.getTerms());
+        Assert.assertEquals(Collections.singletonList(term), results.getTerms());
 
         // add the category and verify there are no results
         results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(Glossary.Category.SOLID_TUMOR));
@@ -109,7 +109,7 @@ public class GlossaryTest {
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());
         Assert.assertEquals(0, results.getTotal().longValue());
-        Assert.assertEquals(0, results.getResults().size());
+        Assert.assertNull(results.getResults());
 
         // add a second category and verify there are we get the results again
         results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(Glossary.Category.SOLID_TUMOR, Glossary.Category.HEMATO));
@@ -118,20 +118,20 @@ public class GlossaryTest {
         Assert.assertEquals(25, results.getCount().longValue());
         Assert.assertTrue(results.getTotal().longValue() > 0);
         Assert.assertTrue(results.getResults().size() > 0);
-        Assert.assertEquals(Collections.singletonList("cell"), results.getTerms());
+        Assert.assertEquals(Collections.singletonList(term), results.getTerms());
     }
 
     @Test
     public void testGlossarySearchIterate() {
         GlossarySearch search = new GlossarySearch();
         search.setOutputType(PublishableSearch.OutputType.FULL);
-        search.setCount(100);
+        search.setCount(25);
         search.setOffset(0);
 
         Integer total = null;
 
         while (total == null || search.getOffset() < total) {
-            GlossarySearchResults results = _GLOSSARY.search("latest", search.paramMap());
+            GlossarySearchResults results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(Glossary.Category.HEMATO));
             Assert.assertNotNull(results);
             Assert.assertTrue(results.getTotal() > 0);
             Assert.assertTrue(results.getResults().size() > 0);
@@ -142,6 +142,8 @@ public class GlossaryTest {
 
             search.setOffset(search.getOffset() + results.getResults().size());
         }
+
+        Assert.assertTrue(total > 100);
     }
 
 }

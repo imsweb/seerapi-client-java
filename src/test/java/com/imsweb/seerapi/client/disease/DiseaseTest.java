@@ -175,7 +175,7 @@ public class DiseaseTest {
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());
         Assert.assertEquals(0, results.getTotal().longValue());
-        Assert.assertEquals(0, results.getResults().size());
+        Assert.assertNull(results.getResults());
 
         // test a case where all search options are set
         search.setMode(PublishableSearch.SearchMode.OR);
@@ -194,7 +194,7 @@ public class DiseaseTest {
         Assert.assertNotNull(results);
         Assert.assertEquals(100, results.getCount().longValue());
         Assert.assertEquals(0, results.getTotal().longValue());
-        Assert.assertEquals(0, results.getResults().size());
+        Assert.assertNull(results.getResults());
 
         // test searching without type
         results = _DISEASE.search("latest", "basophilic");

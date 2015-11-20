@@ -197,8 +197,6 @@ public class StagingTest {
 
     @Test
     public void testStagingWithErrors() throws IOException {
-        StagingService staging = new SeerApi.Builder().connect().staging();
-
         StagingData data = new StagingData();
         data.setInput("site", "C181");
         data.setInput("hist", "8093");
@@ -206,7 +204,7 @@ public class StagingTest {
         data.setInput("extension", "670");
 
         // perform the staging
-        StagingData output = staging.stage(_ALGORITHM, _VERSION, data.getInput()).execute().body();
+        StagingData output = _STAGING.stage(_ALGORITHM, _VERSION, data.getInput()).execute().body();
 
         Assert.assertEquals(StagingData.Result.STAGED, output.getResult());
         Assert.assertEquals(9, output.getErrors().size());

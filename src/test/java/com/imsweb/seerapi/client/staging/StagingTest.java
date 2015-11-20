@@ -197,7 +197,7 @@ public class StagingTest {
 
     @Test
     public void testStagingWithErrors() throws IOException {
-        StagingService staging = new SeerApi.Builder().url("https://seerapi-dev.imsweb.com/rest").apiKey("eca6c605905b94d9a7615ab12e60c15f").connect().staging();
+        StagingService staging = new SeerApi.Builder().connect().staging();
 
         StagingData data = new StagingData();
         data.setInput("site", "C181");

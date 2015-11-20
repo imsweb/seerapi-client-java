@@ -31,7 +31,7 @@ public class GlossaryTest {
 
     @Test
     public void testGlossaryVersions() throws IOException {
-        List<GlossaryVersion> versions = _GLOSSARY.versions();
+        List<GlossaryVersion> versions = _GLOSSARY.versions().execute().body();
 
         Assert.assertTrue(versions.size() > 0);
         for (GlossaryVersion version : versions) {
@@ -43,10 +43,10 @@ public class GlossaryTest {
 
     @Test
     public void testGlossaryById() throws IOException {
-        GlossarySearchResults results = _GLOSSARY.search("latest", "Lymphangiogram");
+        GlossarySearchResults results = _GLOSSARY.search("latest", "Lymphangiogram").execute().body();
         Assert.assertTrue(results.getCount() > 0);
 
-        Glossary glossary = _GLOSSARY.getById("latest", results.getResults().get(0).getId());
+        Glossary glossary = _GLOSSARY.getById("latest", results.getResults().get(0).getId()).execute().body();
 
         Assert.assertNotNull(glossary);
         Assert.assertEquals("Lymphangiogram", glossary.getName());
@@ -61,7 +61,7 @@ public class GlossaryTest {
 
     @Test
     public void testGlossaryChangelog() throws IOException {
-        GlossaryChangelogResults results = _GLOSSARY.changelogs("latest", null, null, 1);
+        GlossaryChangelogResults results = _GLOSSARY.changelogs("latest", null, null, 1).execute().body();
 
         Assert.assertNotNull(results);
 
@@ -95,7 +95,7 @@ public class GlossaryTest {
         String term = "killer";
         GlossarySearch search = new GlossarySearch(term);
 
-        GlossarySearchResults results = _GLOSSARY.search("latest", search.paramMap());
+        GlossarySearchResults results = _GLOSSARY.search("latest", search.paramMap()).execute().body();
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());
@@ -104,7 +104,7 @@ public class GlossaryTest {
         Assert.assertEquals(Collections.singletonList(term), results.getTerms());
 
         // add the category and verify there are no results
-        results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(Glossary.Category.SOLID_TUMOR));
+        results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(Glossary.Category.SOLID_TUMOR)).execute().body();
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());
@@ -112,7 +112,7 @@ public class GlossaryTest {
         Assert.assertNull(results.getResults());
 
         // add a second category and verify there are we get the results again
-        results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(Glossary.Category.SOLID_TUMOR, Glossary.Category.HEMATO));
+        results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(Glossary.Category.SOLID_TUMOR, Glossary.Category.HEMATO)).execute().body();
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());
@@ -122,7 +122,7 @@ public class GlossaryTest {
     }
 
     @Test
-    public void testGlossarySearchIterate() {
+    public void testGlossarySearchIterate() throws IOException {
         GlossarySearch search = new GlossarySearch();
         search.setOutputType(PublishableSearch.OutputType.FULL);
         search.setCount(25);
@@ -131,7 +131,7 @@ public class GlossaryTest {
         Integer total = null;
 
         while (total == null || search.getOffset() < total) {
-            GlossarySearchResults results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(Glossary.Category.HEMATO));
+            GlossarySearchResults results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(Glossary.Category.HEMATO)).execute().body();
             Assert.assertNotNull(results);
             Assert.assertTrue(results.getTotal() > 0);
             Assert.assertTrue(results.getResults().size() > 0);

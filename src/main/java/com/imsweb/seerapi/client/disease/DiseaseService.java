@@ -6,6 +6,7 @@ package com.imsweb.seerapi.client.disease;
 import java.util.List;
 import java.util.Map;
 
+import retrofit.Call;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
@@ -19,8 +20,8 @@ public interface DiseaseService {
      * Return a list of all disease versions and information about them
      * @return a list of DiseaseVersion objects
      */
-    @GET("/disease/versions")
-    List<DiseaseVersion> versions();
+    @GET("disease/versions")
+    Call<List<DiseaseVersion>> versions();
 
     /**
      * Return a list of matching diseases
@@ -28,8 +29,8 @@ public interface DiseaseService {
      * @param query search query
      * @return a DiseaseSearchResults object
      */
-    @GET("/disease/{version}")
-    DiseaseSearchResults search(@Path("version") String version, @Query("q") String query);
+    @GET("disease/{version}")
+    Call<DiseaseSearchResults> search(@Path("version") String version, @Query("q") String query);
 
     /**
      * Return a list of matching diseases
@@ -37,8 +38,8 @@ public interface DiseaseService {
      * @param searchParams A Map of search parameters.  Use DiseaseSearch to easily build parameter list.
      * @return a DiseaseSearchResults object
      */
-    @GET("/disease/{version}")
-    DiseaseSearchResults search(@Path("version") String version, @QueryMap Map<String, String> searchParams);
+    @GET("disease/{version}")
+    Call<DiseaseSearchResults> search(@Path("version") String version, @QueryMap Map<String, String> searchParams);
 
     /**
      * Return a complete disease entity based in identifier.  Note that by default the disease entity does not include relevant glossary references.
@@ -46,8 +47,8 @@ public interface DiseaseService {
      * @param id Disease identifier
      * @return a Disease object
      */
-    @GET("/disease/{version}/id/{id}")
-    Disease getById(@Path("version") String version, @Path("id") String id);
+    @GET("disease/{version}/id/{id}")
+    Call<Disease> getById(@Path("version") String version, @Path("id") String id);
 
     /**
      * Return a complete disease entity based in identifier
@@ -56,30 +57,30 @@ public interface DiseaseService {
      * @param includeGlossary if true, include the glossary
      * @return a Disease object
      */
-    @GET("/disease/{version}/id/{id}")
-    Disease getById(@Path("version") String version, @Path("id") String id, @Query("glossary") boolean includeGlossary);
+    @GET("disease/{version}/id/{id}")
+    Call<Disease> getById(@Path("version") String version, @Path("id") String id, @Query("glossary") boolean includeGlossary);
 
     /**
      * Return a list of all primary sites and labels
      * @return a List of PrimarySite objects
      */
-    @GET("/disease/primary_site")
-    List<PrimarySite> primarySites();
+    @GET("disease/primary_site")
+    Call<List<PrimarySite>> primarySites();
 
     /**
      * Return a single primary site and label
      * @param primarySite Primary Site O3
      * @return a PrimarySite object
      */
-    @GET("/disease/primary_site/{code}")
-    List<PrimarySite> primarySiteCode(@Path("code") String primarySite);
+    @GET("disease/primary_site/{code}")
+    Call<List<PrimarySite>> primarySiteCode(@Path("code") String primarySite);
 
     /**
      * Return a complete list of site categories and definitions
      * @return a list of SiteCategory objects
      */
-    @GET("/disease/site_categories")
-    List<SiteCategory> siteCategories();
+    @GET("disease/site_categories")
+    Call<List<SiteCategory>> siteCategories();
 
     /**
      * Return whether the 2 morphologies represent the same primary for the given year.
@@ -89,16 +90,16 @@ public interface DiseaseService {
      * @param year Year of Diagnosis
      * @return a SamePrimary object
      */
-    @GET("/disease/{version}/same_primary")
-    SamePrimaries samePrimaries(@Path("version") String version, @Query("d1") String morphology1, @Query("d2") String morphology2, @Query("year") String year);
+    @GET("disease/{version}/same_primary")
+    Call<SamePrimaries> samePrimaries(@Path("version") String version, @Query("d1") String morphology1, @Query("d2") String morphology2, @Query("year") String year);
 
     /**
      * Returns the reportable year range of the supplied disease.
      * @param disease Disease object
      * @return a Disease object with the reportability field filled in
      */
-    @POST("/disease/reportability")
-    Disease reportability(@Body Disease disease);
+    @POST("disease/reportability")
+    Call<Disease> reportability(@Body Disease disease);
 
     /**
      * Return the changelog entries for the passed database version
@@ -108,6 +109,6 @@ public interface DiseaseService {
      * @param count if not null, limit the number returned
      * @return a list of DiseaseChangelogResults objects
      */
-    @GET("/disease/{version}/changelog")
-    DiseaseChangelogResults diseaseChangelogs(@Path("version") String version, @Query("from") String fromDate, @Query("to") String toDate, @Query("count") Integer count);
+    @GET("disease/{version}/changelog")
+    Call<DiseaseChangelogResults> diseaseChangelogs(@Path("version") String version, @Query("from") String fromDate, @Query("to") String toDate, @Query("count") Integer count);
 }

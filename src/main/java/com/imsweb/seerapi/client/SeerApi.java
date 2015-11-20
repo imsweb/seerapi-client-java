@@ -6,9 +6,21 @@ package com.imsweb.seerapi.client;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Properties;
 
-import retrofit.RestAdapter;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.squareup.okhttp.Interceptor;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import retrofit.JacksonConverterFactory;
+import retrofit.Retrofit;
 
 import com.imsweb.seerapi.client.disease.DiseaseService;
 import com.imsweb.seerapi.client.glossary.GlossaryService;
@@ -23,23 +35,66 @@ import com.imsweb.seerapi.client.surgery.SurgeryService;
  */
 public final class SeerApi {
 
-    RestAdapter _restAdapter;
+    private Retrofit _retroFit;
 
     /**
      * Creates a client API root object
      * @param baseUrl base URL for API
      * @param apiKey API key
      */
-    private SeerApi(String baseUrl, String apiKey) {
-        if (baseUrl.endsWith("/"))
-            baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
+    private SeerApi(String baseUrl, final String apiKey) {
+        if (!baseUrl.endsWith("/"))
+            baseUrl += "/";
 
-        _restAdapter = new RestAdapter.Builder()
-                .setEndpoint(baseUrl)
-                .setConverter(new SeerApiJacksonConverter())
-                .setRequestInterceptor(new SeerApiRequestInterceptor(apiKey))
-                .setErrorHandler(new SeerApiErrorHandler())
+        OkHttpClient client = new OkHttpClient();
+        client.interceptors().add(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                // add the api key to all requests
+                Request request = original.newBuilder()
+                        .header("Accept", "application/json")
+                        .header("X-SEERAPI-Key", apiKey)
+                        .method(original.method(), original.body())
+                        .build();
+
+                return chain.proceed(request);
+            }
+        });
+        client.interceptors().add(new ErrorInterceptor());
+
+        _retroFit = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(JacksonConverterFactory.create(getMapper()))
+                .client(client)
                 .build();
+    }
+
+    /**
+     * Return the internal ObjectMapper
+     * @return
+     */
+    protected static ObjectMapper getMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+
+        // do not write null values
+        mapper.configure(SerializationFeature.WRITE_NULL_MAP_VALUES, false);
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
+        mapper.setVisibilityChecker(mapper.getSerializationConfig().getDefaultVisibilityChecker()
+                .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
+                .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
+
+        // set Date objects to output in readable customized format
+        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        mapper.setDateFormat(dateFormat);
+
+        return mapper;
     }
 
     /**
@@ -47,7 +102,7 @@ public final class SeerApi {
      * @return an interface to all the disease APIs
      */
     public DiseaseService disease() {
-        return _restAdapter.create(DiseaseService.class);
+        return _retroFit.create(DiseaseService.class);
     }
 
     /**
@@ -55,7 +110,7 @@ public final class SeerApi {
      * @return an interface to all the glossary APIs
      */
     public GlossaryService glossary() {
-        return _restAdapter.create(GlossaryService.class);
+        return _retroFit.create(GlossaryService.class);
     }
 
     /**
@@ -63,7 +118,7 @@ public final class SeerApi {
      * @return an inteface to all the NAACCR APIs
      */
     public NaaccrService naaccr() {
-        return _restAdapter.create(NaaccrService.class);
+        return _retroFit.create(NaaccrService.class);
     }
 
     /**
@@ -71,7 +126,7 @@ public final class SeerApi {
      * @return an inteface to all the Rx APIs
      */
     public RxService rx() {
-        return _restAdapter.create(RxService.class);
+        return _retroFit.create(RxService.class);
     }
 
     /**
@@ -79,7 +134,7 @@ public final class SeerApi {
      * @return an interface to all the site recode APIs
      */
     public SiteRecodeService siteRecode() {
-        return _restAdapter.create(SiteRecodeService.class);
+        return _retroFit.create(SiteRecodeService.class);
     }
 
     /**
@@ -87,7 +142,7 @@ public final class SeerApi {
      * @return an interface to all the staging APIs
      */
     public StagingService staging() {
-        return _restAdapter.create(StagingService.class);
+        return _retroFit.create(StagingService.class);
     }
 
     /**
@@ -95,7 +150,7 @@ public final class SeerApi {
      * @return an interface to all the surgery APIs
      */
     public SurgeryService surgery() {
-        return _restAdapter.create(SurgeryService.class);
+        return _retroFit.create(SurgeryService.class);
     }
 
     /**
@@ -104,7 +159,7 @@ public final class SeerApi {
     public static class Builder {
 
         // default base URL
-        private static final String _SEERAPI_URL = "https://api.seer.cancer.gov/rest";
+        private static final String _SEERAPI_URL = "https://api.seer.cancer.gov/rest/";
 
         // environment variable for URL and API key
         private static final String _ENV_URL = "SEER_API_URL";

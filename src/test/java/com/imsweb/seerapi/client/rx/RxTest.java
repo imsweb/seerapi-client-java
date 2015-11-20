@@ -27,7 +27,7 @@ public class RxTest {
 
     @Test
     public void testRxVersions() throws IOException {
-        List<RxVersion> versions = _RX.versions();
+        List<RxVersion> versions = _RX.versions().execute().body();
 
         Assert.assertTrue(versions.size() > 0);
         for (RxVersion version : versions) {
@@ -39,7 +39,7 @@ public class RxTest {
 
     @Test
     public void testRxById() throws IOException {
-        Rx rx = _RX.getById("latest", "53c44afe102c1290262dc672");
+        Rx rx = _RX.getById("latest", "53c44afe102c1290262dc672").execute().body();
 
         Assert.assertNotNull(rx);
         Assert.assertEquals("ABT-751", rx.getName());
@@ -69,7 +69,7 @@ public class RxTest {
 
     @Test
     public void testRxChangelog() throws IOException {
-        RxChangelogResults results = _RX.changelogs("latest", "2013-07-30", null, 1);
+        RxChangelogResults results = _RX.changelogs("latest", "2015-08-30", "2015-09-30", 1).execute().body();
 
         Assert.assertNotNull(results);
 
@@ -99,7 +99,7 @@ public class RxTest {
     @Test
     public void testRxSearch() throws IOException {
         RxSearch search = new RxSearch("abt", Rx.Type.DRUG);
-        RxSearchResults results = _RX.search("latest", search.paramMap());
+        RxSearchResults results = _RX.search("latest", search.paramMap()).execute().body();
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());
@@ -119,7 +119,7 @@ public class RxTest {
         search.setOrderBy("name");
         search.setOutputType(PublishableSearch.OutputType.MIN);
         search.setDoNotCode(Rx.DoNoCodeValue.YES);
-        results = _RX.search("latest", search.paramMap(), new HashSet<>(Collections.singletonList("category")));
+        results = _RX.search("latest", search.paramMap(), new HashSet<>(Collections.singletonList("category"))).execute().body();
 
         Assert.assertNotNull(results);
         Assert.assertEquals(100, results.getCount().longValue());
@@ -128,7 +128,7 @@ public class RxTest {
     }
 
     @Test
-    public void testRxSearchIterate() {
+    public void testRxSearchIterate() throws IOException {
         RxSearch search = new RxSearch();
         search.setOutputType(PublishableSearch.OutputType.FULL);
         search.setCount(100);
@@ -137,7 +137,7 @@ public class RxTest {
         Integer total = null;
 
         while (total == null || search.getOffset() < total) {
-            RxSearchResults results = _RX.search("latest", search.paramMap());
+            RxSearchResults results = _RX.search("latest", search.paramMap()).execute().body();
             Assert.assertNotNull(results);
             Assert.assertTrue(results.getTotal() > 0);
             Assert.assertTrue(results.getResults().size() > 0);

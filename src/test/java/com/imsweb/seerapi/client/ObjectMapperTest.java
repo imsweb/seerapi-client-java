@@ -12,13 +12,13 @@ import com.imsweb.seerapi.client.disease.Disease;
 import com.imsweb.seerapi.client.disease.SiteRange;
 import com.imsweb.seerapi.client.disease.YearRange;
 
-public class SeerApiJacksonConverterTest {
+public class ObjectMapperTest {
 
     @Test
     public void testMapper() throws IOException {
         Range range = new Range("10", "40");
 
-        ObjectMapper mapper = new SeerApiJacksonConverter().getMapper();
+        ObjectMapper mapper = SeerApi.getMapper();
 
         String json = mapper.writeValueAsString(range);
 
@@ -45,7 +45,7 @@ public class SeerApiJacksonConverterTest {
         partial.setIcdO1Effective(new YearRange(1978, 2001));
         partial.setPrimarySite(Collections.singletonList(new SiteRange("C421", "C421")));
 
-        ObjectMapper mapper = new SeerApiJacksonConverter().getMapper();
+        ObjectMapper mapper = SeerApi.getMapper();
 
         String json = mapper.writeValueAsString(partial);
 

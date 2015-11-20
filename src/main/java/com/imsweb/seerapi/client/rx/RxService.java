@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import retrofit.Call;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -18,8 +19,8 @@ public interface RxService {
      * Return a list of all Rx versions and information about them.  Note that by default the Rx entity does not include relevant glossary references.
      * @return a list of RxVersion objects
      */
-    @GET("/rx/versions")
-    List<RxVersion> versions();
+    @GET("rx/versions")
+    Call<List<RxVersion>> versions();
 
     /**
      * Return a complete Rx entity based in identifier
@@ -27,8 +28,8 @@ public interface RxService {
      * @param id Rx identifier
      * @return a Rx object
      */
-    @GET("/rx/{version}/id/{id}")
-    Rx getById(@Path("version") String version, @Path("id") String id);
+    @GET("rx/{version}/id/{id}")
+    Call<Rx> getById(@Path("version") String version, @Path("id") String id);
 
     /**
      * Return a complete Rx entity based in identifier
@@ -37,8 +38,8 @@ public interface RxService {
      * @param includeGlossary if true, include the glossary
      * @return a Rx object
      */
-    @GET("/rx/{version}/id/{id}")
-    Rx getById(@Path("version") String version, @Path("id") String id, @Query("glossary") boolean includeGlossary);
+    @GET("rx/{version}/id/{id}")
+    Call<Rx> getById(@Path("version") String version, @Path("id") String id, @Query("glossary") boolean includeGlossary);
 
     /**
      * Return a list of matching Rx entities
@@ -46,8 +47,8 @@ public interface RxService {
      * @param query search query
      * @return a RxSearchResults object
      */
-    @GET("/rx/{version}")
-    RxSearchResults search(@Path("version") String version, @Query("q") String query);
+    @GET("rx/{version}")
+    Call<RxSearchResults> search(@Path("version") String version, @Query("q") String query);
 
     /**
      * Return a list of matching Rx entities
@@ -56,8 +57,8 @@ public interface RxService {
      * @param categories limit to these categories
      * @return a RxSearchResults object
      */
-    @GET("/rx/{version}")
-    RxSearchResults search(@Path("version") String version, @Query("q") String query, @Query("category") Set<String> categories);
+    @GET("rx/{version}")
+    Call<RxSearchResults> search(@Path("version") String version, @Query("q") String query, @Query("category") Set<String> categories);
 
     /**
      * Return a list of matching Rx entities
@@ -65,8 +66,8 @@ public interface RxService {
      * @param searchParams A Map of search parameters.  Use RxSearch to easily build parameter list.
      * @return a RxSearchResults object
      */
-    @GET("/rx/{version}")
-    RxSearchResults search(@Path("version") String version, @QueryMap Map<String, String> searchParams);
+    @GET("rx/{version}")
+    Call<RxSearchResults> search(@Path("version") String version, @QueryMap Map<String, String> searchParams);
 
     /**
      * Return a list of matching Rx entities
@@ -75,8 +76,8 @@ public interface RxService {
      * @param categories limit to these categories
      * @return a RxSearchResults object
      */
-    @GET("/rx/{version}")
-    RxSearchResults search(@Path("version") String version, @QueryMap Map<String, String> searchParams, @Query("category") Set<String> categories);
+    @GET("rx/{version}")
+    Call<RxSearchResults> search(@Path("version") String version, @QueryMap Map<String, String> searchParams, @Query("category") Set<String> categories);
 
     /**
      * Return the changelog entries for the passed database version
@@ -86,7 +87,7 @@ public interface RxService {
      * @param count if not null, limit the number returned
      * @return a list of RxChangelogResults objects
      */
-    @GET("/rx/{version}/changelog")
-    RxChangelogResults changelogs(@Path("version") String version, @Query("from") String fromDate, @Query("to") String toDate, @Query("count") Integer count);
+    @GET("rx/{version}/changelog")
+    Call<RxChangelogResults> changelogs(@Path("version") String version, @Query("from") String fromDate, @Query("to") String toDate, @Query("count") Integer count);
 
 }

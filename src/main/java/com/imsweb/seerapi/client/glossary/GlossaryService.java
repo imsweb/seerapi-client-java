@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import retrofit.Call;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -18,8 +19,8 @@ public interface GlossaryService {
      * Return a list of all glossary versions and information about them
      * @return a list of GlossaryVersion objects
      */
-    @GET("/glossary/versions")
-    List<GlossaryVersion> versions();
+    @GET("glossary/versions")
+    Call<List<GlossaryVersion>> versions();
 
     /**
      * Return a complete glossary entity based in identifier
@@ -27,8 +28,8 @@ public interface GlossaryService {
      * @param id Glossary identifier
      * @return a Glossary object
      */
-    @GET("/glossary/{version}/id/{id}")
-    Glossary getById(@Path("version") String version, @Path("id") String id);
+    @GET("glossary/{version}/id/{id}")
+    Call<Glossary> getById(@Path("version") String version, @Path("id") String id);
 
     /**
      * Return a list of matching glossaries
@@ -36,8 +37,8 @@ public interface GlossaryService {
      * @param query search query
      * @return a GlossarySearchResults object
      */
-    @GET("/glossary/{version}")
-    GlossarySearchResults search(@Path("version") String version, @Query("q") String query);
+    @GET("glossary/{version}")
+    Call<GlossarySearchResults> search(@Path("version") String version, @Query("q") String query);
 
     /**
      * Return a list of matching glossaries
@@ -46,8 +47,8 @@ public interface GlossaryService {
      * @param categories a list of categories
      * @return a GlossarySearchResults object
      */
-    @GET("/glossary/{version}")
-    GlossarySearchResults search(@Path("version") String version, @Query("q") String query, @Query("category") Set<Glossary.Category> categories);
+    @GET("glossary/{version}")
+    Call<GlossarySearchResults> search(@Path("version") String version, @Query("q") String query, @Query("category") Set<Glossary.Category> categories);
 
     /**
      * Return a list of matching glossaries
@@ -55,8 +56,8 @@ public interface GlossaryService {
      * @param searchParams A Map of search parameters.  Use GlossarySearch to easily build parameter list.
      * @return a GlossarySearchResults object
      */
-    @GET("/glossary/{version}")
-    GlossarySearchResults search(@Path("version") String version, @QueryMap Map<String, String> searchParams);
+    @GET("glossary/{version}")
+    Call<GlossarySearchResults> search(@Path("version") String version, @QueryMap Map<String, String> searchParams);
 
     /**
      * Return a list of matching glossaries
@@ -65,8 +66,8 @@ public interface GlossaryService {
      * @param categories a list of categories
      * @return a GlossarySearchResults object
      */
-    @GET("/glossary/{version}")
-    GlossarySearchResults search(@Path("version") String version, @QueryMap Map<String, String> searchParams, @Query("category") Set<Glossary.Category> categories);
+    @GET("glossary/{version}")
+    Call<GlossarySearchResults> search(@Path("version") String version, @QueryMap Map<String, String> searchParams, @Query("category") Set<Glossary.Category> categories);
 
     /**
      * Return the changelog entries for the passed database version
@@ -76,7 +77,7 @@ public interface GlossaryService {
      * @param count if not null, limit the number returned
      * @return a list of GlossaryChangelogResults objects
      */
-    @GET("/glossary/{version}/changelog")
-    GlossaryChangelogResults changelogs(@Path("version") String version, @Query("from") String fromDate, @Query("to") String toDate, @Query("count") Integer count);
+    @GET("glossary/{version}/changelog")
+    Call<GlossaryChangelogResults> changelogs(@Path("version") String version, @Query("from") String fromDate, @Query("to") String toDate, @Query("count") Integer count);
 
 }

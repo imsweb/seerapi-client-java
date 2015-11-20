@@ -24,7 +24,7 @@ public class SurgeryTest {
 
     @Test
     public void testSiteSpecificSurgeryVersions() throws IOException {
-        List<Version> versions = _SURGERY.versions();
+        List<Version> versions = _SURGERY.versions().execute().body();
 
         Assert.assertTrue(versions.size() > 0);
         for (Version version : versions) {
@@ -35,7 +35,7 @@ public class SurgeryTest {
 
     @Test
     public void testSiteSpecificSurgeryTables() throws IOException {
-        List<String> titles = _SURGERY.tables("2014");
+        List<String> titles = _SURGERY.tables("2014").execute().body();
 
         Assert.assertTrue(titles.size() > 0);
         Assert.assertTrue(titles.contains("Oral Cavity"));
@@ -43,7 +43,7 @@ public class SurgeryTest {
 
     @Test
     public void testSiteSpecificSurgeryTable() throws IOException {
-        SurgeryTable table = _SURGERY.table("2014", "Oral Cavity", null, null);
+        SurgeryTable table = _SURGERY.table("2014", "Oral Cavity", null, null).execute().body();
 
         Assert.assertNotNull(table);
         Assert.assertEquals("Oral Cavity", table.getTitle());
@@ -58,7 +58,7 @@ public class SurgeryTest {
         Assert.assertEquals(Integer.valueOf(0), row.getLevel());
         Assert.assertFalse(row.getLineBreak());
 
-        table = _SURGERY.table("2014", null, "C001", "8000");
+        table = _SURGERY.table("2014", null, "C001", "8000").execute().body();
         Assert.assertEquals("Oral Cavity", table.getTitle());
     }
 }

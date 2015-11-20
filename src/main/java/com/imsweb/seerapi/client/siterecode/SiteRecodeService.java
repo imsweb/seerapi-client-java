@@ -3,6 +3,7 @@
  */
 package com.imsweb.seerapi.client.siterecode;
 
+import retrofit.Call;
 import retrofit.http.GET;
 import retrofit.http.Query;
 
@@ -14,8 +15,8 @@ public interface SiteRecodeService {
      * Return the version of the SEER Site Recode database.
      * @return a String representing the database version
      */
-    @GET("/recode/version")
-    Version version();
+    @GET("recode/version")
+    Call<Version> version();
 
     /**
      * Return the SEER Site Group for the site/histology combination, or 99999 if the combination is unknown.
@@ -23,7 +24,7 @@ public interface SiteRecodeService {
      * @param hist Histology O3
      * @return a SiteRecode object based on the site and histology
      */
-    @GET("/recode/sitegroup")
-    SiteRecode siteGroup(@Query("site") String site, @Query("hist") String hist);
+    @GET("recode/sitegroup")
+    Call<SiteRecode> siteGroup(@Query("site") String site, @Query("hist") String hist);
 
 }

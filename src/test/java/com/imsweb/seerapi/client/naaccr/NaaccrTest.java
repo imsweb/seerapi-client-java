@@ -23,7 +23,7 @@ public class NaaccrTest {
 
     @Test
     public void testNaaccrVersions() throws IOException {
-        List<NaaccrVersion> versions = _NAACCR.versions();
+        List<NaaccrVersion> versions = _NAACCR.versions().execute().body();
 
         Assert.assertTrue(versions.size() > 0);
         for (NaaccrVersion version : versions) {
@@ -37,7 +37,7 @@ public class NaaccrTest {
 
     @Test
     public void testNaaccrFieldNames() throws IOException {
-        List<NaaccrFieldName> names = _NAACCR.fieldNames("latest");
+        List<NaaccrFieldName> names = _NAACCR.fieldNames("latest").execute().body();
 
         Assert.assertTrue(names.size() > 0);
         for (NaaccrFieldName name : names) {
@@ -48,7 +48,7 @@ public class NaaccrTest {
 
     @Test
     public void testNaaccrField() throws IOException {
-        NaaccrField name = _NAACCR.field("latest", 521);
+        NaaccrField name = _NAACCR.field("latest", 521).execute().body();
 
         Assert.assertNotNull(name);
         Assert.assertEquals("Morph--Type&Behav ICD-O-3", name.getName());

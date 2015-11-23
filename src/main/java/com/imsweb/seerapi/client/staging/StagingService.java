@@ -6,6 +6,7 @@ package com.imsweb.seerapi.client.staging;
 import java.util.List;
 import java.util.Map;
 
+import retrofit.Call;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
@@ -18,16 +19,16 @@ public interface StagingService {
      * Return a list of all supported staging algorithms
      * @return a list of StagingAlgorithm objects
      */
-    @GET("/staging/algorithms")
-    List<StagingAlgorithm> algorithms();
+    @GET("staging/algorithms")
+    Call<List<StagingAlgorithm>> algorithms();
 
     /**
      * Return a list of supported versions for the passed algorithm
      * @param algorithm an algorithm identifier
      * @return
      */
-    @GET("/staging/{algorithm}/versions")
-    List<StagingVersion> versions(@Path("algorithm") String algorithm);
+    @GET("staging/{algorithm}/versions")
+    Call<List<StagingVersion>> versions(@Path("algorithm") String algorithm);
 
     /**
      * Return a list of matching schemas
@@ -35,8 +36,8 @@ public interface StagingService {
      * @param version a version
      * @return a list of schemas
      */
-    @GET("/staging/{algorithm}/{version}/schemas")
-    List<StagingSchemaInfo> schemas(@Path("algorithm") String algorithm, @Path("version") String version);
+    @GET("staging/{algorithm}/{version}/schemas")
+    Call<List<StagingSchemaInfo>> schemas(@Path("algorithm") String algorithm, @Path("version") String version);
 
     /**
      * Return a list of matching schemas
@@ -45,8 +46,8 @@ public interface StagingService {
      * @param query an optional text query
      * @return a list of schemas
      */
-    @GET("/staging/{algorithm}/{version}/schemas")
-    List<StagingSchemaInfo> schemas(@Path("algorithm") String algorithm, @Path("version") String version, @Query("q") String query);
+    @GET("staging/{algorithm}/{version}/schemas")
+    Call<List<StagingSchemaInfo>> schemas(@Path("algorithm") String algorithm, @Path("version") String version, @Query("q") String query);
 
     /**
      * Perform a schema lookup
@@ -55,8 +56,8 @@ public interface StagingService {
      * @param data a map of key/value pairs containing the input for the lookup
      * @return
      */
-    @POST("/staging/{algorithm}/{version}/schemas/lookup")
-    List<StagingSchemaInfo> schemaLookup(@Path("algorithm") String algorithm, @Path("version") String version, @Body Map<String, String> data);
+    @POST("staging/{algorithm}/{version}/schemas/lookup")
+    Call<List<StagingSchemaInfo>> schemaLookup(@Path("algorithm") String algorithm, @Path("version") String version, @Body Map<String, String> data);
 
     /**
      * Return a single schema definition by schema identifier
@@ -65,8 +66,8 @@ public interface StagingService {
      * @param id a schema identifier
      * @return a schema object
      */
-    @GET("/staging/{algorithm}/{version}/schema/{id}")
-    StagingSchema schemaById(@Path("algorithm") String algorithm, @Path("version") String version, @Path("id") String id);
+    @GET("staging/{algorithm}/{version}/schema/{id}")
+    Call<StagingSchema> schemaById(@Path("algorithm") String algorithm, @Path("version") String version, @Path("id") String id);
 
     /**
      * Return a list of tables which are involved in the specified schema
@@ -74,8 +75,8 @@ public interface StagingService {
      * @param version a version
      * @param schemaId a schema identifier
      */
-    @GET("/staging/{algorithm}/{version}/schema/{id}/tables")
-    List<StagingTable> involvedTables(@Path("algorithm") String algorithm, @Path("version") String version, @Path("id") String schemaId);
+    @GET("staging/{algorithm}/{version}/schema/{id}/tables")
+    Call<List<StagingTable>> involvedTables(@Path("algorithm") String algorithm, @Path("version") String version, @Path("id") String schemaId);
 
     /**
      * Return a list of matching tables
@@ -83,8 +84,8 @@ public interface StagingService {
      * @param version a version
      * @return
      */
-    @GET("/staging/{algorithm}/{version}/tables")
-    List<StagingTable> tables(@Path("algorithm") String algorithm, @Path("version") String version);
+    @GET("staging/{algorithm}/{version}/tables")
+    Call<List<StagingTable>> tables(@Path("algorithm") String algorithm, @Path("version") String version);
 
     /**
      * Return a list of matching tables
@@ -93,8 +94,8 @@ public interface StagingService {
      * @param query an optional text query
      * @return
      */
-    @GET("/staging/{algorithm}/{version}/tables")
-    List<StagingTable> tables(@Path("algorithm") String algorithm, @Path("version") String version, @Query("q") String query);
+    @GET("staging/{algorithm}/{version}/tables")
+    Call<List<StagingTable>> tables(@Path("algorithm") String algorithm, @Path("version") String version, @Query("q") String query);
 
     /**
      * Return a single table definition by table identifier
@@ -103,8 +104,8 @@ public interface StagingService {
      * @param id a table identifier
      * @return
      */
-    @GET("/staging/{algorithm}/{version}/table/{id}")
-    StagingTable tableById(@Path("algorithm") String algorithm, @Path("version") String version, @Path("id") String id);
+    @GET("staging/{algorithm}/{version}/table/{id}")
+    Call<StagingTable> tableById(@Path("algorithm") String algorithm, @Path("version") String version, @Path("id") String id);
 
     /**
      * Return a list of schemas which the specified table is involved in
@@ -112,8 +113,8 @@ public interface StagingService {
      * @param version a version
      * @param tableId a table identifier
      */
-    @GET("/staging/{algorithm}/{version}/table/{id}/schemas")
-    List<StagingSchema> involvedSchemas(@Path("algorithm") String algorithm, @Path("version") String version, @Path("id") String tableId);
+    @GET("staging/{algorithm}/{version}/table/{id}/schemas")
+    Call<List<StagingSchema>> involvedSchemas(@Path("algorithm") String algorithm, @Path("version") String version, @Path("id") String tableId);
 
     /**
      * Stage the passed input
@@ -122,7 +123,7 @@ public interface StagingService {
      * @param input a map of key/value pairs containing the input for the staging call
      * @return
      */
-    @POST("/staging/{algorithm}/{version}/stage")
-    StagingData stage(@Path("algorithm") String algorithm, @Path("version") String version, @Body Map<String, String> input);
+    @POST("staging/{algorithm}/{version}/stage")
+    Call<StagingData> stage(@Path("algorithm") String algorithm, @Path("version") String version, @Body Map<String, String> input);
 
 }

@@ -3,6 +3,7 @@
  */
 package com.imsweb.seerapi.client.staging;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.junit.Assert;
@@ -25,59 +26,59 @@ public class StagingTest {
     }
 
     @Test
-    public void testGetAlgorithms() {
-        List<StagingAlgorithm> algorithms = _STAGING.algorithms();
+    public void testGetAlgorithms() throws IOException {
+        List<StagingAlgorithm> algorithms = _STAGING.algorithms().execute().body();
 
         Assert.assertTrue(algorithms.size() > 0);
     }
 
     @Test
-    public void testGetAlgorithmVersions() {
-        List<StagingVersion> versions = _STAGING.versions(_ALGORITHM);
+    public void testGetAlgorithmVersions() throws IOException {
+        List<StagingVersion> versions = _STAGING.versions(_ALGORITHM).execute().body();
 
         Assert.assertTrue(versions.size() > 0);
     }
 
     @Test
-    public void testListSchemas() {
-        List<StagingSchemaInfo> schemaInfos = _STAGING.schemas(_ALGORITHM, _VERSION);
+    public void testListSchemas() throws IOException {
+        List<StagingSchemaInfo> schemaInfos = _STAGING.schemas(_ALGORITHM, _VERSION).execute().body();
         Assert.assertTrue(schemaInfos.size() > 0);
 
-        schemaInfos = _STAGING.schemas(_ALGORITHM, _VERSION, "skin");
+        schemaInfos = _STAGING.schemas(_ALGORITHM, _VERSION, "skin").execute().body();
         Assert.assertTrue(schemaInfos.size() > 0);
     }
 
     @Test
-    public void testSchemaLookup() {
+    public void testSchemaLookup() throws IOException {
         // first test simple lookup that returns a single schema with site/hist only
-        List<StagingSchemaInfo> schemas = _STAGING.schemaLookup(_ALGORITHM, _VERSION, new CsSchemaLookup("C509", "8000").getInputs());
+        List<StagingSchemaInfo> schemas = _STAGING.schemaLookup(_ALGORITHM, _VERSION, new CsSchemaLookup("C509", "8000").getInputs()).execute().body();
         Assert.assertEquals(1, schemas.size());
         Assert.assertEquals("breast", schemas.get(0).getId());
 
         // now test just site
         SchemaLookup data = new SchemaLookup();
         data.setInput(StagingData.PRIMARY_SITE_KEY, "C111");
-        Assert.assertEquals(7, _STAGING.schemaLookup(_ALGORITHM, _VERSION, data.getInputs()).size());
+        Assert.assertEquals(7, _STAGING.schemaLookup(_ALGORITHM, _VERSION, data.getInputs()).execute().body().size());
 
         // add histology
         data.setInput(StagingData.HISTOLOGY_KEY, "8000");
-        Assert.assertEquals(2, _STAGING.schemaLookup(_ALGORITHM, _VERSION, data.getInputs()).size());
+        Assert.assertEquals(2, _STAGING.schemaLookup(_ALGORITHM, _VERSION, data.getInputs()).execute().body().size());
 
         // add discriminator
         data.setInput("ssf25", "010");
-        schemas = _STAGING.schemaLookup(_ALGORITHM, _VERSION, data.getInputs());
+        schemas = _STAGING.schemaLookup(_ALGORITHM, _VERSION, data.getInputs()).execute().body();
         Assert.assertEquals(1, schemas.size());
         Assert.assertEquals("nasopharynx", schemas.get(0).getId());
 
         // test with the CsStaging class
-        schemas = _STAGING.schemaLookup(_ALGORITHM, _VERSION, new CsSchemaLookup("C111", "8000", "010").getInputs());
+        schemas = _STAGING.schemaLookup(_ALGORITHM, _VERSION, new CsSchemaLookup("C111", "8000", "010").getInputs()).execute().body();
         Assert.assertEquals(1, schemas.size());
         Assert.assertEquals("nasopharynx", schemas.get(0).getId());
     }
 
     @Test
-    public void testSchemaById() {
-        StagingSchema schema = _STAGING.schemaById(_ALGORITHM, _VERSION, "brain");
+    public void testSchemaById() throws IOException {
+        StagingSchema schema = _STAGING.schemaById(_ALGORITHM, _VERSION, "brain").execute().body();
 
         Assert.assertEquals("cs", schema.getAlgorithm());
         Assert.assertEquals("02.05.50", schema.getVersion());
@@ -85,22 +86,22 @@ public class StagingTest {
     }
 
     @Test
-    public void testSchemaInvolvedTables() {
-        List<StagingTable> tables = _STAGING.involvedTables(_ALGORITHM, _VERSION, "brain");
+    public void testSchemaInvolvedTables() throws IOException {
+        List<StagingTable> tables = _STAGING.involvedTables(_ALGORITHM, _VERSION, "brain").execute().body();
 
         Assert.assertTrue(tables.size() > 0);
     }
 
     @Test
-    public void testListTables() {
-        List<StagingTable> tables = _STAGING.tables(_ALGORITHM, _VERSION, "ssf1");
+    public void testListTables() throws IOException {
+        List<StagingTable> tables = _STAGING.tables(_ALGORITHM, _VERSION, "ssf1").execute().body();
 
         Assert.assertTrue(tables.size() > 0);
     }
 
     @Test
-    public void testTableById() {
-        StagingTable table = _STAGING.tableById(_ALGORITHM, _VERSION, "primary_site");
+    public void testTableById() throws IOException {
+        StagingTable table = _STAGING.tableById(_ALGORITHM, _VERSION, "primary_site").execute().body();
 
         Assert.assertEquals("cs", table.getAlgorithm());
         Assert.assertEquals("02.05.50", table.getVersion());
@@ -108,14 +109,14 @@ public class StagingTest {
     }
 
     @Test
-    public void testTableInvoledSchemas() {
-        List<StagingSchema> schemas = _STAGING.involvedSchemas(_ALGORITHM, _VERSION, "extension_baa");
+    public void testTableInvoledSchemas() throws IOException {
+        List<StagingSchema> schemas = _STAGING.involvedSchemas(_ALGORITHM, _VERSION, "extension_baa").execute().body();
 
         Assert.assertTrue(schemas.size() > 0);
     }
 
     @Test
-    public void testStaging() {
+    public void testStaging() throws IOException {
         // test this case:  http://seer.cancer.gov/seertools/cstest/?mets=10&lnexam=99&diagnosis_year=2013&grade=9&exteval=9&age=060&site=C680&metseval=9&hist=8000&ext=100&version=020550&nodeseval=9&behav=3&lnpos=99&nodes=100&csver_original=020440&lvi=9&ssf1=020&size=075
         StagingData data = new StagingData();
         data.setInput("site", "C680");
@@ -138,7 +139,7 @@ public class StagingTest {
         data.setInput("ssf1", "020");
 
         // perform the staging
-        StagingData output = _STAGING.stage(_ALGORITHM, _VERSION, data.getInput());
+        StagingData output = _STAGING.stage(_ALGORITHM, _VERSION, data.getInput()).execute().body();
 
         Assert.assertEquals(StagingData.Result.STAGED, output.getResult());
         Assert.assertEquals(0, output.getErrors().size());
@@ -192,6 +193,21 @@ public class StagingTest {
         Assert.assertEquals("D", output.getOutput("m2000"));
         Assert.assertEquals("D", output.getOutput("ss2000"));
         Assert.assertEquals("7", output.getOutput("stor_ss2000"));
+    }
+
+    @Test
+    public void testStagingWithErrors() throws IOException {
+        StagingData data = new StagingData();
+        data.setInput("site", "C181");
+        data.setInput("hist", "8093");
+        data.setInput("year_dx", "2015");
+        data.setInput("extension", "670");
+
+        // perform the staging
+        StagingData output = _STAGING.stage(_ALGORITHM, _VERSION, data.getInput()).execute().body();
+
+        Assert.assertEquals(StagingData.Result.STAGED, output.getResult());
+        Assert.assertEquals(9, output.getErrors().size());
     }
 
 }

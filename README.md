@@ -29,7 +29,7 @@ Download [the latest JAR][1] or grab via Maven:
 <dependency>
     <groupId>com.imsweb</groupId>
     <artifactId>seerapi-client-java</artifactId>
-    <version>2.0</version>
+    <version>3.0</version>
 </dependency>
 ```
 
@@ -73,7 +73,7 @@ Each set of APIs are broken into their own service.  Here are the services:
 A glossary of cancer-related terms.
 
 ```java
-api.glossary().getById("latest", "4ffd7623a3dd635c99d38e2d");
+api.glossary().getById("latest", "4ffd7623a3dd635c99d38e2d").execute().body()
 ```
 
 ### Disease (rest/disease)
@@ -81,7 +81,7 @@ api.glossary().getById("latest", "4ffd7623a3dd635c99d38e2d");
 A searchable database of hematopoietic and lymphoid neoplasms and solid tumor diseases.
 
 ```java
-api.disease().samePrimaries("9870/3", "9872/3", "2010")
+api.disease().samePrimaries("9870/3", "9872/3", "2010").execute().body()
 ```
 
 ### NAACCR (rest/naaccr)
@@ -90,7 +90,7 @@ The NAACCR API provides programmatic access to documentation for the NAACCR Stan
 field level documentation as well as information about file layout.
 
 ```java
-api.naaccr().field("14", 12)
+api.naaccr().field("14", 12).execute().body()
 ```
 
 ### RX (rest/rx)
@@ -98,7 +98,7 @@ api.naaccr().field("14", 12)
 A searchable database for coding oncology drug and regimen treatment categories in cancer registries.
 
 ```java
-api.rx().getById("latest", "53c44b01102c1290262dc8b2");
+api.rx().getById("latest", "53c44b01102c1290262dc8b2").execute().body()
 ```
 
 ### SEER Incidence Site Recode (rest/recode)
@@ -109,7 +109,7 @@ cancer incidence data. For example, there is a section of the SEER Cancer Statis
 groupings in a site recode variable. The site recode variables are added to SEER databases as a convenience for researchers.
 
 ```java
-api.siteRecode().siteGroup("C619", "8000");
+api.siteRecode().siteGroup("C619", "8000").execute().body()
 ```
 
 ### Site-specific Surgery Codes (rest/surgery)
@@ -117,7 +117,7 @@ api.siteRecode().siteGroup("C619", "8000");
 The site-specific surgery tables available on the SEER website.
 
 ```java
-api.surgery().tables();
+api.surgery().tables().execute().body()
 ```
 
 ### Staging
@@ -128,7 +128,7 @@ improve data quality by standardizing rules for timing, clinical and pathologic 
 systems for all cancer sites.
 
 ```
-api.staging().schemaById("cs", "02.05.50", "brain");
+api.staging().schemaById("cs", "02.05.50", "brain").execute().body()
 ```
 
 For a complete description of all available API inputs and outputs, see the SEER*API

@@ -30,7 +30,7 @@ public class DiseaseTest {
 
     @Test
     public void testDiseaseVersions() throws IOException {
-        List<DiseaseVersion> versions = _DISEASE.versions();
+        List<DiseaseVersion> versions = _DISEASE.versions().execute().body();
 
         Assert.assertTrue(versions.size() > 0);
         for (DiseaseVersion version : versions) {
@@ -47,7 +47,7 @@ public class DiseaseTest {
 
     @Test
     public void testDiseasePrimarySites() throws IOException {
-        List<PrimarySite> sites = _DISEASE.primarySites();
+        List<PrimarySite> sites = _DISEASE.primarySites().execute().body();
 
         Assert.assertTrue(sites.size() > 0);
         Assert.assertEquals("C000", sites.get(0).getValue());
@@ -56,7 +56,7 @@ public class DiseaseTest {
 
     @Test
     public void testDiseasePrimarySiteCode() throws IOException {
-        List<PrimarySite> sites = _DISEASE.primarySiteCode("C021");
+        List<PrimarySite> sites = _DISEASE.primarySiteCode("C021").execute().body();
 
         Assert.assertTrue(sites.size() > 0);
         Assert.assertEquals("C021", sites.get(0).getValue());
@@ -65,7 +65,7 @@ public class DiseaseTest {
 
     @Test
     public void testDiseaseSiteCateogires() throws IOException {
-        List<SiteCategory> categories = _DISEASE.siteCategories();
+        List<SiteCategory> categories = _DISEASE.siteCategories().execute().body();
 
         Assert.assertTrue(categories.size() > 0);
         Assert.assertEquals("head-and-neck", categories.get(0).getId());
@@ -77,7 +77,7 @@ public class DiseaseTest {
 
     @Test
     public void testDiseaseById() throws IOException {
-        Disease disease = _DISEASE.getById("latest", "51f6cf58e3e27c3994bd5408");
+        Disease disease = _DISEASE.getById("latest", "51f6cf58e3e27c3994bd5408").execute().body();
 
         Assert.assertNotNull(disease);
         Assert.assertEquals("Acute erythroid leukemia", disease.getName());
@@ -148,7 +148,7 @@ public class DiseaseTest {
 
     @Test
     public void testDiseaseSamePrimary() throws IOException {
-        SamePrimaries same = _DISEASE.samePrimaries("latest", "9870/3", "9872/3", "2010");
+        SamePrimaries same = _DISEASE.samePrimaries("latest", "9870/3", "9872/3", "2010").execute().body();
 
         Assert.assertNotNull(same);
         Assert.assertEquals(false, same.isSame());
@@ -161,7 +161,7 @@ public class DiseaseTest {
     public void testDiseaseSearch() throws IOException {
         DiseaseSearch search = new DiseaseSearch("basophilic", Disease.Type.HEMATO);
 
-        DiseaseSearchResults results = _DISEASE.search("latest", search.paramMap());
+        DiseaseSearchResults results = _DISEASE.search("latest", search.paramMap()).execute().body();
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());
@@ -170,7 +170,7 @@ public class DiseaseTest {
         Assert.assertEquals(Collections.singletonList("basophilic"), results.getTerms());
 
         search.setSiteCategory("BAD_VALUE");
-        results = _DISEASE.search("latest", search.paramMap());
+        results = _DISEASE.search("latest", search.paramMap()).execute().body();
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());
@@ -189,7 +189,7 @@ public class DiseaseTest {
         search.setOffset(0);
         search.setOrderBy("name");
         search.setOutputType(PublishableSearch.OutputType.MIN);
-        results = _DISEASE.search("latest", search.paramMap());
+        results = _DISEASE.search("latest", search.paramMap()).execute().body();
 
         Assert.assertNotNull(results);
         Assert.assertEquals(100, results.getCount().longValue());
@@ -197,7 +197,7 @@ public class DiseaseTest {
         Assert.assertNull(results.getResults());
 
         // test searching without type
-        results = _DISEASE.search("latest", "basophilic");
+        results = _DISEASE.search("latest", "basophilic").execute().body();
 
         Assert.assertNotNull(results);
         Assert.assertEquals(25, results.getCount().longValue());
@@ -207,7 +207,7 @@ public class DiseaseTest {
     }
 
     @Test
-    public void testDiseaseSearchIterate() {
+    public void testDiseaseSearchIterate() throws IOException {
         DiseaseSearch search = new DiseaseSearch();
         search.setOutputType(PublishableSearch.OutputType.FULL);
         search.setCount(100);
@@ -216,7 +216,7 @@ public class DiseaseTest {
         Integer total = null;
 
         while (total == null || search.getOffset() < total) {
-            DiseaseSearchResults results = _DISEASE.search("latest", search.paramMap());
+            DiseaseSearchResults results = _DISEASE.search("latest", search.paramMap()).execute().body();
             Assert.assertNotNull(results);
             Assert.assertTrue(results.getTotal() > 0);
             Assert.assertTrue(results.getResults().size() > 0);
@@ -242,7 +242,7 @@ public class DiseaseTest {
         partial.setIcdO1Effective(new YearRange(1978, 2001));
         partial.setPrimarySite(Collections.singletonList(new SiteRange("C421", "C421")));
 
-        Disease result = _DISEASE.reportability(partial);
+        Disease result = _DISEASE.reportability(partial).execute().body();
 
         Assert.assertNotNull(result);
         Assert.assertNotNull(result.getReportable());
@@ -250,7 +250,7 @@ public class DiseaseTest {
 
     @Test
     public void testDiseaseChangelog() throws IOException {
-        DiseaseChangelogResults results = _DISEASE.diseaseChangelogs("latest", null, "2013-07-30", 1);
+        DiseaseChangelogResults results = _DISEASE.diseaseChangelogs("latest", null, "2013-07-30", 1).execute().body();
 
         Assert.assertNotNull(results);
         Assert.assertEquals(1, results.getChangelogs().size());

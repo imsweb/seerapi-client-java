@@ -24,14 +24,14 @@ public class StagingData {
     public static final String YEAR_DX_KEY = "year_dx";
 
     // set of keys that are standard for all schema lookups; any other keys are considered a discriminator
-    public static final Set<String> STANDARD_LOOKUP_KEYS = new HashSet<String>(Arrays.asList(PRIMARY_SITE_KEY, HISTOLOGY_KEY));
+    public static final Set<String> STANDARD_LOOKUP_KEYS = new HashSet<>(Arrays.asList(PRIMARY_SITE_KEY, HISTOLOGY_KEY));
 
     private Result _result;
     private String _schemaId;
-    private Map<String, String> _input = new HashMap<String, String>();
-    private Map<String, String> _output = new HashMap<String, String>();
-    private List<Error> _errors = new ArrayList<Error>();
-    private List<String> _path = new ArrayList<String>();
+    private Map<String, String> _input = new HashMap<>();
+    private Map<String, String> _output = new HashMap<>();
+    private List<StagingError> _errors = new ArrayList<>();
+    private List<String> _path = new ArrayList<>();
 
     public enum Result {
         // staging was performed
@@ -128,11 +128,11 @@ public class StagingData {
     // errors
 
     @JsonProperty("errors")
-    public List<Error> getErrors() {
+    public List<StagingError> getErrors() {
         return _errors;
     }
 
-    public void setErrors(List<Error> errors) {
+    public void setErrors(List<StagingError> errors) {
         _errors = errors;
     }
 

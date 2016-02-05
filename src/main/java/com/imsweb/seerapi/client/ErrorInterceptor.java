@@ -6,8 +6,9 @@ package com.imsweb.seerapi.client;
 import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.squareup.okhttp.Interceptor;
-import com.squareup.okhttp.Response;
+
+import okhttp3.Interceptor;
+import okhttp3.Response;
 
 /**
  * Interceptor to catch all non-200 responses and convert them to exceptions.

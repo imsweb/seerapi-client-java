@@ -14,13 +14,13 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.squareup.okhttp.Interceptor;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
-import retrofit.JacksonConverterFactory;
-import retrofit.Retrofit;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import com.imsweb.seerapi.client.disease.DiseaseService;
 import com.imsweb.seerapi.client.glossary.GlossaryService;
@@ -46,23 +46,24 @@ public final class SeerApi {
         if (!baseUrl.endsWith("/"))
             baseUrl += "/";
 
-        OkHttpClient client = new OkHttpClient();
-        client.interceptors().add(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request original = chain.request();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request original = chain.request();
 
-                // add the api key to all requests
-                Request request = original.newBuilder()
-                        .header("Accept", "application/json")
-                        .header("X-SEERAPI-Key", apiKey)
-                        .method(original.method(), original.body())
-                        .build();
+                        // add the api key to all requests
+                        Request request = original.newBuilder()
+                                .header("Accept", "application/json")
+                                .header("X-SEERAPI-Key", apiKey)
+                                .method(original.method(), original.body())
+                                .build();
 
-                return chain.proceed(request);
-            }
-        });
-        client.interceptors().add(new ErrorInterceptor());
+                        return chain.proceed(request);
+                    }
+                })
+                .addInterceptor(new ErrorInterceptor())
+                .build();
 
         _retroFit = new Retrofit.Builder()
                 .baseUrl(baseUrl)

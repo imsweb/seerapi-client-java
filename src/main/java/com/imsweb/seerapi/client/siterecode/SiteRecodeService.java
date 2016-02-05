@@ -3,9 +3,9 @@
  */
 package com.imsweb.seerapi.client.siterecode;
 
-import retrofit.Call;
-import retrofit.http.GET;
-import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 import com.imsweb.seerapi.client.shared.Version;
 

@@ -15,10 +15,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -47,20 +45,17 @@ public final class SeerApi {
             baseUrl += "/";
 
         OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request original = chain.request();
+                .addInterceptor(chain -> {
+                    Request original = chain.request();
 
-                        // add the api key to all requests
-                        Request request = original.newBuilder()
-                                .header("Accept", "application/json")
-                                .header("X-SEERAPI-Key", apiKey)
-                                .method(original.method(), original.body())
-                                .build();
+                    // add the api key to all requests
+                    Request request = original.newBuilder()
+                            .header("Accept", "application/json")
+                            .header("X-SEERAPI-Key", apiKey)
+                            .method(original.method(), original.body())
+                            .build();
 
-                        return chain.proceed(request);
-                    }
+                    return chain.proceed(request);
                 })
                 .addInterceptor(new ErrorInterceptor())
                 .build();
@@ -76,7 +71,7 @@ public final class SeerApi {
      * Return the internal ObjectMapper
      * @return
      */
-    protected static ObjectMapper getMapper() {
+    static ObjectMapper getMapper() {
         ObjectMapper mapper = new ObjectMapper();
 
         // do not write null values
@@ -220,12 +215,12 @@ public final class SeerApi {
                 _apiKey = System.getenv(_ENV_API_KEY);
         }
 
-        public Builder url(String url) {
+        Builder url(String url) {
             _url = url;
             return this;
         }
 
-        public Builder apiKey(String apiKey) {
+        Builder apiKey(String apiKey) {
             _apiKey = apiKey;
             return this;
         }

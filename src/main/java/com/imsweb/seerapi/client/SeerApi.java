@@ -35,7 +35,7 @@ import com.imsweb.seerapi.client.surgery.SurgeryService;
  */
 public final class SeerApi {
 
-    private Retrofit _retroFit;
+    private Retrofit _retrofit;
 
     /**
      * Creates a client API root object
@@ -65,7 +65,7 @@ public final class SeerApi {
                 .addInterceptor(new ErrorInterceptor())
                 .build();
 
-        _retroFit = new Retrofit.Builder()
+        _retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(JacksonConverterFactory.create(getMapper()))
                 .client(client)
@@ -103,7 +103,7 @@ public final class SeerApi {
      * @return an interface to all the disease APIs
      */
     public DiseaseService disease() {
-        return _retroFit.create(DiseaseService.class);
+        return _retrofit.create(DiseaseService.class);
     }
 
     /**
@@ -111,7 +111,7 @@ public final class SeerApi {
      * @return an interface to all the glossary APIs
      */
     public GlossaryService glossary() {
-        return _retroFit.create(GlossaryService.class);
+        return _retrofit.create(GlossaryService.class);
     }
 
     /**
@@ -119,7 +119,7 @@ public final class SeerApi {
      * @return an inteface to all the NAACCR APIs
      */
     public NaaccrService naaccr() {
-        return _retroFit.create(NaaccrService.class);
+        return _retrofit.create(NaaccrService.class);
     }
 
     /**
@@ -127,7 +127,7 @@ public final class SeerApi {
      * @return an inteface to all the Rx APIs
      */
     public RxService rx() {
-        return _retroFit.create(RxService.class);
+        return _retrofit.create(RxService.class);
     }
 
     /**
@@ -135,7 +135,7 @@ public final class SeerApi {
      * @return an interface to all the site recode APIs
      */
     public SiteRecodeService siteRecode() {
-        return _retroFit.create(SiteRecodeService.class);
+        return _retrofit.create(SiteRecodeService.class);
     }
 
     /**
@@ -143,7 +143,7 @@ public final class SeerApi {
      * @return an interface to all the staging APIs
      */
     public StagingService staging() {
-        return _retroFit.create(StagingService.class);
+        return _retrofit.create(StagingService.class);
     }
 
     /**
@@ -151,7 +151,7 @@ public final class SeerApi {
      * @return an interface to all the surgery APIs
      */
     public SurgeryService surgery() {
-        return _retroFit.create(SurgeryService.class);
+        return _retrofit.create(SurgeryService.class);
     }
 
     /**

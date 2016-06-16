@@ -28,7 +28,7 @@ public class StagingSchemaInfo {
 
     /**
      * Constructor
-     * @param schema
+     * @param schema a staging schema
      */
     public StagingSchemaInfo(StagingSchema schema) {
         setId(schema.getId());

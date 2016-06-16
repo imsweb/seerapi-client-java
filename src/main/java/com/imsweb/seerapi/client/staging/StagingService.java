@@ -25,7 +25,7 @@ public interface StagingService {
     /**
      * Return a list of supported versions for the passed algorithm
      * @param algorithm an algorithm identifier
-     * @return
+     * @return a list of schema versions
      */
     @GET("staging/{algorithm}/versions")
     Call<List<StagingVersion>> versions(@Path("algorithm") String algorithm);
@@ -54,7 +54,7 @@ public interface StagingService {
      * @param algorithm an algorithm identifier
      * @param version a version
      * @param data a map of key/value pairs containing the input for the lookup
-     * @return
+     * @return a list of schemas
      */
     @POST("staging/{algorithm}/{version}/schemas/lookup")
     Call<List<StagingSchemaInfo>> schemaLookup(@Path("algorithm") String algorithm, @Path("version") String version, @Body Map<String, String> data);
@@ -74,6 +74,7 @@ public interface StagingService {
      * @param algorithm an algorithm identifier
      * @param version a version
      * @param schemaId a schema identifier
+     * @return a list of staging tables
      */
     @GET("staging/{algorithm}/{version}/schema/{id}/tables")
     Call<List<StagingTable>> involvedTables(@Path("algorithm") String algorithm, @Path("version") String version, @Path("id") String schemaId);
@@ -82,7 +83,7 @@ public interface StagingService {
      * Return a list of matching tables
      * @param algorithm an algorithm identifier
      * @param version a version
-     * @return
+     * @return a list of staging tables
      */
     @GET("staging/{algorithm}/{version}/tables")
     Call<List<StagingTable>> tables(@Path("algorithm") String algorithm, @Path("version") String version);
@@ -92,7 +93,7 @@ public interface StagingService {
      * @param algorithm an algorithm identifier
      * @param version a version
      * @param query an optional text query
-     * @return
+     * @return a list of staging tables
      */
     @GET("staging/{algorithm}/{version}/tables")
     Call<List<StagingTable>> tables(@Path("algorithm") String algorithm, @Path("version") String version, @Query("q") String query);
@@ -102,7 +103,7 @@ public interface StagingService {
      * @param algorithm an algorithm identifier
      * @param version a version
      * @param id a table identifier
-     * @return
+     * @return a staging table
      */
     @GET("staging/{algorithm}/{version}/table/{id}")
     Call<StagingTable> tableById(@Path("algorithm") String algorithm, @Path("version") String version, @Path("id") String id);
@@ -112,6 +113,7 @@ public interface StagingService {
      * @param algorithm an algorithm identifier
      * @param version a version
      * @param tableId a table identifier
+     * @return a list of staging schemas
      */
     @GET("staging/{algorithm}/{version}/table/{id}/schemas")
     Call<List<StagingSchema>> involvedSchemas(@Path("algorithm") String algorithm, @Path("version") String version, @Path("id") String tableId);
@@ -121,7 +123,7 @@ public interface StagingService {
      * @param algorithm an algorithm identifier
      * @param version a version
      * @param input a map of key/value pairs containing the input for the staging call
-     * @return
+     * @return a StagingData object representing the results of the staging process
      */
     @POST("staging/{algorithm}/{version}/stage")
     Call<StagingData> stage(@Path("algorithm") String algorithm, @Path("version") String version, @Body Map<String, String> input);

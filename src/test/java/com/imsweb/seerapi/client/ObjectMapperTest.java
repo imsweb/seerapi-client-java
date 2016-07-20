@@ -38,8 +38,8 @@ public class ObjectMapperTest {
 
         partial.setType(Disease.Type.HEMATO);
         partial.setIcdO3Morphology("9840/3");
-        partial.setIcdO2Morphology("9840/3");
-        partial.setIcdO1Morphology("9840/3");
+        partial.setIcdO2Morphology(Collections.singletonList("9840/3"));
+        partial.setIcdO1Morphology(Collections.singletonList("9840/3"));
         partial.setIcdO3Effective(new YearRange(2001, null));
         partial.setIcdO2Effective(new YearRange(1992, 2000));
         partial.setIcdO1Effective(new YearRange(1978, 2001));

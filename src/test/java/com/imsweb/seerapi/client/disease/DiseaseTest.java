@@ -120,9 +120,9 @@ public class DiseaseTest {
         Assert.assertEquals(12, disease.getAlternateName().size());
         Assert.assertEquals("Acute erythremia [OBS]", disease.getAlternateName().get(0).getValue());
         Assert.assertTrue(disease.getDefinition().get(0).getValue().startsWith("Acute erythroid leukemia is characterized by a predominant erythroid"));
-        Assert.assertEquals("9840/3", disease.getIcdO2Morphology());
-        Assert.assertEquals("9840/3", disease.getIcdO1Morphology());
-        Assert.assertEquals("C94.0 Acute erythroid leukemia", disease.getIcd10CmCode().get(0));
+        Assert.assertEquals(Collections.singletonList("9840/3"), disease.getIcdO2Morphology());
+        Assert.assertEquals(Collections.singletonList("9840/3"), disease.getIcdO1Morphology());
+        Assert.assertEquals("C94.0 Acute erythroid leukemia", disease.getIcd10CmCode().get(0).getValue());
         Assert.assertEquals("C94.0 Acute erythremia and erythroleukemia", disease.getIcd10Code().get(0));
         Assert.assertEquals("207.0 Acute erythremia and erythroleukemia", disease.getIcd9Code().get(0));
         Assert.assertNotNull(disease.getSigns());
@@ -235,8 +235,8 @@ public class DiseaseTest {
 
         partial.setType(Disease.Type.HEMATO);
         partial.setIcdO3Morphology("9840/3");
-        partial.setIcdO2Morphology("9840/3");
-        partial.setIcdO1Morphology("9840/3");
+        partial.setIcdO2Morphology(Collections.singletonList("9840/3"));
+        partial.setIcdO1Morphology(Collections.singletonList("9840/3"));
         partial.setIcdO3Effective(new YearRange(2001, null));
         partial.setIcdO2Effective(new YearRange(1992, 2000));
         partial.setIcdO1Effective(new YearRange(1978, 2001));

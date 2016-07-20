@@ -10,6 +10,7 @@ public class Disease extends Publishable {
 
     @JsonProperty("history")
     protected List<DiseaseHistoryEvent> _history;
+
     /**
      * Identifying information
      */
@@ -23,6 +24,7 @@ public class Disease extends Publishable {
     protected String _siteCategory;
     @JsonProperty("type")
     protected Type _type;
+
     /**
      * Obsolete ranges
      */
@@ -30,6 +32,7 @@ public class Disease extends Publishable {
     protected YearRange _valid;
     @JsonProperty("obsolete_new_code")
     protected List<String> _obsoleteNewCode;
+
     /**
      * Shared disease properties
      */
@@ -46,11 +49,11 @@ public class Disease extends Publishable {
     @JsonProperty("definition")
     protected List<YearRangeString> _definition;
     @JsonProperty("icdO2_morphology")
-    protected String _icdO2Morphology;
+    protected List<String> _icdO2Morphology;
     @JsonProperty("icdO1_morphology")
-    protected String _icdO1Morphology;
+    protected List<String> _icdO1Morphology;
     @JsonProperty("icd_10cm_code")
-    protected List<String> _icd10CmCode;
+    protected List<DateRangeString> _icd10CmCode;
     @JsonProperty("icd_10_code")
     protected List<String> _icd10Code;
     @JsonProperty("icd_9_code")
@@ -61,6 +64,7 @@ public class Disease extends Publishable {
     protected List<YearRangeString> _exams;
     @JsonProperty("mortality")
     protected List<YearRangeString> _mortality;
+
     /**
      * Morphology ranges
      */
@@ -70,6 +74,7 @@ public class Disease extends Publishable {
     protected YearRange _icdO2Effective;
     @JsonProperty("icdO1_effective")
     protected YearRange _icdO1Effective;
+
     /**
      * Hemato specific
      */
@@ -97,6 +102,7 @@ public class Disease extends Publishable {
     protected List<YearRangeString> _samePrimariesText;
     @JsonProperty("progression")
     protected List<YearRangeString> _progression;
+
     /**
      * Solid tumor specific
      */
@@ -219,27 +225,27 @@ public class Disease extends Publishable {
         _definition = definition;
     }
 
-    public String getIcdO2Morphology() {
+    public List<String> getIcdO2Morphology() {
         return _icdO2Morphology;
     }
 
-    public void setIcdO2Morphology(String icdO2Morphology) {
+    public void setIcdO2Morphology(List<String> icdO2Morphology) {
         _icdO2Morphology = icdO2Morphology;
     }
 
-    public String getIcdO1Morphology() {
+    public List<String> getIcdO1Morphology() {
         return _icdO1Morphology;
     }
 
-    public void setIcdO1Morphology(String icdO1Morphology) {
+    public void setIcdO1Morphology(List<String> icdO1Morphology) {
         _icdO1Morphology = icdO1Morphology;
     }
 
-    public List<String> getIcd10CmCode() {
+    public List<DateRangeString> getIcd10CmCode() {
         return _icd10CmCode;
     }
 
-    public void setIcd10CmCode(List<String> icd10CmCode) {
+    public void setIcd10CmCode(List<DateRangeString> icd10CmCode) {
         _icd10CmCode = icd10CmCode;
     }
 

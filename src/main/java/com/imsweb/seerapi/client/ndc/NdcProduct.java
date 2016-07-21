@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({"ndc", "type_name", "proprietary_name", "proprietary_name_suffix", "non_proprietary_name", "dosage_form_name", "route_name",
         "start_marketing_date", "end_marketing_date", "marketing_category_name", "application_number", "labeler_name", "substances", "pharm_class",
-        "dea_schedule", "packages", "date_added", "date_modified", "date_removed", "score"})
+        "dea_schedule", "packages", "date_added", "date_modified", "date_removed"})
 public class NdcProduct {
 
     @JsonProperty("ndc")
@@ -52,8 +52,6 @@ public class NdcProduct {
     private Date _dateModified;
     @JsonProperty("date_removed")
     private Date _dateRemoved;
-    @JsonProperty
-    private Double _score;
 
     public String getNdc() {
         return _ndc;
@@ -129,10 +127,6 @@ public class NdcProduct {
 
     public Date getDateRemoved() {
         return _dateRemoved;
-    }
-
-    public Double getScore() {
-        return _score;
     }
 
 }

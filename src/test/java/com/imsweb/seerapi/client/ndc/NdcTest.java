@@ -6,15 +6,19 @@ package com.imsweb.seerapi.client.ndc;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import retrofit2.Response;
 
 import com.imsweb.seerapi.client.SeerApi;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class NdcTest {
 
@@ -61,7 +65,39 @@ public class NdcTest {
         assertNotNull(product.getDateAdded());
         assertNotNull(product.getDateModified());
         assertNull(product.getDateRemoved());
-        assertNull(product.getScore());
+    }
+
+    @Test
+    public void testNdcSearch() throws IOException {
+        NdcSearch search = new NdcSearch();
+        search.setIncludeRemoved(true);
+
+        Response<List<NdcProduct>> response = _NDC.search(search.paramMap()).execute();
+
+        // hold onto total number (including "removed")
+        Integer totalIncludingRemoved = Integer.valueOf(response.headers().get("X-Total-Count"));
+        assertTrue(totalIncludingRemoved > 100000);
+
+        assertEquals(3, response.headers().values("Link").size());
+
+        List<NdcProduct> products = response.body();
+        assertEquals(25, products.size());
+
+        search.setQuery("daklinza");
+        products = _NDC.search(search.paramMap()).execute().body();
+        assertTrue(products.size() > 1);
+
+        search.setRemovedSince("2016-07-21");
+        products = _NDC.search(search.paramMap()).execute().body();
+        assertEquals(0, products.size());
+
+        // test removed
+        search = new NdcSearch();
+        search.setIncludeRemoved(false);
+        response = _NDC.search(search.paramMap()).execute();
+        Integer totalExcludingRemoved = Integer.valueOf(response.headers().get("X-Total-Count"));
+
+        assertTrue(totalIncludingRemoved > totalExcludingRemoved);
     }
 
 }

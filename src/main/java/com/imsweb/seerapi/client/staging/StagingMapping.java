@@ -86,7 +86,7 @@ public class StagingMapping {
 
     public void addInitialContext(String key, String value) {
         if (_initialContext == null)
-            _initialContext = new HashSet<StagingKeyValue>();
+            _initialContext = new HashSet<>();
 
         _initialContext.add(new StagingKeyValue(key, value));
     }

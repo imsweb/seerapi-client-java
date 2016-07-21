@@ -11,7 +11,7 @@ import com.imsweb.seerapi.client.staging.SchemaLookup;
 
 public class CsSchemaLookup extends SchemaLookup {
 
-    private static final Set<String> _ALLOWED_KEYS = new HashSet<String>(Arrays.asList(CsStagingData.PRIMARY_SITE_KEY, CsStagingData.HISTOLOGY_KEY, CsStagingData.SSF25_KEY));
+    private static final Set<String> _ALLOWED_KEYS = new HashSet<>(Arrays.asList(CsStagingData.PRIMARY_SITE_KEY, CsStagingData.HISTOLOGY_KEY, CsStagingData.SSF25_KEY));
 
     /**
      * Default constructor

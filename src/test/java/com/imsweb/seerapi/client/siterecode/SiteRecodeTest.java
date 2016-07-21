@@ -5,7 +5,6 @@ package com.imsweb.seerapi.client.siterecode;
 
 import java.io.IOException;
 
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -14,6 +13,10 @@ import retrofit2.Call;
 import com.imsweb.seerapi.client.BadRequestException;
 import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.shared.Version;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class SiteRecodeTest {
 
@@ -44,7 +47,7 @@ public class SiteRecodeTest {
         //     https://api.seer.cancer.gov/rest/recode/sitegroup?site=C379
         // and the full message returned should be
         //     {"code":400,"message":"Site and histology must be supplied"}
-        Assert.assertEquals("Site and histology must be supplied", message);
+        assertEquals("Site and histology must be supplied", message);
     }
 
     @Test
@@ -52,8 +55,8 @@ public class SiteRecodeTest {
         Call<Version> call = _SITE_RECODE.version();
         String version = call.execute().body().getVersion();
 
-        Assert.assertNotNull(version);
-        Assert.assertTrue(version.length() > 0);
+        assertNotNull(version);
+        assertTrue(version.length() > 0);
     }
 
     @Test
@@ -61,9 +64,9 @@ public class SiteRecodeTest {
         Call<SiteRecode> call = _SITE_RECODE.siteGroup("C379", "9650");
         SiteRecode recode = call.execute().body();
 
-        Assert.assertEquals("C379", recode.getSite());
-        Assert.assertEquals("9650", recode.getHist());
-        Assert.assertEquals("33011", recode.getSiteGroup());
+        assertEquals("C379", recode.getSite());
+        assertEquals("9650", recode.getHist());
+        assertEquals("33011", recode.getSiteGroup());
     }
 
 }

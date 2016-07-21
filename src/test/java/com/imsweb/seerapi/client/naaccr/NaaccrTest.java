@@ -6,11 +6,14 @@ package com.imsweb.seerapi.client.naaccr;
 import java.io.IOException;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class NaaccrTest {
 
@@ -25,13 +28,13 @@ public class NaaccrTest {
     public void testNaaccrVersions() throws IOException {
         List<NaaccrVersion> versions = _NAACCR.versions().execute().body();
 
-        Assert.assertTrue(versions.size() > 0);
+        assertTrue(versions.size() > 0);
         for (NaaccrVersion version : versions) {
-            Assert.assertTrue(version.getVersion().length() > 0);
-            Assert.assertTrue(version.getName().length() > 0);
-            Assert.assertEquals(22824, version.getLength().longValue());
-            Assert.assertTrue(version.getDescription().length() > 0);
-            Assert.assertTrue(version.getStyle().length() > 0);
+            assertTrue(version.getVersion().length() > 0);
+            assertTrue(version.getName().length() > 0);
+            assertEquals(22824, version.getLength().longValue());
+            assertTrue(version.getDescription().length() > 0);
+            assertTrue(version.getStyle().length() > 0);
         }
     }
 
@@ -39,10 +42,10 @@ public class NaaccrTest {
     public void testNaaccrFieldNames() throws IOException {
         List<NaaccrFieldName> names = _NAACCR.fieldNames("latest").execute().body();
 
-        Assert.assertTrue(names.size() > 0);
+        assertTrue(names.size() > 0);
         for (NaaccrFieldName name : names) {
-            Assert.assertTrue(name.getItem() > 0);
-            Assert.assertTrue(name.getName().length() > 0);
+            assertTrue(name.getItem() > 0);
+            assertTrue(name.getName().length() > 0);
         }
     }
 
@@ -50,25 +53,25 @@ public class NaaccrTest {
     public void testNaaccrField() throws IOException {
         NaaccrField name = _NAACCR.field("latest", 521).execute().body();
 
-        Assert.assertNotNull(name);
-        Assert.assertEquals("Morph--Type&Behav ICD-O-3", name.getName());
-        Assert.assertEquals("LEFT", name.getAlign());
-        Assert.assertEquals(" ", name.getPadChar());
-        Assert.assertTrue(name.getDocumentation().startsWith("<table class=\"naaccr-summary-table naaccr-borders\">"));
-        Assert.assertEquals(521, name.getItem().longValue());
-        Assert.assertEquals(550, name.getStart().longValue());
-        Assert.assertEquals(554, name.getEnd().longValue());
+        assertNotNull(name);
+        assertEquals("Morph--Type&Behav ICD-O-3", name.getName());
+        assertEquals("LEFT", name.getAlign());
+        assertEquals(" ", name.getPadChar());
+        assertTrue(name.getDocumentation().startsWith("<table class=\"naaccr-summary-table naaccr-borders\">"));
+        assertEquals(521, name.getItem().longValue());
+        assertEquals(550, name.getStart().longValue());
+        assertEquals(554, name.getEnd().longValue());
 
-        Assert.assertEquals(2, name.getSubFields().size());
-        Assert.assertEquals(522, name.getSubFields().get(0).getItem().longValue());
-        Assert.assertEquals(523, name.getSubFields().get(1).getItem().longValue());
+        assertEquals(2, name.getSubFields().size());
+        assertEquals(522, name.getSubFields().get(0).getItem().longValue());
+        assertEquals(523, name.getSubFields().get(1).getItem().longValue());
 
         NaaccrSubField sub = name.getSubFields().get(0);
-        Assert.assertEquals("Histologic Type ICD-O-3", sub.getName());
-        Assert.assertEquals(550, sub.getStart().longValue());
-        Assert.assertEquals(553, sub.getEnd().longValue());
-        Assert.assertEquals("LEFT", sub.getAlign());
-        Assert.assertEquals(" ", sub.getPadChar());
+        assertEquals("Histologic Type ICD-O-3", sub.getName());
+        assertEquals(550, sub.getStart().longValue());
+        assertEquals(553, sub.getEnd().longValue());
+        assertEquals("LEFT", sub.getAlign());
+        assertEquals(" ", sub.getPadChar());
     }
 
 }

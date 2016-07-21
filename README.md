@@ -29,14 +29,14 @@ Download [the latest JAR][1] or grab via Maven:
 <dependency>
     <groupId>com.imsweb</groupId>
     <artifactId>seerapi-client-java</artifactId>
-    <version>3.0</version>
+    <version>3.1</version>
 </dependency>
 ```
 
 or via Gradle:
 
 ```
-compile 'com.imsweb:seerapi-client-java:3.0'
+compile 'com.imsweb:seerapi-client-java:3.1'
 ```
 
 ## Usage
@@ -91,6 +91,14 @@ field level documentation as well as information about file layout.
 
 ```java
 api.naaccr().field("14", 12).execute().body()
+```
+
+### NDC (rest/ndc)
+
+A searchable mirror of the [National Drug Code Directory](http://www.fda.gov/Drugs/InformationOnDrugs/ucm142438.htm) from the FDA website. This database is updated weekly.
+
+```java
+api.ndc().getByCode("0002-3227").execute().body()
 ```
 
 ### RX (rest/rx)

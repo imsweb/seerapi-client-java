@@ -16,16 +16,15 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import com.imsweb.seerapi.client.disease.DiseaseService;
 import com.imsweb.seerapi.client.glossary.GlossaryService;
 import com.imsweb.seerapi.client.naaccr.NaaccrService;
+import com.imsweb.seerapi.client.ndc.NdcService;
 import com.imsweb.seerapi.client.rx.RxService;
 import com.imsweb.seerapi.client.siterecode.SiteRecodeService;
 import com.imsweb.seerapi.client.staging.StagingService;
@@ -48,20 +47,17 @@ public final class SeerApi {
             baseUrl += "/";
 
         OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request original = chain.request();
+                .addInterceptor(chain -> {
+                    Request original = chain.request();
 
-                        // add the api key to all requests
-                        Request request = original.newBuilder()
-                                .header("Accept", "application/json")
-                                .header("X-SEERAPI-Key", apiKey)
-                                .method(original.method(), original.body())
-                                .build();
+                    // add the api key to all requests
+                    Request request = original.newBuilder()
+                            .header("Accept", "application/json")
+                            .header("X-SEERAPI-Key", apiKey)
+                            .method(original.method(), original.body())
+                            .build();
 
-                        return chain.proceed(request);
-                    }
+                    return chain.proceed(request);
                 })
                 .addInterceptor(new ErrorInterceptor())
                 .build();
@@ -118,6 +114,14 @@ public final class SeerApi {
      */
     public NaaccrService naaccr() {
         return _retrofit.create(NaaccrService.class);
+    }
+
+    /**
+     * Return the NDC service
+     * @return an inteface to all the NDC APIs
+     */
+    public NdcService ndc() {
+        return _retrofit.create(NdcService.class);
     }
 
     /**

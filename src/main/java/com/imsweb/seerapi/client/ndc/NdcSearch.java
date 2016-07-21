@@ -9,7 +9,7 @@ import java.util.Map;
 public class NdcSearch {
 
     private String _query;
-    private Boolean includeRemoved;
+    private Boolean _includeRemoved;
     private String _addedSince;
     private String _modifiedSince;
     private String _removedSince;
@@ -26,11 +26,11 @@ public class NdcSearch {
     }
 
     public Boolean getIncludeRemoved() {
-        return includeRemoved;
+        return _includeRemoved;
     }
 
     public void setIncludeRemoved(Boolean includeRemoved) {
-        this.includeRemoved = includeRemoved;
+        this._includeRemoved = includeRemoved;
     }
 
     public String getAddedSince() {

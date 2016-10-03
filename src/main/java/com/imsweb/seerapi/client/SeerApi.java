@@ -222,12 +222,12 @@ public final class SeerApi {
                 _apiKey = System.getenv(_ENV_API_KEY);
         }
 
-        Builder url(String url) {
+        public Builder url(String url) {
             _url = url;
             return this;
         }
 
-        Builder apiKey(String apiKey) {
+        public Builder apiKey(String apiKey) {
             _apiKey = apiKey;
             return this;
         }

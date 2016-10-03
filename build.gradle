@@ -63,7 +63,7 @@ findbugs {
 
 // Gradle wrapper, this allows to build the project without having to install Gradle!
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.0'
+    gradleVersion = '3.1'
 }
 
 modifyPom {

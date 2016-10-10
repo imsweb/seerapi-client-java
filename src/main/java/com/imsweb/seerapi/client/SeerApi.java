@@ -35,8 +35,6 @@ import com.imsweb.seerapi.client.surgery.SurgeryService;
  */
 public final class SeerApi {
 
-    private Retrofit _retrofit;
-
     private DiseaseService _diseaseService;
     private GlossaryService _glossaryService;
     private NaaccrService _naaccrService;
@@ -71,21 +69,21 @@ public final class SeerApi {
                 .addInterceptor(new ErrorInterceptor())
                 .build();
 
-        _retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(JacksonConverterFactory.create(getMapper()))
                 .client(client)
                 .build();
 
         // create cached service entities
-        _diseaseService = _retrofit.create(DiseaseService.class);
-        _glossaryService = _retrofit.create(GlossaryService.class);
-        _naaccrService = _retrofit.create(NaaccrService.class);
-        _ndcService = _retrofit.create(NdcService.class);
-        _rxService = _retrofit.create(RxService.class);
-        _siteRecodeService = _retrofit.create(SiteRecodeService.class);
-        _stagingService = _retrofit.create(StagingService.class);
-        _surgeryService = _retrofit.create(SurgeryService.class);
+        _diseaseService = retrofit.create(DiseaseService.class);
+        _glossaryService = retrofit.create(GlossaryService.class);
+        _naaccrService = retrofit.create(NaaccrService.class);
+        _ndcService = retrofit.create(NdcService.class);
+        _rxService = retrofit.create(RxService.class);
+        _siteRecodeService = retrofit.create(SiteRecodeService.class);
+        _stagingService = retrofit.create(StagingService.class);
+        _surgeryService = retrofit.create(SurgeryService.class);
     }
 
     /**

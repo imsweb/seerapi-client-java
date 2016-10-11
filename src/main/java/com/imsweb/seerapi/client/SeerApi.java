@@ -35,7 +35,14 @@ import com.imsweb.seerapi.client.surgery.SurgeryService;
  */
 public final class SeerApi {
 
-    private Retrofit _retrofit;
+    private DiseaseService _diseaseService;
+    private GlossaryService _glossaryService;
+    private NaaccrService _naaccrService;
+    private NdcService _ndcService;
+    private RxService _rxService;
+    private SiteRecodeService _siteRecodeService;
+    private StagingService _stagingService;
+    private SurgeryService _surgeryService;
 
     /**
      * Creates a client API root object
@@ -62,11 +69,21 @@ public final class SeerApi {
                 .addInterceptor(new ErrorInterceptor())
                 .build();
 
-        _retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(JacksonConverterFactory.create(getMapper()))
                 .client(client)
                 .build();
+
+        // create cached service entities
+        _diseaseService = retrofit.create(DiseaseService.class);
+        _glossaryService = retrofit.create(GlossaryService.class);
+        _naaccrService = retrofit.create(NaaccrService.class);
+        _ndcService = retrofit.create(NdcService.class);
+        _rxService = retrofit.create(RxService.class);
+        _siteRecodeService = retrofit.create(SiteRecodeService.class);
+        _stagingService = retrofit.create(StagingService.class);
+        _surgeryService = retrofit.create(SurgeryService.class);
     }
 
     /**
@@ -97,7 +114,7 @@ public final class SeerApi {
      * @return an interface to all the disease APIs
      */
     public DiseaseService disease() {
-        return _retrofit.create(DiseaseService.class);
+        return _diseaseService;
     }
 
     /**
@@ -105,7 +122,7 @@ public final class SeerApi {
      * @return an interface to all the glossary APIs
      */
     public GlossaryService glossary() {
-        return _retrofit.create(GlossaryService.class);
+        return _glossaryService;
     }
 
     /**
@@ -113,7 +130,7 @@ public final class SeerApi {
      * @return an inteface to all the NAACCR APIs
      */
     public NaaccrService naaccr() {
-        return _retrofit.create(NaaccrService.class);
+        return _naaccrService;
     }
 
     /**
@@ -121,7 +138,7 @@ public final class SeerApi {
      * @return an inteface to all the NDC APIs
      */
     public NdcService ndc() {
-        return _retrofit.create(NdcService.class);
+        return _ndcService;
     }
 
     /**
@@ -129,7 +146,7 @@ public final class SeerApi {
      * @return an inteface to all the Rx APIs
      */
     public RxService rx() {
-        return _retrofit.create(RxService.class);
+        return _rxService;
     }
 
     /**
@@ -137,7 +154,7 @@ public final class SeerApi {
      * @return an interface to all the site recode APIs
      */
     public SiteRecodeService siteRecode() {
-        return _retrofit.create(SiteRecodeService.class);
+        return _siteRecodeService;
     }
 
     /**
@@ -145,7 +162,7 @@ public final class SeerApi {
      * @return an interface to all the staging APIs
      */
     public StagingService staging() {
-        return _retrofit.create(StagingService.class);
+        return _stagingService;
     }
 
     /**
@@ -153,7 +170,7 @@ public final class SeerApi {
      * @return an interface to all the surgery APIs
      */
     public SurgeryService surgery() {
-        return _retrofit.create(SurgeryService.class);
+        return _surgeryService;
     }
 
     /**

@@ -23,6 +23,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import com.imsweb.seerapi.client.disease.DiseaseService;
 import com.imsweb.seerapi.client.glossary.GlossaryService;
+import com.imsweb.seerapi.client.mph.MphService;
 import com.imsweb.seerapi.client.naaccr.NaaccrService;
 import com.imsweb.seerapi.client.ndc.NdcService;
 import com.imsweb.seerapi.client.rx.RxService;
@@ -37,6 +38,7 @@ public final class SeerApi {
 
     private DiseaseService _diseaseService;
     private GlossaryService _glossaryService;
+    private MphService _mphService;
     private NaaccrService _naaccrService;
     private NdcService _ndcService;
     private RxService _rxService;
@@ -78,6 +80,7 @@ public final class SeerApi {
         // create cached service entities
         _diseaseService = retrofit.create(DiseaseService.class);
         _glossaryService = retrofit.create(GlossaryService.class);
+        _mphService = retrofit.create(MphService.class);
         _naaccrService = retrofit.create(NaaccrService.class);
         _ndcService = retrofit.create(NdcService.class);
         _rxService = retrofit.create(RxService.class);
@@ -123,6 +126,14 @@ public final class SeerApi {
      */
     public GlossaryService glossary() {
         return _glossaryService;
+    }
+
+    /**
+     * Return the multiple primary service
+     * @return an interface to the multiple APIs
+     */
+    public MphService mph() {
+        return _mphService;
     }
 
     /**

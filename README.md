@@ -29,14 +29,14 @@ Download [the latest JAR][1] or grab via Maven:
 <dependency>
     <groupId>com.imsweb</groupId>
     <artifactId>seerapi-client-java</artifactId>
-    <version>3.3</version>
+    <version>3.4</version>
 </dependency>
 ```
 
 or via Gradle:
 
 ```
-compile 'com.imsweb:seerapi-client-java:3.3'
+compile 'com.imsweb:seerapi-client-java:3.4'
 ```
 
 ## Usage
@@ -82,6 +82,28 @@ A searchable database of hematopoietic and lymphoid neoplasms and solid tumor di
 
 ```java
 api.disease().samePrimaries("9870/3", "9872/3", "2010").execute().body()
+```
+
+### Multiple Primaries (rest/mph)
+
+The SEER implementation of the Multiple Primary and Histology Coding Rules. The implementation combines Hematopoietic rules, SEER Multiple Primary and Histology Coding Rules. The rules used in the calculation are based on the diagnosis year and histology.
+
+```java
+MphInput input1 = new MphInput();
+input1.setPrimarySite("C509");
+input1.setHistologyIcdO3("8000");
+input1.setBehaviorIcdO3("3");
+input1.setDateOfDiagnosisYear("2016");
+input1.setLaterality("1");
+
+MphInput input2 = new MphInput();
+input2.setPrimarySite("C501");
+input2.setHistologyIcdO3("8000");
+input2.setBehaviorIcdO3("3");
+input2.setDateOfDiagnosisYear("2015");
+input2.setLaterality("1");
+
+MphResult result = api.mph(new MphInputPair(input1, input2)).execute().body();
 ```
 
 ### NAACCR (rest/naaccr)

@@ -4,6 +4,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MphInput {
 
+    /**
+     * How to consider histology match, if it is strict 8000 is considered a different histology than 8010-9999
+     * for rule : Do the tumors have ICD-O-3 histology codes that are different at the first (Xxxx), second (Xxxx), or third (xxXx) number?
+     * If lenient mode is on 8000 is considered as NOS and be considered to match any 8nnn histologies.
+     */
+    public enum HistologyMatchMode {
+        STRICT,
+        LENIENT
+    }
+
     @JsonProperty("primary_site")
     private String _primarySite;
     @JsonProperty("histology_icd_o3")

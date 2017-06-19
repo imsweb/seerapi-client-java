@@ -8,7 +8,7 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-import com.imsweb.seerapi.client.mph.MphInput.MpHistologyMatchMode;
+import com.imsweb.seerapi.client.mph.MphInput.HistologyMatchMode;
 
 public interface MphService {
 
@@ -27,6 +27,6 @@ public interface MphService {
      * @return a result indicating whether the two diseases are the same primary
      */
     @POST("mph")
-    Call<MphOutput> mph(@Body MphInputPair pair, @Query("histology-matching-mode") MpHistologyMatchMode matchMode);
+    Call<MphOutput> mph(@Body MphInputPair pair, @Query("histology-matching-mode") HistologyMatchMode matchMode);
 
 }

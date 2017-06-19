@@ -9,7 +9,7 @@ public class MphInput {
      * for rule : Do the tumors have ICD-O-3 histology codes that are different at the first (Xxxx), second (Xxxx), or third (xxXx) number?
      * If lenient mode is on 8000 is considered as NOS and be considered to match any 8nnn histologies.
      */
-    public enum MpHistologyMatchMode {
+    public enum HistologyMatchMode {
         STRICT,
         LENIENT
     }

@@ -41,7 +41,7 @@ public class NdcTest {
         assertEquals(Collections.singletonList("Atomoxetine hydrochloride"), product.getNonProprietaryName());
         assertEquals("CAPSULE", product.getDosageFormName());
         assertEquals(Collections.singletonList("ORAL"), product.getRouteName());
-        assertEquals("20030110", product.getStartMarketingDate());
+        assertEquals("20021126", product.getStartMarketingDate());
         assertNull(product.getEndMarketingDate());
         assertEquals("NDA", product.getMarketingCategoryName());
         assertEquals("NDA021411", product.getApplicationNumber());

@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import com.imsweb.seerapi.client.BadRequestException;
 import com.imsweb.seerapi.client.SeerApi;
+import com.imsweb.seerapi.client.mph.MphInput.MpHistologyMatchMode;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -101,6 +102,45 @@ public class MphTest {
         assertEquals("Tumors diagnosed more than five (5) years apart are multiple primaries.", result.getReason());
         assertEquals(2, result.getAppliedRules().size());
         assertEquals("Are there tumors diagnosed more than five (5) years apart?", result.getAppliedRules().get(1).getQuestion());
+    }
+
+    @Test
+    public void testLenientMode() throws IOException {
+        MphInput input1 = new MphInput();
+        MphInput input2 = new MphInput();
+        input1.setPrimarySite("C502");
+        input1.setHistologyIcdO3("8500");
+        input1.setBehaviorIcdO3("3");
+        input1.setLaterality("1");
+        input1.setDateOfDiagnosisYear("2015");
+        input1.setDateOfDiagnosisMonth("8");
+        input1.setDateOfDiagnosisDay("17");
+
+        input2.setPrimarySite("C502");
+        input2.setHistologyIcdO3("8000");
+        input2.setBehaviorIcdO3("3");
+        input2.setLaterality("1");
+        input2.setDateOfDiagnosisYear("2015");
+        input2.setDateOfDiagnosisMonth("10");
+        input2.setDateOfDiagnosisDay("28");
+
+        // not passing should default to STRICT
+        MphOutput result = _MPH.mph(new MphInputPair(input1, input2)).execute().body();
+        assertEquals(9, result.getAppliedRules().size());
+        assertEquals(MphOutput.Result.MULTIPLE_PRIMARIES, result.getResult());
+        assertEquals("M12", result.getStep());
+
+        // specify STRICT
+        result = _MPH.mph(new MphInputPair(input1, input2), MpHistologyMatchMode.STRICT).execute().body();
+        assertEquals(9, result.getAppliedRules().size());
+        assertEquals(MphOutput.Result.MULTIPLE_PRIMARIES, result.getResult());
+        assertEquals("M12", result.getStep());
+
+        // specify LENIENT
+        result = _MPH.mph(new MphInputPair(input1, input2), MpHistologyMatchMode.LENIENT).execute().body();
+        assertEquals(10, result.getAppliedRules().size());
+        assertEquals(MphOutput.Result.SINGLE_PRIMARY, result.getResult());
+        assertEquals("M13", result.getStep());
     }
 
 }

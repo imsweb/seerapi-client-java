@@ -6,16 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MphOutput {
 
-    // The possible results of determining if two tumors are single or multiple primaries.
-    public enum Result {
-        // indicates the two tumors are the same primary
-        SINGLE_PRIMARY,
-        // indicates the two tumors are different primaries
-        MULTIPLE_PRIMARIES,
-        // indicates there is not enough information to make a proper determination
-        QUESTIONABLE
-    }
-
     @JsonProperty("result")
     private Result _result;
     @JsonProperty("reason")
@@ -26,7 +16,6 @@ public class MphOutput {
     private String _groupId;
     @JsonProperty("step")
     private String _step;
-
     public MphOutput() {
     }
 
@@ -68,5 +57,15 @@ public class MphOutput {
 
     public void setStep(String step) {
         _step = step;
+    }
+
+    // The possible results of determining if two tumors are single or multiple primaries.
+    public enum Result {
+        // indicates the two tumors are the same primary
+        SINGLE_PRIMARY,
+        // indicates the two tumors are different primaries
+        MULTIPLE_PRIMARIES,
+        // indicates there is not enough information to make a proper determination
+        QUESTIONABLE
     }
 }

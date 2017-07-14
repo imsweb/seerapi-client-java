@@ -143,4 +143,21 @@ public class MphTest {
         assertEquals("M13", result.getStep());
     }
 
+    @Test(expected = BadRequestException.class)
+    public void testInvalidInput() throws IOException {
+        MphInput i1 = new MphInput();
+        MphInput i2 = new MphInput();
+
+        // invalid primary site
+        i1.setPrimarySite("C080");
+        i2.setPrimarySite("D080");
+        i1.setHistologyIcdO3("8000");
+        i1.setBehaviorIcdO3("3");
+        i2.setHistologyIcdO3("8100");
+        i2.setBehaviorIcdO3("3");
+        i1.setDateOfDiagnosisYear("2015");
+        i2.setDateOfDiagnosisYear("2015");
+        _MPH.mph(new MphInputPair(i1, i2)).execute().body();
+    }
+
 }

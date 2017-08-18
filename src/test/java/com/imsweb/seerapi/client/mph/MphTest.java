@@ -26,7 +26,7 @@ public class MphTest {
         _MPH.mph(new MphInputPair()).execute();
     }
 
-    @Test
+    @Test(expected = BadRequestException.class)
     public void testMissingSite() throws IOException {
         MphInput input1 = new MphInput();
         // site is missing
@@ -43,10 +43,6 @@ public class MphTest {
         input2.setLaterality("1");
 
         MphOutput result = _MPH.mph(new MphInputPair(input1, input2)).execute().body();
-        assertEquals(MphOutput.Result.QUESTIONABLE, result.getResult());
-        assertEquals(
-                "Unable to identify cancer group for first set of parameters. Valid primary site (C000-C999 excluding C809), histology (8000-9999), behavior (0-3, 6) and diagnosis year are required.",
-                result.getReason());
     }
 
     @Test

@@ -4,30 +4,54 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ErrorResponse {
 
-    @JsonProperty("code")
-    protected Integer _id;
+    @JsonProperty("timestamp")
+    private String _timestamp;
+    @JsonProperty("status")
+    private Integer _status;
+    @JsonProperty("error")
+    private String _error;
     @JsonProperty("message")
-    protected String _message;
+    private String _message;
+    @JsonProperty("path")
+    private String _path;
 
-    /**
-     * Default constructor
-     */
-    public ErrorResponse() {
+    public String getTimestamp() {
+        return _timestamp;
     }
 
-    /**
-     * Return the error identifier
-     * @return an error identifier
-     */
-    public Integer getId() {
-        return _id;
+    public void setTimestamp(String timestamp) {
+        _timestamp = timestamp;
     }
 
-    /**
-     * Return the error message
-     * @return an error message
-     */
+    public Integer getStatus() {
+        return _status;
+    }
+
+    public void setStatus(Integer status) {
+        _status = status;
+    }
+
+    public String getError() {
+        return _error;
+    }
+
+    public void setError(String error) {
+        _error = error;
+    }
+
     public String getMessage() {
         return _message;
+    }
+
+    public void setMessage(String message) {
+        _message = message;
+    }
+
+    public String getPath() {
+        return _path;
+    }
+
+    public void setPath(String path) {
+        _path = path;
     }
 }

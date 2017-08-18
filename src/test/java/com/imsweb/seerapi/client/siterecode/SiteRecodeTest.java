@@ -28,7 +28,7 @@ public class SiteRecodeTest {
     }
 
     @Test(expected = BadRequestException.class)
-    public void testBadRequestExceptiion() throws IOException {
+    public void testBadRequestException() throws IOException {
         _SITE_RECODE.siteGroup("C379", null).execute();
     }
 
@@ -45,9 +45,7 @@ public class SiteRecodeTest {
 
         // the API call works out to:
         //     https://api.seer.cancer.gov/rest/recode/sitegroup?site=C379
-        // and the full message returned should be
-        //     {"code":400,"message":"Site and histology must be supplied"}
-        assertEquals("Site and histology must be supplied", message);
+        assertEquals("Required String parameter 'hist' is not present", message);
     }
 
     @Test

@@ -56,11 +56,9 @@ public class NdcTest {
 
         assertEquals(Arrays.asList("Norepinephrine Reuptake Inhibitor [EPC]", "Norepinephrine Uptake Inhibitors [MoA]"), product.getPharmClass());
 
-        assertEquals(2, product.getPackages().size());
-        assertEquals("07", product.getPackages().get(0).getCode());
-        assertEquals("7 CAPSULE in 1 BOTTLE (0002-3227-07)", product.getPackages().get(0).getDescription());
-        assertEquals("30", product.getPackages().get(1).getCode());
-        assertEquals("30 CAPSULE in 1 BOTTLE (0002-3227-30)", product.getPackages().get(1).getDescription());
+        assertEquals(1, product.getPackages().size());
+        assertEquals("30", product.getPackages().get(0).getCode());
+        assertEquals("30 CAPSULE in 1 BOTTLE (0002-3227-30)", product.getPackages().get(0).getDescription());
 
         assertNotNull(product.getDateAdded());
         assertNotNull(product.getDateModified());
@@ -77,8 +75,6 @@ public class NdcTest {
         // hold onto total number (including "removed")
         Integer totalIncludingRemoved = Integer.valueOf(response.headers().get("X-Total-Count"));
         assertTrue(totalIncludingRemoved > 100000);
-
-        assertEquals(3, response.headers().values("Link").size());
 
         List<NdcProduct> products = response.body();
         assertEquals(25, products.size());

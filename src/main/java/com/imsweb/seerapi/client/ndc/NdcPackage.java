@@ -13,6 +13,10 @@ public class NdcPackage {
     private String _code;
     @JsonProperty("description")
     private String _description;
+    @JsonProperty("start_marketing_date")
+    private String _startMarketingDate;
+    @JsonProperty("end_marketing_date")
+    private String _endMarketingDate;
 
     public String getCode() {
         return _code;
@@ -28,5 +32,21 @@ public class NdcPackage {
 
     public void setDescription(String description) {
         _description = description;
+    }
+
+    public String getStartMarketingDate() {
+        return _startMarketingDate;
+    }
+
+    public void setStartMarketingDate(String startMarketingDate) {
+        _startMarketingDate = startMarketingDate;
+    }
+
+    public String getEndMarketingDate() {
+        return _endMarketingDate;
+    }
+
+    public void setEndMarketingDate(String endMarketingDate) {
+        _endMarketingDate = endMarketingDate;
     }
 }

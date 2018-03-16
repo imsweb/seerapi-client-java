@@ -56,9 +56,9 @@ public class NdcTest {
 
         assertEquals(Arrays.asList("Norepinephrine Reuptake Inhibitor [EPC]", "Norepinephrine Uptake Inhibitors [MoA]"), product.getPharmClass());
 
-        assertEquals(1, product.getPackages().size());
+        assertEquals(2, product.getPackages().size());
         assertEquals("30", product.getPackages().get(0).getCode());
-        assertEquals("30 CAPSULE in 1 BOTTLE (0002-3227-30)", product.getPackages().get(0).getDescription());
+        assertEquals("30 CAPSULE in 1 BOTTLE (0002-3227-30)", product.getPackages().get(0).getDescription().trim());
 
         assertNotNull(product.getDateAdded());
         assertNotNull(product.getDateModified());

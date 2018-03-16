@@ -11,9 +11,8 @@ import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 public class NaaccrTest {
 
@@ -28,13 +27,13 @@ public class NaaccrTest {
     public void testNaaccrVersions() throws IOException {
         List<NaaccrVersion> versions = _NAACCR.versions().execute().body();
 
-        assertTrue(versions.size() > 0);
+        assertThat(versions).isNotNull().isNotEmpty();
         for (NaaccrVersion version : versions) {
-            assertTrue(version.getVersion().length() > 0);
-            assertTrue(version.getName().length() > 0);
-            assertEquals(22824, version.getLength().longValue());
-            assertTrue(version.getDescription().length() > 0);
-            assertTrue(version.getStyle().length() > 0);
+            assertThat(version.getVersion()).isNotEmpty();
+            assertThat(version.getName()).isNotEmpty();
+            assertThat(version.getLength()).isGreaterThanOrEqualTo(22824);
+            assertThat(version.getDescription()).isNotEmpty();
+            assertThat(version.getStyle()).isNotEmpty();
         }
     }
 
@@ -42,36 +41,35 @@ public class NaaccrTest {
     public void testNaaccrFieldNames() throws IOException {
         List<NaaccrFieldName> names = _NAACCR.fieldNames("latest").execute().body();
 
-        assertTrue(names.size() > 0);
+        assertThat(names).isNotEmpty();
         for (NaaccrFieldName name : names) {
-            assertTrue(name.getItem() > 0);
-            assertTrue(name.getName().length() > 0);
+            assertThat(name.getItem()).isGreaterThan(0);
+            assertThat(name.getName()).isNotEmpty();
         }
     }
 
     @Test
     public void testNaaccrField() throws IOException {
-        NaaccrField name = _NAACCR.field("latest", 521).execute().body();
+        NaaccrField name = _NAACCR.field("16", 521).execute().body();
 
-        assertNotNull(name);
-        assertEquals("Morph--Type&Behav ICD-O-3", name.getName());
-        assertEquals("LEFT", name.getAlign());
-        assertEquals(" ", name.getPadChar());
-        assertTrue(name.getDocumentation().startsWith("<table class=\"naaccr-summary-table naaccr-borders\">"));
-        assertEquals(521, name.getItem().longValue());
-        assertEquals(550, name.getStart().longValue());
-        assertEquals(554, name.getEnd().longValue());
+        assertThat(name).isNotNull();
+        assertThat(name.getName()).isEqualTo("Morph--Type&Behav ICD-O-3");
+        assertThat(name.getAlign()).isEqualTo("LEFT");
+        assertThat(name.getPadChar()).isEqualTo(" ");
+        assertThat(name.getDocumentation()).startsWith("<table class=\"naaccr-summary-table naaccr-borders\">");
+        assertThat(name.getItem()).isEqualTo(521);
+        assertThat(name.getStart()).isEqualTo(550);
+        assertThat(name.getEnd()).isEqualTo(554);
 
-        assertEquals(2, name.getSubFields().size());
-        assertEquals(522, name.getSubFields().get(0).getItem().longValue());
-        assertEquals(523, name.getSubFields().get(1).getItem().longValue());
+        assertThat(name.getSubFields()).hasSize(2);
+        assertThat(name.getSubFields()).extracting("item").contains(522, 523);
 
         NaaccrSubField sub = name.getSubFields().get(0);
-        assertEquals("Histologic Type ICD-O-3", sub.getName());
-        assertEquals(550, sub.getStart().longValue());
-        assertEquals(553, sub.getEnd().longValue());
-        assertEquals("LEFT", sub.getAlign());
-        assertEquals(" ", sub.getPadChar());
+        assertThat(sub.getName()).isEqualTo("Histologic Type ICD-O-3");
+        assertThat(sub.getStart()).isEqualTo(550);
+        assertThat(sub.getEnd()).isEqualTo(553);
+        assertThat(sub.getAlign()).isEqualTo("LEFT");
+        assertThat(sub.getPadChar()).isEqualTo(" ");
     }
 
 }

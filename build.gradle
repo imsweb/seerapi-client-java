@@ -10,7 +10,7 @@ plugins {
 }
 
 group = 'com.imsweb'
-version = '3.7'
+version = '3.8'
 description = 'Java client library for SEER*API'
 
 println "Starting build using ${Jvm.current()}"
@@ -32,6 +32,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-jackson:2.3.0'
 
     testCompile 'junit:junit:4.11'
+    testCompile 'org.assertj:assertj-core:3.9.0'
 }
 
 jar {

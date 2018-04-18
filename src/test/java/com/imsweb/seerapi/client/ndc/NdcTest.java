@@ -64,6 +64,7 @@ public class NdcTest {
         product = _NDC.getByCode("0002-4483").execute().body();
         assertThat(product.getNdc()).isEqualTo("0002-4483");
         assertThat(product.getProprietaryName()).isEqualTo("Verzenio");
+        assertThat(product.getSeerInfo()).as("must have 'seerinfo'").isNotNull();
         assertThat(product.getSeerInfo().getCategories()).containsExactly(Category.CHEMOTHERAPY);
     }
 

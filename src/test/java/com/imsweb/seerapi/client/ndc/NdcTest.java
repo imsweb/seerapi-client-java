@@ -4,8 +4,6 @@
 package com.imsweb.seerapi.client.ndc;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.BeforeClass;
@@ -14,11 +12,9 @@ import org.junit.Test;
 import retrofit2.Response;
 
 import com.imsweb.seerapi.client.SeerApi;
+import com.imsweb.seerapi.client.ndc.NdcSeerInfo.Category;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class NdcTest {
 
@@ -33,36 +29,42 @@ public class NdcTest {
     public void testNdcByCode() throws IOException {
         NdcProduct product = _NDC.getByCode("0002-3227").execute().body();
 
-        assertNotNull(product);
-        assertEquals("0002-3227", product.getNdc());
-        assertEquals("HUMAN PRESCRIPTION DRUG", product.getTypeName());
-        assertEquals("Strattera", product.getProprietaryName());
-        assertNull(product.getProprietaryNameSuffix());
-        assertEquals(Collections.singletonList("Atomoxetine hydrochloride"), product.getNonProprietaryName());
-        assertEquals("CAPSULE", product.getDosageFormName());
-        assertEquals(Collections.singletonList("ORAL"), product.getRouteName());
-        assertEquals("20021126", product.getStartMarketingDate());
-        assertNull(product.getEndMarketingDate());
-        assertEquals("NDA", product.getMarketingCategoryName());
-        assertEquals("NDA021411", product.getApplicationNumber());
-        assertEquals("Eli Lilly and Company", product.getLabelerName());
-        assertNull(product.getDeaSchedule());
-        assertEquals(1, product.getSubstances().size());
+        assertThat(product).isNotNull();
+        assertThat(product.getNdc()).isEqualTo("0002-3227");
+        assertThat(product.getTypeName()).isEqualTo("HUMAN PRESCRIPTION DRUG");
+        assertThat(product.getProprietaryName()).isEqualTo("Strattera");
+        assertThat(product.getProprietaryNameSuffix()).isNull();
+        assertThat(product.getNonProprietaryName()).containsExactly("Atomoxetine hydrochloride");
+        assertThat(product.getDosageFormName()).isEqualTo("CAPSULE");
+        assertThat(product.getRouteName()).containsExactly("ORAL");
+        assertThat(product.getStartMarketingDate()).isEqualTo("20021126");
+        assertThat(product.getEndMarketingDate()).isNull();
+        assertThat(product.getMarketingCategoryName()).isEqualTo("NDA");
+        assertThat(product.getApplicationNumber()).isEqualTo("NDA021411");
+        assertThat(product.getLabelerName()).isEqualTo("Eli Lilly and Company");
+        assertThat(product.getDeaSchedule()).isNull();
+        assertThat(product.getSubstances()).hasSize(1);
 
         NdcSubstance substance = product.getSubstances().get(0);
-        assertEquals("ATOMOXETINE HYDROCHLORIDE", substance.getName());
-        assertEquals("10", substance.getStrengthNumber());
-        assertEquals("mg/1", substance.getStrengthUnit());
+        assertThat(substance.getName()).isEqualTo("ATOMOXETINE HYDROCHLORIDE");
+        assertThat(substance.getStrengthNumber()).isEqualTo("10");
+        assertThat(substance.getStrengthUnit()).isEqualTo("mg/1");
 
-        assertEquals(Arrays.asList("Norepinephrine Reuptake Inhibitor [EPC]", "Norepinephrine Uptake Inhibitors [MoA]"), product.getPharmClass());
+        assertThat(product.getPharmClass()).containsExactly("Norepinephrine Reuptake Inhibitor [EPC]", "Norepinephrine Uptake Inhibitors [MoA]");
 
-        assertEquals(2, product.getPackages().size());
-        assertEquals("30", product.getPackages().get(0).getCode());
-        assertEquals("30 CAPSULE in 1 BOTTLE (0002-3227-30)", product.getPackages().get(0).getDescription().trim());
+        assertThat(product.getPackages()).isNotEmpty();
+        assertThat(product.getPackages().get(0).getCode()).isEqualTo("30");
+        assertThat(product.getPackages().get(0).getDescription()).isEqualToIgnoringWhitespace("30 CAPSULE in 1 BOTTLE (0002-3227-30)");
 
-        assertNotNull(product.getDateAdded());
-        assertNotNull(product.getDateModified());
-        assertNull(product.getDateRemoved());
+        assertThat(product.getDateAdded()).isNotNull();
+        assertThat(product.getDateModified()).isNotNull();
+        assertThat(product.getDateRemoved()).isNull();
+
+        // test one with "seer" added information (0002-4483)
+        product = _NDC.getByCode("0002-4483").execute().body();
+        assertThat(product.getNdc()).isEqualTo("0002-4483");
+        assertThat(product.getProprietaryName()).isEqualTo("Verzenio");
+        assertThat(product.getSeerInfo().getCategories()).containsExactly(Category.CHEMOTHERAPY);
     }
 
     @Test
@@ -74,18 +76,18 @@ public class NdcTest {
 
         // hold onto total number (including "removed")
         Integer totalIncludingRemoved = Integer.valueOf(response.headers().get("X-Total-Count"));
-        assertTrue(totalIncludingRemoved > 100000);
+        assertThat(totalIncludingRemoved).isGreaterThan(100000);
 
         List<NdcProduct> products = response.body();
-        assertEquals(25, products.size());
+        assertThat(products).hasSize(25);
 
         search.setQuery("daklinza");
         products = _NDC.search(search.paramMap()).execute().body();
-        assertTrue(products.size() > 1);
+        assertThat(products.size()).isGreaterThan(1);
 
         search.setRemovedSince("2016-07-21");
         products = _NDC.search(search.paramMap()).execute().body();
-        assertEquals(0, products.size());
+        assertThat(products).isEmpty();
 
         // test removed
         search = new NdcSearch();
@@ -93,7 +95,24 @@ public class NdcTest {
         response = _NDC.search(search.paramMap()).execute();
         Integer totalExcludingRemoved = Integer.valueOf(response.headers().get("X-Total-Count"));
 
-        assertTrue(totalIncludingRemoved > totalExcludingRemoved);
+        assertThat(totalIncludingRemoved).isGreaterThan(totalExcludingRemoved);
+    }
+
+    @Test
+    public void testNdcSearchByCategory() throws IOException {
+        NdcSearch search = new NdcSearch();
+        search.setCategory(Category.CHEMOTHERAPY);
+
+        Response<List<NdcProduct>> response = _NDC.search(search.paramMap()).execute();
+
+        assertThat(Integer.valueOf(response.headers().get("X-Total-Count"))).isGreaterThan(0);
+
+        List<NdcProduct> products = response.body();
+        assertThat(products).isNotEmpty();
+
+        NdcProduct product = products.get(0);
+        assertThat(product.getSeerInfo()).as("must have 'seerinfo'").isNotNull();
+        assertThat(product.getSeerInfo().getCategories()).contains(Category.CHEMOTHERAPY);
     }
 
 }

@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Properties;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -91,15 +91,13 @@ public final class SeerApi {
 
     /**
      * Return the internal ObjectMapper
-     * @return
+     * @return an Objectmapper
      */
     static ObjectMapper getMapper() {
         ObjectMapper mapper = new ObjectMapper();
 
         // do not write null values
-        mapper.configure(SerializationFeature.WRITE_NULL_MAP_VALUES, false);
-        mapper.configure(SerializationFeature.WRITE_EMPTY_JSON_ARRAYS, false);
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        mapper.setSerializationInclusion(Include.NON_NULL);
 
         mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
         mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);

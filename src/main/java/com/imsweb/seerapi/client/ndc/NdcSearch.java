@@ -6,9 +6,12 @@ package com.imsweb.seerapi.client.ndc;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.imsweb.seerapi.client.ndc.NdcSeerInfo.Category;
+
 public class NdcSearch {
 
     private String _query;
+    private Category _category;
     private Boolean _includeRemoved;
     private String _addedSince;
     private String _modifiedSince;
@@ -23,6 +26,14 @@ public class NdcSearch {
 
     public void setQuery(String query) {
         _query = query;
+    }
+
+    public Category getCategory() {
+        return _category;
+    }
+
+    public void setCategory(Category category) {
+        _category = category;
     }
 
     public Boolean getIncludeRemoved() {
@@ -90,6 +101,8 @@ public class NdcSearch {
 
         if (getQuery() != null)
             params.put("q", getQuery());
+        if (getCategory() != null)
+            params.put("category", getCategory().toString());
         if (getIncludeRemoved() != null)
             params.put("include_removed", getIncludeRemoved() ? "true" : "false");
         if (getAddedSince() != null)

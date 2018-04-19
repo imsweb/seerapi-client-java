@@ -5,7 +5,7 @@ plugins {
     id 'checkstyle'
     id 'findbugs'
     id 'com.bmuschko.nexus' version '2.3.1'
-    id "io.codearte.nexus-staging" version "0.8.0"  // logs into Sonotype OSS and does a "Close" and "Release"
+    id "io.codearte.nexus-staging" version "0.11.0"
     id 'net.ossindex.audit' version '0.1.1'
 }
 
@@ -64,7 +64,6 @@ findbugs {
     excludeFilter = file("config/findbugs/findbugs-exclude.xml")
 }
 
-// Gradle wrapper, this allows to build the project without having to install Gradle!
 task wrapper(type: Wrapper) {
     gradleVersion = '4.7'
 }

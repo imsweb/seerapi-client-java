@@ -53,14 +53,11 @@ jar {
 
 // checkstyle plugin settings
 checkstyle {
-    ignoreFailures = true
     configFile = file("config/checkstyle/checkstyle.xml")
 }
 
 // findbugs plugin settings
 findbugs {
-    ignoreFailures = true
-    effort = 'max'
     excludeFilter = file("config/findbugs/findbugs-exclude.xml")
 }
 

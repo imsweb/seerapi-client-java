@@ -54,6 +54,8 @@ public class NdcProduct {
     private Date _dateRemoved;
     @JsonProperty("seer")
     private NdcSeerInfo _seerInfo;
+    @JsonProperty("score")
+    private Double _score;
 
     public String getNdc() {
         return _ndc;
@@ -133,5 +135,9 @@ public class NdcProduct {
 
     public NdcSeerInfo getSeerInfo() {
         return _seerInfo;
+    }
+
+    public Double getScore() {
+        return _score;
     }
 }

@@ -84,7 +84,7 @@ public class DiseaseTest {
         Disease disease = _DISEASE.getById("latest", "51f6cf58e3e27c3994bd5408").execute().body();
 
         assertNotNull(disease);
-        assertEquals("Acute erythroid leukemia", disease.getName());
+        assertEquals("Pure erythroid leukemia", disease.getName());
         assertEquals(Disease.Type.HEMATO, disease.getType());
         assertEquals("9840/3", disease.getIcdO3Morphology());
         assertTrue(disease.getSamePrimaries().size() > 0);
@@ -121,11 +121,10 @@ public class DiseaseTest {
         assertEquals(1, disease.getAbstractorNote().size());
         assertEquals(2, disease.getTreatment().size());
         assertNull(disease.getGenetics());
-        assertEquals(12, disease.getAlternateName().size());
-        assertEquals("Acute erythremia [OBS]", disease.getAlternateName().get(0).getValue());
-        assertTrue(disease.getDefinition().get(0).getValue().startsWith("Acute erythroid leukemia is characterized by a predominant erythroid"));
-        assertEquals(Collections.singletonList("9840/3"), disease.getIcdO2Morphology());
-        assertEquals(Collections.singletonList("9840/3"), disease.getIcdO1Morphology());
+        assertTrue(disease.getAlternateName().size() > 0);
+        assertEquals("Acute erythremia", disease.getAlternateName().get(0).getValue());
+        assertTrue(disease.getIcdO2Morphology().contains("9840/3"));
+        assertTrue(disease.getIcdO1Morphology().contains("9840/3"));
         assertEquals("C94.0 Acute erythroid leukemia", disease.getIcd10CmCode().get(0).getValue());
         assertEquals("C94.0 Acute erythremia and erythroleukemia", disease.getIcd10Code().get(0));
         assertEquals("207.0 Acute erythremia and erythroleukemia", disease.getIcd9Code().get(0));
@@ -141,9 +140,9 @@ public class DiseaseTest {
         assertEquals(1991, disease.getIcdO1Effective().getEndYear().longValue());
         assertNull(disease.getMissingPrimarySiteMessage());
         assertNull(disease.getGrade());
-        assertNull(disease.getTransformFrom());
+        assertNotNull(disease.getTransformFrom());
         assertNull(disease.getTransformTo());
-        assertNull(disease.getImmunophenotype());
+        assertNotNull(disease.getImmunophenotype());
         assertEquals("Bone marrow biopsy", disease.getDiagnosisMethod().get(0).getValue());
         assertEquals("See abstractor notes", disease.getModuleId().get(0).getValue());
         assertNull(disease.getBiomarkers());
@@ -169,8 +168,8 @@ public class DiseaseTest {
 
         assertNotNull(results);
         assertEquals(25, results.getCount().longValue());
-        assertEquals(3, results.getTotal().longValue());
-        assertEquals(3, results.getResults().size());
+        assertEquals(6, results.getTotal().longValue());
+        assertEquals(6, results.getResults().size());
         assertEquals(Collections.singletonList("basophilic"), results.getTerms());
 
         search.setSiteCategory("BAD_VALUE");
@@ -205,8 +204,8 @@ public class DiseaseTest {
 
         assertNotNull(results);
         assertEquals(25, results.getCount().longValue());
-        assertEquals(4, results.getTotal().longValue());
-        assertEquals(4, results.getResults().size());
+        assertEquals(7, results.getTotal().longValue());
+        assertEquals(7, results.getResults().size());
         assertEquals(Collections.singletonList("basophilic"), results.getTerms());
     }
 

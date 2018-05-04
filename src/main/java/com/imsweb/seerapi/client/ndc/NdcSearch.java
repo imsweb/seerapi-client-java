@@ -12,6 +12,7 @@ public class NdcSearch {
 
     private String _query;
     private Category _category;
+    private Boolean _hasSeerInfo;
     private Boolean _includeRemoved;
     private String _addedSince;
     private String _modifiedSince;
@@ -34,6 +35,14 @@ public class NdcSearch {
 
     public void setCategory(Category category) {
         _category = category;
+    }
+
+    public Boolean getHasSeerInfo() {
+        return _hasSeerInfo;
+    }
+
+    public void setHasSeerInfo(Boolean hasSeerInfo) {
+        _hasSeerInfo = hasSeerInfo;
     }
 
     public Boolean getIncludeRemoved() {
@@ -103,6 +112,8 @@ public class NdcSearch {
             params.put("q", getQuery());
         if (getCategory() != null)
             params.put("category", getCategory().toString());
+        if (getHasSeerInfo() != null)
+            params.put("has_seer_info", getHasSeerInfo().toString());
         if (getIncludeRemoved() != null)
             params.put("include_removed", getIncludeRemoved() ? "true" : "false");
         if (getAddedSince() != null)

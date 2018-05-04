@@ -116,4 +116,29 @@ public class NdcTest {
         assertThat(product.getSeerInfo().getCategories()).contains(Category.CHEMOTHERAPY);
     }
 
+    @Test
+    public void testNdcHasSeerInfo() throws IOException {
+        NdcSearch search = new NdcSearch();
+        search.setIncludeRemoved(true);
+
+        // get count of all drugs
+        Response<List<NdcProduct>> response = _NDC.search(search.paramMap()).execute();
+        Integer totalCount = Integer.parseInt(response.headers().get("X-Total-Count"));
+        assertThat(totalCount).isGreaterThan(0);
+
+        // get count of seer-info drugs
+        search.setHasSeerInfo(true);
+        response = _NDC.search(search.paramMap()).execute();
+        Integer withCount = Integer.parseInt(response.headers().get("X-Total-Count"));
+        assertThat(withCount).isGreaterThan(0).isLessThan(totalCount);
+
+        // get count of non seer-info drugs
+        search.setHasSeerInfo(false);
+        response = _NDC.search(search.paramMap()).execute();
+        Integer withoutCount = Integer.parseInt(response.headers().get("X-Total-Count"));
+        assertThat(withCount).isGreaterThan(0).isLessThan(totalCount);
+
+        assertThat(totalCount).isEqualTo(withCount + withoutCount);
+    }
+
 }

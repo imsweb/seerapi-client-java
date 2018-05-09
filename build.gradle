@@ -10,7 +10,7 @@ plugins {
 }
 
 group = 'com.imsweb'
-version = '3.9'
+version = '3.10-SNAPSHOT'
 description = 'Java client library for SEER*API'
 
 println "Starting build using ${Jvm.current()}"

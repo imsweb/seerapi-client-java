@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.imsweb.seerapi.client.publishable.Publishable;
 
+@SuppressWarnings("WeakerAccess")
 public class Disease extends Publishable {
 
     @JsonProperty("history")
@@ -131,7 +132,7 @@ public class Disease extends Publishable {
         _icdO3Morphology = icdO3Morphology;
     }
 
-    List<SiteRange> getPrimarySite() {
+    public List<SiteRange> getPrimarySite() {
         return _primarySite;
     }
 
@@ -147,7 +148,7 @@ public class Disease extends Publishable {
         _primarySiteText = primarySiteText;
     }
 
-    String getSiteCategory() {
+    public String getSiteCategory() {
         return _siteCategory;
     }
 
@@ -163,7 +164,7 @@ public class Disease extends Publishable {
         _type = type;
     }
 
-    YearRange getValid() {
+    public YearRange getValid() {
         return _valid;
     }
 
@@ -171,7 +172,7 @@ public class Disease extends Publishable {
         _valid = valid;
     }
 
-    List<String> getObsoleteNewCode() {
+    public List<String> getObsoleteNewCode() {
         return _obsoleteNewCode;
     }
 
@@ -179,7 +180,7 @@ public class Disease extends Publishable {
         _obsoleteNewCode = obsoleteNewCode;
     }
 
-    List<YearRange> getReportable() {
+    public List<YearRange> getReportable() {
         return _reportable;
     }
 
@@ -187,7 +188,7 @@ public class Disease extends Publishable {
         _reportable = reportable;
     }
 
-    List<YearRangeString> getAbstractorNote() {
+    public List<YearRangeString> getAbstractorNote() {
         return _abstractorNote;
     }
 
@@ -195,7 +196,7 @@ public class Disease extends Publishable {
         _abstractorNote = abstractorNote;
     }
 
-    List<YearRangeString> getTreatment() {
+    public List<YearRangeString> getTreatment() {
         return _treatment;
     }
 
@@ -203,7 +204,7 @@ public class Disease extends Publishable {
         _treatment = treatment;
     }
 
-    List<YearRangeString> getGenetics() {
+    public List<YearRangeString> getGenetics() {
         return _genetics;
     }
 
@@ -211,7 +212,7 @@ public class Disease extends Publishable {
         _genetics = genetics;
     }
 
-    List<YearRangeString> getAlternateName() {
+    public List<YearRangeString> getAlternateName() {
         return _alternateName;
     }
 
@@ -219,7 +220,7 @@ public class Disease extends Publishable {
         _alternateName = alternateName;
     }
 
-    List<YearRangeString> getDefinition() {
+    public List<YearRangeString> getDefinition() {
         return _definition;
     }
 
@@ -227,7 +228,7 @@ public class Disease extends Publishable {
         _definition = definition;
     }
 
-    List<String> getIcdO2Morphology() {
+    public List<String> getIcdO2Morphology() {
         return _icdO2Morphology;
     }
 
@@ -235,7 +236,7 @@ public class Disease extends Publishable {
         _icdO2Morphology = icdO2Morphology;
     }
 
-    List<String> getIcdO1Morphology() {
+    public List<String> getIcdO1Morphology() {
         return _icdO1Morphology;
     }
 
@@ -243,7 +244,7 @@ public class Disease extends Publishable {
         _icdO1Morphology = icdO1Morphology;
     }
 
-    List<DateRangeString> getIcd10CmCode() {
+    public List<DateRangeString> getIcd10CmCode() {
         return _icd10CmCode;
     }
 
@@ -251,7 +252,7 @@ public class Disease extends Publishable {
         _icd10CmCode = icd10CmCode;
     }
 
-    List<String> getIcd10Code() {
+    public List<String> getIcd10Code() {
         return _icd10Code;
     }
 
@@ -259,7 +260,7 @@ public class Disease extends Publishable {
         _icd10Code = icd10Code;
     }
 
-    List<String> getIcd9Code() {
+    public List<String> getIcd9Code() {
         return _icd9Code;
     }
 
@@ -267,7 +268,7 @@ public class Disease extends Publishable {
         _icd9Code = icd9Code;
     }
 
-    List<YearRangeString> getSigns() {
+    public List<YearRangeString> getSigns() {
         return _signs;
     }
 
@@ -275,7 +276,7 @@ public class Disease extends Publishable {
         _signs = signs;
     }
 
-    List<YearRangeString> getExams() {
+    public List<YearRangeString> getExams() {
         return _exams;
     }
 
@@ -283,7 +284,7 @@ public class Disease extends Publishable {
         _exams = exams;
     }
 
-    List<YearRangeString> getRecurrence() {
+    public List<YearRangeString> getRecurrence() {
         return _recurrence;
     }
 
@@ -291,7 +292,7 @@ public class Disease extends Publishable {
         _recurrence = recurrence;
     }
 
-    List<YearRangeString> getMortality() {
+    public List<YearRangeString> getMortality() {
         return _mortality;
     }
 
@@ -307,7 +308,7 @@ public class Disease extends Publishable {
         _source = source;
     }
 
-    YearRange getIcdO3Effective() {
+    public YearRange getIcdO3Effective() {
         return _icdO3Effective;
     }
 
@@ -315,7 +316,7 @@ public class Disease extends Publishable {
         _icdO3Effective = icdO3Effective;
     }
 
-    YearRange getIcdO2Effective() {
+    public YearRange getIcdO2Effective() {
         return _icdO2Effective;
     }
 
@@ -323,7 +324,7 @@ public class Disease extends Publishable {
         _icdO2Effective = icdO2Effective;
     }
 
-    YearRange getIcdO1Effective() {
+    public YearRange getIcdO1Effective() {
         return _icdO1Effective;
     }
 
@@ -331,7 +332,7 @@ public class Disease extends Publishable {
         _icdO1Effective = icdO1Effective;
     }
 
-    List<YearRangeString> getMissingPrimarySiteMessage() {
+    public List<YearRangeString> getMissingPrimarySiteMessage() {
         return _missingPrimarySiteMessage;
     }
 
@@ -339,7 +340,7 @@ public class Disease extends Publishable {
         _missingPrimarySiteMessage = missingPrimarySiteMessage;
     }
 
-    List<YearRangeInteger> getGrade() {
+    public List<YearRangeInteger> getGrade() {
         return _grade;
     }
 
@@ -347,7 +348,7 @@ public class Disease extends Publishable {
         _grade = grade;
     }
 
-    List<YearRangeString> getTransformTo() {
+    public List<YearRangeString> getTransformTo() {
         return _transformTo;
     }
 
@@ -355,7 +356,7 @@ public class Disease extends Publishable {
         _transformTo = transformTo;
     }
 
-    List<YearRangeString> getTransformFrom() {
+    public List<YearRangeString> getTransformFrom() {
         return _transformFrom;
     }
 
@@ -379,7 +380,7 @@ public class Disease extends Publishable {
         _transformToText = transformToText;
     }
 
-    List<YearRangeString> getImmunophenotype() {
+    public List<YearRangeString> getImmunophenotype() {
         return _immunophenotype;
     }
 
@@ -387,7 +388,7 @@ public class Disease extends Publishable {
         _immunophenotype = immunophenotype;
     }
 
-    List<YearRangeString> getDiagnosisMethod() {
+    public List<YearRangeString> getDiagnosisMethod() {
         return _diagnosisMethod;
     }
 
@@ -395,7 +396,7 @@ public class Disease extends Publishable {
         _diagnosisMethod = diagnosisMethod;
     }
 
-    List<YearRangeString> getModuleId() {
+    public List<YearRangeString> getModuleId() {
         return _moduleId;
     }
 
@@ -403,7 +404,7 @@ public class Disease extends Publishable {
         _moduleId = moduleId;
     }
 
-    List<YearRangeString> getSamePrimaries() {
+    public List<YearRangeString> getSamePrimaries() {
         return _samePrimaries;
     }
 
@@ -419,7 +420,7 @@ public class Disease extends Publishable {
         _samePrimariesText = samePrimariesText;
     }
 
-    List<YearRangeString> getBiomarkers() {
+    public List<YearRangeString> getBiomarkers() {
         return _biomarkers;
     }
 
@@ -427,7 +428,7 @@ public class Disease extends Publishable {
         _biomarkers = biomarkers;
     }
 
-    List<YearRangeString> getTreatmentText() {
+    public List<YearRangeString> getTreatmentText() {
         return _treatmentText;
     }
 

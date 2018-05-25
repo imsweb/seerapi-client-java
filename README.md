@@ -162,6 +162,6 @@ api.staging().schemaById("cs", "02.05.50", "brain").execute().body()
 ```
 
 For a complete description of all available API inputs and outputs, see the SEER*API
-[Documentation](https://api.seer.cancer.gov/api.do) page.
+[Documentation](https://api.seer.cancer.gov/docs) page.
 
 [1]: http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=com.imsweb&a=seerapi-client-java&v=LATEST

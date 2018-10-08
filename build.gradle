@@ -32,7 +32,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-jackson:2.4.0'
 
     testCompile 'junit:junit:4.11'
-    testCompile 'org.assertj:assertj-core:3.9.1'
+    testCompile 'org.assertj:assertj-core:3.11.1'
 }
 
 jar {
@@ -47,6 +47,7 @@ jar {
                 'Built-By': System.getProperty('user.name'),
                 'Built-Date': new Date(),
                 'Built-JDK': System.getProperty('java.version'),
+                'Automatic-Module-Name': 'com.imsweb.seerapi.client'
         )
     }
 }
@@ -62,7 +63,7 @@ findbugs {
 }
 
 wrapper {
-    gradleVersion = '4.9'
+    gradleVersion = '4.10.2'
 }
 
 modifyPom {

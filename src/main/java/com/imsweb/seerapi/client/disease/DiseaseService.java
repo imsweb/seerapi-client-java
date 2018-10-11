@@ -88,7 +88,7 @@ public interface DiseaseService {
      * @param morphology1 ICD O3 Morphology
      * @param morphology2 ICD O3 Morphology
      * @param year1 Year of Diagnosis1
-     * @param year1 Year of Diagnosis2
+     * @param year2 Year of Diagnosis2
      * @return a SamePrimary object
      */
     @GET("disease/{version}/same_primary")

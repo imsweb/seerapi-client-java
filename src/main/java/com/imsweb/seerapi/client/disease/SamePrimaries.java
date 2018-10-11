@@ -8,8 +8,10 @@ public class SamePrimaries {
     protected String _disease1;
     @JsonProperty("disease2")
     protected String _disease2;
-    @JsonProperty("year")
-    protected Integer _year;
+    @JsonProperty("year1")
+    protected Integer _year1;
+    @JsonProperty("year2")
+    protected Integer _year2;
     @JsonProperty("is_same")
     protected Boolean _isSame;
 
@@ -29,16 +31,20 @@ public class SamePrimaries {
         _disease2 = disease2;
     }
 
-    public Integer getYear() {
-        return _year;
+    public Integer getYear1() {
+        return _year1;
     }
 
-    public void setYear(Integer year) {
-        _year = year;
+    public void setYear1(Integer year1) {
+        _year1 = year1;
     }
 
-    public Boolean isSame() {
-        return _isSame;
+    public Integer getYear2() {
+        return _year2;
+    }
+
+    public void setYear2(Integer year2) {
+        _year2 = year2;
     }
 
     public Boolean getIsSame() {

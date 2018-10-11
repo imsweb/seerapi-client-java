@@ -151,11 +151,22 @@ public class DiseaseTest {
 
     @Test
     public void testDiseaseSamePrimary() throws IOException {
-        SamePrimaries same = _DISEASE.samePrimaries("latest", "9870/3", "9872/3", "2010").execute().body();
+        SamePrimaries same = _DISEASE.samePrimaries("latest", "9870/3", "9872/3", "2010", "2010").execute().body();
 
         assertNotNull(same);
-        assertEquals(false, same.isSame());
-        assertEquals(2010, same.getYear().longValue());
+        assertEquals(false, same.getIsSame());
+        assertEquals(2010, same.getYear1().longValue());
+        assertEquals(2010, same.getYear2().longValue());
+        assertEquals("9870/3", same.getDisease1());
+        assertEquals("9872/3", same.getDisease2());
+
+        // try same with different years
+        same = _DISEASE.samePrimaries("latest", "9870/3", "9872/3", "2010", "2015").execute().body();
+
+        assertNotNull(same);
+        assertEquals(false, same.getIsSame());
+        assertEquals(2010, same.getYear1().longValue());
+        assertEquals(2015, same.getYear2().longValue());
         assertEquals("9870/3", same.getDisease1());
         assertEquals("9872/3", same.getDisease2());
     }

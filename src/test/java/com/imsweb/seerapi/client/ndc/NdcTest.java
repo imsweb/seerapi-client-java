@@ -16,6 +16,7 @@ import com.imsweb.seerapi.client.ndc.NdcSeerInfo.Category;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings("ConstantConditions")
 public class NdcTest {
 
     private static NdcService _NDC;
@@ -66,6 +67,13 @@ public class NdcTest {
         assertThat(product.getProprietaryName()).isEqualTo("Verzenio");
         assertThat(product.getSeerInfo()).as("must have 'seerinfo'").isNotNull();
         assertThat(product.getSeerInfo().getCategories()).containsExactly(Category.CHEMOTHERAPY);
+        assertThat(product.getSeerInfo().getMajorDrugClass()).startsWith("Cyclin dependent");
+        assertThat(product.getSeerInfo().getMinorDrugClass()).isEqualTo("CDK 4/6");
+
+        // the subcategory is being removed but still exists in production; the key should be ignored
+        product = _NDC.getByCode("0006-0072").execute().body();
+        assertThat(product.getSeerInfo()).as("must have 'seerinfo'").isNotNull();
+        assertThat(product.getSeerInfo().getCategories()).containsExactly(Category.ANCILLARY);
     }
 
     @Test

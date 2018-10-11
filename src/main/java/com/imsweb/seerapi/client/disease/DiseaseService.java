@@ -87,11 +87,12 @@ public interface DiseaseService {
      * @param version Disease version
      * @param morphology1 ICD O3 Morphology
      * @param morphology2 ICD O3 Morphology
-     * @param year Year of Diagnosis
+     * @param year1 Year of Diagnosis1
+     * @param year1 Year of Diagnosis2
      * @return a SamePrimary object
      */
     @GET("disease/{version}/same_primary")
-    Call<SamePrimaries> samePrimaries(@Path("version") String version, @Query("d1") String morphology1, @Query("d2") String morphology2, @Query("year") String year);
+    Call<SamePrimaries> samePrimaries(@Path("version") String version, @Query("d1") String morphology1, @Query("d2") String morphology2, @Query("year1") String year1, @Query("year2") String year2);
 
     /**
      * Returns the reportable year range of the supplied disease.

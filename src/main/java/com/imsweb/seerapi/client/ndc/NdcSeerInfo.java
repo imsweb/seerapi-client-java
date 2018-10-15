@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"seer_rx_id", "categories", "subcategory", "major_drug_class", "minor_drug_class", "orphan_drug", "exclusive_oncologic_agent", "date_modified"})
+@JsonPropertyOrder({"seer_rx_id", "categories", "major_drug_class", "minor_drug_class", "orphan_drug", "exclusive_oncologic_agent", "date_modified"})
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NdcSeerInfo {
 

@@ -49,6 +49,10 @@ public class NdcSeerInfo {
         return _orphanDrug;
     }
 
+    public Boolean getExclusiveAgent() {
+        return _exclusiveAgent;
+    }
+
     public Date getDateModified() {
         return _dateModified;
     }

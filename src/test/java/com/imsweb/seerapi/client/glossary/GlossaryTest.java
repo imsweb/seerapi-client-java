@@ -15,6 +15,10 @@ import org.junit.Test;
 import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.publishable.PublishableSearch;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 public class GlossaryTest {
 
     private static GlossaryService _GLOSSARY;
@@ -33,12 +37,12 @@ public class GlossaryTest {
     public void testGlossaryVersions() throws IOException {
         List<GlossaryVersion> versions = _GLOSSARY.versions().execute().body();
 
-        Assert.assertTrue(versions.size() > 0);
-        for (GlossaryVersion version : versions) {
-            Assert.assertTrue(version.getName().length() > 0);
-            Assert.assertTrue(version.getType().length() > 0);
-            Assert.assertNotNull(version.getLastModified());
-        }
+        assertEquals(1, versions.size());
+        GlossaryVersion version = versions.get(0);
+        assertEquals("latest", version.getName());
+        assertNull(version.getType());  // type not returned when no permisisons
+        assertNotNull(version.getFirstPublished());
+        assertNotNull(version.getCount());
     }
 
     @Test

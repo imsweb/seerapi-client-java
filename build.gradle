@@ -3,10 +3,9 @@ import org.gradle.internal.jvm.Jvm
 plugins {
     id 'java'
     id 'checkstyle'
-    id 'findbugs'
+    id "com.github.spotbugs" version "1.6.5"
     id 'com.bmuschko.nexus' version '2.3.1'
-    id "io.codearte.nexus-staging" version "0.11.0"
-    id 'net.ossindex.audit' version '0.1.1'
+    id "io.codearte.nexus-staging" version "0.20.0"
 }
 
 group = 'com.imsweb'
@@ -52,18 +51,16 @@ jar {
     }
 }
 
-// checkstyle plugin settings
 checkstyle {
     configFile = file("config/checkstyle/checkstyle.xml")
 }
 
-// findbugs plugin settings
-findbugs {
-    excludeFilter = file("config/findbugs/findbugs-exclude.xml")
+spotbugs {
+    toolVersion = '3.1.8'
+    excludeFilter = file('config/spotbugs/spotbugs-exclude.xml')
 }
-
 wrapper {
-    gradleVersion = '4.10.2'
+    gradleVersion = '5.1.1'
     distributionType = Wrapper.DistributionType.ALL
 }
 

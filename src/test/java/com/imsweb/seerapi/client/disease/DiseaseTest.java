@@ -36,17 +36,12 @@ public class DiseaseTest {
     public void testDiseaseVersions() throws IOException {
         List<DiseaseVersion> versions = _DISEASE.versions().execute().body();
 
-        assertTrue(versions.size() > 0);
-        for (DiseaseVersion version : versions) {
-            assertTrue(version.getName().length() > 0);
-            assertTrue(version.getType().length() > 0);
-            assertNotNull(version.getLastModified());
-            if (version.getName().equals("latest")) {
-                assertNotNull(version.getType());
-                assertNotNull(version.getFirstPublished());
-                assertNotNull(version.getCount());
-            }
-        }
+        assertEquals(1, versions.size());
+        DiseaseVersion version = versions.get(0);
+        assertEquals("latest", version.getName());
+        assertNull(version.getType());  // type not returned when no permisisons
+        assertNotNull(version.getFirstPublished());
+        assertNotNull(version.getCount());
     }
 
     @Test

@@ -23,7 +23,7 @@ public interface MphService {
     /**
      * Uses multiple primary rules to compare two diseases
      * @param pair a pair of diseases
-     * @param matchMode
+     * @param matchMode match mode
      * @return a result indicating whether the two diseases are the same primary
      */
     @POST("mph")

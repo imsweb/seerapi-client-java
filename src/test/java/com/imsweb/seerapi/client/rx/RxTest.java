@@ -33,12 +33,12 @@ public class RxTest {
     public void testRxVersions() throws IOException {
         List<RxVersion> versions = _RX.versions().execute().body();
 
-        assertTrue(versions.size() > 0);
-        for (RxVersion version : versions) {
-            assertTrue(version.getName().length() > 0);
-            assertTrue(version.getType().length() > 0);
-            assertNotNull(version.getLastModified());
-        }
+        assertEquals(1, versions.size());
+        RxVersion version = versions.get(0);
+        assertEquals("latest", version.getName());
+        assertNull(version.getType());  // type not returned when no permisisons
+        assertNotNull(version.getFirstPublished());
+        assertNotNull(version.getCount());
     }
 
     @Test

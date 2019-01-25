@@ -27,8 +27,8 @@ repositories {
 }
 
 dependencies {
-    compile 'com.squareup.retrofit2:retrofit:2.4.0'
-    compile 'com.squareup.retrofit2:converter-jackson:2.4.0'
+    compile 'com.squareup.retrofit2:retrofit:2.5.0'
+    compile 'com.squareup.retrofit2:converter-jackson:2.5.0'
 
     testCompile 'junit:junit:4.11'
     testCompile 'org.assertj:assertj-core:3.11.1'

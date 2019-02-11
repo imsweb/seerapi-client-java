@@ -61,7 +61,7 @@ checkstyle {
 }
 
 spotbugs {
-    toolVersion = '3.1.8'
+    toolVersion = '3.1.11'
     excludeFilter = file('config/spotbugs/spotbugs-exclude.xml')
 }
 wrapper {

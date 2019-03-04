@@ -6,13 +6,17 @@ package com.imsweb.seerapi.client.naaccr;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+@JsonPropertyOrder({"item", "name", "section", "start_col", "end_col", "alignment", "padding_char", "default_value", "documentation", "subfield"})
 public class NaaccrField {
 
     @JsonProperty("item")
     protected Integer _item;
     @JsonProperty("name")
     protected String _name;
+    @JsonProperty("section")
+    protected String _section;
     @JsonProperty("start_col")
     protected Integer _start;
     @JsonProperty("end_col")
@@ -21,6 +25,8 @@ public class NaaccrField {
     protected String _align;
     @JsonProperty("padding_char")
     protected String _padChar;
+    @JsonProperty("default_value")
+    protected String _defaultValue;
     @JsonProperty("documentation")
     protected String _documentation;
     @JsonProperty("subfield")
@@ -40,6 +46,14 @@ public class NaaccrField {
 
     public void setName(String name) {
         _name = name;
+    }
+
+    public String getSection() {
+        return _section;
+    }
+
+    public void setSection(String section) {
+        _section = section;
     }
 
     public Integer getStart() {
@@ -72,6 +86,14 @@ public class NaaccrField {
 
     public void setPadChar(String padChar) {
         _padChar = padChar;
+    }
+
+    public String getDefaultValue() {
+        return _defaultValue;
+    }
+
+    public void setDefaultValue(String defaultValue) {
+        _defaultValue = defaultValue;
     }
 
     public String getDocumentation() {

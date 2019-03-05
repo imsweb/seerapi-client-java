@@ -13,7 +13,6 @@ import com.imsweb.seerapi.client.SeerApi;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 public class NaaccrTest {
 
     private static NaaccrService _NAACCR;
@@ -41,7 +40,7 @@ public class NaaccrTest {
     public void testNaaccrFieldNames() throws IOException {
         List<NaaccrFieldName> names = _NAACCR.fieldNames("latest").execute().body();
 
-        assertThat(names).isNotEmpty();
+        assertThat(names).isNotNull();
         for (NaaccrFieldName name : names) {
             assertThat(name.getItem()).isGreaterThan(0);
             assertThat(name.getName()).isNotEmpty();
@@ -74,6 +73,7 @@ public class NaaccrTest {
 
         // test one with default value
         NaaccrField recordID = _NAACCR.field("18", 10).execute().body();
+        assertThat(recordID).isNotNull();
         assertThat(recordID.getName()).isEqualTo("Record Type");
         assertThat(recordID.getSection()).isEqualTo("Record ID");
         assertThat(recordID.getDefaultValue()).isEqualTo("A");

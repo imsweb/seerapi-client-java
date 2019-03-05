@@ -54,6 +54,7 @@ public class NaaccrTest {
 
         assertThat(name).isNotNull();
         assertThat(name.getName()).isEqualTo("Morph--Type&Behav ICD-O-3");
+        assertThat(name.getSection()).isEqualTo("Cancer Identification");
         assertThat(name.getAlign()).isEqualTo("LEFT");
         assertThat(name.getPadChar()).isEqualTo(" ");
         assertThat(name.getDocumentation()).startsWith("<table class=\"naaccr-summary-table naaccr-borders\">");
@@ -70,6 +71,12 @@ public class NaaccrTest {
         assertThat(sub.getEnd()).isEqualTo(553);
         assertThat(sub.getAlign()).isEqualTo("LEFT");
         assertThat(sub.getPadChar()).isEqualTo(" ");
+
+        // test one with default value
+        NaaccrField recordID = _NAACCR.field("18", 10).execute().body();
+        assertThat(recordID.getName()).isEqualTo("Record Type");
+        assertThat(recordID.getSection()).isEqualTo("Record ID");
+        assertThat(recordID.getDefaultValue()).isEqualTo("A");
     }
 
 }

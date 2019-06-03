@@ -150,6 +150,10 @@ The site-specific surgery tables available on the SEER website.
 api.surgery().tables().execute().body()
 ```
 
+### HCPCS
+
+Healthcare Common Procedure Coding Systems (HCPCS) nomenclatures. The information is maintained through [CanMED](https://seer.cancer.gov/oncologytoolbox).
+
 ### Staging
 
 Cancer staging algorithms.  Currently supports Collaborative Stage which is a unified data collection system designed to provide a

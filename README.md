@@ -154,6 +154,10 @@ api.surgery().tables().execute().body()
 
 Healthcare Common Procedure Coding Systems (HCPCS) nomenclatures. The information is maintained through [CanMED](https://seer.cancer.gov/oncologytoolbox).
 
+```java
+api.hcpcs().getProcedure("S0087").execute().body();
+```
+
 ### Staging
 
 Cancer staging algorithms.  Currently supports Collaborative Stage which is a unified data collection system designed to provide a
@@ -161,7 +165,7 @@ common data set to meet the needs of all three staging systems (TNM, SEER EOD, a
 improve data quality by standardizing rules for timing, clinical and pathologic assessments, and compatibility across all of the
 systems for all cancer sites.
 
-```
+```java
 api.staging().schemaById("cs", "02.05.50", "brain").execute().body()
 ```
 

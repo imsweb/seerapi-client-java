@@ -161,5 +161,8 @@
         </module>
         <module name="HiddenField" />
     </module>
+    <module name="SuppressionFilter">
+        <property name="file" value="${suppressionFile}" default="config/checkstyle/suppressions.xml"/>
+    </module>
     <module name="Translation" />
 </module>

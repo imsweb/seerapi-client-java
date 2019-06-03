@@ -23,6 +23,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import com.imsweb.seerapi.client.disease.DiseaseService;
 import com.imsweb.seerapi.client.glossary.GlossaryService;
+import com.imsweb.seerapi.client.hcpcs.HcpcsService;
 import com.imsweb.seerapi.client.mph.MphService;
 import com.imsweb.seerapi.client.naaccr.NaaccrService;
 import com.imsweb.seerapi.client.ndc.NdcService;
@@ -45,6 +46,7 @@ public final class SeerApi {
     private SiteRecodeService _siteRecodeService;
     private StagingService _stagingService;
     private SurgeryService _surgeryService;
+    private HcpcsService _hcpcsService;
 
     /**
      * Creates a client API root object
@@ -87,6 +89,7 @@ public final class SeerApi {
         _siteRecodeService = retrofit.create(SiteRecodeService.class);
         _stagingService = retrofit.create(StagingService.class);
         _surgeryService = retrofit.create(SurgeryService.class);
+        _hcpcsService = retrofit.create(HcpcsService.class);
     }
 
     /**
@@ -180,6 +183,14 @@ public final class SeerApi {
      */
     public SurgeryService surgery() {
         return _surgeryService;
+    }
+
+    /**
+     * Return the HCPCS service
+     * @return an interface to all the HCPCS APIs
+     */
+    public HcpcsService hcpcs() {
+        return _hcpcsService;
     }
 
     /**

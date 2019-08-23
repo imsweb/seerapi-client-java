@@ -42,7 +42,7 @@ public class MphTest {
         input2.setDateOfDiagnosisYear("2016");
         input2.setLaterality("1");
 
-        MphOutput result = _MPH.mph(new MphInputPair(input1, input2)).execute().body();
+        _MPH.mph(new MphInputPair(input1, input2)).execute().body();
     }
 
     @Test

@@ -32,7 +32,6 @@ repositories {
 
 dependencies {
     errorprone("com.google.errorprone:error_prone_core:2.3.3")
-    errorproneJavac("com.google.errorprone:javac:2.3.3")
 
     compile 'com.squareup.retrofit2:retrofit:2.6.1'
     compile 'com.squareup.retrofit2:converter-jackson:2.6.1'

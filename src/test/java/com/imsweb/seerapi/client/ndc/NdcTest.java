@@ -67,7 +67,7 @@ public class NdcTest {
         assertThat(product.getProprietaryName()).isEqualTo("Verzenio");
         assertThat(product.getSeerInfo()).as("must have 'seerinfo'").isNotNull();
         assertThat(product.getSeerInfo().getCategories()).containsExactly(Category.CHEMOTHERAPY);
-        assertThat(product.getSeerInfo().getMajorDrugClass()).startsWith("Cyclin dependent");
+        assertThat(product.getSeerInfo().getMajorDrugClass()).contains("Cyclin Dependent");
         assertThat(product.getSeerInfo().getMinorDrugClass()).isEqualTo("CDK 4/6");
 
         // the subcategory is being removed but still exists in production; the key should be ignored

@@ -10,13 +10,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
-import com.imsweb.seerapi.client.shared.Version;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SurgeryTest {
 
@@ -28,42 +23,32 @@ public class SurgeryTest {
     }
 
     @Test
-    public void testSiteSpecificSurgeryVersions() throws IOException {
-        List<Version> versions = _SURGERY.versions().execute().body();
-
-        assertTrue(versions.size() > 0);
-        for (Version version : versions) {
-            assertTrue(version.getVersion().length() > 0);
-            assertTrue(version.getCount() > 0);
-        }
-    }
-
-    @Test
     public void testSiteSpecificSurgeryTables() throws IOException {
         List<String> titles = _SURGERY.tables("2014").execute().body();
 
-        assertTrue(titles.size() > 0);
-        assertTrue(titles.contains("Oral Cavity"));
+        assertThat(titles).isNotEmpty();
+        assertThat(titles).containsAnyOf("Oral Cavity");
     }
 
     @Test
     public void testSiteSpecificSurgeryTable() throws IOException {
         SurgeryTable table = _SURGERY.table("2014", "Oral Cavity", null, null).execute().body();
 
-        assertNotNull(table);
-        assertEquals("Oral Cavity", table.getTitle());
-        assertNotNull(table.getSiteInclusions());
-        assertNotNull(table.getHistExclusions());
-        assertNull(table.getHistInclusions());
-        assertNotNull(table.getPreNote());
-        assertNull(table.getPostNote());
+        assertThat(table).isNotNull();
+        assertThat(table.getTitle()).isEqualTo("Oral Cavity");
+        assertThat(table.getSiteInclusions()).isNotNull();
+        assertThat(table.getHistExclusions()).isNotNull();
+        assertThat(table.getHistInclusions()).isNull();
+        assertThat(table.getPreNote()).isNotNull();
+        assertThat(table.getPostNote()).isNull();
+
         SurgeryRow row = table.getRows().get(0);
-        assertEquals("00", row.getCode());
-        assertNotNull(row.getDescription());
-        assertEquals(Integer.valueOf(0), row.getLevel());
-        assertFalse(row.getLineBreak());
+        assertThat(row.getCode()).isEqualTo("00");
+        assertThat(row.getDescription()).isNotNull();
+        assertThat(row.getLevel()).isEqualTo(Integer.valueOf(0));
+        assertThat(row.getLineBreak()).isFalse();
 
         table = _SURGERY.table("2014", null, "C001", "8000").execute().body();
-        assertEquals("Oral Cavity", table.getTitle());
+        assertThat(table.getTitle()).isEqualTo("Oral Cavity");
     }
 }

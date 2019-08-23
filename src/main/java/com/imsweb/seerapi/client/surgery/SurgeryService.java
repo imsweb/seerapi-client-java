@@ -10,34 +10,25 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-import com.imsweb.seerapi.client.shared.Version;
-
 public interface SurgeryService {
 
     /**
-     * Return a collection of Version objects which describe the available versions
-     * @return a list of the available site-specific surgery versions and information about each of them
-     */
-    @GET("surgery/versions")
-    Call<List<Version>> versions();
-
-    /**
-     * Return a list of all the site-specific surgery table titles from a specific version
-     * @param version version
+     * Return a list of all the site-specific surgery table titles from a specific year
+     * @param year year
      * @return a list of site-specific surgery table titles
      */
-    @GET("surgery/{version}/tables")
-    Call<List<String>> tables(@Path("version") String version);
+    @GET("surgery/{year}/tables")
+    Call<List<String>> tables(@Path("year") String year);
 
     /**
-     * Return a specific site-specific surgary table from a specific version
-     * @param version version
+     * Return a specific site-specific surgary table from a specific year
+     * @param year year
      * @param title site title (optional if the site/histology is provided)
      * @param site primary site (optional if the title is provided)
      * @param histology histology (optional if the title is provided)
      * @return a site-specific surgery table
      */
-    @GET("surgery/{version}/table")
-    Call<SurgeryTable> table(@Path("version") String version, @Query("title") String title, @Query("site") String site, @Query("hist") String histology);
+    @GET("surgery/{year}/table")
+    Call<SurgeryTable> table(@Path("year") String year, @Query("title") String title, @Query("site") String site, @Query("hist") String histology);
 
 }

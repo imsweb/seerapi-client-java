@@ -60,7 +60,7 @@ public class TnmStagingData extends StagingData {
         SSF24("ssf24"),
         SSF25("ssf25");
 
-        private String _name;
+        private final String _name;
 
         TnmInput(String name) {
             _name = name;
@@ -85,7 +85,7 @@ public class TnmStagingData extends StagingData {
         SOURCE_M("source_m"),
         COMBINED_M("combined_m");
 
-        private String _name;
+        private final String _name;
 
         TnmOutput(String name) {
             _name = name;

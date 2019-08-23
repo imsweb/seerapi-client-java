@@ -137,8 +137,10 @@ public class SchemaLookup {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof SchemaLookup))
+            return false;
 
         SchemaLookup lookup = (SchemaLookup)o;
 

@@ -119,7 +119,7 @@ public class EodStagingData extends StagingData {
         SYSTEMIC_SURG_SEQ("systemic_surg_seq"),
         SS_2018("ss2018");
 
-        private String _name;
+        private final String _name;
 
         EodInput(String name) {
             _name = name;
@@ -142,7 +142,7 @@ public class EodStagingData extends StagingData {
         EOD_2018_STAGE_GROUP("eod_2018_stage_group"),
         SS_2018_DERIVED("ss2018_derived");
 
-        private String _name;
+        private final String _name;
 
         EodOutput(String name) {
             _name = name;

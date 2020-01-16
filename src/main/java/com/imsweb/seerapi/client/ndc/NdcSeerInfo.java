@@ -15,46 +15,46 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class NdcSeerInfo {
 
     @JsonProperty("seer_rx_id")
-    private String _seerRxId;
+    private String seerRxId;
     @JsonProperty("categories")
-    private List<Category> _categories;
+    private List<Category> categories;
     @JsonProperty("major_drug_class")
-    private String _majorDrugClass;
+    private String majorDrugClass;
     @JsonProperty("minor_drug_class")
-    private String _minorDrugClass;
+    private String minorDrugClass;
     @JsonProperty("orphan_drug")
-    private Boolean _orphanDrug;
+    private Boolean orphanDrug;
     @JsonProperty("exclusive_oncologic_agent")
-    private Boolean _exclusiveAgent;
+    private Boolean exclusiveAgent;
     @JsonProperty("date_modified")
-    private Date _dateModified;
+    private Date dateModified;
 
     public String getSeerRxId() {
-        return _seerRxId;
+        return seerRxId;
     }
 
     public List<Category> getCategories() {
-        return _categories;
+        return categories;
     }
 
     public String getMajorDrugClass() {
-        return _majorDrugClass;
+        return majorDrugClass;
     }
 
     public String getMinorDrugClass() {
-        return _minorDrugClass;
+        return minorDrugClass;
     }
 
     public Boolean getOrphanDrug() {
-        return _orphanDrug;
+        return orphanDrug;
     }
 
     public Boolean getExclusiveAgent() {
-        return _exclusiveAgent;
+        return exclusiveAgent;
     }
 
     public Date getDateModified() {
-        return _dateModified;
+        return dateModified;
     }
 
     // drug categories

@@ -36,16 +36,16 @@ repositories {
 }
 
 dependencies {
-    compile 'com.squareup.retrofit2:retrofit:2.7.1'
-    compile 'com.squareup.retrofit2:converter-jackson:2.7.1'
+    api 'com.squareup.retrofit2:retrofit:2.7.1'
+    api 'com.squareup.retrofit2:converter-jackson:2.7.1'
 
-    testCompile 'junit:junit:4.13'
-    testCompile 'org.assertj:assertj-core:3.14.0'
+    testImplementation 'junit:junit:4.13'
+    testImplementation 'org.assertj:assertj-core:3.14.0'
 }
 
 jar {
     // specify the archive name; otherwise the version is appended to the war file
-    archiveName = 'seerapi-java.jar'
+    archiveFileName = 'seerapi-java.jar'
 
     manifest {
         attributes('Implementation-Title': 'SEER*API Java Client',

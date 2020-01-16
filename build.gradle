@@ -3,12 +3,12 @@ import org.gradle.internal.jvm.Jvm
 plugins {
     id 'java-library'
     id 'checkstyle'
+    id "com.github.spotbugs" version "3.0.0"
     id 'maven-publish'
     id 'signing'
-    id "com.github.spotbugs" version "3.0.0"
+    id "io.codearte.nexus-staging" version "0.21.2"
     id 'com.adarshr.test-logger' version '2.0.0'
     id "com.github.ben-manes.versions" version "0.27.0"
-    id "io.codearte.nexus-staging" version "0.21.2"
 }
 
 group = 'com.imsweb'

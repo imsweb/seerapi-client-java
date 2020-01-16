@@ -14,90 +14,90 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class Hcpcs {
 
     @JsonProperty("hcpcs_code")
-    private String _hcpcsCode;
+    private String hcpcsCode;
     @JsonProperty("generic_name")
-    private String _genericName;
+    private String genericName;
     @JsonProperty("brand_names")
-    private List<String> _brandNames;
+    private List<String> brandNames;
     @JsonProperty("strength")
-    private String _strength;
+    private String strength;
     @JsonProperty("fda_approval_year")
-    private String _fdaApprovalYear;
+    private String fdaApprovalYear;
     @JsonProperty("fda_discontinuation_year")
-    private String _fdaDiscontinuationYear;
+    private String fdaDiscontinuationYear;
     @JsonProperty("cms_approval_date")
-    private String _cmsApprovalDate;
+    private String cmsApprovalDate;
     @JsonProperty("cms_discontinuation_date")
-    private String _cmsDiscontinuationDate;
+    private String cmsDiscontinuationDate;
     @JsonProperty("categories")
-    private List<Category> _categories;
+    private List<Category> categories;
     @JsonProperty("major_drug_class")
-    private String _majorDrugClass;
+    private String majorDrugClass;
     @JsonProperty("minor_drug_class")
-    private String _minorDrugClass;
+    private String minorDrugClass;
     @JsonProperty("oral")
-    private Boolean _oral;
+    private Boolean oral;
     @JsonProperty("date_added")
-    private Date _dateAdded;
+    private Date dateAdded;
     @JsonProperty("date_modified")
-    private Date _dateModified;
+    private Date dateModified;
     @JsonProperty("score")
     private Double score;
 
     public String getHcpcsCode() {
-        return _hcpcsCode;
+        return hcpcsCode;
     }
 
     public String getGenericName() {
-        return _genericName;
+        return genericName;
     }
 
     public List<String> getBrandNames() {
-        return _brandNames;
+        return brandNames;
     }
 
     public String getStrength() {
-        return _strength;
+        return strength;
     }
 
     public String getFdaApprovalYear() {
-        return _fdaApprovalYear;
+        return fdaApprovalYear;
     }
 
     public String getFdaDiscontinuationYear() {
-        return _fdaDiscontinuationYear;
+        return fdaDiscontinuationYear;
     }
 
     public String getCmsApprovalDate() {
-        return _cmsApprovalDate;
+        return cmsApprovalDate;
     }
 
     public String getCmsDiscontinuationDate() {
-        return _cmsDiscontinuationDate;
+        return cmsDiscontinuationDate;
     }
 
     public List<Category> getCategories() {
-        return _categories;
+        return categories;
     }
 
     public String getMajorDrugClass() {
-        return _majorDrugClass;
+        return majorDrugClass;
     }
 
     public String getMinorDrugClass() {
-        return _minorDrugClass;
+        return minorDrugClass;
     }
 
     public Boolean getOral() {
-        return _oral;
+        return oral;
     }
 
     public Date getDateAdded() {
-        return _dateAdded;
+        return dateAdded;
     }
 
     public Date getDateModified() {
-        return _dateModified;
+        return dateModified;
     }
 
     public Double getScore() {

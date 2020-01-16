@@ -10,28 +10,28 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class NdcPackage {
 
     @JsonProperty("package")
-    private String _code;
+    private String code;
     @JsonProperty("description")
-    private String _description;
+    private String description;
     @JsonProperty("start_marketing_date")
-    private String _startMarketingDate;
+    private String startMarketingDate;
     @JsonProperty("end_marketing_date")
-    private String _endMarketingDate;
+    private String endMarketingDate;
 
     public String getCode() {
-        return _code;
+        return code;
     }
 
     public String getDescription() {
-        return _description;
+        return description;
     }
 
     public String getStartMarketingDate() {
-        return _startMarketingDate;
+        return startMarketingDate;
     }
 
     public String getEndMarketingDate() {
-        return _endMarketingDate;
+        return endMarketingDate;
     }
 
 }

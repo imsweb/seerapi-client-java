@@ -15,129 +15,129 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class NdcProduct {
 
     @JsonProperty("ndc")
-    private String _ndc;
+    private String ndc;
     @JsonProperty("type_name")
-    private String _typeName;
+    private String typeName;
     @JsonProperty("proprietary_name")
-    private String _proprietaryName;
+    private String proprietaryName;
     @JsonProperty("proprietary_name_suffix")
-    private String _proprietaryNameSuffix;
+    private String proprietaryNameSuffix;
     @JsonProperty("non_proprietary_name")
-    private List<String> _nonProprietaryName;
+    private List<String> nonProprietaryName;
     @JsonProperty("dosage_form_name")
-    private String _dosageFormName;
+    private String dosageFormName;
     @JsonProperty("route_name")
-    private List<String> _routeName;
+    private List<String> routeName;
     @JsonProperty("start_marketing_date")
-    private String _startMarketingDate;
+    private String startMarketingDate;
     @JsonProperty("end_marketing_date")
-    private String _endMarketingDate;
+    private String endMarketingDate;
     @JsonProperty("marketing_category_name")
-    private String _marketingCategoryName;
+    private String marketingCategoryName;
     @JsonProperty("application_number")
-    private String _applicationNumber;
+    private String applicationNumber;
     @JsonProperty("labeler_name")
-    private String _labelerName;
+    private String labelerName;
     @JsonProperty("dea_schedule")
-    private String _deaSchedule;
+    private String deaSchedule;
     @JsonProperty("substances")
-    private List<NdcSubstance> _substances;
+    private List<NdcSubstance> substances;
     @JsonProperty("pharm_class")
-    private List<String> _pharmClass;
+    private List<String> pharmClass;
     @JsonProperty("packages")
-    private List<NdcPackage> _packages;
+    private List<NdcPackage> packages;
     @JsonProperty("date_added")
-    private Date _dateAdded;
+    private Date dateAdded;
     @JsonProperty("date_modified")
-    private Date _dateModified;
+    private Date dateModified;
     @JsonProperty("date_removed")
-    private Date _dateRemoved;
+    private Date dateRemoved;
     @JsonProperty("seer")
-    private NdcSeerInfo _seerInfo;
+    private NdcSeerInfo seerInfo;
     @JsonProperty("score")
-    private Double _score;
+    private Double score;
 
     public String getNdc() {
-        return _ndc;
+        return ndc;
     }
 
     public String getTypeName() {
-        return _typeName;
+        return typeName;
     }
 
     public String getProprietaryName() {
-        return _proprietaryName;
+        return proprietaryName;
     }
 
     public String getProprietaryNameSuffix() {
-        return _proprietaryNameSuffix;
+        return proprietaryNameSuffix;
     }
 
     public List<String> getNonProprietaryName() {
-        return _nonProprietaryName;
+        return nonProprietaryName;
     }
 
     public String getDosageFormName() {
-        return _dosageFormName;
+        return dosageFormName;
     }
 
     public List<String> getRouteName() {
-        return _routeName;
+        return routeName;
     }
 
     public String getStartMarketingDate() {
-        return _startMarketingDate;
+        return startMarketingDate;
     }
 
     public String getEndMarketingDate() {
-        return _endMarketingDate;
+        return endMarketingDate;
     }
 
     public String getMarketingCategoryName() {
-        return _marketingCategoryName;
+        return marketingCategoryName;
     }
 
     public String getApplicationNumber() {
-        return _applicationNumber;
+        return applicationNumber;
     }
 
     public String getLabelerName() {
-        return _labelerName;
+        return labelerName;
     }
 
     public String getDeaSchedule() {
-        return _deaSchedule;
+        return deaSchedule;
     }
 
     public List<NdcSubstance> getSubstances() {
-        return _substances;
+        return substances;
     }
 
     public List<String> getPharmClass() {
-        return _pharmClass;
+        return pharmClass;
     }
 
     public List<NdcPackage> getPackages() {
-        return _packages;
+        return packages;
     }
 
     public Date getDateAdded() {
-        return _dateAdded;
+        return dateAdded;
     }
 
     public Date getDateModified() {
-        return _dateModified;
+        return dateModified;
     }
 
     public Date getDateRemoved() {
-        return _dateRemoved;
+        return dateRemoved;
     }
 
     public NdcSeerInfo getSeerInfo() {
-        return _seerInfo;
+        return seerInfo;
     }
 
     public Double getScore() {
-        return _score;
+        return score;
     }
 }

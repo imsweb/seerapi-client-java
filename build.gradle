@@ -65,7 +65,7 @@ testlogger {
 }
 
 checkstyle {
-    toolVersion '8.23'
+    toolVersion '8.28'
     configFile = file("config/checkstyle/checkstyle.xml")
 }
 

@@ -36,8 +36,8 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew publish closeAndReleaseRepository
         env:
-          ORG_GRADLE_PROJECT_NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-          ORG_GRADLE_PROJECT_NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-          ORG_GRADLE_PROJECT_SEER_GPG_KEYID: ${{ secrets.SEER_GPG_KEYID }}
-          ORG_GRADLE_PROJECT_SEER_GPG_PASSWORD: ${{ secrets.SEER_GPG_PASSWORD }}
-          ORG_GRADLE_PROJECT_SEER_GPG_SECRET_KEYRING_FILE: ${{ secrets.SEER_GPG_SECRET_KEYRING_FILE }}
+          ORG_GRADLE_PROJECT_nexusUsername: ${{ secrets.NEXUS_USERNAME }}
+          ORG_GRADLE_PROJECT_nexusPassword: ${{ secrets.NEXUS_PASSWORD }}
+          ORG_GRADLE_PROJECT_signing.keyId: ${{ secrets.SEER_GPG_KEYID }}
+          ORG_GRADLE_PROJECT_signing.password: ${{ secrets.SEER_GPG_PASSWORD }}
+          ORG_GRADLE_PROJECT_signing.secretKeyRingFile: ${{ secrets.SEER_GPG_SECRET_KEYRING_FILE }}

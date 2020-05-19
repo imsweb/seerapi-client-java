@@ -1,6 +1,6 @@
 # Build the project and run unit tests
 
-name: build
+name: integration
 
 on:
   push:

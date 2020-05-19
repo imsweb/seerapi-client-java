@@ -33,8 +33,11 @@ jobs:
         run: |
           cat <(echo -e "${{ secrets.SEER_GPG_SECRET_KEY }}") | gpg --batch --import
           gpg --list-secret-keys --keyid-format LONG
-#      - name: Build with Gradle
-#        run: ./gradlew publish closeAndReleaseRepository
-#        env:
-#          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-#          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+      - name: Build with Gradle
+        run: ./gradlew publish closeAndReleaseRepository
+        env:
+          ORG_GRADLE_PROJECT_NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          ORG_GRADLE_PROJECT_NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+          ORG_GRADLE_PROJECT_SEER_GPG_KEYID: ${{ secrets.SEER_GPG_KEYID }}
+          ORG_GRADLE_PROJECT_SEER_GPG_PASSWORD: ${{ secrets.SEER_GPG_PASSWORD }}
+          ORG_GRADLE_PROJECT_SEER_GPG_SECRET_KEYRING_FILE: ${{ secrets.SEER_GPG_SECRET_KEYRING_FILE }}

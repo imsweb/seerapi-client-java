@@ -156,8 +156,8 @@ publishing {
             url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
 
             credentials {
-                username = System.getenv("NEXUS_USERNAME")
-                password = System.getenv("NEXUS_PASSWORD")
+                username = project.hasProperty('nexusUsername') ? project.getProperty('nexusUsername') : ''
+                password = project.hasProperty('nexusPassword') ? project.getProperty('nexusPassword') : ''
             }
         }
     }

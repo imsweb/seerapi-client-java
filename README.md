@@ -1,5 +1,5 @@
 # seerapi-client-java
-![Java CI](https://github.com/imsweb/seerapi-client-java/workflows/integration/badge.svg)
+![integration](https://github.com/imsweb/seerapi-client-java/workflows/integration/badge.svg)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.imsweb/seerapi-client-java/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.imsweb/seerapi-client-java)
 
 A [SEER*API](https://api.seer.cancer.gov) client for Java applications.  This library supports most of the APIs and

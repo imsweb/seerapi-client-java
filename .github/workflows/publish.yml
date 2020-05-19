@@ -1,11 +1,13 @@
 # Publish to Maven Central
+#
+# Instructions from https://gist.github.com/sualeh/ae78dc16123899d7942bc38baba5203c
 
 name: publish
 
 on:
   repository_dispatch:
     types: manual-publish
-# once all is working, trigger when release is created
+# once all is working, also trigger when release is created
 #  release:
 #    types: [created]
 

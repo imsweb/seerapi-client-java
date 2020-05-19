@@ -1,6 +1,6 @@
 # Build the project and run unit tests
 
-name: Java CI with Gradle
+name: build
 
 on:
   push:

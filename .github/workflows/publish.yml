@@ -28,9 +28,12 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Build with Gradle
-        run: ./gradlew publish closeAndReleaseRepository
-        env:
-          SEER_API_KEY: ${{ secrets.SEER_API_KEY }}
-          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+      - name: Install gpg secret key
+        run: |
+        cat <(echo -e "${{ secrets.SEER_GPG_SECRET_KEY }}") | gpg --batch --import
+        gpg --list-secret-keys --keyid-format LONG
+#      - name: Build with Gradle
+#        run: ./gradlew publish closeAndReleaseRepository
+#        env:
+#          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+#          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}

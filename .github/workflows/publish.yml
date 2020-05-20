@@ -28,7 +28,7 @@ jobs:
         run: |
           cat <(echo -e "${{ secrets.SEER_GPG_SECRET_KEY }}") | gpg --batch --import
           gpg --list-secret-keys --keyid-format LONG
-          ls -lagF ~/.gpg
+          ls -lagF ~/.gnupg
       - name: Publish
         run: ./gradlew uploadArchives closeAndReleaseRepository -Psigning.keyId=${{ secrets.SEER_GPG_KEYID }} -Psigning.password=${{ secrets.SEER_GPG_PASSWORD }} -Psigning.secretKeyRingFile=${{ secrets.SEER_GPG_KEYRING_FILE }}
         env:

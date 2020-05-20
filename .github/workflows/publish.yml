@@ -28,7 +28,7 @@ jobs:
         run: |
           echo ${{ secrets.SEER_GPG_SECRET_KEY }} | base64 --decode | gpg --import --no-tty --batch --yes
           echo ${{ secrets.SEER_GPG_OWNER_TRUST }} | base64 --decode | gpg --import-ownertrust --no-tty --batch --yes
-          gpg --export-secret-keys -o ~/.gnupg/secring.gpg
+          gpg --export-secret-keys -o ~/.gnupg/secring.gpg --no-tty --batch --yes
           gpg --list-secret-keys --keyid-format LONG
           ls -lagF ~/.gnupg
       - name: Publish

@@ -26,8 +26,8 @@ jobs:
       - id: install-secret-key
         name: Install gpg secret key
         run: |
-          cat <(echo "${{ secrets.SEER_GPG_SECRET_KEY }}") | base64 --decode | gpg --import
-          cat <(echo "${{ secrets.SEER_GPG_OWNER_TRUST }}") | base64 --decode | gpg --import-ownertrust
+          cat <(echo "${{ secrets.SEER_GPG_SECRET_KEY }}") | base64 --decode | gpg --import --no-tty --batch --yes
+          cat <(echo "${{ secrets.SEER_GPG_OWNER_TRUST }}") | base64 --decode | gpg --import-ownertrust --no-tty --batch --yes
           gpg --list-secret-keys --keyid-format LONG
           ls -lagF ~/.gnupg
       - name: Publish

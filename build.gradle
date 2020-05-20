@@ -1,18 +1,17 @@
 import org.gradle.internal.jvm.Jvm
 
 plugins {
-    id 'java-library'
+    id 'java'
     id 'checkstyle'
-    id "com.github.spotbugs" version "4.2.0"
-    id 'maven-publish'
-    id 'signing'
+    id "com.github.spotbugs" version "4.2.1"
+    id 'com.bmuschko.nexus' version '2.3.1'
     id "io.codearte.nexus-staging" version "0.21.2"
     id 'com.adarshr.test-logger' version '2.0.0'
     id "com.github.ben-manes.versions" version "0.28.0"
 }
 
 group = 'com.imsweb'
-version = '3.18'
+version = '3.16'
 description = 'Java client library for SEER*API'
 
 println "Starting build using ${Jvm.current()}"
@@ -25,10 +24,6 @@ tasks.withType(JavaCompile) {
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
-
-
-    withJavadocJar()
-    withSourcesJar()
 }
 
 repositories {
@@ -36,20 +31,20 @@ repositories {
 }
 
 dependencies {
-    api 'com.squareup.retrofit2:retrofit:2.8.1'
-    api 'com.squareup.retrofit2:converter-jackson:2.8.1'
+    compile 'com.squareup.retrofit2:retrofit:2.8.2'
+    compile 'com.squareup.retrofit2:converter-jackson:2.8.2'
 
-    testImplementation 'junit:junit:4.13'
-    testImplementation 'org.assertj:assertj-core:3.16.1'
+    testCompile 'junit:junit:4.13'
+    testCompile 'org.assertj:assertj-core:3.16.1'
 }
 
 jar {
     // specify the archive name; otherwise the version is appended to the war file
-    archiveFileName = 'seerapi-java.jar'
+    archiveName = 'seerapi-java.jar'
 
     manifest {
         attributes('Implementation-Title': 'SEER*API Java Client',
-                'Implementation-Version': archiveVersion,
+                'Implementation-Version': version,
                 'Implementation-Vendor': group,
                 'Created-By': System.properties['java.vm.version'] + " (" + System.properties['java.vm.vendor'] + ")",
                 'Built-By': System.getProperty('user.name'),
@@ -65,7 +60,8 @@ testlogger {
 }
 
 checkstyle {
-    toolVersion '8.28'
+    toolVersion '8.23'
+    configProperties = ["suppressionFile": project(':').file('config/checkstyle/suppressions.xml')]
     configFile = file("config/checkstyle/checkstyle.xml")
 }
 
@@ -74,102 +70,43 @@ spotbugs {
     excludeFilter = file('config/spotbugs/spotbugs-exclude.xml')
 }
 
-// when checking for later versions, exclude alphas, betas, etc..
-dependencyUpdates {
-    resolutionStrategy {
-        componentSelection { rules ->
-            rules.all { ComponentSelection selection ->
-                boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { qualifier ->
-                    selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
-                }
-                if (rejected) {
-                    selection.reject('Release candidate')
-                }
-            }
-        }
-    }
-}
-
 wrapper {
     gradleVersion = '6.4.1'
     distributionType = Wrapper.DistributionType.ALL
 }
 
-// don't try to release a snapshot to a non-snapshot repository, that won't work anyway
-if (version.endsWith('-SNAPSHOT')) {
-    gradle.startParameter.excludedTaskNames += 'signMavenJavaPublication'
-    gradle.startParameter.excludedTaskNames += 'closeAndReleaseRepository'
-}
+modifyPom {
+    project {
+        name 'SEER*API Java Client'
+        description 'API mapping for SEER*API in Java'
+        url 'https://github.com/imsweb/seerapi-client-java'
+        inceptionYear '2014'
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifactId = 'seerapi-client-java'
-            from components.java
-            versionMapping {
-                usage('java-api') {
-                    fromResolutionOf('runtimeClasspath')
-                }
-                usage('java-runtime') {
-                    fromResolutionResult()
-                }
-            }
-            pom {
-                name = 'SEER*API Java Client'
-                description = 'API mapping for SEER*API in Java'
-                url = 'https://github.com/imsweb/seerapi-client-java'
-                inceptionYear = '2014'
+        scm {
+            url 'https://github.com/imsweb/seerapi-client-java'
+            connection 'scm:https://github.com/imsweb/seerapi-client-java.git'
+            developerConnection 'scm:git@github.com:imsweb/seerapi-client-java.git'
+        }
 
-                licenses {
-                    license {
-                        name = 'The MIT License (MIT)'
-                        url = 'http://www.opensource.org/licenses/mit-license.php'
-                        distribution = 'repo'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id = 'ctmay4'
-                        name = 'Chuck May'
-                        email = 'mayc@imsweb.com'
-                    }
-                    developer {
-                        id = 'depryf'
-                        name = 'Fabian Depry'
-                        email = 'depryf@imsweb.com'
-                    }
-                }
-
-                scm {
-                    url = 'https://github.com/imsweb/seerapi-client-java'
-                    connection = 'scm:https://github.com/imsweb/seerapi-client-java.git'
-                    developerConnection = 'scm:git@github.com:imsweb/seerapi-client-java.git'
-                }
+        licenses {
+            license {
+                name 'The MIT License (MIT)'
+                url 'http://www.opensource.org/licenses/mit-license.php'
+                distribution 'repo'
             }
         }
-    }
-    repositories {
-        maven {
-            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
-            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
 
-            credentials {
-                username = project.hasProperty('nexusUsername') ? project.getProperty('nexusUsername') : ''
-                password = project.hasProperty('nexusPassword') ? project.getProperty('nexusPassword') : ''
+        developers {
+            developer {
+                id 'ctmay4'
+                name 'Chuck May'
+                email 'mayc@imsweb.com'
+            }
+            developer {
+                id 'depryf'
+                name 'Fabian Depry'
+                email 'depryf@imsweb.com'
             }
         }
     }
 }
-
-signing {
-    sign publishing.publications.mavenJava
-}
-
-javadoc {
-    if (JavaVersion.current().isJava9Compatible()) {
-        options.addBooleanOption('html5', true)
-    }
-}
-

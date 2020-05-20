@@ -75,6 +75,10 @@ wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
 
+// don't try to release a snapshot to a non-snapshot repository, that won't work anyway
+if (version.endsWith('-SNAPSHOT'))
+    gradle.startParameter.excludedTaskNames += 'closeAndReleaseRepository'
+
 modifyPom {
     project {
         name 'SEER*API Java Client'

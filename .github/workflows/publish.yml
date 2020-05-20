@@ -26,10 +26,9 @@ jobs:
       - id: install-secret-key
         name: Install gpg secret key
         run: |
-          export GPG_TTY=$(tty)
           echo ${{ secrets.SEER_GPG_SECRET_KEY }} | base64 --decode | gpg --import --no-tty --batch --yes
           echo ${{ secrets.SEER_GPG_OWNER_TRUST }} | base64 --decode | gpg --import-ownertrust --no-tty --batch --yes
-          gpg --export-secret-keys -o ~/.gnupg/secring.gpg --no-tty --batch --yes
+          echo ${{ secrets.SEER_GPG_SECRING }} | base64 --decode > ~/.gnupg/secring.gpg
           ls -lagF ~/.gnupg
       - name: Publish
         run: ./gradlew uploadArchives closeAndReleaseRepository -Psigning.keyId=${{ secrets.SEER_GPG_KEYID }} -Psigning.password=${{ secrets.SEER_GPG_PASSWORD }}

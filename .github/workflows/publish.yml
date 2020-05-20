@@ -26,14 +26,14 @@ jobs:
       - id: install-secret-key
         name: Install gpg secret key
         run: |
-          echo use-agent >> ~/.gnupg/gpg.conf
-          echo pinentry-mode loopback >> ~/.gnupg/gpg.conf
-          echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
-          echo RELOADAGENT | gpg-connect-agent
-          echo ${{ secrets.SEER_GPG_SECRET_KEY }} | base64 --decode | gpg --import --no-tty --batch --yes
-          echo ${{ secrets.SEER_GPG_OWNER_TRUST }} | base64 --decode | gpg --import-ownertrust --no-tty --batch --yes
-          gpg --list-secret-keys --keyid-format LONG
-          ls -lagF ~/.gnupg
+          #          echo use-agent >> ~/.gnupg/gpg.conf
+          #          echo pinentry-mode loopback >> ~/.gnupg/gpg.conf
+          #          echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
+          #          echo RELOADAGENT | gpg-connect-agent
+               echo ${{ secrets.SEER_GPG_SECRET_KEY }} | base64 --decode | gpg --import --no-tty --batch --yes
+               echo ${{ secrets.SEER_GPG_OWNER_TRUST }} | base64 --decode | gpg --import-ownertrust --no-tty --batch --yes
+               gpg --list-secret-keys --keyid-format LONG
+               ls -lagF ~/.gnupg
       - name: Publish
         run: ./gradlew uploadArchives closeAndReleaseRepository -Psigning.keyId=${{ secrets.SEER_GPG_KEYID }} -Psigning.password=${{ secrets.SEER_GPG_PASSWORD }} -Psigning.secretKeyRingFile=${{ secrets.SEER_GPG_KEYRING_FILE }}
         env:

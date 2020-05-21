@@ -5,8 +5,8 @@ name: publish
 on:
   repository_dispatch:
     types: manual-publish
-#  release:
-#    types: [created]
+  release:
+    types: [created]
 
 jobs:
   publish:

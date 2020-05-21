@@ -1,6 +1,4 @@
 # Publish to Maven Central
-#
-# Instructions from https://gist.github.com/sualeh/ae78dc16123899d7942bc38baba5203c
 
 name: publish
 
@@ -16,21 +14,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - id: install-secret-key
-        name: Install gpg secret key
-        run: |
-          echo ${{ secrets.SEER_GPG_SECRET_KEY }} | base64 --decode | gpg --import --no-tty --batch --yes
-          echo ${{ secrets.SEER_GPG_OWNER_TRUST }} | base64 --decode | gpg --import-ownertrust --no-tty --batch --yes
-          echo ${{ secrets.SEER_GPG_SECRING }} | base64 --decode > ~/.gnupg/secring.gpg
       - name: Publish
-        run: ./gradlew uploadArchives closeAndReleaseRepository -Psigning.keyId=${{ secrets.SEER_GPG_KEYID }} -Psigning.password=${{ secrets.SEER_GPG_PASSWORD }}
+        run: ./gradlew uploadArchives closeAndReleaseRepository
         env:
           ORG_GRADLE_PROJECT_nexusUsername: ${{ secrets.NEXUS_USERNAME }}
           ORG_GRADLE_PROJECT_nexusPassword: ${{ secrets.NEXUS_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SEER_GPG_SECRET_KEY }}
+          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SEER_GPG_PASSWORD }}

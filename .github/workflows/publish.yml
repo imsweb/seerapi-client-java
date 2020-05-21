@@ -1,5 +1,4 @@
 # Publish to Maven Central
-# ./gradlew uploadArchives closeAndReleaseRepository
 
 name: publish
 
@@ -24,7 +23,7 @@ jobs:
       - name: Publish
         run: |
           chmod +x gradlew
-          ./gradlew signMavenJavaPublication
+          ./gradlew uploadArchives closeAndReleaseRepository
         env:
           ORG_GRADLE_PROJECT_nexusUsername: ${{ secrets.NEXUS_USERNAME }}
           ORG_GRADLE_PROJECT_nexusPassword: ${{ secrets.NEXUS_PASSWORD }}

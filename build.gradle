@@ -173,3 +173,9 @@ javadoc {
         options.addBooleanOption('html5', true)
     }
 }
+
+// configure nexus staging plugin
+nexusStaging {
+    numberOfRetries = 50
+    delayBetweenRetriesInMillis = 5000
+}

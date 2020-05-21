@@ -1,21 +1,23 @@
-import org.gradle.internal.jvm.Jvm
-
 plugins {
     id 'java-library'
     id 'checkstyle'
     id "com.github.spotbugs" version "4.2.1"
-    id 'maven-publish'
     id 'signing'
+    id "de.marcphilipp.nexus-publish" version "0.4.0"
     id "io.codearte.nexus-staging" version "0.21.2"
     id 'com.adarshr.test-logger' version '2.0.0'
     id "com.github.ben-manes.versions" version "0.28.0"
 }
 
 group = 'com.imsweb'
-version = '3.18.1'
+version = '3.18.2'
 description = 'Java client library for SEER*API'
 
-println "Starting build using ${Jvm.current()}"
+// externally defined properties
+def nexusUsername = project.findProperty('nexusUsername') ?: ''
+def nexusPassword = project.findProperty('nexusPassword') ?: ''
+def signingKey = project.findProperty('signingKey') ?: ''
+def signingPassword = project.findProperty('signingPassword') ?: ''
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -25,9 +27,20 @@ tasks.withType(JavaCompile) {
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+}
 
-    withJavadocJar()
-    withSourcesJar()
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
 }
 
 repositories {
@@ -92,30 +105,23 @@ wrapper {
 }
 
 // don't try to release a snapshot to a non-snapshot repository, that won't work anyway
-if (version.endsWith('-SNAPSHOT')) {
-    gradle.startParameter.excludedTaskNames += 'signMavenJavaPublication'
-    gradle.startParameter.excludedTaskNames += 'closeAndReleaseRepository'
-}
+//if (version.endsWith('-SNAPSHOT')) {
+//    gradle.startParameter.excludedTaskNames += 'signMavenJavaPublication'
+//    gradle.startParameter.excludedTaskNames += 'closeAndReleaseRepository'
+//}
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
             artifactId = 'seerapi-client-java'
             from components.java
-            versionMapping {
-                usage('java-api') {
-                    fromResolutionOf('runtimeClasspath')
-                }
-                usage('java-runtime') {
-                    fromResolutionResult()
-                }
-            }
+            artifact sourcesJar
+            artifact javadocJar
             pom {
                 name = 'SEER*API Java Client'
                 description = 'API mapping for SEER*API in Java'
                 url = 'https://github.com/imsweb/seerapi-client-java'
                 inceptionYear = '2014'
-
                 licenses {
                     license {
                         name = 'The MIT License (MIT)'
@@ -123,7 +129,6 @@ publishing {
                         distribution = 'repo'
                     }
                 }
-
                 developers {
                     developer {
                         id = 'ctmay4'
@@ -136,7 +141,6 @@ publishing {
                         email = 'depryf@imsweb.com'
                     }
                 }
-
                 scm {
                     url = 'https://github.com/imsweb/seerapi-client-java'
                     connection = 'scm:https://github.com/imsweb/seerapi-client-java.git'
@@ -145,27 +149,12 @@ publishing {
             }
         }
     }
-    repositories {
-        maven {
-            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
-            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-
-            credentials {
-                username = project.findProperty('nexusUsername') ?: ''
-                password = project.findProperty('nexusPassword') ?: ''
-            }
-        }
-    }
 }
 
 signing {
-    def signingKey = project.findProperty('signingKey') ?: ''
-    def signingPassword = project.findProperty('signingPassword') ?: ''
-
     useInMemoryPgpKeys(signingKey, signingPassword)
 
-    sign publishing.publications.mavenJava
+    sign publishing.publications
 }
 
 javadoc {
@@ -178,4 +167,26 @@ javadoc {
 nexusStaging {
     numberOfRetries = 50
     delayBetweenRetriesInMillis = 5000
+}
+
+if (nexusUsername) {
+    nexusPublishing {
+        repositories {
+            sonatype {
+                nexusUrl = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+                snapshotRepositoryUrl = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+                username = nexusUsername
+                password = nexusPassword
+            }
+        }
+        connectTimeout = Duration.ofSeconds(360)
+        clientTimeout = Duration.ofSeconds(360)
+    }
+
+    nexusStaging {
+        packageGroup = "com.imsweb"
+        stagingProfileId = "seerapi-client-java"
+        username = nexusUsername
+        password = nexusPassword
+    }
 }

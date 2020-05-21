@@ -26,5 +26,6 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew build
+          ./gradlew getStagingProfile
         env:
           SEER_API_KEY: ${{ secrets.SEER_API_KEY }}

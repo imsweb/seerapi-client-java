@@ -163,12 +163,6 @@ javadoc {
     }
 }
 
-// configure nexus staging plugin
-nexusStaging {
-    numberOfRetries = 50
-    delayBetweenRetriesInMillis = 5000
-}
-
 if (nexusUsername) {
     nexusPublishing {
         repositories {
@@ -185,8 +179,9 @@ if (nexusUsername) {
 
     nexusStaging {
         packageGroup = "com.imsweb"
-        stagingProfileId = "seerapi-client-java"
         username = nexusUsername
         password = nexusPassword
+        numberOfRetries = 50
+        delayBetweenRetriesInMillis = 5000
     }
 }

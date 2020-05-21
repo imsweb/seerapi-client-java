@@ -61,10 +61,6 @@ jar {
     }
 }
 
-testlogger {
-    theme 'mocha'
-}
-
 checkstyle {
     toolVersion '8.28'
     configFile = file("config/checkstyle/checkstyle.xml")

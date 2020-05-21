@@ -152,16 +152,17 @@ publishing {
             url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
 
             credentials {
-                username = project.hasProperty('nexusUsername') ? project.getProperty('nexusUsername') : ''
-                password = project.hasProperty('nexusPassword') ? project.getProperty('nexusPassword') : ''
+                username = project.findProperty('nexusUsername') ?: ''
+                password = project.findProperty('nexusPassword') ?: ''
             }
         }
     }
 }
 
 signing {
-    def signingKey = project.hasProperty('signingKey') ? project.getProperty('signingKey') : ''
-    def signingPassword = project.hasProperty('signingPassword') ? project.getProperty('signingPassword') : ''
+    def signingKey = project.findProperty('signingKey') ?: ''
+    def signingPassword = project.findProperty('signingPassword') ?: ''
+
     useInMemoryPgpKeys(signingKey, signingPassword)
 
     sign publishing.publications.mavenJava

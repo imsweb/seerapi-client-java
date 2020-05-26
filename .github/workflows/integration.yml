@@ -25,6 +25,6 @@ jobs:
       - name: Build and test
         run: |
           chmod +x gradlew
-          ./gradlew build
+          ./gradlew build --no-daemon
         env:
           SEER_API_KEY: ${{ secrets.SEER_API_KEY }}

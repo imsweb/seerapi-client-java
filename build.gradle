@@ -1,5 +1,3 @@
-import org.gradle.internal.jvm.Jvm
-
 plugins {
     id 'java-library'
     id 'checkstyle'
@@ -12,10 +10,8 @@ plugins {
 }
 
 group = 'com.imsweb'
-version = '3.18.2'
+version = '3.19-SNAPSHOT'
 description = 'Java client library for SEER*API'
-
-println "Starting build using ${Jvm.current()}"
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'

@@ -73,13 +73,6 @@ dependencyCheck {
     format = 'ALL'
 }
 
-dependencyUpdates {
-    // ignore alpha, beta, etc. versions
-//    rejectVersionIf { selection ->
-//        isNonStable(selection.candidate.version)
-//    }
-}
-
 wrapper {
     gradleVersion = '6.4.1'
     distributionType = Wrapper.DistributionType.ALL

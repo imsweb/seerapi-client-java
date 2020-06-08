@@ -73,19 +73,10 @@ dependencyCheck {
     format = 'ALL'
 }
 
-// when checking for later versions, exclude alphas, betas, etc..
 dependencyUpdates {
-    resolutionStrategy {
-        componentSelection { rules ->
-            rules.all { ComponentSelection selection ->
-                boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { qualifier ->
-                    selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
-                }
-                if (rejected) {
-                    selection.reject('Release candidate')
-                }
-            }
-        }
+    // ignore alpha, beta, etc. versions
+    rejectVersionIf { selection ->
+        isNonStable(selection.candidate.version)
     }
 }
 

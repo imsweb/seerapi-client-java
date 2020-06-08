@@ -75,9 +75,9 @@ dependencyCheck {
 
 dependencyUpdates {
     // ignore alpha, beta, etc. versions
-    rejectVersionIf { selection ->
-        isNonStable(selection.candidate.version)
-    }
+//    rejectVersionIf { selection ->
+//        isNonStable(selection.candidate.version)
+//    }
 }
 
 wrapper {

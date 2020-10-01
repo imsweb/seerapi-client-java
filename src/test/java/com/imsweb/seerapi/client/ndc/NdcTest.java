@@ -94,7 +94,7 @@ public class NdcTest {
         products = _NDC.search(search.paramMap()).execute().body();
         assertThat(products.size()).isGreaterThan(1);
 
-        search.setRemovedSince("2020-01-06");
+        search.setRemovedSince("2020-10-01");
         products = _NDC.search(search.paramMap()).execute().body();
         assertThat(products).isEmpty();
 

@@ -6,13 +6,14 @@ package com.imsweb.seerapi.client.staging;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"key", "name", "description", "naaccr_item", "table"})
+@JsonPropertyOrder({"key", "name", "description", "naaccr_item", "naaccr_xml_id", "table"})
 public class StagingSchemaOutput {
 
     private String _key;
     private String _name;
     private String _description;
     private Integer _naaccrItem;
+    private String _naaccrXmlId;
     private String _table;
     private String _default;
 
@@ -42,6 +43,7 @@ public class StagingSchemaOutput {
         setName(other.getName());
         setDescription(other.getDescription());
         setNaaccrItem(other.getNaaccrItem());
+        setNaaccrXmlId(other.getNaaccrXmlId());
         setTable(other.getTable());
         setDefault(other.getDefault());
     }
@@ -80,6 +82,15 @@ public class StagingSchemaOutput {
 
     public void setNaaccrItem(Integer naaccrItem) {
         _naaccrItem = naaccrItem;
+    }
+
+    @JsonProperty("naaccr_xml_id")
+    public String getNaaccrXmlId() {
+        return _naaccrXmlId;
+    }
+
+    public void setNaaccrXmlId(String naaccrXmlId) {
+        _naaccrXmlId = naaccrXmlId;
     }
 
     @JsonProperty("table")

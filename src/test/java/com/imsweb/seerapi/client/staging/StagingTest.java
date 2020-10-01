@@ -82,6 +82,25 @@ public class StagingTest {
         assertThat(schema.getAlgorithm()).isEqualTo("cs");
         assertThat(schema.getVersion()).isEqualTo("02.05.50");
         assertThat(schema.getId()).isEqualTo("brain");
+
+        // verify the inputs
+        StagingSchemaInput input = schema.getInputs().stream().filter(i -> "site".equals(i.getKey())).findFirst().orElse(null);
+        assertThat(input).isNotNull();
+        assertThat(input.getName()).isEqualTo("Primary Site");
+        assertThat(input.getDescription()).isEqualTo("Code for the primary site of the tumor being reported using either ICD-O-2 or ICD-O-3.");
+        assertThat(input.getNaaccrItem()).isEqualTo(400);
+        assertThat(input.getNaaccrXmlId()).isEqualTo("primarySite");
+        assertThat(input.getUsedForStaging()).isTrue();
+        assertThat(input.getTable()).isEqualTo("primary_site");
+
+        // verify the outputs
+        StagingSchemaOutput output = schema.getOutputs().stream().filter(i -> "csver_derived".equals(i.getKey())).findFirst().orElse(null);
+        assertThat(output).isNotNull();
+        assertThat(output.getName()).isEqualTo("CS Version Derived");
+        assertThat(output.getDescription()).isEqualTo("Collaborative Staging (CS) version used to derive the CS output fields.");
+        assertThat(output.getNaaccrItem()).isEqualTo(2936);
+        assertThat(output.getNaaccrXmlId()).isEqualTo("csVersionDerived");
+        assertThat(output.getDefault()).isEqualTo("020550");
     }
 
     @Test

@@ -11,13 +11,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-@JsonPropertyOrder({"key", "name", "description", "naaccr_item", "values", "default", "table", "used_for_staging", "fail_on_invalid", "unit", "decimal_places", "metadata"})
+@JsonPropertyOrder({"key", "name", "description", "naaccr_item", "naaccr_xml_id", "values", "default", "table", "used_for_staging", "fail_on_invalid", "unit", "decimal_places", "metadata"})
 public class StagingSchemaInput {
 
     private String _key;
     private String _name;
     private String _description;
     private Integer _naaccrItem;
+    private String _naaccrXmlId;
     private String _default;
     private String _table;
     private Boolean _usedForStaging;
@@ -51,6 +52,7 @@ public class StagingSchemaInput {
         setName(other.getName());
         setDescription(other.getDescription());
         setNaaccrItem(other.getNaaccrItem());
+        setNaaccrXmlId(other.getNaaccrXmlId());
         setDefault(other.getDefault());
         setTable(other.getTable());
         if (other.getMetadata() != null)
@@ -94,6 +96,15 @@ public class StagingSchemaInput {
 
     public void setNaaccrItem(Integer naaccrItem) {
         _naaccrItem = naaccrItem;
+    }
+
+    @JsonProperty("naaccr_xml_id")
+    public String getNaaccrXmlId() {
+        return _naaccrXmlId;
+    }
+
+    public void setNaaccrXmlId(String naaccrXmlId) {
+        _naaccrXmlId = naaccrXmlId;
     }
 
     @JsonProperty("default")

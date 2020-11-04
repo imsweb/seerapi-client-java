@@ -115,6 +115,17 @@ public interface StagingService {
     Call<List<StagingTable>> tables(@Path("algorithm") String algorithm, @Path("version") String version, @Query("q") String query);
 
     /**
+     * Return a list of matching tables
+     * @param algorithm an algorithm identifier
+     * @param version a version
+     * @param query an optional text query
+     * @param unusedOnly if true, limit to unused tables
+     * @return a list of staging tables
+     */
+    @GET("staging/{algorithm}/{version}/tables")
+    Call<List<StagingTable>> tables(@Path("algorithm") String algorithm, @Path("version") String version, @Query("q") String query, @Query("unused") Boolean unusedOnly);
+
+    /**
      * Return a single table definition by table identifier
      * @param algorithm an algorithm identifier
      * @param version a version

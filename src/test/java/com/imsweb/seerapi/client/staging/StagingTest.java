@@ -117,7 +117,11 @@ public class StagingTest {
     @Test
     public void testListTables() throws IOException {
         List<StagingTable> tables = _STAGING.tables(_ALGORITHM, _VERSION, "ssf1").execute().body();
+        assertThat(tables).isNotEmpty();
 
+        tables = _STAGING.tables(_ALGORITHM, _VERSION, null, true).execute().body();
+        assertThat(tables).isEmpty();
+        tables = _STAGING.tables(_ALGORITHM, _VERSION, null, false).execute().body();
         assertThat(tables).isNotEmpty();
     }
 

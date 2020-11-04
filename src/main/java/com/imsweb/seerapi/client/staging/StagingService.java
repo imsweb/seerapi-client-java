@@ -5,6 +5,7 @@ package com.imsweb.seerapi.client.staging;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -12,6 +13,9 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+
+import com.imsweb.seerapi.client.glossary.Glossary.Category;
+import com.imsweb.seerapi.client.shared.KeywordMatch;
 
 public interface StagingService {
 
@@ -70,6 +74,18 @@ public interface StagingService {
     Call<StagingSchema> schemaById(@Path("algorithm") String algorithm, @Path("version") String version, @Path("id") String id);
 
     /**
+     * Return a glossary results for a staging schema
+     * @param algorithm an algorithm identifier
+     * @param version a version
+     * @param id a table identifier
+     * @param categories options list of categories
+     * @param wholeWordsOnly if true, only return whole word matcehs
+     * @return a set of matches
+     */
+    @GET("staging/{algorithm}/{version}/schema/{id}/glossary")
+    Call<Set<KeywordMatch>> schemaGlossary(@Path("algorithm") String algorithm, @Path("version") String version, @Path("id") String id, @Query("category") Set<Category> categories, @Query("wholeWordsOnly") Boolean wholeWordsOnly);
+
+    /**
      * Return a list of tables which are involved in the specified schema
      * @param algorithm an algorithm identifier
      * @param version a version
@@ -107,6 +123,18 @@ public interface StagingService {
      */
     @GET("staging/{algorithm}/{version}/table/{id}")
     Call<StagingTable> tableById(@Path("algorithm") String algorithm, @Path("version") String version, @Path("id") String id);
+
+    /**
+     * Return a glossary results for a staging table
+     * @param algorithm an algorithm identifier
+     * @param version a version
+     * @param id a table identifier
+     * @param categories options list of categories
+     * @param wholeWordsOnly if true, only return whole word matcehs
+     * @return a set of matches
+     */
+    @GET("staging/{algorithm}/{version}/table/{id}/glossary")
+    Call<Set<KeywordMatch>> tableGlossary(@Path("algorithm") String algorithm, @Path("version") String version, @Path("id") String id, @Query("category") Set<Category> categories, @Query("wholeWordsOnly") Boolean wholeWordsOnly);
 
     /**
      * Return a list of schemas which the specified table is involved in

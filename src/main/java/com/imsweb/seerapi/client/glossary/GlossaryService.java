@@ -8,10 +8,16 @@ import java.util.Map;
 import java.util.Set;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
+
+import com.imsweb.seerapi.client.glossary.Glossary.Category;
+import com.imsweb.seerapi.client.shared.KeywordMatch;
 
 public interface GlossaryService {
 
@@ -79,5 +85,16 @@ public interface GlossaryService {
      */
     @GET("glossary/{version}/changelog")
     Call<GlossaryChangelogResults> changelogs(@Path("version") String version, @Query("from") String fromDate, @Query("to") String toDate, @Query("count") Integer count);
+
+    /**
+     * Return a glossary results for a staging table
+     * @param text text to look up glossary references
+     * @param categories options list of categories
+     * @param wholeWordsOnly if true, only return whole word matcehs
+     * @return a set of matches
+     */
+    @Headers("Content-Type:text/plain")
+    @POST("glossary/match")
+    Call<Set<KeywordMatch>> match(@Body String text, @Query("category") Set<Category> categories, @Query("wholeWordsOnly") Boolean wholeWordsOnly);
 
 }

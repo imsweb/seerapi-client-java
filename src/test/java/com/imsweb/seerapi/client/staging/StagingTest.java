@@ -4,8 +4,7 @@
 package com.imsweb.seerapi.client.staging;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
@@ -240,12 +239,12 @@ public class StagingTest {
     public void testStagingGlossary() throws IOException {
         Set<KeywordMatch> matches = _STAGING.schemaGlossary("eod_public", "2.0", "breast", null, true).execute().body();
         assertThat(matches).hasSize(26);
-        matches = _STAGING.schemaGlossary("eod_public", "2.0", "breast", new HashSet<>(Collections.singletonList(Category.STAGING)), true).execute().body();
+        matches = _STAGING.schemaGlossary("eod_public", "2.0", "breast", EnumSet.of(Category.STAGING), true).execute().body();
         assertThat(matches).hasSize(1);
 
         matches = _STAGING.tableGlossary("eod_public", "2.0", "cea_pretx_lab_value_33864", null, true).execute().body();
         assertThat(matches).hasSize(20);
-        matches = _STAGING.tableGlossary("eod_public", "2.0", "cea_pretx_lab_value_33864", new HashSet<>(Collections.singletonList(Category.STAGING)), true).execute().body();
+        matches = _STAGING.tableGlossary("eod_public", "2.0", "cea_pretx_lab_value_33864", EnumSet.of(Category.STAGING), true).execute().body();
         assertThat(matches).isEmpty();
     }
 

@@ -6,7 +6,6 @@ package com.imsweb.seerapi.client.glossary;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.EnumSet;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -162,7 +161,7 @@ public class GlossaryTest {
         Assert.assertNotNull(matches);
         Assert.assertEquals(matches.size(), 1);
 
-        matches = _GLOSSARY.match(text, new HashSet<>(Collections.singletonList(GENERAL)), true).execute().body();
+        matches = _GLOSSARY.match(text, EnumSet.of(GENERAL), true).execute().body();
         Assert.assertNotNull(matches);
         Assert.assertEquals(matches.size(), 0);
     }

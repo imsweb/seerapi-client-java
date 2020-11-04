@@ -4,12 +4,17 @@
 package com.imsweb.seerapi.client.staging;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
+import com.imsweb.seerapi.client.glossary.Glossary.Category;
+import com.imsweb.seerapi.client.shared.KeywordMatch;
 import com.imsweb.seerapi.client.staging.cs.CsSchemaLookup;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -229,6 +234,19 @@ public class StagingTest {
         assertThat(output).isNotNull();
         assertThat(output.getResult()).isEqualTo(StagingData.Result.STAGED);
         assertThat(output.getErrors()).hasSize(9);
+    }
+
+    @Test
+    public void testStagingGlossary() throws IOException {
+        Set<KeywordMatch> matches = _STAGING.schemaGlossary("eod_public", "2.0", "breast", null, true).execute().body();
+        assertThat(matches).hasSize(26);
+        matches = _STAGING.schemaGlossary("eod_public", "2.0", "breast", new HashSet<>(Collections.singletonList(Category.STAGING)), true).execute().body();
+        assertThat(matches).hasSize(1);
+
+        matches = _STAGING.tableGlossary("eod_public", "2.0", "cea_pretx_lab_value_33864", null, true).execute().body();
+        assertThat(matches).hasSize(20);
+        matches = _STAGING.tableGlossary("eod_public", "2.0", "cea_pretx_lab_value_33864", new HashSet<>(Collections.singletonList(Category.STAGING)), true).execute().body();
+        assertThat(matches).isEmpty();
     }
 
 }

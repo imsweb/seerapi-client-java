@@ -6,7 +6,9 @@ package com.imsweb.seerapi.client.glossary;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -14,7 +16,9 @@ import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.publishable.PublishableSearch;
+import com.imsweb.seerapi.client.shared.KeywordMatch;
 
+import static com.imsweb.seerapi.client.glossary.Glossary.Category.GENERAL;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -54,7 +58,7 @@ public class GlossaryTest {
 
         Assert.assertNotNull(glossary);
         Assert.assertEquals("Lymphangiogram", glossary.getName());
-        Assert.assertEquals(Collections.singletonList(Glossary.Category.GENERAL), glossary.getCategories());
+        Assert.assertEquals(Collections.singletonList(GENERAL), glossary.getCategories());
         Assert.assertNull(glossary.getPrimarySite());
 
         Assert.assertNull(glossary.getHistology());
@@ -148,6 +152,19 @@ public class GlossaryTest {
         }
 
         Assert.assertTrue(total > 100);
+    }
+
+    @Test
+    public void testGlossaryMatch() throws IOException {
+        String text = "This text contains summary stage which should be found.";
+
+        Set<KeywordMatch> matches = _GLOSSARY.match(text, null, true).execute().body();
+        Assert.assertNotNull(matches);
+        Assert.assertEquals(matches.size(), 1);
+
+        matches = _GLOSSARY.match(text, new HashSet<>(Collections.singletonList(GENERAL)), true).execute().body();
+        Assert.assertNotNull(matches);
+        Assert.assertEquals(matches.size(), 0);
     }
 
 }

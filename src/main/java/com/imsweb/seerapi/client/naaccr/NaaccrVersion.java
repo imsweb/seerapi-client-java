@@ -14,6 +14,12 @@ public class NaaccrVersion {
     protected String _description;
     @JsonProperty("style")
     protected String _style;
+    @JsonProperty("dictionary_uri")
+    protected String dictionaryUri;
+    @JsonProperty("dictionary_description")
+    protected String dictionaryDescription;
+    @JsonProperty("specification_version")
+    protected String specificationVersion;
 
     public String getVersion() {
         return _version;
@@ -53,5 +59,29 @@ public class NaaccrVersion {
 
     public void setStyle(String style) {
         _style = style;
+    }
+
+    public String getDictionaryUri() {
+        return dictionaryUri;
+    }
+
+    public void setDictionaryUri(String dictionaryUri) {
+        this.dictionaryUri = dictionaryUri;
+    }
+
+    public String getDictionaryDescription() {
+        return dictionaryDescription;
+    }
+
+    public void setDictionaryDescription(String dictionaryDescription) {
+        this.dictionaryDescription = dictionaryDescription;
+    }
+
+    public String getSpecificationVersion() {
+        return specificationVersion;
+    }
+
+    public void setSpecificationVersion(String specificationVersion) {
+        this.specificationVersion = specificationVersion;
     }
 }

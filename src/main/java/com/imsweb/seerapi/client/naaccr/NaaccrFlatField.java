@@ -9,8 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({"item", "name", "section", "start_col", "end_col", "alignment", "padding_char", "default_value", "documentation", "subfield"})
-public class NaaccrField {
+public class NaaccrFlatField {
 
+    @JsonProperty("id")
+    protected String _id;
     @JsonProperty("item")
     protected Integer _item;
     @JsonProperty("name")
@@ -31,6 +33,14 @@ public class NaaccrField {
     protected String _documentation;
     @JsonProperty("subfield")
     protected List<NaaccrSubField> _subFields;
+
+    public String getId() {
+        return _id;
+    }
+
+    public void setId(String id) {
+        _id = id;
+    }
 
     public Integer getItem() {
         return _item;

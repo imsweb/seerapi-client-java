@@ -37,6 +37,9 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.9.0'
     api 'com.squareup.retrofit2:converter-jackson:2.9.0'
 
+    // newer version of dependency to fix vulnerability until converter-jackson is updated
+    api 'com.fasterxml.jackson.core:jackson-databind:2.10.5.1'
+
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.assertj:assertj-core:3.19.0'
 }

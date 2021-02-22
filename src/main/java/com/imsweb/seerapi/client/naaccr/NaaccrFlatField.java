@@ -9,8 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({"item", "name", "section", "start_col", "end_col", "alignment", "padding_char", "default_value", "documentation", "subfield"})
-public class NaaccrField {
+public class NaaccrFlatField {
 
+    @JsonProperty("id")
+    protected String _id;
     @JsonProperty("item")
     protected Integer _item;
     @JsonProperty("name")
@@ -32,83 +34,47 @@ public class NaaccrField {
     @JsonProperty("subfield")
     protected List<NaaccrSubField> _subFields;
 
-    public Integer getItem() {
-        return _item;
+    public String getNaaccrId() {
+        return _id;
     }
 
-    public void setItem(Integer item) {
-        _item = item;
+    public Integer getItemNum() {
+        return _item;
     }
 
     public String getName() {
         return _name;
     }
 
-    public void setName(String name) {
-        _name = name;
-    }
-
     public String getSection() {
         return _section;
-    }
-
-    public void setSection(String section) {
-        _section = section;
     }
 
     public Integer getStart() {
         return _start;
     }
 
-    public void setStart(Integer start) {
-        _start = start;
-    }
-
     public Integer getEnd() {
         return _end;
-    }
-
-    public void setEnd(Integer end) {
-        _end = end;
     }
 
     public String getAlign() {
         return _align;
     }
 
-    public void setAlign(String align) {
-        _align = align;
-    }
-
     public String getPadChar() {
         return _padChar;
-    }
-
-    public void setPadChar(String padChar) {
-        _padChar = padChar;
     }
 
     public String getDefaultValue() {
         return _defaultValue;
     }
 
-    public void setDefaultValue(String defaultValue) {
-        _defaultValue = defaultValue;
-    }
-
     public String getDocumentation() {
         return _documentation;
     }
 
-    public void setDocumentation(String documentation) {
-        _documentation = documentation;
-    }
-
     public List<NaaccrSubField> getSubFields() {
         return _subFields;
-    }
-
-    public void setSubFields(List<NaaccrSubField> subFields) {
-        _subFields = subFields;
     }
 }

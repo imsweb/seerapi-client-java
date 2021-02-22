@@ -6,8 +6,8 @@ plugins {
     id 'signing'
     id "io.codearte.nexus-staging" version "0.22.0"
     id 'com.adarshr.test-logger' version '2.1.1'
-    id "com.github.ben-manes.versions" version "0.34.0"
-    id "org.owasp.dependencycheck" version "6.0.3"
+    id "com.github.ben-manes.versions" version "0.36.0"
+    id 'org.sonatype.gradle.plugins.scan' version '2.0.3'
 }
 
 group = 'com.imsweb'
@@ -32,13 +32,16 @@ repositories {
 }
 
 dependencies {
-    spotbugs 'com.github.spotbugs:spotbugs:4.1.4'
+    spotbugs 'com.github.spotbugs:spotbugs:4.2.1'
 
     api 'com.squareup.retrofit2:retrofit:2.9.0'
     api 'com.squareup.retrofit2:converter-jackson:2.9.0'
 
-    testImplementation 'junit:junit:4.13.1'
-    testImplementation 'org.assertj:assertj-core:3.18.0'
+    // newer version of dependency to fix vulnerability until converter-jackson is updated
+    api 'com.fasterxml.jackson.core:jackson-databind:2.10.5.1'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.assertj:assertj-core:3.19.0'
 }
 
 jar {
@@ -67,14 +70,24 @@ spotbugs {
     excludeFilter = file('config/spotbugs/spotbugs-exclude.xml')
 }
 
-// OWASP check (https://jeremylong.github.io/DependencyCheck/index.html)
-dependencyCheck {
-    failOnError = true
-    format = 'ALL'
+// Nexus vulnerability scan (see https://github.com/sonatype-nexus-community/scan-gradle-plugin)
+ossIndexAudit {
+    dependencyGraph = true
+    printBanner = false
+
+    // only set proxy if running outside of Github Actions
+    if (!System.getenv().GITHUB_ACTIONS) {
+        proxyConfiguration {
+            protocol = 'http'
+            host = 'webproxy-btp.imsweb.com'
+            port = 8080
+        }
+    }
 }
+check.dependsOn 'ossIndexAudit'
 
 wrapper {
-    gradleVersion = '6.7'
+    gradleVersion = '6.8.2'
     distributionType = Wrapper.DistributionType.ALL
 }
 

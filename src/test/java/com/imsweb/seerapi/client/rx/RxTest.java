@@ -107,8 +107,8 @@ public class RxTest {
 
         assertNotNull(results);
         assertEquals(25, results.getCount().longValue());
-        assertEquals(9, results.getTotal().longValue());
-        assertEquals(9, results.getResults().size());
+        assertEquals(10, results.getTotal().longValue());
+        assertEquals(10, results.getResults().size());
         assertEquals(Collections.singletonList("abt"), results.getTerms());
 
         search.setMode(PublishableSearch.SearchMode.OR);

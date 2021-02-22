@@ -247,7 +247,7 @@ public class StagingTest {
         assertThat(matches).hasSize(1);
 
         matches = _STAGING.tableGlossary("eod_public", "2.0", "cea_pretx_lab_value_33864", null, true).execute().body();
-        assertThat(matches).hasSize(20);
+        assertThat(matches).hasSize(24);
         matches = _STAGING.tableGlossary("eod_public", "2.0", "cea_pretx_lab_value_33864", EnumSet.of(Category.STAGING), true).execute().body();
         assertThat(matches).isEmpty();
     }

@@ -5,8 +5,10 @@ package com.imsweb.seerapi.client.naaccr;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
@@ -59,7 +61,7 @@ public class NaaccrTest {
 
         assertThat(names).isNotNull();
         for (NaaccrFieldName name : names) {
-            assertThat(name.getItem()).isGreaterThan(0);
+            assertThat(name.getItemNum()).isGreaterThan(0);
             assertThat(name.getName()).isNotEmpty();
         }
     }
@@ -70,8 +72,8 @@ public class NaaccrTest {
 
         assertThat(names).isNotNull();
         for (NaaccrFieldName name : names) {
-            assertThat(name.getId()).isNotEmpty();
-            assertThat(name.getItem()).isGreaterThan(0);
+            assertThat(name.getNaaccrId()).isNotEmpty();
+            assertThat(name.getItemNum()).isGreaterThan(0);
             assertThat(name.getName()).isNotEmpty();
         }
     }
@@ -81,12 +83,13 @@ public class NaaccrTest {
         NaaccrFlatField name = _NAACCR.flatField("16", 521).execute().body();
 
         assertThat(name).isNotNull();
+        assertThat(name.getItemNum()).isEqualTo(521);
+        assertThat(name.getNaaccrId()).isEqualTo("morphTypebehavIcdO3");
         assertThat(name.getName()).isEqualTo("Morph--Type&Behav ICD-O-3");
         assertThat(name.getSection()).isEqualTo("Cancer Identification");
         assertThat(name.getAlign()).isEqualTo("LEFT");
         assertThat(name.getPadChar()).isEqualTo(" ");
         assertThat(name.getDocumentation()).startsWith("<table class=\"naaccr-summary-table naaccr-borders\">");
-        assertThat(name.getItem()).isEqualTo(521);
         assertThat(name.getStart()).isEqualTo(550);
         assertThat(name.getEnd()).isEqualTo(554);
 
@@ -114,7 +117,7 @@ public class NaaccrTest {
 
         assertThat(name).isNotNull();
         assertThat(name.getNaaccrId()).isEqualTo("phase2RadiationExternalBeamTech");
-        assertThat(name.getNaaccrItemNum()).isEqualTo(1512);
+        assertThat(name.getItemNum()).isEqualTo(1512);
         assertThat(name.getName()).isEqualTo("Phase II Radiation External Beam Planning Tech");
         assertThat(name.getSection()).isEqualTo("Treatment-1st Course");
         assertThat(name.getParentXmlElement()).isEqualTo("Tumor");
@@ -125,5 +128,25 @@ public class NaaccrTest {
         assertThat(name.getTrimType()).isEqualTo("all");
         assertThat(name.getAllowUnlimitedText()).isEqualTo(false);
         assertThat(name.getDocumentation()).isNotEmpty();
+    }
+
+    // these two tests are slow so don't run them all the time; they verify that all the items from flat and NAACR can be read without error
+
+    @Ignore
+    public void loadAllFlat() throws IOException {
+        for (NaaccrFieldName name : Objects.requireNonNull(_NAACCR.flatFieldNames("latest").execute().body())) {
+            NaaccrFlatField field = _NAACCR.flatField("latest", name.getItemNum()).execute().body();
+
+            assertThat(field).isNotNull();
+        }
+    }
+
+    @Ignore
+    public void loadAllXml() throws IOException {
+        for (NaaccrFieldName name : Objects.requireNonNull(_NAACCR.xmlFieldNames("latest").execute().body())) {
+            NaaccrXmlField field = _NAACCR.xmlField("latest", name.getNaaccrId()).execute().body();
+
+            assertThat(field).isNotNull();
+        }
     }
 }

@@ -14,27 +14,15 @@ public class NaaccrFieldName {
     @JsonProperty("name")
     protected String _name;
 
-    public String getId() {
+    public String getNaaccrId() {
         return _id;
     }
 
-    public void setId(String id) {
-        _id = id;
-    }
-
-    public Integer getItem() {
+    public Integer getItemNum() {
         return _item;
-    }
-
-    public void setItem(Integer item) {
-        _item = item;
     }
 
     public String getName() {
         return _name;
-    }
-
-    public void setName(String name) {
-        _name = name;
     }
 }

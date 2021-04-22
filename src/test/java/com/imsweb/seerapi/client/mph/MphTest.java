@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import com.imsweb.seerapi.client.BadRequestException;
 import com.imsweb.seerapi.client.SeerApi;
-import com.imsweb.seerapi.client.mph.MphInput.HistologyMatchMode;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -125,18 +124,6 @@ public class MphTest {
         assertEquals(9, result.getAppliedRules().size());
         assertEquals(MphOutput.Result.MULTIPLE_PRIMARIES, result.getResult());
         assertEquals("M12", result.getStep());
-
-        // specify STRICT
-        result = _MPH.mph(new MphInputPair(input1, input2), HistologyMatchMode.STRICT).execute().body();
-        assertEquals(9, result.getAppliedRules().size());
-        assertEquals(MphOutput.Result.MULTIPLE_PRIMARIES, result.getResult());
-        assertEquals("M12", result.getStep());
-
-        // specify LENIENT
-        result = _MPH.mph(new MphInputPair(input1, input2), HistologyMatchMode.LENIENT).execute().body();
-        assertEquals(10, result.getAppliedRules().size());
-        assertEquals(MphOutput.Result.SINGLE_PRIMARY, result.getResult());
-        assertEquals("M13", result.getStep());
     }
 
     @Test(expected = BadRequestException.class)

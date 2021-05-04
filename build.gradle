@@ -1,13 +1,13 @@
 plugins {
     id 'java-library'
     id 'checkstyle'
-    id "com.github.spotbugs" version "4.7.0"
+    id "com.github.spotbugs" version "4.7.1"
     id 'maven-publish'
     id 'signing'
     id "io.codearte.nexus-staging" version "0.30.0"
     id 'com.adarshr.test-logger' version '3.0.0'
     id "com.github.ben-manes.versions" version "0.38.0"
-    id 'org.sonatype.gradle.plugins.scan' version '2.0.7'
+    id 'org.sonatype.gradle.plugins.scan' version '2.0.9'
 }
 
 group = 'com.imsweb'

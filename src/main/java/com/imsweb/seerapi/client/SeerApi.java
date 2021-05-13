@@ -37,16 +37,16 @@ import com.imsweb.seerapi.client.surgery.SurgeryService;
  */
 public final class SeerApi {
 
-    private DiseaseService _diseaseService;
-    private GlossaryService _glossaryService;
-    private MphService _mphService;
-    private NaaccrService _naaccrService;
-    private NdcService _ndcService;
-    private RxService _rxService;
-    private SiteRecodeService _siteRecodeService;
-    private StagingService _stagingService;
-    private SurgeryService _surgeryService;
-    private HcpcsService _hcpcsService;
+    private final DiseaseService _diseaseService;
+    private final GlossaryService _glossaryService;
+    private final MphService _mphService;
+    private final NaaccrService _naaccrService;
+    private final NdcService _ndcService;
+    private final RxService _rxService;
+    private final SiteRecodeService _siteRecodeService;
+    private final StagingService _stagingService;
+    private final SurgeryService _surgeryService;
+    private final HcpcsService _hcpcsService;
 
     /**
      * Creates a client API root object
@@ -210,30 +210,19 @@ public final class SeerApi {
 
         /**
          * Return a list of user properties from the local .seerapi file
-         * @return
+         * @return Properties object
          */
         private Properties getProperties() {
             Properties props = new Properties();
 
             File config = new File(System.getProperty("user.home"), ".seerapi");
             if (config.exists()) {
-                FileInputStream in = null;
 
-                try {
-                    in = new FileInputStream(config);
+                try (FileInputStream in = new FileInputStream(config)) {
                     props.load(in);
                 }
                 catch (IOException e) {
                     // error reading
-                }
-                finally {
-                    try {
-                        if (in != null)
-                            in.close();
-                    }
-                    catch (IOException e) {
-                        // do nothing if error closing stream
-                    }
                 }
             }
 

@@ -3,13 +3,11 @@
  */
 package com.imsweb.seerapi.client.staging;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @JsonPropertyOrder({"key", "name", "description", "naaccr_item", "naaccr_xml_id", "table", "default", "metadata"})
 public class StagingSchemaOutput {
@@ -21,7 +19,7 @@ public class StagingSchemaOutput {
     private String _naaccrXmlId;
     private String _table;
     private String _default;
-    private Set<String> _metadata;
+    private List<StagingMetadata> _metadata;
 
     /**
      * Morphia requires a default constructor
@@ -53,7 +51,7 @@ public class StagingSchemaOutput {
         setTable(other.getTable());
         setDefault(other.getDefault());
         if (other.getMetadata() != null)
-            setMetadata(new HashSet<>(other.getMetadata()));
+            setMetadata(new ArrayList<>(other.getMetadata()));
     }
 
     @JsonProperty("key")
@@ -120,12 +118,11 @@ public class StagingSchemaOutput {
     }
 
     @JsonProperty("metadata")
-    public Set<String> getMetadata() {
+    public List<StagingMetadata> getMetadata() {
         return _metadata;
     }
 
-    @JsonDeserialize(as = LinkedHashSet.class)
-    public void setMetadata(Set<String> metadata) {
+    public void setMetadata(List<StagingMetadata> metadata) {
         _metadata = metadata;
     }
 

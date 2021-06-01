@@ -252,4 +252,15 @@ public class StagingTest {
         assertThat(matches).isEmpty();
     }
 
+    @Test
+    public void testStagingMetadata() throws IOException {
+        StagingSchema schema = _STAGING.schemaById("eod_public", "2.0", "brain").execute().body();
+        assertThat(schema).isNotNull();
+
+        StagingSchemaInput mgmt = schema.getInputs().stream().filter(i -> i.getKey().equals("mgmt")).findFirst().orElse(null);
+        assertThat(mgmt).isNotNull();
+
+        assertThat(mgmt.getMetadata()).extracting("name").containsExactlyInAnyOrder("COC_REQUIRED", "SEER_REQUIRED", "SSDI");
+    }
+
 }

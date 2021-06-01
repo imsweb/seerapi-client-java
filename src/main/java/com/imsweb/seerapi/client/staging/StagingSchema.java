@@ -6,10 +6,8 @@ package com.imsweb.seerapi.client.staging;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -198,11 +196,6 @@ public class StagingSchema {
 
     public void setMappings(List<StagingMapping> mapping) {
         _mappings = mapping;
-    }
-
-    @JsonIgnore
-    public Map<String, StagingSchemaInput> getInputMap() {
-        return null;
     }
 
     @JsonProperty("involved_tables")

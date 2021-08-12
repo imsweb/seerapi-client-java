@@ -96,16 +96,6 @@ public class DiseaseTest {
         assertNull(disease.getFieldNotes());
         assertNull(disease.getScore());
         assertNull(disease.getGlossaryMatches());
-        //assertNull(disease.getHistory());
-
-        //        assertTrue(disease.getHistory().size() > 0);
-        //
-        //        DiseaseHistoryEvent event = disease.getHistory().get(0);
-        //        assertEquals("mayc@imsweb.com", event.getUser());
-        //        assertNotNull(event.getDate());
-        //        assertNull(event.getOld());
-        //        assertNull(event.getNew());
-
         assertEquals(1, disease.getPrimarySite().size());
         assertEquals("C421", disease.getPrimarySite().get(0).getLow());
         assertEquals("C421", disease.getPrimarySite().get(0).getHigh());
@@ -142,6 +132,7 @@ public class DiseaseTest {
         assertEquals("See abstractor notes", disease.getModuleId().get(0).getValue());
         assertNull(disease.getBiomarkers());
         assertNull(disease.getTreatmentText());
+        assertTrue(disease.getDiagnosticConfirmation().get(0).getValue().startsWith("This histology can be determined by positive histology"));
     }
 
     @Test

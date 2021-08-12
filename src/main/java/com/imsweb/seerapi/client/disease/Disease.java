@@ -105,6 +105,8 @@ public class Disease extends Publishable {
     private List<YearRangeString> _samePrimariesText;
     @JsonProperty("progression")
     private List<YearRangeString> _progression;
+    @JsonProperty("diagnostic_confirmation")
+    private List<YearRangeString> _diagnosticConfirmation;
 
     /**
      * Solid tumor specific
@@ -442,6 +444,14 @@ public class Disease extends Publishable {
 
     public void setProgression(List<YearRangeString> progression) {
         _progression = progression;
+    }
+
+    public List<YearRangeString> getDiagnosticConfirmation() {
+        return _diagnosticConfirmation;
+    }
+
+    public void setDiagnosticConfirmation(List<YearRangeString> diagnosticConfirmation) {
+        _diagnosticConfirmation = diagnosticConfirmation;
     }
 
     // values for the datasources

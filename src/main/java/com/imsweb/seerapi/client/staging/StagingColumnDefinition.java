@@ -20,9 +20,6 @@ public class StagingColumnDefinition {
         ENDPOINT
     }
 
-    /**
-     * Morphia requires a default constructor
-     */
     public StagingColumnDefinition() {
     }
 

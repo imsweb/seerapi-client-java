@@ -46,9 +46,6 @@ public class StagingSchema {
     private Set<String> _involvedTables;
     private StagingInputErrorHandler _onInvalidInput;
 
-    /**
-     * Morphia requires a default constructor
-     */
     public StagingSchema() {
     }
 

@@ -21,9 +21,6 @@ public class StagingSchemaOutput {
     private String _default;
     private List<StagingMetadata> _metadata;
 
-    /**
-     * Morphia requires a default constructor
-     */
     public StagingSchemaOutput() {
     }
 

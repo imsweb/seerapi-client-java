@@ -9,17 +9,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"algorithm", "version", "type", "last_modified"})
+@JsonPropertyOrder({"algorithm", "version", "naaccr_version", "type", "last_modified"})
 public class StagingVersion {
 
     private String _algorithm;
     private String _version;
+    private String _naaccrVersion;
     private Type _type;
     private Date _lastModified;
 
-    /**
-     * Default constructor is required by Morphia
-     */
     public StagingVersion() {
     }
 
@@ -44,6 +42,15 @@ public class StagingVersion {
 
     public void setVersion(String version) {
         _version = version;
+    }
+
+    @JsonProperty("naaccr_version")
+    public String getNaaccrVersion() {
+        return _naaccrVersion;
+    }
+
+    public void setNaaccrVersion(String naaccrVersion) {
+        _naaccrVersion = naaccrVersion;
     }
 
     @JsonProperty("type")

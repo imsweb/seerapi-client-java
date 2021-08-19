@@ -13,9 +13,6 @@ public class StagingAlgorithm {
     private String _name;
     private String _description;
 
-    /**
-     * Morphia requires a default constructor
-     */
     public StagingAlgorithm() {
     }
 

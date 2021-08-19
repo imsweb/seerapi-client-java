@@ -19,9 +19,6 @@ public class StagingTablePath {
     private Set<String> _inputs;
     private Set<String> _outputs;
 
-    /**
-     * Morphia requires a default constructor
-     */
     public StagingTablePath() {
     }
 

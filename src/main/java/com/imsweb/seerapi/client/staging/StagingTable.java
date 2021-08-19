@@ -27,9 +27,6 @@ public class StagingTable {
     private Set<String> _extraInput;
     private List<List<String>> _rows;
 
-    /**
-     * Morphia requires a default constructor
-     */
     public StagingTable() {
     }
 

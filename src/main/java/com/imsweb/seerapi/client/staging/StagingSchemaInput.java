@@ -24,9 +24,6 @@ public class StagingSchemaInput {
     private Integer _decimalPlaces;
     private List<StagingMetadata> _metadata;
 
-    /**
-     * Morphia requires a default constructor
-     */
     public StagingSchemaInput() {
     }
 

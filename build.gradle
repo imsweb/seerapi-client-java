@@ -11,7 +11,7 @@ plugins {
 }
 
 group = 'com.imsweb'
-version = '3.25'
+version = '5.0'
 description = 'Java client library for SEER*API'
 
 tasks.withType(JavaCompile) {

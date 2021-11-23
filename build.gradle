@@ -16,7 +16,7 @@ description = 'Java client library for SEER*API'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
-    options.compilerArgs << "-Xlint:all" << "-Xlint:-serial" << "-Werror"
+    options.compilerArgs << "-Werror"
 }
 
 java {
@@ -59,6 +59,13 @@ jar {
                 'Automatic-Module-Name': 'com.imsweb.seerapi.client'
         )
     }
+}
+
+tasks.withType(Javadoc) {
+    failOnError false
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
 }
 
 checkstyle {

@@ -91,7 +91,6 @@ ossIndexAudit {
         }
     }
 }
-check.dependsOn 'ossIndexAudit'
 
 wrapper {
     gradleVersion = '7.4.2'

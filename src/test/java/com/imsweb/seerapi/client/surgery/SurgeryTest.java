@@ -26,8 +26,7 @@ public class SurgeryTest {
     public void testSiteSpecificSurgeryTables() throws IOException {
         List<String> titles = _SURGERY.tables("2014").execute().body();
 
-        assertThat(titles).isNotEmpty();
-        assertThat(titles).containsAnyOf("Oral Cavity");
+        assertThat(titles).isNotEmpty().containsAnyOf("Oral Cavity");
     }
 
     @Test

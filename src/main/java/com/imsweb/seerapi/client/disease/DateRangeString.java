@@ -7,12 +7,6 @@ public class DateRangeString extends DateRange {
     @JsonProperty("value")
     protected String _value;
 
-    /**
-     * Default constructor
-     */
-    public DateRangeString() {
-    }
-
     public String getValue() {
         return _value;
     }

@@ -9,12 +9,6 @@ public class DateRange {
     @JsonProperty("end")
     protected String _endDate;
 
-    /**
-     * Default constructor
-     */
-    public DateRange() {
-    }
-
     public String getStartDate() {
         return _startDate;
     }

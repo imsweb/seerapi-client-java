@@ -122,7 +122,7 @@ public class SchemaLookup {
         for (Entry<String, String> entry : _inputs.entrySet()) {
             String key = entry.getKey();
 
-            if (StagingData.STANDARD_LOOKUP_KEYS.contains(key))
+            if (StagingData._STANDARD_LOOKUP_KEYS.contains(key))
                 continue;
 
             String value = entry.getValue();

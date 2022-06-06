@@ -16,8 +16,6 @@ public class MphOutput {
     private String _groupId;
     @JsonProperty("step")
     private String _step;
-    public MphOutput() {
-    }
 
     public Result getResult() {
         return _result;

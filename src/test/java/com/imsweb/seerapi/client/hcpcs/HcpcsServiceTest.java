@@ -43,7 +43,7 @@ public class HcpcsServiceTest {
         assertThat(proc.getCategories()).containsExactly(Category.IMMUNOTHERAPY);
         assertThat(proc.getMajorDrugClass()).isEqualTo("Monoclonal Antibody");
         assertThat(proc.getMinorDrugClass()).isEqualTo("CD52");
-        assertThat(proc.getOral()).isEqualTo(false);
+        assertThat(proc.getOral()).isFalse();
         assertThat(proc.getDateAdded()).isNotNull();
         assertThat(proc.getDateModified()).isNotNull();
 
@@ -69,7 +69,7 @@ public class HcpcsServiceTest {
 
         // test page out of range
         params.put("page", "1000");
-        assertThat(_HCPCS.search(params).execute().body()).hasSize(0);
+        assertThat(_HCPCS.search(params).execute().body()).isEmpty();
 
         // test searching
         params.clear();
@@ -88,6 +88,6 @@ public class HcpcsServiceTest {
         assertThat(results).extracting("hcpcsCode").contains("J9207", "C9240");
 
         params.put("category", Category.IMMUNOTHERAPY.toString());
-        assertThat(_HCPCS.search(params).execute().body()).hasSize(0);
+        assertThat(_HCPCS.search(params).execute().body()).isEmpty();
     }
 }

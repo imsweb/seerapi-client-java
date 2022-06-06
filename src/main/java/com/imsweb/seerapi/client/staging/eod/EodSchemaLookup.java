@@ -9,13 +9,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.imsweb.seerapi.client.staging.SchemaLookup;
+import com.imsweb.seerapi.client.staging.StagingData;
 import com.imsweb.seerapi.client.staging.eod.EodStagingData.EodInput;
 
 public class EodSchemaLookup extends SchemaLookup {
 
     private static final Set<String> _ALLOWED_KEYS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
-            EodStagingData.PRIMARY_SITE_KEY,
-            EodStagingData.HISTOLOGY_KEY,
+            StagingData.PRIMARY_SITE_KEY,
+            StagingData.HISTOLOGY_KEY,
             EodInput.SEX.toString(),
             EodInput.DISCRIMINATOR_1.toString(),
             EodInput.DISCRIMINATOR_2.toString())));

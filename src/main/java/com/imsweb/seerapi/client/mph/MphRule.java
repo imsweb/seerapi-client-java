@@ -22,9 +22,6 @@ public class MphRule {
     @JsonProperty("examples")
     private List<String> _examples;
 
-    public MphRule() {
-    }
-
     public String getGroupId() {
         return _groupId;
     }

@@ -115,7 +115,7 @@ public class NdcSearch {
         if (getHasSeerInfo() != null)
             params.put("has_seer_info", getHasSeerInfo().toString());
         if (getIncludeRemoved() != null)
-            params.put("include_removed", getIncludeRemoved() ? "true" : "false");
+            params.put("include_removed", Boolean.TRUE.equals(getIncludeRemoved()) ? "true" : "false");
         if (getAddedSince() != null)
             params.put("added_since", getAddedSince());
         if (getModifiedSince() != null)

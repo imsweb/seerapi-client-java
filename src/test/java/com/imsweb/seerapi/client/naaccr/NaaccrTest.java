@@ -61,7 +61,7 @@ public class NaaccrTest {
 
         assertThat(names).isNotNull();
         for (NaaccrFieldName name : names) {
-            assertThat(name.getItemNum()).isGreaterThan(0);
+            assertThat(name.getItemNum()).isPositive();
             assertThat(name.getName()).isNotEmpty();
         }
     }
@@ -73,7 +73,7 @@ public class NaaccrTest {
         assertThat(names).isNotNull();
         for (NaaccrFieldName name : names) {
             assertThat(name.getNaaccrId()).isNotEmpty();
-            assertThat(name.getItemNum()).isGreaterThan(0);
+            assertThat(name.getItemNum()).isPositive();
             assertThat(name.getName()).isNotEmpty();
         }
     }
@@ -126,13 +126,13 @@ public class NaaccrTest {
         assertThat(name.getLength()).isEqualTo(2);
         assertThat(name.getPadType()).isEqualTo("rightBlank");
         assertThat(name.getTrimType()).isEqualTo("all");
-        assertThat(name.getAllowUnlimitedText()).isEqualTo(false);
+        assertThat(name.getAllowUnlimitedText()).isFalse();
         assertThat(name.getDocumentation()).isNotEmpty();
     }
 
     // these two tests are slow so don't run them all the time; they verify that all the items from flat and NAACR can be read without error
 
-    @Ignore
+    @Ignore("Slow test so do not run all the time")
     public void loadAllFlat() throws IOException {
         for (NaaccrFieldName name : Objects.requireNonNull(_NAACCR.flatFieldNames("latest").execute().body())) {
             NaaccrFlatField field = _NAACCR.flatField("latest", name.getItemNum()).execute().body();
@@ -141,7 +141,7 @@ public class NaaccrTest {
         }
     }
 
-    @Ignore
+    @Ignore("Slow test so do not run all the time")
     public void loadAllXml() throws IOException {
         for (NaaccrFieldName name : Objects.requireNonNull(_NAACCR.xmlFieldNames("latest").execute().body())) {
             NaaccrXmlField field = _NAACCR.xmlField("latest", name.getNaaccrId()).execute().body();

@@ -3,6 +3,7 @@
  */
 package com.imsweb.seerapi.client.staging;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -41,7 +42,7 @@ public class SchemaLookup {
      * @return a set of keys
      */
     public Set<String> getAllowedKeys() {
-        return null;
+        return Collections.emptySet();
     }
 
     /**
@@ -67,7 +68,7 @@ public class SchemaLookup {
      * @param value value of input
      */
     public void setInput(String key, String value) {
-        if (getAllowedKeys() != null && !getAllowedKeys().contains(key))
+        if (!getAllowedKeys().isEmpty() && !getAllowedKeys().contains(key))
             throw new IllegalStateException("The input key " + key + " is not allowed for lookups");
 
         _inputs.put(key, value);
@@ -116,13 +117,14 @@ public class SchemaLookup {
      * Return true if the inputs contain a discriminator.  A key that is not site or hist which has a non-null/non-empty value is considered a discriminator
      * @return true or false indicating whether a discriminator exists
      */
+    @SuppressWarnings("java:S135")
     public boolean hasDiscriminator() {
         boolean hasDiscriminator = false;
 
         for (Entry<String, String> entry : _inputs.entrySet()) {
             String key = entry.getKey();
 
-            if (StagingData.STANDARD_LOOKUP_KEYS.contains(key))
+            if (StagingData._STANDARD_LOOKUP_KEYS.contains(key))
                 continue;
 
             String value = entry.getValue();

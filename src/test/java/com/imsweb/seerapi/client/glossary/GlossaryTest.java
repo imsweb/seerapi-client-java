@@ -159,11 +159,11 @@ public class GlossaryTest {
 
         Set<KeywordMatch> matches = _GLOSSARY.match(text, null, true).execute().body();
         Assert.assertNotNull(matches);
-        Assert.assertEquals(matches.size(), 1);
+        Assert.assertEquals(1, matches.size());
 
         matches = _GLOSSARY.match(text, EnumSet.of(GENERAL), true).execute().body();
         Assert.assertNotNull(matches);
-        Assert.assertEquals(matches.size(), 0);
+        Assert.assertEquals(0, matches.size());
     }
 
 }

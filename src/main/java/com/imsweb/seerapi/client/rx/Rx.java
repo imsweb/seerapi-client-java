@@ -40,12 +40,6 @@ public class Rx extends Publishable {
     @JsonProperty("radiation")
     protected String _radiation;
 
-    /**
-     * Default constructor
-     */
-    public Rx() {
-    }
-
     public List<RxHistoryEvent> getHistory() {
         return _history;
     }

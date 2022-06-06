@@ -8,10 +8,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.imsweb.seerapi.client.staging.SchemaLookup;
+import com.imsweb.seerapi.client.staging.StagingData;
 
 public class CsSchemaLookup extends SchemaLookup {
 
-    private static final Set<String> _ALLOWED_KEYS = new HashSet<>(Arrays.asList(CsStagingData.PRIMARY_SITE_KEY, CsStagingData.HISTOLOGY_KEY, CsStagingData.SSF25_KEY));
+    private static final Set<String> _ALLOWED_KEYS = new HashSet<>(Arrays.asList(StagingData.PRIMARY_SITE_KEY, StagingData.HISTOLOGY_KEY, CsStagingData.SSF25_KEY));
 
     /**
      * Default constructor

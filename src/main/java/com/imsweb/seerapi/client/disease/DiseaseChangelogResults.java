@@ -13,12 +13,6 @@ public class DiseaseChangelogResults extends PublishableChangelogResults {
 
     protected List<DiseaseChangelog> _changelogs;
 
-    /**
-     * Default constructor
-     */
-    public DiseaseChangelogResults() {
-    }
-
     @JsonProperty("changelogs")
     public List<DiseaseChangelog> getChangelogs() {
         return _changelogs;

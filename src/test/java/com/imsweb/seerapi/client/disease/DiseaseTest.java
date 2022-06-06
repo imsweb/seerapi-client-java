@@ -74,6 +74,7 @@ public class DiseaseTest {
         assertEquals("C148", categories.get(0).getSites().get(0).getHigh());
     }
 
+    @SuppressWarnings("java:S5961")
     @Test
     public void testDiseaseById() throws IOException {
         Disease disease = _DISEASE.getById("latest", "51f6cf58e3e27c3994bd5408").execute().body();

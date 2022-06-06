@@ -12,6 +12,10 @@ public class Range {
     @JsonProperty("high")
     protected String _highValue;
 
+    public Range() {
+        // the object mapper needs this defined
+    }
+
     public Range(String low, String high) {
         setLowValue(low);
         setHighValue(high);

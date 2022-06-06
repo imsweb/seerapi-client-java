@@ -1,4 +1,4 @@
-package com.imsweb.seerapi.client.mph;
+package com.imsweb.seerapi.client.hcpcs.mph;
 
 import java.io.IOException;
 
@@ -7,6 +7,10 @@ import org.junit.Test;
 
 import com.imsweb.seerapi.client.BadRequestException;
 import com.imsweb.seerapi.client.SeerApi;
+import com.imsweb.seerapi.client.mph.MphInput;
+import com.imsweb.seerapi.client.mph.MphInputPair;
+import com.imsweb.seerapi.client.mph.MphOutput;
+import com.imsweb.seerapi.client.mph.MphService;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

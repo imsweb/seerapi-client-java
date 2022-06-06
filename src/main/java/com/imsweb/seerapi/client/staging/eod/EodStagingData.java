@@ -159,7 +159,7 @@ public class EodStagingData extends StagingData {
      */
     public static class EodStagingInputBuilder {
 
-        private EodStagingData _data;
+        private final EodStagingData _data;
 
         public EodStagingInputBuilder() {
             _data = new EodStagingData();

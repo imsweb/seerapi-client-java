@@ -9,7 +9,6 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -21,6 +20,7 @@ import static com.imsweb.seerapi.client.glossary.Glossary.Category.GENERAL;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class GlossaryTest {
 
@@ -33,13 +33,14 @@ public class GlossaryTest {
 
     @Test
     public void testGlossaryCategory() {
-        Assert.assertEquals(Glossary.Category.SOLID_TUMOR, Glossary.Category.valueOf("SOLID_TUMOR"));
+        assertEquals(Glossary.Category.SOLID_TUMOR, Glossary.Category.valueOf("SOLID_TUMOR"));
     }
 
     @Test
     public void testGlossaryVersions() throws IOException {
         List<GlossaryVersion> versions = _GLOSSARY.versions().execute().body();
 
+        assertNotNull(versions);
         assertEquals(1, versions.size());
         GlossaryVersion version = versions.get(0);
         assertEquals("latest", version.getName());
@@ -51,26 +52,27 @@ public class GlossaryTest {
     @Test
     public void testGlossaryById() throws IOException {
         GlossarySearchResults results = _GLOSSARY.search("latest", "Lymphangiogram").execute().body();
-        Assert.assertTrue(results.getCount() > 0);
+        assertNotNull(results);
+        assertTrue(results.getCount() > 0);
 
         Glossary glossary = _GLOSSARY.getById("latest", results.getResults().get(0).getId()).execute().body();
 
-        Assert.assertNotNull(glossary);
-        Assert.assertEquals("Lymphangiogram", glossary.getName());
-        Assert.assertEquals(Collections.singletonList(GENERAL), glossary.getCategories());
-        Assert.assertNull(glossary.getPrimarySite());
+        assertNotNull(glossary);
+        assertEquals("Lymphangiogram", glossary.getName());
+        assertEquals(Collections.singletonList(GENERAL), glossary.getCategories());
+        assertNull(glossary.getPrimarySite());
 
-        Assert.assertNull(glossary.getHistology());
-        Assert.assertTrue(glossary.getDefinition().startsWith("An x-ray of the lymphatic system."));
-        Assert.assertNull(glossary.getAlternateName());
-        Assert.assertNull(glossary.getHistory());
+        assertNull(glossary.getHistology());
+        assertTrue(glossary.getDefinition().startsWith("An x-ray of the lymphatic system."));
+        assertNull(glossary.getAlternateName());
+        assertNull(glossary.getHistory());
     }
 
     @Test
     public void testGlossaryChangelog() throws IOException {
         GlossaryChangelogResults results = _GLOSSARY.changelogs("latest", null, null, 1).execute().body();
 
-        Assert.assertNotNull(results);
+        assertNotNull(results);
 
         // TODO since all the glossary items were removed from the production database, this needs to be commented out; it will return when they are published again
 
@@ -104,28 +106,28 @@ public class GlossaryTest {
 
         GlossarySearchResults results = _GLOSSARY.search("latest", search.paramMap()).execute().body();
 
-        Assert.assertNotNull(results);
-        Assert.assertEquals(25, results.getCount().longValue());
-        Assert.assertTrue(results.getTotal().longValue() > 0);
-        Assert.assertTrue(results.getResults().size() > 0);
-        Assert.assertEquals(Collections.singletonList(term), results.getTerms());
+        assertNotNull(results);
+        assertEquals(25, results.getCount().longValue());
+        assertTrue(results.getTotal().longValue() > 0);
+        assertTrue(results.getResults().size() > 0);
+        assertEquals(Collections.singletonList(term), results.getTerms());
 
         // add the category and verify there are no results
         results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(Glossary.Category.SOLID_TUMOR)).execute().body();
 
-        Assert.assertNotNull(results);
-        Assert.assertEquals(25, results.getCount().longValue());
-        Assert.assertEquals(0, results.getTotal().longValue());
-        Assert.assertNull(results.getResults());
+        assertNotNull(results);
+        assertEquals(25, results.getCount().longValue());
+        assertEquals(0, results.getTotal().longValue());
+        assertNull(results.getResults());
 
         // add a second category and verify there are we get the results again
         results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(Glossary.Category.SOLID_TUMOR, Glossary.Category.HEMATO)).execute().body();
 
-        Assert.assertNotNull(results);
-        Assert.assertEquals(25, results.getCount().longValue());
-        Assert.assertTrue(results.getTotal().longValue() > 0);
-        Assert.assertTrue(results.getResults().size() > 0);
-        Assert.assertEquals(Collections.singletonList(term), results.getTerms());
+        assertNotNull(results);
+        assertEquals(25, results.getCount().longValue());
+        assertTrue(results.getTotal().longValue() > 0);
+        assertTrue(results.getResults().size() > 0);
+        assertEquals(Collections.singletonList(term), results.getTerms());
     }
 
     @Test
@@ -139,9 +141,9 @@ public class GlossaryTest {
 
         while (total == null || search.getOffset() < total) {
             GlossarySearchResults results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(Glossary.Category.HEMATO)).execute().body();
-            Assert.assertNotNull(results);
-            Assert.assertTrue(results.getTotal() > 0);
-            Assert.assertTrue(results.getResults().size() > 0);
+            assertNotNull(results);
+            assertTrue(results.getTotal() > 0);
+            assertTrue(results.getResults().size() > 0);
 
             // the first time through, set the total
             if (total == null)
@@ -150,7 +152,7 @@ public class GlossaryTest {
             search.setOffset(search.getOffset() + results.getResults().size());
         }
 
-        Assert.assertTrue(total > 100);
+        assertTrue(total > 100);
     }
 
     @Test
@@ -158,12 +160,12 @@ public class GlossaryTest {
         String text = "This text contains summary stage which should be found.";
 
         Set<KeywordMatch> matches = _GLOSSARY.match(text, null, true).execute().body();
-        Assert.assertNotNull(matches);
-        Assert.assertEquals(1, matches.size());
+        assertNotNull(matches);
+        assertEquals(1, matches.size());
 
         matches = _GLOSSARY.match(text, EnumSet.of(GENERAL), true).execute().body();
-        Assert.assertNotNull(matches);
-        Assert.assertEquals(0, matches.size());
+        assertNotNull(matches);
+        assertEquals(0, matches.size());
     }
 
 }

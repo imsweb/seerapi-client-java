@@ -48,6 +48,7 @@ public class SurgeryTest {
         assertThat(row.getLineBreak()).isFalse();
 
         table = _SURGERY.table("2014", null, "C001", "8000").execute().body();
+        assertThat(table).isNotNull();
         assertThat(table.getTitle()).isEqualTo("Oral Cavity");
     }
 }

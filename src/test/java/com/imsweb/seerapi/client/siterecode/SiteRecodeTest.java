@@ -62,6 +62,7 @@ public class SiteRecodeTest {
         Call<SiteRecode> call = _SITE_RECODE.siteGroup("C379", "9650");
         SiteRecode recode = call.execute().body();
 
+        assertNotNull(recode);
         assertEquals("C379", recode.getSite());
         assertEquals("9650", recode.getHist());
         assertEquals("33011", recode.getSiteGroup());

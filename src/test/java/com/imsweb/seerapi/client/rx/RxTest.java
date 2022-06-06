@@ -33,6 +33,7 @@ public class RxTest {
     public void testRxVersions() throws IOException {
         List<RxVersion> versions = _RX.versions().execute().body();
 
+        assertNotNull(versions);
         assertEquals(1, versions.size());
         RxVersion version = versions.get(0);
         assertEquals("latest", version.getName());

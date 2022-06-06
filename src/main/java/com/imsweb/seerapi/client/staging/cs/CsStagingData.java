@@ -211,7 +211,7 @@ public class CsStagingData extends StagingData {
      */
     public static class CsStagingInputBuilder {
 
-        private CsStagingData _data;
+        private final CsStagingData _data;
 
         public CsStagingInputBuilder() {
             _data = new CsStagingData();

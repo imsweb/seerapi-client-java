@@ -180,7 +180,7 @@ public class TnmStagingData extends StagingData {
      */
     public static class TnmStagingInputBuilder {
 
-        private TnmStagingData _data;
+        private final TnmStagingData _data;
 
         public TnmStagingInputBuilder() {
             _data = new TnmStagingData();

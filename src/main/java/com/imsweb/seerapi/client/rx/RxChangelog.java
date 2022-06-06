@@ -3,12 +3,13 @@
  */
 package com.imsweb.seerapi.client.rx;
 
-import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class RxChangelog {
+import com.imsweb.seerapi.client.shared.Changelog;
+
+public class RxChangelog extends Changelog {
 
     @JsonProperty("adds")
     private List<RxChangelogEntry> _adds;
@@ -16,14 +17,6 @@ public class RxChangelog {
     private List<RxChangelogEntry> _deletes;
     @JsonProperty("mods")
     private List<RxChangelogEntry> _mods;
-    @JsonProperty("user")
-    private String _user;
-    @JsonProperty("date")
-    private Date _date;
-    @JsonProperty("version")
-    private String _version;
-    @JsonProperty("description")
-    private String _description;
 
     public List<RxChangelogEntry> getAdds() {
         return _adds;
@@ -49,35 +42,4 @@ public class RxChangelog {
         _mods = mods;
     }
 
-    public String getUser() {
-        return _user;
-    }
-
-    public void setUser(String user) {
-        _user = user;
-    }
-
-    public Date getDate() {
-        return _date;
-    }
-
-    public void setDate(Date date) {
-        _date = date;
-    }
-
-    public String getVersion() {
-        return _version;
-    }
-
-    public void setVersion(String version) {
-        _version = version;
-    }
-
-    public String getDescription() {
-        return _description;
-    }
-
-    public void setDescription(String description) {
-        _description = description;
-    }
 }

@@ -3,6 +3,7 @@
  */
 package com.imsweb.seerapi.client.staging;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -41,7 +42,7 @@ public class SchemaLookup {
      * @return a set of keys
      */
     public Set<String> getAllowedKeys() {
-        return null;
+        return Collections.emptySet();
     }
 
     /**
@@ -116,6 +117,7 @@ public class SchemaLookup {
      * Return true if the inputs contain a discriminator.  A key that is not site or hist which has a non-null/non-empty value is considered a discriminator
      * @return true or false indicating whether a discriminator exists
      */
+    @SuppressWarnings("java:S135")
     public boolean hasDiscriminator() {
         boolean hasDiscriminator = false;
 

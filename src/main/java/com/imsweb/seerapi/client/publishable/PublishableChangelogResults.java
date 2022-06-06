@@ -11,12 +11,6 @@ public class PublishableChangelogResults {
     protected Integer _count;
     protected Integer _offset;
 
-    /**
-     * Default constructor
-     */
-    public PublishableChangelogResults() {
-    }
-
     @JsonProperty("total")
     public Long getTotal() {
         return _total;

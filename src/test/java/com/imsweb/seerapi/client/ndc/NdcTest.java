@@ -92,7 +92,7 @@ public class NdcTest {
 
         search.setQuery("daklinza");
         products = _NDC.search(search.paramMap()).execute().body();
-        assertThat(products.size()).isGreaterThan(1);
+        assertThat(products).hasSizeGreaterThan(1);
 
         search.setRemovedSince("2020-10-01");
         products = _NDC.search(search.paramMap()).execute().body();
@@ -114,7 +114,7 @@ public class NdcTest {
 
         Response<List<NdcProduct>> response = _NDC.search(search.paramMap()).execute();
 
-        assertThat(Integer.valueOf(response.headers().get("X-Total-Count"))).isGreaterThan(0);
+        assertThat(Integer.valueOf(response.headers().get("X-Total-Count"))).isPositive();
 
         List<NdcProduct> products = response.body();
         assertThat(products).isNotEmpty();
@@ -132,19 +132,19 @@ public class NdcTest {
         // get count of all drugs
         Response<List<NdcProduct>> response = _NDC.search(search.paramMap()).execute();
         Integer totalCount = Integer.parseInt(response.headers().get("X-Total-Count"));
-        assertThat(totalCount).isGreaterThan(0);
+        assertThat(totalCount).isPositive();
 
         // get count of seer-info drugs
         search.setHasSeerInfo(true);
         response = _NDC.search(search.paramMap()).execute();
         Integer withCount = Integer.parseInt(response.headers().get("X-Total-Count"));
-        assertThat(withCount).isGreaterThan(0).isLessThan(totalCount);
+        assertThat(withCount).isPositive().isLessThan(totalCount);
 
         // get count of non seer-info drugs
         search.setHasSeerInfo(false);
         response = _NDC.search(search.paramMap()).execute();
         Integer withoutCount = Integer.parseInt(response.headers().get("X-Total-Count"));
-        assertThat(withCount).isGreaterThan(0).isLessThan(totalCount);
+        assertThat(withCount).isPositive().isLessThan(totalCount);
 
         assertThat(totalCount).isEqualTo(withCount + withoutCount);
     }

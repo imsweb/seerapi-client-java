@@ -13,12 +13,6 @@ public class RxChangelogResults extends PublishableChangelogResults {
 
     protected List<RxChangelog> _changelogs;
 
-    /**
-     * Default constructor
-     */
-    public RxChangelogResults() {
-    }
-
     @JsonProperty("changelogs")
     public List<RxChangelog> getChangelogs() {
         return _changelogs;

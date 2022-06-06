@@ -46,9 +46,6 @@ public class StagingSchema {
     private Set<String> _involvedTables;
     private StagingInputErrorHandler _onInvalidInput;
 
-    public StagingSchema() {
-    }
-
     @JsonProperty("id")
     public String getId() {
         return _displayId;

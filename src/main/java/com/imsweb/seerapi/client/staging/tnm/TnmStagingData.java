@@ -57,8 +57,7 @@ public class TnmStagingData extends StagingData {
         SSF21("ssf21"),
         SSF22("ssf22"),
         SSF23("ssf23"),
-        SSF24("ssf24"),
-        SSF25("ssf25");
+        SSF24("ssf24");
 
         private final String _name;
 

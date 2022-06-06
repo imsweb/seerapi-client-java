@@ -39,9 +39,6 @@ public class NaaccrXmlField {
     @JsonProperty("documentation")
     protected String _documentation;
 
-    public NaaccrXmlField() {
-    }
-
     public String getNaaccrId() {
         return _naaccrId;
     }

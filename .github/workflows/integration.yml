@@ -2,7 +2,7 @@
 
 name: integration
 
-on: [push, pull_request]
+on: [ push, pull_request ]
 
 jobs:
   build:
@@ -25,9 +25,11 @@ jobs:
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
-      - name: Build and test
-        run: |
-          chmod +x gradlew
-          ./gradlew build --no-daemon
+      - name: Build and analyze
         env:
           SEER_API_KEY: ${{ secrets.SEER_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          chmod +x gradlew
+          ./gradlew build sonarqube

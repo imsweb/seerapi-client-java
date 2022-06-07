@@ -18,6 +18,10 @@ import com.imsweb.seerapi.client.staging.cs.CsSchemaLookup;
 import com.imsweb.seerapi.client.staging.cs.CsStagingData;
 import com.imsweb.seerapi.client.staging.cs.CsStagingData.CsInput;
 import com.imsweb.seerapi.client.staging.cs.CsStagingData.CsStagingInputBuilder;
+import com.imsweb.seerapi.client.staging.tnm.TnmStagingData;
+import com.imsweb.seerapi.client.staging.tnm.TnmStagingData.TnmInput;
+import com.imsweb.seerapi.client.staging.tnm.TnmStagingData.TnmOutput;
+import com.imsweb.seerapi.client.staging.tnm.TnmStagingData.TnmStagingInputBuilder;
 
 import static com.imsweb.seerapi.client.staging.cs.CsStagingData.CsOutput.AJCC6_M;
 import static com.imsweb.seerapi.client.staging.cs.CsStagingData.CsOutput.AJCC6_MDESCRIPTOR;
@@ -186,6 +190,52 @@ public class StagingTest {
     }
 
     @Test
+    public void testCsInputBuilder() {
+        CsStagingData data1 = new CsStagingData();
+        data1.setInput(CsInput.PRIMARY_SITE, "C680");
+        data1.setInput(CsInput.HISTOLOGY, "8000");
+        data1.setInput(CsInput.BEHAVIOR, "3");
+        data1.setInput(CsInput.GRADE, "9");
+        data1.setInput(CsInput.DX_YEAR, "2013");
+        data1.setInput(CsInput.CS_VERSION_ORIGINAL, "020550");
+        data1.setInput(CsInput.TUMOR_SIZE, "075");
+        data1.setInput(CsInput.EXTENSION, "100");
+        data1.setInput(CsInput.EXTENSION_EVAL, "9");
+        data1.setInput(CsInput.LYMPH_NODES, "100");
+        data1.setInput(CsInput.LYMPH_NODES_EVAL, "9");
+        data1.setInput(CsInput.REGIONAL_NODES_POSITIVE, "99");
+        data1.setInput(CsInput.REGIONAL_NODES_EXAMINED, "99");
+        data1.setInput(CsInput.METS_AT_DX, "10");
+        data1.setInput(CsInput.METS_EVAL, "9");
+        data1.setInput(CsInput.LVI, "9");
+        data1.setInput(CsInput.AGE_AT_DX, "060");
+        data1.setSsf(1, "020");
+
+        CsStagingData data2 = new CsStagingInputBuilder()
+                .withInput(CsStagingData.CsInput.PRIMARY_SITE, "C680")
+                .withInput(CsStagingData.CsInput.HISTOLOGY, "8000")
+                .withInput(CsStagingData.CsInput.BEHAVIOR, "3")
+                .withInput(CsStagingData.CsInput.GRADE, "9")
+                .withInput(CsStagingData.CsInput.DX_YEAR, "2013")
+                .withInput(CsStagingData.CsInput.CS_VERSION_ORIGINAL, "020550")
+                .withInput(CsStagingData.CsInput.TUMOR_SIZE, "075")
+                .withInput(CsStagingData.CsInput.EXTENSION, "100")
+                .withInput(CsStagingData.CsInput.EXTENSION_EVAL, "9")
+                .withInput(CsStagingData.CsInput.LYMPH_NODES, "100")
+                .withInput(CsStagingData.CsInput.LYMPH_NODES_EVAL, "9")
+                .withInput(CsStagingData.CsInput.REGIONAL_NODES_POSITIVE, "99")
+                .withInput(CsStagingData.CsInput.REGIONAL_NODES_EXAMINED, "99")
+                .withInput(CsStagingData.CsInput.METS_AT_DX, "10")
+                .withInput(CsStagingData.CsInput.METS_EVAL, "9")
+                .withInput(CsStagingData.CsInput.LVI, "9")
+                .withInput(CsStagingData.CsInput.AGE_AT_DX, "060")
+                .withSsf(1, "020")
+                .build();
+
+        assertThat(data1.getInput()).isEqualTo(data2.getInput());
+    }
+
+    @Test
     public void testCsStaging() throws IOException {
         CsStagingData data = new CsStagingInputBuilder()
                 .withInput(CsInput.PRIMARY_SITE, "C680")
@@ -209,7 +259,7 @@ public class StagingTest {
                 .build();
 
         // perform the staging
-        StagingData output = _STAGING.stage(_ALGORITHM, _VERSION, data.getInput()).execute().body();
+        StagingData output = _STAGING.stage("cs", "02.05.50", data.getInput()).execute().body();
 
         assertThat(output).isNotNull();
         assertThat(output.getResult()).isEqualTo(StagingData.Result.STAGED);
@@ -264,6 +314,91 @@ public class StagingTest {
         assertThat(output.getOutput(SS2000_M.toString())).isEqualTo("D");
         assertThat(output.getOutput(SS2000_STAGE.toString())).isEqualTo("D");
         assertThat(output.getOutput(STOR_SS2000_STAGE.toString())).isEqualTo("7");
+    }
+
+    @Test
+    public void testTnmInputBuilder() {
+        TnmStagingData data1 = new TnmStagingData();
+        data1.setInput(TnmInput.PRIMARY_SITE, "C680");
+        data1.setInput(TnmInput.HISTOLOGY, "8000");
+        data1.setInput(TnmInput.BEHAVIOR, "3");
+        data1.setInput(TnmInput.GRADE, "9");
+        data1.setInput(TnmInput.DX_YEAR, "2013");
+        data1.setInput(TnmInput.REGIONAL_NODES_POSITIVE, "99");
+        data1.setInput(TnmInput.AGE_AT_DX, "060");
+        data1.setInput(TnmInput.SEX, "1");
+        data1.setInput(TnmInput.RX_SUMM_SURGERY, "8");
+        data1.setInput(TnmInput.RX_SUMM_RADIATION, "9");
+        data1.setInput(TnmInput.CLIN_T, "1");
+        data1.setInput(TnmInput.CLIN_N, "2");
+        data1.setInput(TnmInput.CLIN_M, "3");
+        data1.setInput(TnmInput.PATH_T, "4");
+        data1.setInput(TnmInput.PATH_N, "5");
+        data1.setInput(TnmInput.PATH_M, "6");
+        data1.setSsf(1, "020");
+
+        TnmStagingData data2 = new TnmStagingData.TnmStagingInputBuilder()
+                .withInput(TnmInput.PRIMARY_SITE, "C680")
+                .withInput(TnmInput.HISTOLOGY, "8000")
+                .withInput(TnmInput.BEHAVIOR, "3")
+                .withInput(TnmInput.GRADE, "9")
+                .withInput(TnmInput.DX_YEAR, "2013")
+                .withInput(TnmInput.REGIONAL_NODES_POSITIVE, "99")
+                .withInput(TnmInput.AGE_AT_DX, "060")
+                .withInput(TnmInput.SEX, "1")
+                .withInput(TnmInput.RX_SUMM_SURGERY, "8")
+                .withInput(TnmInput.RX_SUMM_RADIATION, "9")
+                .withInput(TnmInput.CLIN_T, "1")
+                .withInput(TnmInput.CLIN_N, "2")
+                .withInput(TnmInput.CLIN_M, "3")
+                .withInput(TnmInput.PATH_T, "4")
+                .withInput(TnmInput.PATH_N, "5")
+                .withInput(TnmInput.PATH_M, "6")
+                .withSsf(1, "020").build();
+
+        assertThat(data1.getInput()).isEqualTo(data2.getInput());
+    }
+
+    @Test
+    public void testTnmStaging() throws IOException {
+        TnmStagingData data = new TnmStagingInputBuilder()
+                .withInput(TnmInput.PRIMARY_SITE, "C680")
+                .withInput(TnmInput.HISTOLOGY, "8000")
+                .withInput(TnmInput.BEHAVIOR, "3")
+                .withInput(TnmInput.DX_YEAR, "2016")
+                .withInput(TnmInput.RX_SUMM_SURGERY, "2")
+                .withInput(TnmInput.RX_SUMM_RADIATION, "4")
+                .withInput(TnmInput.REGIONAL_NODES_POSITIVE, "02")
+                .withInput(TnmInput.CLIN_T, "c0")
+                .withInput(TnmInput.CLIN_N, "c1")
+                .withInput(TnmInput.CLIN_M, "c0")
+                .withInput(TnmInput.PATH_T, "p0")
+                .withInput(TnmInput.PATH_N, "p1")
+                .withInput(TnmInput.PATH_M, "p1")
+                .build();
+
+        // perform the staging
+        StagingData output = _STAGING.stage("tnm", "1.9", data.getInput()).execute().body();
+
+        // check output
+        assertThat(output).isNotNull();
+        assertThat(output.getResult()).isEqualTo(StagingData.Result.STAGED);
+        assertThat(output.getSchemaId()).isEqualTo("urethra");
+        assertThat(output.getErrors()).isEmpty();
+        assertThat(output.getPath()).hasSize(25);
+        assertThat(output.getOutput()).hasSize(10);
+
+        // check outputs
+        assertThat(output.getOutput(TnmOutput.DERIVED_VERSION.toString())).isEqualTo("1.9");
+        assertThat(output.getOutput(TnmOutput.CLIN_STAGE_GROUP.toString())).isEqualTo("3");
+        assertThat(output.getOutput(TnmOutput.PATH_STAGE_GROUP.toString())).isEqualTo("4");
+        assertThat(output.getOutput(TnmOutput.COMBINED_STAGE_GROUP.toString())).isEqualTo("4");
+        assertThat(output.getOutput(TnmOutput.COMBINED_T.toString())).isEqualTo("c0");
+        assertThat(output.getOutput(TnmOutput.SOURCE_T.toString())).isEqualTo("1");
+        assertThat(output.getOutput(TnmOutput.COMBINED_N.toString())).isEqualTo("c1");
+        assertThat(output.getOutput(TnmOutput.SOURCE_N.toString())).isEqualTo("1");
+        assertThat(output.getOutput(TnmOutput.COMBINED_M.toString())).isEqualTo("p1");
+        assertThat(output.getOutput(TnmOutput.SOURCE_M.toString())).isEqualTo("2");
     }
 
     @Test

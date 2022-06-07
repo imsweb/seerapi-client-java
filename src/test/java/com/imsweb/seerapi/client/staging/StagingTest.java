@@ -18,6 +18,10 @@ import com.imsweb.seerapi.client.staging.cs.CsSchemaLookup;
 import com.imsweb.seerapi.client.staging.cs.CsStagingData;
 import com.imsweb.seerapi.client.staging.cs.CsStagingData.CsInput;
 import com.imsweb.seerapi.client.staging.cs.CsStagingData.CsStagingInputBuilder;
+import com.imsweb.seerapi.client.staging.eod.EodStagingData;
+import com.imsweb.seerapi.client.staging.eod.EodStagingData.EodInput;
+import com.imsweb.seerapi.client.staging.eod.EodStagingData.EodOutput;
+import com.imsweb.seerapi.client.staging.eod.EodStagingData.EodStagingInputBuilder;
 import com.imsweb.seerapi.client.staging.tnm.TnmStagingData;
 import com.imsweb.seerapi.client.staging.tnm.TnmStagingData.TnmInput;
 import com.imsweb.seerapi.client.staging.tnm.TnmStagingData.TnmOutput;
@@ -399,6 +403,68 @@ public class StagingTest {
         assertThat(output.getOutput(TnmOutput.SOURCE_N.toString())).isEqualTo("1");
         assertThat(output.getOutput(TnmOutput.COMBINED_M.toString())).isEqualTo("p1");
         assertThat(output.getOutput(TnmOutput.SOURCE_M.toString())).isEqualTo("2");
+    }
+
+    @Test
+    public void testEodInputBuilder() {
+        EodStagingData data1 = new EodStagingData();
+        data1.setInput(EodInput.PRIMARY_SITE, "C250");
+        data1.setInput(EodInput.HISTOLOGY, "8154");
+        data1.setInput(EodInput.DX_YEAR, "2018");
+        data1.setInput(EodInput.AGE_AT_DX, "060");
+        data1.setInput(EodInput.SEX, "1");
+        data1.setInput(EodInput.TUMOR_SIZE_SUMMARY, "004");
+        data1.setInput(EodInput.NODES_POS, "03");
+        data1.setInput(EodInput.EOD_PRIMARY_TUMOR, "500");
+        data1.setInput(EodInput.EOD_REGIONAL_NODES, "300");
+        data1.setInput(EodInput.EOD_METS, "10");
+
+        EodStagingData data2 = new EodStagingInputBuilder()
+                .withInput(EodInput.PRIMARY_SITE, "C250")
+                .withInput(EodInput.HISTOLOGY, "8154")
+                .withInput(EodInput.DX_YEAR, "2018")
+                .withInput(EodInput.AGE_AT_DX, "060")
+                .withInput(EodInput.SEX, "1")
+                .withInput(EodInput.TUMOR_SIZE_SUMMARY, "004")
+                .withInput(EodInput.NODES_POS, "03")
+                .withInput(EodInput.EOD_PRIMARY_TUMOR, "500")
+                .withInput(EodInput.EOD_REGIONAL_NODES, "300")
+                .withInput(EodInput.EOD_METS, "10").build();
+
+        assertThat(data1.getInput()).isEqualTo(data2.getInput());
+    }
+
+    @Test
+    public void testEodStaging() throws IOException {
+        EodStagingData data = new EodStagingInputBuilder()
+                .withInput(EodInput.PRIMARY_SITE, "C250")
+                .withInput(EodInput.HISTOLOGY, "8154")
+                .withInput(EodInput.DX_YEAR, "2018")
+                .withInput(EodInput.TUMOR_SIZE_SUMMARY, "004")
+                .withInput(EodInput.NODES_POS, "03")
+                .withInput(EodInput.EOD_PRIMARY_TUMOR, "500")
+                .withInput(EodInput.EOD_REGIONAL_NODES, "300")
+                .withInput(EodInput.EOD_METS, "10").build();
+
+        // perform the staging
+        StagingData output = _STAGING.stage("eod_public", "2.1", data.getInput()).execute().body();
+
+        assertThat(output).isNotNull();
+        assertThat(output.getResult()).isEqualTo(StagingData.Result.STAGED);
+        assertThat(output.getSchemaId()).isEqualTo("pancreas");
+        assertThat(output.getErrors()).isEmpty();
+        assertThat(output.getPath()).hasSize(12);
+        assertThat(output.getOutput()).hasSize(9);
+
+        // check outputs
+        assertThat(output.getOutput(EodOutput.DERIVED_VERSION.toString())).isEqualTo("2.1");
+        assertThat(output.getOutput(EodOutput.SS_2018_DERIVED.toString())).isEqualTo("7");
+        assertThat(output.getOutput(EodOutput.NAACCR_SCHEMA_ID.toString())).isEqualTo("00280");
+        assertThat(output.getOutput(EodOutput.EOD_2018_STAGE_GROUP.toString())).isEqualTo("4");
+        assertThat(output.getOutput(EodOutput.EOD_2018_T.toString())).isEqualTo("T1a");
+        assertThat(output.getOutput(EodOutput.EOD_2018_N.toString())).isEqualTo("N1");
+        assertThat(output.getOutput(EodOutput.EOD_2018_M.toString())).isEqualTo("M1");
+        assertThat(output.getOutput(EodOutput.AJCC_ID.toString())).isEqualTo("28");
     }
 
     @Test

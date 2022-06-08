@@ -7,12 +7,16 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.publishable.PublishableSearch;
 
+import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
+import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -272,6 +276,14 @@ public class DiseaseTest {
         assertTrue(entry.getName().length() > 0);
         assertNull(entry.getOldVersion());
         assertNull(entry.getNewVersion());
+    }
+
+    @Test
+    public void testBeans() {
+        MatcherAssert.assertThat(DiseaseHistoryEvent.class, CoreMatchers.allOf(
+                hasValidBeanConstructor(),
+                hasValidGettersAndSetters()
+        ));
     }
 
 }

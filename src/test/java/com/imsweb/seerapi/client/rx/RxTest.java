@@ -9,12 +9,16 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.publishable.PublishableSearch;
 
+import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
+import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -153,5 +157,13 @@ public class RxTest {
 
             search.setOffset(search.getOffset() + results.getResults().size());
         }
+    }
+
+    @Test
+    public void testBeans() {
+        MatcherAssert.assertThat(RxHistoryEvent.class, CoreMatchers.allOf(
+                hasValidBeanConstructor(),
+                hasValidGettersAndSetters()
+        ));
     }
 }

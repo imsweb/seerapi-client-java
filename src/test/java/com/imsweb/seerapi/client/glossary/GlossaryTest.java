@@ -9,6 +9,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -16,6 +18,8 @@ import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.publishable.PublishableSearch;
 import com.imsweb.seerapi.client.shared.KeywordMatch;
 
+import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
+import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static com.imsweb.seerapi.client.glossary.Glossary.Category.GENERAL;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -168,4 +172,11 @@ public class GlossaryTest {
         assertEquals(0, matches.size());
     }
 
+    @Test
+    public void testBeans() {
+        MatcherAssert.assertThat(GlossaryHistoryEvent.class, CoreMatchers.allOf(
+                hasValidBeanConstructor(),
+                hasValidGettersAndSetters()
+        ));
+    }
 }

@@ -44,6 +44,7 @@ dependencies {
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.assertj:assertj-core:3.23.1'
+    testImplementation 'com.google.code.bean-matchers:bean-matchers:0.13'
 }
 
 jar {

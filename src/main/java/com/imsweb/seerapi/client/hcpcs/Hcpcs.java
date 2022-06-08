@@ -48,60 +48,120 @@ public class Hcpcs {
         return hcpcsCode;
     }
 
+    public void setHcpcsCode(String hcpcsCode) {
+        this.hcpcsCode = hcpcsCode;
+    }
+
     public String getGenericName() {
         return genericName;
+    }
+
+    public void setGenericName(String genericName) {
+        this.genericName = genericName;
     }
 
     public List<String> getBrandNames() {
         return brandNames;
     }
 
+    public void setBrandNames(List<String> brandNames) {
+        this.brandNames = brandNames;
+    }
+
     public String getStrength() {
         return strength;
+    }
+
+    public void setStrength(String strength) {
+        this.strength = strength;
     }
 
     public String getFdaApprovalYear() {
         return fdaApprovalYear;
     }
 
+    public void setFdaApprovalYear(String fdaApprovalYear) {
+        this.fdaApprovalYear = fdaApprovalYear;
+    }
+
     public String getFdaDiscontinuationYear() {
         return fdaDiscontinuationYear;
+    }
+
+    public void setFdaDiscontinuationYear(String fdaDiscontinuationYear) {
+        this.fdaDiscontinuationYear = fdaDiscontinuationYear;
     }
 
     public String getCmsApprovalDate() {
         return cmsApprovalDate;
     }
 
+    public void setCmsApprovalDate(String cmsApprovalDate) {
+        this.cmsApprovalDate = cmsApprovalDate;
+    }
+
     public String getCmsDiscontinuationDate() {
         return cmsDiscontinuationDate;
+    }
+
+    public void setCmsDiscontinuationDate(String cmsDiscontinuationDate) {
+        this.cmsDiscontinuationDate = cmsDiscontinuationDate;
     }
 
     public List<Category> getCategories() {
         return categories;
     }
 
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
     public String getMajorDrugClass() {
         return majorDrugClass;
+    }
+
+    public void setMajorDrugClass(String majorDrugClass) {
+        this.majorDrugClass = majorDrugClass;
     }
 
     public String getMinorDrugClass() {
         return minorDrugClass;
     }
 
+    public void setMinorDrugClass(String minorDrugClass) {
+        this.minorDrugClass = minorDrugClass;
+    }
+
     public Boolean getOral() {
         return oral;
+    }
+
+    public void setOral(Boolean oral) {
+        this.oral = oral;
     }
 
     public Date getDateAdded() {
         return dateAdded;
     }
 
+    public void setDateAdded(Date dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
     public Date getDateModified() {
         return dateModified;
     }
 
+    public void setDateModified(Date dateModified) {
+        this.dateModified = dateModified;
+    }
+
     public Double getScore() {
         return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
     }
 
     // drug categories

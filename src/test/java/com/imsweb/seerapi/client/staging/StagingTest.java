@@ -572,7 +572,6 @@ public class StagingTest {
         MatcherAssert.assertThat(StagingColumnDefinition.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(StagingSchemaInput.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(StagingSchemaOutput.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
-        MatcherAssert.assertThat(StagingData.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(StagingMapping.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(StagingKeyMapping.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(StagingKeyValue.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));

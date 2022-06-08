@@ -157,6 +157,7 @@ public class MphTest {
         MatcherAssert.assertThat(MphRule.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(MphInput.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(MphInputPair.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(MphOutput.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
     }
 
 }

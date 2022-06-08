@@ -559,6 +559,7 @@ public class StagingTest {
 
     @Test
     public void testBeans() {
+        MatcherAssert.assertThat(StagingAlgorithm.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(StagingMetadata.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(StagingVersion.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSettersExcluding("production", "beta", "development")));
         MatcherAssert.assertThat(StagingSchema.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
@@ -573,6 +574,7 @@ public class StagingTest {
         MatcherAssert.assertThat(StagingMapping.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(StagingKeyMapping.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(StagingKeyValue.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(StagingError.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(YearRange.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(YearRangeString.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(YearRangeInteger.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));

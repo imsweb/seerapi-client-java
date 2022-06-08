@@ -75,6 +75,7 @@ public class SiteRecodeTest {
     @Test
     public void testBeans() {
         MatcherAssert.assertThat(Version.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(SiteRecode.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
     }
 
 }

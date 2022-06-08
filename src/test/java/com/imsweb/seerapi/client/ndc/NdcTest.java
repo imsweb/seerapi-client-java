@@ -159,6 +159,6 @@ public class NdcTest {
         MatcherAssert.assertThat(NdcPackage.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(NdcSubstance.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(NdcSearch.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
-
+        MatcherAssert.assertThat(NdcSeerInfo.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
     }
 }

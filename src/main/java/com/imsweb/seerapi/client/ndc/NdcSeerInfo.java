@@ -33,28 +33,56 @@ public class NdcSeerInfo {
         return seerRxId;
     }
 
+    public void setSeerRxId(String seerRxId) {
+        this.seerRxId = seerRxId;
+    }
+
     public List<Category> getCategories() {
         return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
     public String getMajorDrugClass() {
         return majorDrugClass;
     }
 
+    public void setMajorDrugClass(String majorDrugClass) {
+        this.majorDrugClass = majorDrugClass;
+    }
+
     public String getMinorDrugClass() {
         return minorDrugClass;
+    }
+
+    public void setMinorDrugClass(String minorDrugClass) {
+        this.minorDrugClass = minorDrugClass;
     }
 
     public Boolean getOrphanDrug() {
         return orphanDrug;
     }
 
+    public void setOrphanDrug(Boolean orphanDrug) {
+        this.orphanDrug = orphanDrug;
+    }
+
     public Boolean getExclusiveAgent() {
         return exclusiveAgent;
     }
 
+    public void setExclusiveAgent(Boolean exclusiveAgent) {
+        this.exclusiveAgent = exclusiveAgent;
+    }
+
     public Date getDateModified() {
         return dateModified;
+    }
+
+    public void setDateModified(Date dateModified) {
+        this.dateModified = dateModified;
     }
 
     // drug categories

@@ -289,6 +289,9 @@ public class DiseaseTest {
         MatcherAssert.assertThat(DiseaseSearchResults.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(DiseaseSource.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(SiteCategory.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(SamePrimaries.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(PrimarySite.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(SiteRange.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
     }
 
 }

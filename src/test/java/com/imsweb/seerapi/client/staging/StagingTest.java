@@ -5,7 +5,9 @@ package com.imsweb.seerapi.client.staging;
 
 import java.io.IOException;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.BeforeClass;
@@ -18,15 +20,19 @@ import com.imsweb.seerapi.client.staging.cs.CsSchemaLookup;
 import com.imsweb.seerapi.client.staging.cs.CsStagingData;
 import com.imsweb.seerapi.client.staging.cs.CsStagingData.CsInput;
 import com.imsweb.seerapi.client.staging.cs.CsStagingData.CsStagingInputBuilder;
+import com.imsweb.seerapi.client.staging.eod.EodSchemaLookup;
 import com.imsweb.seerapi.client.staging.eod.EodStagingData;
 import com.imsweb.seerapi.client.staging.eod.EodStagingData.EodInput;
 import com.imsweb.seerapi.client.staging.eod.EodStagingData.EodOutput;
 import com.imsweb.seerapi.client.staging.eod.EodStagingData.EodStagingInputBuilder;
+import com.imsweb.seerapi.client.staging.tnm.TnmSchemaLookup;
 import com.imsweb.seerapi.client.staging.tnm.TnmStagingData;
 import com.imsweb.seerapi.client.staging.tnm.TnmStagingData.TnmInput;
 import com.imsweb.seerapi.client.staging.tnm.TnmStagingData.TnmOutput;
 import com.imsweb.seerapi.client.staging.tnm.TnmStagingData.TnmStagingInputBuilder;
 
+import static com.imsweb.seerapi.client.staging.StagingData.HISTOLOGY_KEY;
+import static com.imsweb.seerapi.client.staging.StagingData.PRIMARY_SITE_KEY;
 import static com.imsweb.seerapi.client.staging.cs.CsStagingData.CsOutput.AJCC6_M;
 import static com.imsweb.seerapi.client.staging.cs.CsStagingData.CsOutput.AJCC6_MDESCRIPTOR;
 import static com.imsweb.seerapi.client.staging.cs.CsStagingData.CsOutput.AJCC6_N;
@@ -68,6 +74,7 @@ import static com.imsweb.seerapi.client.staging.cs.CsStagingData.CsOutput.STOR_A
 import static com.imsweb.seerapi.client.staging.cs.CsStagingData.CsOutput.STOR_SS1977_STAGE;
 import static com.imsweb.seerapi.client.staging.cs.CsStagingData.CsOutput.STOR_SS2000_STAGE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class StagingTest {
 
@@ -112,7 +119,7 @@ public class StagingTest {
 
         // now test just site
         SchemaLookup data = new SchemaLookup();
-        data.setInput(StagingData.PRIMARY_SITE_KEY, "C111");
+        data.setInput(PRIMARY_SITE_KEY, "C111");
         assertThat(_STAGING.schemaLookup(_ALGORITHM, _VERSION, data.getInputs()).execute().body()).hasSize(7);
 
         // add histology
@@ -124,9 +131,42 @@ public class StagingTest {
         schemas = _STAGING.schemaLookup(_ALGORITHM, _VERSION, data.getInputs()).execute().body();
         assertThat(schemas).hasSize(1).extracting("id").contains("nasopharynx");
 
-        // test with the CsStaging class
+        // test with the CS
         schemas = _STAGING.schemaLookup(_ALGORITHM, _VERSION, new CsSchemaLookup("C111", "8000", "010").getInputs()).execute().body();
         assertThat(schemas).hasSize(1).extracting("id").contains("nasopharynx");
+
+        // test with the TNM
+        schemas = _STAGING.schemaLookup(_ALGORITHM, _VERSION, new TnmSchemaLookup("C680", "8000").getInputs()).execute().body();
+        assertThat(schemas).hasSize(1).extracting("id").contains("urethra");
+
+        // test with the EOD
+        schemas = _STAGING.schemaLookup(_ALGORITHM, _VERSION, new EodSchemaLookup("C680", "8000").getInputs()).execute().body();
+        assertThat(schemas).hasSize(1).extracting("id").contains("urethra");
+
+        Map<String, String> values = new HashMap<>();
+        values.put(PRIMARY_SITE_KEY, "C680");
+        values.put(HISTOLOGY_KEY, "8000");
+        SchemaLookup schemaLookup = new SchemaLookup(values);
+        assertThat(schemaLookup.getInput(PRIMARY_SITE_KEY)).isEqualTo("C680");
+        assertThat(schemaLookup.getSite()).isEqualTo("C680");
+        assertThat(schemaLookup.getHistology()).isEqualTo("8000");
+        assertThat(schemaLookup.hasDiscriminator()).isFalse();
+
+        assertThat(schemaLookup).isEqualTo(new SchemaLookup("C680", "8000"));
+
+        // test invalid input
+        CsSchemaLookup csLookup = new CsSchemaLookup();
+        csLookup.setSite("C111");
+        csLookup.setHistology("8000");
+        csLookup.setInput(CsStagingData.SSF25_KEY, "010");
+        assertThatExceptionOfType(IllegalStateException.class)
+                .isThrownBy(() -> csLookup.setInput("bad_key", "1"))
+                .withMessageContaining("is not allowed for lookups");
+        assertThat(csLookup.hasDiscriminator()).isEqualTo(true);
+
+        // test clearning inpuyts
+        schemaLookup.clearInputs();
+        assertThat(schemaLookup.getInput(PRIMARY_SITE_KEY)).isNull();
     }
 
     @Test

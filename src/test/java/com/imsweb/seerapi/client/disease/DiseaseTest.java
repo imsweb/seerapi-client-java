@@ -284,6 +284,14 @@ public class DiseaseTest {
                 hasValidBeanConstructor(),
                 hasValidGettersAndSetters()
         ));
+        MatcherAssert.assertThat(DiseaseSearchResults.class, CoreMatchers.allOf(
+                hasValidBeanConstructor(),
+                hasValidGettersAndSetters()
+        ));
+        MatcherAssert.assertThat(DiseaseSource.class, CoreMatchers.allOf(
+                hasValidBeanConstructor(),
+                hasValidGettersAndSetters()
+        ));
     }
 
 }

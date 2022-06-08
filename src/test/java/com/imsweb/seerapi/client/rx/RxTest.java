@@ -165,5 +165,9 @@ public class RxTest {
                 hasValidBeanConstructor(),
                 hasValidGettersAndSetters()
         ));
+        MatcherAssert.assertThat(RxSearchResults.class, CoreMatchers.allOf(
+                hasValidBeanConstructor(),
+                hasValidGettersAndSetters()
+        ));
     }
 }

@@ -2,6 +2,8 @@ package com.imsweb.seerapi.client.hcpcs.mph;
 
 import java.io.IOException;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -10,8 +12,11 @@ import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.mph.MphInput;
 import com.imsweb.seerapi.client.mph.MphInputPair;
 import com.imsweb.seerapi.client.mph.MphOutput;
+import com.imsweb.seerapi.client.mph.MphRule;
 import com.imsweb.seerapi.client.mph.MphService;
 
+import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
+import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -145,6 +150,14 @@ public class MphTest {
         i1.setDateOfDiagnosisYear("2015");
         i2.setDateOfDiagnosisYear("2015");
         _MPH.mph(new MphInputPair(i1, i2)).execute().body();
+    }
+
+    @Test
+    public void testBeans() {
+        MatcherAssert.assertThat(MphRule.class, CoreMatchers.allOf(
+                hasValidBeanConstructor(),
+                hasValidGettersAndSetters()
+        ));
     }
 
 }

@@ -174,7 +174,27 @@ public class GlossaryTest {
 
     @Test
     public void testBeans() {
+        MatcherAssert.assertThat(GlossaryResource.class, CoreMatchers.allOf(
+                hasValidBeanConstructor(),
+                hasValidGettersAndSetters()
+        ));
+        MatcherAssert.assertThat(GlossaryChangelogEntry.class, CoreMatchers.allOf(
+                hasValidBeanConstructor(),
+                hasValidGettersAndSetters()
+        ));
+        MatcherAssert.assertThat(GlossarySearchResults.class, CoreMatchers.allOf(
+                hasValidBeanConstructor(),
+                hasValidGettersAndSetters()
+        ));
+        MatcherAssert.assertThat(GlossaryChangelogResults.class, CoreMatchers.allOf(
+                hasValidBeanConstructor(),
+                hasValidGettersAndSetters()
+        ));
         MatcherAssert.assertThat(GlossaryHistoryEvent.class, CoreMatchers.allOf(
+                hasValidBeanConstructor(),
+                hasValidGettersAndSetters()
+        ));
+        MatcherAssert.assertThat(KeywordMatch.class, CoreMatchers.allOf(
                 hasValidBeanConstructor(),
                 hasValidGettersAndSetters()
         ));

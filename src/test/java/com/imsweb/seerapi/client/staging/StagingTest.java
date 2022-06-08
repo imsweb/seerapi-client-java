@@ -162,7 +162,7 @@ public class StagingTest {
         assertThatExceptionOfType(IllegalStateException.class)
                 .isThrownBy(() -> csLookup.setInput("bad_key", "1"))
                 .withMessageContaining("is not allowed for lookups");
-        assertThat(csLookup.hasDiscriminator()).isEqualTo(true);
+        assertThat(csLookup.hasDiscriminator()).isTrue();
 
         // test clearning inpuyts
         schemaLookup.clearInputs();

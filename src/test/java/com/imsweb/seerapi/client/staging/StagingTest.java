@@ -39,6 +39,7 @@ import com.imsweb.seerapi.client.staging.tnm.TnmStagingData.TnmOutput;
 import com.imsweb.seerapi.client.staging.tnm.TnmStagingData.TnmStagingInputBuilder;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
+import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanEquals;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSettersExcluding;
 import static com.imsweb.seerapi.client.staging.StagingData.HISTOLOGY_KEY;
@@ -560,7 +561,7 @@ public class StagingTest {
     @Test
     public void testBeans() {
         MatcherAssert.assertThat(StagingAlgorithm.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
-        MatcherAssert.assertThat(StagingMetadata.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(StagingMetadata.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters(), hasValidBeanEquals()));
         MatcherAssert.assertThat(StagingVersion.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSettersExcluding("production", "beta", "development")));
         MatcherAssert.assertThat(StagingSchema.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(StagingSchemaInfo.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));

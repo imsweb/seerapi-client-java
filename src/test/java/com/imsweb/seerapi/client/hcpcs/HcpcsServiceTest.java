@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -15,6 +17,8 @@ import com.imsweb.seerapi.client.NotFoundException;
 import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.hcpcs.Hcpcs.Category;
 
+import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
+import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
@@ -89,5 +93,10 @@ public class HcpcsServiceTest {
 
         params.put("category", Category.IMMUNOTHERAPY.toString());
         assertThat(_HCPCS.search(params).execute().body()).isEmpty();
+    }
+
+    @Test
+    public void testBeans() {
+        MatcherAssert.assertThat(Hcpcs.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
     }
 }

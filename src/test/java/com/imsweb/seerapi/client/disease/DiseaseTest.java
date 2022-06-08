@@ -280,18 +280,15 @@ public class DiseaseTest {
 
     @Test
     public void testBeans() {
-        MatcherAssert.assertThat(DiseaseHistoryEvent.class, CoreMatchers.allOf(
-                hasValidBeanConstructor(),
-                hasValidGettersAndSetters()
-        ));
-        MatcherAssert.assertThat(DiseaseSearchResults.class, CoreMatchers.allOf(
-                hasValidBeanConstructor(),
-                hasValidGettersAndSetters()
-        ));
-        MatcherAssert.assertThat(DiseaseSource.class, CoreMatchers.allOf(
-                hasValidBeanConstructor(),
-                hasValidGettersAndSetters()
-        ));
+        MatcherAssert.assertThat(Disease.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(DiseaseVersion.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(DiseaseChangelog.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(DiseaseChangelogEntry.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(DiseaseChangelogResults.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(DiseaseHistoryEvent.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(DiseaseSearchResults.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(DiseaseSource.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(SiteCategory.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
     }
 
 }

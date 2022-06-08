@@ -5,6 +5,8 @@ package com.imsweb.seerapi.client.siterecode;
 
 import java.io.IOException;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -14,6 +16,8 @@ import com.imsweb.seerapi.client.BadRequestException;
 import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.shared.Version;
 
+import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
+import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -66,6 +70,11 @@ public class SiteRecodeTest {
         assertEquals("C379", recode.getSite());
         assertEquals("9650", recode.getHist());
         assertEquals("33011", recode.getSiteGroup());
+    }
+
+    @Test
+    public void testBeans() {
+        MatcherAssert.assertThat(Version.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
     }
 
 }

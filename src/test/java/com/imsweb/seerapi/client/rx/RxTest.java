@@ -161,13 +161,12 @@ public class RxTest {
 
     @Test
     public void testBeans() {
-        MatcherAssert.assertThat(RxHistoryEvent.class, CoreMatchers.allOf(
-                hasValidBeanConstructor(),
-                hasValidGettersAndSetters()
-        ));
-        MatcherAssert.assertThat(RxSearchResults.class, CoreMatchers.allOf(
-                hasValidBeanConstructor(),
-                hasValidGettersAndSetters()
-        ));
+        MatcherAssert.assertThat(Rx.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(RxChangelog.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(RxChangelogEntry.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(RxChangelogResults.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(RxVersion.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(RxHistoryEvent.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(RxSearchResults.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
     }
 }

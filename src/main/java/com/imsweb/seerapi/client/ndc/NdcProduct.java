@@ -61,83 +61,167 @@ public class NdcProduct {
         return ndc;
     }
 
+    public void setNdc(String ndc) {
+        this.ndc = ndc;
+    }
+
     public String getTypeName() {
         return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
     public String getProprietaryName() {
         return proprietaryName;
     }
 
+    public void setProprietaryName(String proprietaryName) {
+        this.proprietaryName = proprietaryName;
+    }
+
     public String getProprietaryNameSuffix() {
         return proprietaryNameSuffix;
+    }
+
+    public void setProprietaryNameSuffix(String proprietaryNameSuffix) {
+        this.proprietaryNameSuffix = proprietaryNameSuffix;
     }
 
     public List<String> getNonProprietaryName() {
         return nonProprietaryName;
     }
 
+    public void setNonProprietaryName(List<String> nonProprietaryName) {
+        this.nonProprietaryName = nonProprietaryName;
+    }
+
     public String getDosageFormName() {
         return dosageFormName;
+    }
+
+    public void setDosageFormName(String dosageFormName) {
+        this.dosageFormName = dosageFormName;
     }
 
     public List<String> getRouteName() {
         return routeName;
     }
 
+    public void setRouteName(List<String> routeName) {
+        this.routeName = routeName;
+    }
+
     public String getStartMarketingDate() {
         return startMarketingDate;
+    }
+
+    public void setStartMarketingDate(String startMarketingDate) {
+        this.startMarketingDate = startMarketingDate;
     }
 
     public String getEndMarketingDate() {
         return endMarketingDate;
     }
 
+    public void setEndMarketingDate(String endMarketingDate) {
+        this.endMarketingDate = endMarketingDate;
+    }
+
     public String getMarketingCategoryName() {
         return marketingCategoryName;
+    }
+
+    public void setMarketingCategoryName(String marketingCategoryName) {
+        this.marketingCategoryName = marketingCategoryName;
     }
 
     public String getApplicationNumber() {
         return applicationNumber;
     }
 
+    public void setApplicationNumber(String applicationNumber) {
+        this.applicationNumber = applicationNumber;
+    }
+
     public String getLabelerName() {
         return labelerName;
+    }
+
+    public void setLabelerName(String labelerName) {
+        this.labelerName = labelerName;
     }
 
     public String getDeaSchedule() {
         return deaSchedule;
     }
 
+    public void setDeaSchedule(String deaSchedule) {
+        this.deaSchedule = deaSchedule;
+    }
+
     public List<NdcSubstance> getSubstances() {
         return substances;
+    }
+
+    public void setSubstances(List<NdcSubstance> substances) {
+        this.substances = substances;
     }
 
     public List<String> getPharmClass() {
         return pharmClass;
     }
 
+    public void setPharmClass(List<String> pharmClass) {
+        this.pharmClass = pharmClass;
+    }
+
     public List<NdcPackage> getPackages() {
         return packages;
+    }
+
+    public void setPackages(List<NdcPackage> packages) {
+        this.packages = packages;
     }
 
     public Date getDateAdded() {
         return dateAdded;
     }
 
+    public void setDateAdded(Date dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
     public Date getDateModified() {
         return dateModified;
+    }
+
+    public void setDateModified(Date dateModified) {
+        this.dateModified = dateModified;
     }
 
     public Date getDateRemoved() {
         return dateRemoved;
     }
 
+    public void setDateRemoved(Date dateRemoved) {
+        this.dateRemoved = dateRemoved;
+    }
+
     public NdcSeerInfo getSeerInfo() {
         return seerInfo;
     }
 
+    public void setSeerInfo(NdcSeerInfo seerInfo) {
+        this.seerInfo = seerInfo;
+    }
+
     public Double getScore() {
         return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
     }
 }

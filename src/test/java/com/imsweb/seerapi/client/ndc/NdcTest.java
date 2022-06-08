@@ -6,6 +6,8 @@ package com.imsweb.seerapi.client.ndc;
 import java.io.IOException;
 import java.util.List;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -14,6 +16,8 @@ import retrofit2.Response;
 import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.ndc.NdcSeerInfo.Category;
 
+import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
+import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("ConstantConditions")
@@ -149,4 +153,12 @@ public class NdcTest {
         assertThat(totalCount).isEqualTo(withCount + withoutCount);
     }
 
+    @Test
+    public void testBeans() {
+        MatcherAssert.assertThat(NdcProduct.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(NdcPackage.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(NdcSubstance.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(NdcSearch.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+
+    }
 }

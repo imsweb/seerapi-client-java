@@ -18,6 +18,9 @@ import org.junit.Test;
 import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.disease.DateRange;
 import com.imsweb.seerapi.client.disease.DateRangeString;
+import com.imsweb.seerapi.client.disease.YearRange;
+import com.imsweb.seerapi.client.disease.YearRangeInteger;
+import com.imsweb.seerapi.client.disease.YearRangeString;
 import com.imsweb.seerapi.client.glossary.Glossary.Category;
 import com.imsweb.seerapi.client.shared.KeywordMatch;
 import com.imsweb.seerapi.client.staging.cs.CsSchemaLookup;
@@ -37,6 +40,7 @@ import com.imsweb.seerapi.client.staging.tnm.TnmStagingData.TnmStagingInputBuild
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
+import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSettersExcluding;
 import static com.imsweb.seerapi.client.staging.StagingData.HISTOLOGY_KEY;
 import static com.imsweb.seerapi.client.staging.StagingData.PRIMARY_SITE_KEY;
 import static com.imsweb.seerapi.client.staging.cs.CsStagingData.CsOutput.AJCC6_M;
@@ -555,18 +559,25 @@ public class StagingTest {
 
     @Test
     public void testBeans() {
-        MatcherAssert.assertThat(StagingMetadata.class, CoreMatchers.allOf(
-                hasValidBeanConstructor(),
-                hasValidGettersAndSetters()
-        ));
-        MatcherAssert.assertThat(DateRange.class, CoreMatchers.allOf(
-                hasValidBeanConstructor(),
-                hasValidGettersAndSetters()
-        ));
-        MatcherAssert.assertThat(DateRangeString.class, CoreMatchers.allOf(
-                hasValidBeanConstructor(),
-                hasValidGettersAndSetters()
-        ));
+        MatcherAssert.assertThat(StagingMetadata.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(StagingVersion.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSettersExcluding("production", "beta", "development")));
+        MatcherAssert.assertThat(StagingSchema.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(StagingSchemaInfo.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(StagingSchemaInput.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(StagingSchemaOutput.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(StagingTable.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(StagingTablePath.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(StagingColumnDefinition.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(StagingSchemaInput.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(StagingSchemaOutput.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(StagingMapping.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(StagingKeyMapping.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(StagingKeyValue.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(YearRange.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(YearRangeString.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(YearRangeInteger.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(DateRange.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(DateRangeString.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
     }
 
 }

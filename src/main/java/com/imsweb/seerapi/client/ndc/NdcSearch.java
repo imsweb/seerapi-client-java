@@ -50,7 +50,7 @@ public class NdcSearch {
     }
 
     public void setIncludeRemoved(Boolean includeRemoved) {
-        this._includeRemoved = includeRemoved;
+        _includeRemoved = includeRemoved;
     }
 
     public String getAddedSince() {
@@ -97,8 +97,8 @@ public class NdcSearch {
         return _order;
     }
 
-    public void setOrder(String orderBy) {
-        _order = orderBy;
+    public void setOrder(String order) {
+        _order = order;
     }
 
     /**

@@ -6,11 +6,15 @@ package com.imsweb.seerapi.client.surgery;
 import java.io.IOException;
 import java.util.List;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
 
+import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
+import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SurgeryTest {
@@ -50,5 +54,11 @@ public class SurgeryTest {
         table = _SURGERY.table("2014", null, "C001", "8000").execute().body();
         assertThat(table).isNotNull();
         assertThat(table.getTitle()).isEqualTo("Oral Cavity");
+    }
+
+    @Test
+    public void testBeans() {
+        MatcherAssert.assertThat(SurgeryTable.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
+        MatcherAssert.assertThat(SurgeryRow.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
     }
 }

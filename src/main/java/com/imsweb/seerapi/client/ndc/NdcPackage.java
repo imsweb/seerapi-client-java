@@ -22,16 +22,31 @@ public class NdcPackage {
         return code;
     }
 
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getStartMarketingDate() {
         return startMarketingDate;
     }
 
+    public void setStartMarketingDate(String startMarketingDate) {
+        this.startMarketingDate = startMarketingDate;
+    }
+
     public String getEndMarketingDate() {
         return endMarketingDate;
     }
 
+    public void setEndMarketingDate(String endMarketingDate) {
+        this.endMarketingDate = endMarketingDate;
+    }
 }

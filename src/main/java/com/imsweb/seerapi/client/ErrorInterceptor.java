@@ -4,6 +4,9 @@
 package com.imsweb.seerapi.client;
 
 import java.io.IOException;
+import java.util.Objects;
+
+import org.jetbrains.annotations.NotNull;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -15,6 +18,7 @@ import okhttp3.Response;
  */
 public class ErrorInterceptor implements Interceptor {
 
+    @NotNull
     @Override
     public Response intercept(Chain chain) throws IOException {
         Response response = chain.proceed(chain.request());
@@ -24,7 +28,7 @@ public class ErrorInterceptor implements Interceptor {
             ErrorResponse error = null;
             if (response.body() != null) {
                 try {
-                    error = new ObjectMapper().readValue(response.body().byteStream(), ErrorResponse.class);
+                    error = new ObjectMapper().readValue(Objects.requireNonNull(response.body()).byteStream(), ErrorResponse.class);
                 }
                 catch (IOException e) {
                     // sometimes the error message is not right format (like for 404 errors)

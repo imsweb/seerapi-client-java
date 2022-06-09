@@ -39,6 +39,9 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.9.0'
     api 'com.squareup.retrofit2:converter-jackson:2.9.0'
 
+    // retrofit will not update these dependencies to fix vulnerabilities
+    api 'com.squareup.okhttp3:okhttp:4.9.3'
+
     // newer version of dependency to fix vulnerability until converter-jackson is updated
     api 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
 

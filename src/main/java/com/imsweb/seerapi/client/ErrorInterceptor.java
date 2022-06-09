@@ -4,7 +4,6 @@
 package com.imsweb.seerapi.client;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -12,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import okhttp3.Interceptor;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * Interceptor to catch all non-200 responses and convert them to exceptions.
@@ -24,11 +24,13 @@ public class ErrorInterceptor implements Interceptor {
         Response response = chain.proceed(chain.request());
 
         if (response.code() != 200) {
-            // convert body to error response
             ErrorResponse error = null;
-            if (response.body() != null) {
+
+            // convert body to error response
+            ResponseBody body = response.body();
+            if (body != null) {
                 try {
-                    error = new ObjectMapper().readValue(Objects.requireNonNull(response.body()).byteStream(), ErrorResponse.class);
+                    error = new ObjectMapper().readValue(body.byteStream(), ErrorResponse.class);
                 }
                 catch (IOException e) {
                     // sometimes the error message is not right format (like for 404 errors)

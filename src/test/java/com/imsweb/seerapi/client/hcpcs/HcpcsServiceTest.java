@@ -54,6 +54,17 @@ public class HcpcsServiceTest {
         assertThatExceptionOfType(NotFoundException.class)
                 .isThrownBy(() -> _HCPCS.getProcedure("bad_code").execute())
                 .withMessage("HCPCS code '%s' does not exist.", "bad_code");
+
+        // test the new description field and
+        proc = _HCPCS.getProcedure("G6015").execute().body();
+        assertThat(proc).isNotNull();
+        assertThat(proc.getDescription()).contains("temporally modulated beams, binary, dynamic mlc, per treatment session");
+
+        // verify multiple categories are supported
+        proc = _HCPCS.getProcedure("A9545").execute().body();
+        assertThat(proc).isNotNull();
+        assertThat(proc.getCategories()).containsExactlyInAnyOrder(Category.IMMUNOTHERAPY, Category.RADIOPHARMACEUTICAL);
+
     }
 
     @Test

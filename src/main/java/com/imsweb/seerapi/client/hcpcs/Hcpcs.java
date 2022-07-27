@@ -9,7 +9,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"hcpcs_code", "generic_name", "brand_names", "strength", "fda_approval_year", "fda_discontinuation_year", "cms_approval_date",
+@JsonPropertyOrder({"hcpcs_code", "generic_name", "description", "brand_names", "strength", "fda_approval_year", "fda_discontinuation_year", "cms_approval_date",
         "cms_discontinuation_date", "categories", "major_drug_class", "minor_drug_class", "oral", "date_added", "date_modified", "score"})
 public class Hcpcs {
 
@@ -17,6 +17,8 @@ public class Hcpcs {
     private String hcpcsCode;
     @JsonProperty("generic_name")
     private String genericName;
+    @JsonProperty("description")
+    private String description;
     @JsonProperty("brand_names")
     private List<String> brandNames;
     @JsonProperty("strength")
@@ -58,6 +60,14 @@ public class Hcpcs {
 
     public void setGenericName(String genericName) {
         this.genericName = genericName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<String> getBrandNames() {

@@ -75,11 +75,6 @@ tasks.withType(Javadoc) {
     options.addStringOption('charSet', 'UTF-8')
 }
 
-// make sure that Sonarqube still runs even if there are failing tests
-test {
-    ignoreFailures = true
-}
-
 checkstyle {
     toolVersion '8.29'
     configFile = file("config/checkstyle/checkstyle.xml")

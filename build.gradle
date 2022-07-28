@@ -13,7 +13,7 @@ plugins {
 }
 
 group = 'com.imsweb'
-version = '5.1'
+version = '5.2'
 description = 'Java client library for SEER*API'
 
 tasks.withType(JavaCompile) {
@@ -48,7 +48,7 @@ dependencies {
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.assertj:assertj-core:3.23.1'
-    testImplementation 'com.google.code.bean-matchers:bean-matchers:0.13'
+    testImplementation 'com.google.code.bean-matchers:bean-matchers:0.14'
 }
 
 jar {
@@ -106,7 +106,7 @@ ossIndexAudit {
 }
 
 wrapper {
-    gradleVersion = '7.4.2'
+    gradleVersion = '7.5'
     distributionType = Wrapper.DistributionType.ALL
 }
 

@@ -79,7 +79,6 @@ tasks.withType(Javadoc) {
 
 test {
     useJUnitPlatform()
-    maxParallelForks = (int) (Runtime.runtime.availableProcessors() / 2 + 1)
 }
 
 checkstyle {

@@ -4,8 +4,10 @@ import java.io.IOException;
 
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import retrofit2.Call;
 
 import com.imsweb.seerapi.client.BadRequestException;
 import com.imsweb.seerapi.client.SeerApi;
@@ -17,25 +19,28 @@ import com.imsweb.seerapi.client.mph.MphService;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MphTest {
 
     private static MphService _MPH;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         _MPH = new SeerApi.Builder().connect().mph();
     }
 
-    @Test(expected = BadRequestException.class)
-    public void testMissingAllInput() throws IOException {
-        _MPH.mph(new MphInputPair()).execute();
+    @Test
+    void testMissingAllInput() {
+        Call<MphOutput> call = _MPH.mph(new MphInputPair());
+        assertThrows(BadRequestException.class, call::execute);
     }
 
-    @Test(expected = BadRequestException.class)
-    public void testMissingSite() throws IOException {
+    @Test
+    void testMissingSite() throws IOException {
         MphInput input1 = new MphInput();
         // site is missing
         input1.setHistologyIcdO3("8000");
@@ -50,11 +55,12 @@ public class MphTest {
         input2.setDateOfDiagnosisYear("2016");
         input2.setLaterality("1");
 
-        _MPH.mph(new MphInputPair(input1, input2)).execute().body();
+        Call<MphOutput> call = _MPH.mph(new MphInputPair(input1, input2));
+        assertThrows(BadRequestException.class, call::execute);
     }
 
     @Test
-    public void testResults() throws IOException {
+    void testResults() throws IOException {
         MphInput input1 = new MphInput();
         input1.setPrimarySite("C509");
         input1.setHistologyIcdO3("8000");
@@ -71,6 +77,7 @@ public class MphTest {
 
         // first test single primary (only differs by site code)
         MphOutput result = _MPH.mph(new MphInputPair(input1, input2)).execute().body();
+        assertNotNull(result);
         assertEquals(MphOutput.Result.SINGLE_PRIMARY, result.getResult());
         assertEquals("mp_2007_breast", result.getGroupId());
         assertEquals("M13", result.getStep());
@@ -81,6 +88,7 @@ public class MphTest {
         // next test questionable (setting laterality to unknown for one of the diseases)
         input2.setLaterality("9");
         result = _MPH.mph(new MphInputPair(input1, input2)).execute().body();
+        assertNotNull(result);
         assertEquals(MphOutput.Result.QUESTIONABLE, result.getResult());
         assertEquals("mp_2007_breast", result.getGroupId());
         assertEquals("M7", result.getStep());
@@ -100,6 +108,7 @@ public class MphTest {
         input2.setDateOfDiagnosisYear("1998");
         input2.setLaterality("1");
         result = _MPH.mph(new MphInputPair(input1, input2)).execute().body();
+        assertNotNull(result);
         assertEquals(MphOutput.Result.MULTIPLE_PRIMARIES, result.getResult());
         assertEquals("mp_2007_breast", result.getGroupId());
         assertEquals("M5", result.getStep());
@@ -109,7 +118,7 @@ public class MphTest {
     }
 
     @Test
-    public void testLenientMode() throws IOException {
+    void testLenientMode() throws IOException {
         MphInput input1 = new MphInput();
         MphInput input2 = new MphInput();
         input1.setPrimarySite("C502");
@@ -130,13 +139,14 @@ public class MphTest {
 
         // not passing should default to STRICT
         MphOutput result = _MPH.mph(new MphInputPair(input1, input2)).execute().body();
+        assertNotNull(result);
         assertEquals(9, result.getAppliedRules().size());
         assertEquals(MphOutput.Result.MULTIPLE_PRIMARIES, result.getResult());
         assertEquals("M12", result.getStep());
     }
 
-    @Test(expected = BadRequestException.class)
-    public void testInvalidInput() throws IOException {
+    @Test
+    void testInvalidInput() throws IOException {
         MphInput i1 = new MphInput();
         MphInput i2 = new MphInput();
 
@@ -149,11 +159,13 @@ public class MphTest {
         i2.setBehaviorIcdO3("3");
         i1.setDateOfDiagnosisYear("2015");
         i2.setDateOfDiagnosisYear("2015");
-        _MPH.mph(new MphInputPair(i1, i2)).execute().body();
+
+        Call<MphOutput> call = _MPH.mph(new MphInputPair(i1, i2));
+        assertThrows(BadRequestException.class, call::execute);
     }
 
     @Test
-    public void testBeans() {
+    void testBeans() {
         MatcherAssert.assertThat(MphRule.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(MphInput.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(MphInputPair.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));

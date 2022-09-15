@@ -3,8 +3,7 @@ package com.imsweb.seerapi.client;
 import java.io.IOException;
 import java.util.Collections;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -12,28 +11,32 @@ import com.imsweb.seerapi.client.disease.Disease;
 import com.imsweb.seerapi.client.disease.SiteRange;
 import com.imsweb.seerapi.client.disease.YearRange;
 
-public class ObjectMapperTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+class ObjectMapperTest {
 
     @Test
-    public void testMapper() throws IOException {
+    void testMapper() throws IOException {
         Range range = new Range("10", "40");
 
         ObjectMapper mapper = SeerApi.getMapper();
 
         String json = mapper.writeValueAsString(range);
 
-        Assert.assertTrue(json.contains("low"));
-        Assert.assertFalse(json.contains("lowValue"));
+        assertTrue(json.contains("low"));
+        assertFalse(json.contains("lowValue"));
 
         // now test reading that back in
         range = mapper.readValue(json, Range.class);
 
-        Assert.assertEquals("10", range.getLowValue());
-        Assert.assertEquals("40", range.getHighValue());
+        assertEquals("10", range.getLowValue());
+        assertEquals("40", range.getHighValue());
     }
 
     @Test
-    public void testDiseaseMapping() throws IOException {
+    void testDiseaseMapping() throws IOException {
         Disease partial = new Disease();
 
         partial.setType(Disease.Type.HEMATO);
@@ -49,13 +52,13 @@ public class ObjectMapperTest {
 
         String json = mapper.writeValueAsString(partial);
 
-        Assert.assertTrue(json.contains("icdO3_morphology"));
-        Assert.assertFalse(json.contains("icdO3Morphology"));
+        assertTrue(json.contains("icdO3_morphology"));
+        assertFalse(json.contains("icdO3Morphology"));
 
         // now test reading that back in
         partial = mapper.readValue(json, Disease.class);
 
-        Assert.assertEquals("9840/3", partial.getIcdO3Morphology());
+        assertEquals("9840/3", partial.getIcdO3Morphology());
     }
 
 }

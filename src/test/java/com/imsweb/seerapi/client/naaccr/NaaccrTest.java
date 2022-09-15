@@ -7,25 +7,25 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class NaaccrTest {
+class NaaccrTest {
 
     private static NaaccrService _NAACCR;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         _NAACCR = new SeerApi.Builder().connect().naaccr();
     }
 
     @Test
-    public void testNaaccrFlatVersions() throws IOException {
+    void testNaaccrFlatVersions() throws IOException {
         List<NaaccrVersion> versions = _NAACCR.flatVersions().execute().body();
 
         assertThat(versions).isNotNull().isNotEmpty();
@@ -39,7 +39,7 @@ public class NaaccrTest {
     }
 
     @Test
-    public void testNaaccrXmlVersions() throws IOException {
+    void testNaaccrXmlVersions() throws IOException {
         List<NaaccrVersion> versions = _NAACCR.xmlVersions().execute().body();
 
         assertThat(versions).isNotNull().isNotEmpty();
@@ -56,7 +56,7 @@ public class NaaccrTest {
     }
 
     @Test
-    public void testNaaccrFlatFieldNames() throws IOException {
+    void testNaaccrFlatFieldNames() throws IOException {
         List<NaaccrFieldName> names = _NAACCR.flatFieldNames("latest").execute().body();
 
         assertThat(names).isNotNull();
@@ -67,7 +67,7 @@ public class NaaccrTest {
     }
 
     @Test
-    public void testNaaccrXmlFieldNames() throws IOException {
+    void testNaaccrXmlFieldNames() throws IOException {
         List<NaaccrFieldName> names = _NAACCR.xmlFieldNames("latest").execute().body();
 
         assertThat(names).isNotNull();
@@ -79,7 +79,7 @@ public class NaaccrTest {
     }
 
     @Test
-    public void testNaaccrFlatField() throws IOException {
+    void testNaaccrFlatField() throws IOException {
         NaaccrFlatField name = _NAACCR.flatField("16", 521).execute().body();
 
         assertThat(name).isNotNull();
@@ -112,7 +112,7 @@ public class NaaccrTest {
     }
 
     @Test
-    public void testNaaccrXmlField() throws IOException {
+    void testNaaccrXmlField() throws IOException {
         NaaccrXmlField name = _NAACCR.xmlField("21", "phase2RadiationExternalBeamTech").execute().body();
 
         assertThat(name).isNotNull();
@@ -132,7 +132,7 @@ public class NaaccrTest {
 
     // these two tests are slow so don't run them all the time; they verify that all the items from flat and NAACR can be read without error
 
-    @Ignore("Slow test so do not run all the time")
+    @Disabled("Slow test so do not run all the time")
     public void loadAllFlat() throws IOException {
         for (NaaccrFieldName name : Objects.requireNonNull(_NAACCR.flatFieldNames("latest").execute().body())) {
             NaaccrFlatField field = _NAACCR.flatField("latest", name.getItemNum()).execute().body();
@@ -141,7 +141,7 @@ public class NaaccrTest {
         }
     }
 
-    @Ignore("Slow test so do not run all the time")
+    @Disabled("Slow test so do not run all the time")
     public void loadAllXml() throws IOException {
         for (NaaccrFieldName name : Objects.requireNonNull(_NAACCR.xmlFieldNames("latest").execute().body())) {
             NaaccrXmlField field = _NAACCR.xmlField("latest", name.getNaaccrId()).execute().body();

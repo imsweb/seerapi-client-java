@@ -11,30 +11,30 @@ import java.util.List;
 
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.publishable.PublishableSearch;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class RxTest {
+class RxTest {
 
     private static RxService _RX;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         _RX = new SeerApi.Builder().connect().rx();
     }
 
     @Test
-    public void testRxVersions() throws IOException {
+    void testRxVersions() throws IOException {
         List<RxVersion> versions = _RX.versions().execute().body();
 
         assertNotNull(versions);
@@ -47,7 +47,7 @@ public class RxTest {
     }
 
     @Test
-    public void testRxById() throws IOException {
+    void testRxById() throws IOException {
         Rx rx = _RX.getById("latest", "53c44afe102c1290262dc672").execute().body();
 
         assertNotNull(rx);
@@ -77,7 +77,7 @@ public class RxTest {
     }
 
     @Test
-    public void testRxChangelog() throws IOException {
+    void testRxChangelog() throws IOException {
         RxChangelogResults results = _RX.changelogs("latest", "2015-08-30", "2015-09-30", 1).execute().body();
 
         assertNotNull(results);
@@ -106,7 +106,7 @@ public class RxTest {
     }
 
     @Test
-    public void testRxSearch() throws IOException {
+    void testRxSearch() throws IOException {
         RxSearch search = new RxSearch("abt", Rx.Type.DRUG);
         RxSearchResults results = _RX.search("latest", search.paramMap()).execute().body();
 
@@ -137,7 +137,7 @@ public class RxTest {
     }
 
     @Test
-    public void testRxSearchIterate() throws IOException {
+    void testRxSearchIterate() throws IOException {
         RxSearch search = new RxSearch();
         search.setOutputType(PublishableSearch.OutputType.FULL);
         search.setCount(100);
@@ -160,7 +160,7 @@ public class RxTest {
     }
 
     @Test
-    public void testBeans() {
+    void testBeans() {
         MatcherAssert.assertThat(Rx.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(RxChangelog.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(RxChangelogEntry.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));

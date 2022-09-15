@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
 
@@ -17,24 +17,24 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SurgeryTest {
+class SurgeryTest {
 
     private static SurgeryService _SURGERY;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         _SURGERY = new SeerApi.Builder().connect().surgery();
     }
 
     @Test
-    public void testSiteSpecificSurgeryTables() throws IOException {
+    void testSiteSpecificSurgeryTables() throws IOException {
         List<String> titles = _SURGERY.tables("2014").execute().body();
 
         assertThat(titles).isNotEmpty().containsAnyOf("Oral Cavity");
     }
 
     @Test
-    public void testSiteSpecificSurgeryTable() throws IOException {
+    void testSiteSpecificSurgeryTable() throws IOException {
         SurgeryTable table = _SURGERY.table("2014", "Oral Cavity", null, null).execute().body();
 
         assertThat(table).isNotNull();
@@ -57,7 +57,7 @@ public class SurgeryTest {
     }
 
     @Test
-    public void testBeans() {
+    void testBeans() {
         MatcherAssert.assertThat(SurgeryTable.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(SurgeryRow.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
     }

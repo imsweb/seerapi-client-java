@@ -8,8 +8,8 @@ import java.util.Objects;
 
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import retrofit2.Response;
 
@@ -22,17 +22,17 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetter
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
-public class HcpcsServiceTest {
+class HcpcsServiceTest {
 
     private static HcpcsService _HCPCS;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         _HCPCS = new SeerApi.Builder().connect().hcpcs();
     }
 
     @Test
-    public void testGetProcedureByCode() throws IOException {
+    void testGetProcedureByCode() throws IOException {
         Hcpcs proc = _HCPCS.getProcedure("S0087").execute().body();
 
         assertThat(proc).isNotNull();
@@ -68,7 +68,7 @@ public class HcpcsServiceTest {
     }
 
     @Test
-    public void testSearch() throws IOException {
+    void testSearch() throws IOException {
         Response<List<Hcpcs>> response = _HCPCS.search(new HashMap<>()).execute();
         assertThat(response.headers().get("X-Total-Count")).isNotNull();
         assertThat(Integer.valueOf(Objects.requireNonNull(response.headers().get("X-Total-Count")))).isGreaterThan(100);
@@ -107,7 +107,7 @@ public class HcpcsServiceTest {
     }
 
     @Test
-    public void testBeans() {
+    void testBeans() {
         MatcherAssert.assertThat(Hcpcs.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
     }
 }

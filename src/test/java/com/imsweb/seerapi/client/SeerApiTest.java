@@ -5,18 +5,26 @@ package com.imsweb.seerapi.client;
 
 import java.io.IOException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class SeerApiTest {
+import retrofit2.Call;
 
-    @Test(expected = NotAuthorizedException.class)
-    public void testBadApiKeyAndURL() throws IOException {
-        new SeerApi.Builder().url("https://api.seer.cancer.gov/rest/").apiKey("BAD KEY").connect().siteRecode().version().execute();
+import com.imsweb.seerapi.client.shared.Version;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+class SeerApiTest {
+
+    @Test
+    void testBadApiKeyAndURL() {
+        Call<Version> call = new SeerApi.Builder().url("https://api.seer.cancer.gov/rest/").apiKey("BAD KEY").connect().siteRecode().version();
+        assertThrows(NotAuthorizedException.class, call::execute);
     }
 
-    @Test(expected = NotAuthorizedException.class)
-    public void testBadApiKey() throws IOException {
-        new SeerApi.Builder().apiKey("BAD KEY").connect().siteRecode().version().execute();
+    @Test
+    void testBadApiKey() throws IOException {
+        Call<Version> call = new SeerApi.Builder().apiKey("BAD KEY").connect().siteRecode().version();
+        assertThrows(NotAuthorizedException.class, call::execute);
     }
 
 }

@@ -9,37 +9,38 @@ import java.util.List;
 
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.publishable.PublishableSearch;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DiseaseTest {
+class DiseaseTest {
 
     private static DiseaseService _DISEASE;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         _DISEASE = new SeerApi.Builder().connect().disease();
     }
 
     @Test
-    public void testDiseaseTypeCategory() {
+    void testDiseaseTypeCategory() {
         assertEquals(Disease.Type.SOLID_TUMOR, Disease.Type.valueOf("SOLID_TUMOR"));
     }
 
     @Test
-    public void testDiseaseVersions() throws IOException {
+    void testDiseaseVersions() throws IOException {
         List<DiseaseVersion> versions = _DISEASE.versions().execute().body();
 
+        assertNotNull(versions);
         assertEquals(1, versions.size());
         DiseaseVersion version = versions.get(0);
         assertEquals("latest", version.getName());
@@ -49,27 +50,30 @@ public class DiseaseTest {
     }
 
     @Test
-    public void testDiseasePrimarySites() throws IOException {
+    void testDiseasePrimarySites() throws IOException {
         List<PrimarySite> sites = _DISEASE.primarySites().execute().body();
 
+        assertNotNull(sites);
         assertTrue(sites.size() > 0);
         assertEquals("C000", sites.get(0).getValue());
         assertEquals("External upper lip", sites.get(0).getLabel());
     }
 
     @Test
-    public void testDiseasePrimarySiteCode() throws IOException {
+    void testDiseasePrimarySiteCode() throws IOException {
         List<PrimarySite> sites = _DISEASE.primarySiteCode("C021").execute().body();
 
+        assertNotNull(sites);
         assertTrue(sites.size() > 0);
         assertEquals("C021", sites.get(0).getValue());
         assertEquals("Border of tongue", sites.get(0).getLabel());
     }
 
     @Test
-    public void testDiseaseSiteCateogires() throws IOException {
+    void testDiseaseSiteCateogires() throws IOException {
         List<SiteCategory> categories = _DISEASE.siteCategories().execute().body();
 
+        assertNotNull(categories);
         assertTrue(categories.size() > 0);
         assertEquals("head-and-neck", categories.get(0).getId());
         assertEquals("Head and Neck", categories.get(0).getLabel());
@@ -80,7 +84,7 @@ public class DiseaseTest {
 
     @SuppressWarnings("java:S5961")
     @Test
-    public void testDiseaseById() throws IOException {
+    void testDiseaseById() throws IOException {
         Disease disease = _DISEASE.getById("latest", "51f6cf58e3e27c3994bd5408").execute().body();
 
         assertNotNull(disease);
@@ -141,7 +145,7 @@ public class DiseaseTest {
     }
 
     @Test
-    public void testDiseaseSamePrimary() throws IOException {
+    void testDiseaseSamePrimary() throws IOException {
         SamePrimaries same = _DISEASE.samePrimaries("latest", "9870/3", "9872/3", "2010", "2010").execute().body();
 
         assertNotNull(same);
@@ -163,7 +167,7 @@ public class DiseaseTest {
     }
 
     @Test
-    public void testDiseaseSearch() throws IOException {
+    void testDiseaseSearch() throws IOException {
         DiseaseSearch search = new DiseaseSearch("basophilic", Disease.Type.HEMATO);
 
         DiseaseSearchResults results = _DISEASE.search("latest", search.paramMap()).execute().body();
@@ -212,7 +216,7 @@ public class DiseaseTest {
     }
 
     @Test
-    public void testDiseaseSearchIterate() throws IOException {
+    void testDiseaseSearchIterate() throws IOException {
         DiseaseSearch search = new DiseaseSearch();
         search.setOutputType(PublishableSearch.OutputType.FULL);
         search.setCount(100);
@@ -235,7 +239,7 @@ public class DiseaseTest {
     }
 
     @Test
-    public void testDiseaseReportability() throws IOException {
+    void testDiseaseReportability() throws IOException {
         Disease partial = new Disease();
 
         partial.setType(Disease.Type.HEMATO);
@@ -254,7 +258,7 @@ public class DiseaseTest {
     }
 
     @Test
-    public void testDiseaseChangelog() throws IOException {
+    void testDiseaseChangelog() throws IOException {
         DiseaseChangelogResults results = _DISEASE.diseaseChangelogs("latest", null, "2013-07-30", 1).execute().body();
 
         assertNotNull(results);
@@ -279,7 +283,7 @@ public class DiseaseTest {
     }
 
     @Test
-    public void testBeans() {
+    void testBeans() {
         MatcherAssert.assertThat(Disease.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(DiseaseVersion.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(DiseaseChangelog.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));

@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import retrofit2.Response;
 
@@ -21,17 +21,17 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetter
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("ConstantConditions")
-public class NdcTest {
+class NdcTest {
 
     private static NdcService _NDC;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         _NDC = new SeerApi.Builder().connect().ndc();
     }
 
     @Test
-    public void testNdcByCode() throws IOException {
+    void testNdcByCode() throws IOException {
         NdcProduct product = _NDC.getByCode("0002-3227").execute().body();
 
         assertThat(product).isNotNull();
@@ -81,7 +81,7 @@ public class NdcTest {
     }
 
     @Test
-    public void testNdcSearch() throws IOException {
+    void testNdcSearch() throws IOException {
         NdcSearch search = new NdcSearch();
         search.setIncludeRemoved(true);
 
@@ -112,7 +112,7 @@ public class NdcTest {
     }
 
     @Test
-    public void testNdcSearchByCategory() throws IOException {
+    void testNdcSearchByCategory() throws IOException {
         NdcSearch search = new NdcSearch();
         search.setCategory(Category.CHEMOTHERAPY);
 
@@ -129,7 +129,7 @@ public class NdcTest {
     }
 
     @Test
-    public void testNdcHasSeerInfo() throws IOException {
+    void testNdcHasSeerInfo() throws IOException {
         NdcSearch search = new NdcSearch();
         search.setIncludeRemoved(true);
 
@@ -154,7 +154,7 @@ public class NdcTest {
     }
 
     @Test
-    public void testBeans() {
+    void testBeans() {
         MatcherAssert.assertThat(NdcProduct.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(NdcPackage.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(NdcSubstance.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));

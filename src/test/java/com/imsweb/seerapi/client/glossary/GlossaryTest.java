@@ -11,8 +11,8 @@ import java.util.Set;
 
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.publishable.PublishableSearch;
@@ -21,27 +21,27 @@ import com.imsweb.seerapi.client.shared.KeywordMatch;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static com.imsweb.seerapi.client.glossary.Glossary.Category.GENERAL;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class GlossaryTest {
+class GlossaryTest {
 
     private static GlossaryService _GLOSSARY;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         _GLOSSARY = new SeerApi.Builder().connect().glossary();
     }
 
     @Test
-    public void testGlossaryCategory() {
+    void testGlossaryCategory() {
         assertEquals(Glossary.Category.SOLID_TUMOR, Glossary.Category.valueOf("SOLID_TUMOR"));
     }
 
     @Test
-    public void testGlossaryVersions() throws IOException {
+    void testGlossaryVersions() throws IOException {
         List<GlossaryVersion> versions = _GLOSSARY.versions().execute().body();
 
         assertNotNull(versions);
@@ -54,7 +54,7 @@ public class GlossaryTest {
     }
 
     @Test
-    public void testGlossaryById() throws IOException {
+    void testGlossaryById() throws IOException {
         GlossarySearchResults results = _GLOSSARY.search("latest", "Lymphangiogram").execute().body();
         assertNotNull(results);
         assertTrue(results.getCount() > 0);
@@ -73,7 +73,7 @@ public class GlossaryTest {
     }
 
     @Test
-    public void testGlossaryChangelog() throws IOException {
+    void testGlossaryChangelog() throws IOException {
         GlossaryChangelogResults results = _GLOSSARY.changelogs("latest", null, null, 1).execute().body();
 
         assertNotNull(results);
@@ -104,7 +104,7 @@ public class GlossaryTest {
     }
 
     @Test
-    public void testGlossarySearch() throws IOException {
+    void testGlossarySearch() throws IOException {
         String term = "killer";
         GlossarySearch search = new GlossarySearch(term);
 
@@ -135,7 +135,7 @@ public class GlossaryTest {
     }
 
     @Test
-    public void testGlossarySearchIterate() throws IOException {
+    void testGlossarySearchIterate() throws IOException {
         GlossarySearch search = new GlossarySearch();
         search.setOutputType(PublishableSearch.OutputType.FULL);
         search.setCount(25);
@@ -160,7 +160,7 @@ public class GlossaryTest {
     }
 
     @Test
-    public void testGlossaryMatch() throws IOException {
+    void testGlossaryMatch() throws IOException {
         String text = "This text contains summary stage which should be found.";
 
         Set<KeywordMatch> matches = _GLOSSARY.match(text, null, true).execute().body();
@@ -173,7 +173,7 @@ public class GlossaryTest {
     }
 
     @Test
-    public void testBeans() {
+    void testBeans() {
         MatcherAssert.assertThat(Glossary.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(GlossaryVersion.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(GlossaryResource.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));

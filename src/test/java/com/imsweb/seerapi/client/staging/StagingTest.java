@@ -12,8 +12,8 @@ import java.util.Set;
 
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.disease.DateRange;
@@ -87,34 +87,34 @@ import static com.imsweb.seerapi.client.staging.cs.CsStagingData.CsOutput.STOR_S
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class StagingTest {
+class StagingTest {
 
     private static final String _ALGORITHM = "cs";
     private static final String _VERSION = "02.05.50";
 
     private static StagingService _STAGING;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         _STAGING = new SeerApi.Builder().connect().staging();
     }
 
     @Test
-    public void testGetAlgorithms() throws IOException {
+    void testGetAlgorithms() throws IOException {
         List<StagingAlgorithm> algorithms = _STAGING.algorithms().execute().body();
 
         assertThat(algorithms).isNotEmpty().extracting("algorithm").contains("cs", "tnm", "eod_public");
     }
 
     @Test
-    public void testGetAlgorithmVersions() throws IOException {
+    void testGetAlgorithmVersions() throws IOException {
         List<StagingVersion> versions = _STAGING.versions(_ALGORITHM).execute().body();
 
         assertThat(versions).isNotEmpty();
     }
 
     @Test
-    public void testListSchemas() throws IOException {
+    void testListSchemas() throws IOException {
         List<StagingSchemaInfo> schemaInfos = _STAGING.schemas(_ALGORITHM, _VERSION).execute().body();
         assertThat(schemaInfos).isNotEmpty();
 
@@ -123,7 +123,7 @@ public class StagingTest {
     }
 
     @Test
-    public void testSchemaLookup() throws IOException {
+    void testSchemaLookup() throws IOException {
         // first test simple lookup that returns a single schema with site/hist only
         List<StagingSchemaInfo> schemas = _STAGING.schemaLookup(_ALGORITHM, _VERSION, new CsSchemaLookup("C509", "8000").getInputs()).execute().body();
         assertThat(schemas).hasSize(1).extracting("id").contains("breast");
@@ -181,7 +181,7 @@ public class StagingTest {
     }
 
     @Test
-    public void testSchemaById() throws IOException {
+    void testSchemaById() throws IOException {
         StagingSchema schema = _STAGING.schemaById(_ALGORITHM, _VERSION, "brain").execute().body();
 
         assertThat(schema).isNotNull();
@@ -210,14 +210,14 @@ public class StagingTest {
     }
 
     @Test
-    public void testSchemaInvolvedTables() throws IOException {
+    void testSchemaInvolvedTables() throws IOException {
         List<StagingTable> tables = _STAGING.involvedTables(_ALGORITHM, _VERSION, "brain").execute().body();
 
         assertThat(tables).isNotEmpty();
     }
 
     @Test
-    public void testListTables() throws IOException {
+    void testListTables() throws IOException {
         List<StagingTable> tables = _STAGING.tables(_ALGORITHM, _VERSION, "ssf1").execute().body();
         assertThat(tables).isNotEmpty();
 
@@ -228,7 +228,7 @@ public class StagingTest {
     }
 
     @Test
-    public void testTableById() throws IOException {
+    void testTableById() throws IOException {
         StagingTable table = _STAGING.tableById(_ALGORITHM, _VERSION, "primary_site").execute().body();
 
         assertThat(table).isNotNull();
@@ -238,14 +238,14 @@ public class StagingTest {
     }
 
     @Test
-    public void testTableInvoledSchemas() throws IOException {
+    void testTableInvoledSchemas() throws IOException {
         List<StagingSchema> schemas = _STAGING.involvedSchemas(_ALGORITHM, _VERSION, "extension_baa").execute().body();
 
         assertThat(schemas).isNotEmpty();
     }
 
     @Test
-    public void testCsInputBuilder() {
+    void testCsInputBuilder() {
         CsStagingData data1 = new CsStagingData();
         data1.setInput(CsInput.PRIMARY_SITE, "C680");
         data1.setInput(CsInput.HISTOLOGY, "8000");
@@ -291,7 +291,7 @@ public class StagingTest {
     }
 
     @Test
-    public void testCsStaging() throws IOException {
+    void testCsStaging() throws IOException {
         CsStagingData data = new CsStagingInputBuilder()
                 .withInput(CsInput.PRIMARY_SITE, "C680")
                 .withInput(CsInput.HISTOLOGY, "8000")
@@ -372,7 +372,7 @@ public class StagingTest {
     }
 
     @Test
-    public void testTnmInputBuilder() {
+    void testTnmInputBuilder() {
         TnmStagingData data1 = new TnmStagingData();
         data1.setInput(TnmInput.PRIMARY_SITE, "C680");
         data1.setInput(TnmInput.HISTOLOGY, "8000");
@@ -415,7 +415,7 @@ public class StagingTest {
     }
 
     @Test
-    public void testTnmStaging() throws IOException {
+    void testTnmStaging() throws IOException {
         TnmStagingData data = new TnmStagingInputBuilder()
                 .withInput(TnmInput.PRIMARY_SITE, "C680")
                 .withInput(TnmInput.HISTOLOGY, "8000")
@@ -457,7 +457,7 @@ public class StagingTest {
     }
 
     @Test
-    public void testEodInputBuilder() {
+    void testEodInputBuilder() {
         EodStagingData data1 = new EodStagingData();
         data1.setInput(EodInput.PRIMARY_SITE, "C250");
         data1.setInput(EodInput.HISTOLOGY, "8154");
@@ -486,7 +486,7 @@ public class StagingTest {
     }
 
     @Test
-    public void testEodStaging() throws IOException {
+    void testEodStaging() throws IOException {
         EodStagingData data = new EodStagingInputBuilder()
                 .withInput(EodInput.PRIMARY_SITE, "C250")
                 .withInput(EodInput.HISTOLOGY, "8154")
@@ -519,7 +519,7 @@ public class StagingTest {
     }
 
     @Test
-    public void testStagingWithErrors() throws IOException {
+    void testStagingWithErrors() throws IOException {
         StagingData data = new StagingData();
         data.setInput("site", "C181");
         data.setInput("hist", "8093");
@@ -535,7 +535,7 @@ public class StagingTest {
     }
 
     @Test
-    public void testStagingGlossary() throws IOException {
+    void testStagingGlossary() throws IOException {
         Set<KeywordMatch> matches = _STAGING.schemaGlossary("eod_public", "2.0", "breast", null, true).execute().body();
         assertThat(matches).hasSize(26);
         matches = _STAGING.schemaGlossary("eod_public", "2.0", "breast", EnumSet.of(Category.STAGING), true).execute().body();
@@ -548,7 +548,7 @@ public class StagingTest {
     }
 
     @Test
-    public void testStagingMetadata() throws IOException {
+    void testStagingMetadata() throws IOException {
         StagingSchema schema = _STAGING.schemaById("eod_public", "2.0", "brain").execute().body();
         assertThat(schema).isNotNull();
 
@@ -559,7 +559,7 @@ public class StagingTest {
     }
 
     @Test
-    public void testBeans() {
+    void testBeans() {
         MatcherAssert.assertThat(StagingAlgorithm.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(StagingMetadata.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters(), hasValidBeanEquals()));
         MatcherAssert.assertThat(StagingVersion.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSettersExcluding("production", "beta", "development")));

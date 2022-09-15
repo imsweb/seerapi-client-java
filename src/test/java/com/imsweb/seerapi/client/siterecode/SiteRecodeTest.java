@@ -7,8 +7,8 @@ import java.io.IOException;
 
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import retrofit2.Call;
 
@@ -18,26 +18,28 @@ import com.imsweb.seerapi.client.shared.Version;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SiteRecodeTest {
 
     private static SiteRecodeService _SITE_RECODE;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         _SITE_RECODE = new SeerApi.Builder().connect().siteRecode();
     }
 
-    @Test(expected = BadRequestException.class)
-    public void testBadRequestException() throws IOException {
-        _SITE_RECODE.siteGroup("C379", null).execute();
+    @Test
+    void testBadRequestException() {
+        Call<SiteRecode> call = _SITE_RECODE.siteGroup("C379", null);
+        assertThrows(BadRequestException.class, call::execute);
     }
 
     @Test
-    public void testExceptionMessages() throws IOException {
+    void testExceptionMessages() throws IOException {
         String message = "";
 
         try {
@@ -53,16 +55,15 @@ public class SiteRecodeTest {
     }
 
     @Test
-    public void testSiteRecordVersion() throws IOException {
-        Call<Version> call = _SITE_RECODE.version();
-        String version = call.execute().body().getVersion();
+    void testSiteRecordVersion() throws IOException {
+        String version = _SITE_RECODE.version().execute().body().getVersion();
 
         assertNotNull(version);
         assertTrue(version.length() > 0);
     }
 
     @Test
-    public void testSiteRecode() throws IOException {
+    void testSiteRecode() throws IOException {
         Call<SiteRecode> call = _SITE_RECODE.siteGroup("C379", "9650");
         SiteRecode recode = call.execute().body();
 
@@ -73,7 +74,7 @@ public class SiteRecodeTest {
     }
 
     @Test
-    public void testBeans() {
+    void testBeans() {
         MatcherAssert.assertThat(Version.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
         MatcherAssert.assertThat(SiteRecode.class, CoreMatchers.allOf(hasValidBeanConstructor(), hasValidGettersAndSetters()));
     }

@@ -2,13 +2,13 @@ plugins {
     id 'java-library'
     id 'checkstyle'
     id 'jacoco'
-    id "com.github.spotbugs" version "5.0.9"
+    id "com.github.spotbugs" version "5.0.12"
     id 'maven-publish'
     id 'signing'
     id "io.codearte.nexus-staging" version "0.30.0"
     id 'com.adarshr.test-logger' version '3.2.0'
     id "com.github.ben-manes.versions" version "0.42.0"
-    id 'org.sonatype.gradle.plugins.scan' version '2.3.0'
+    id 'org.sonatype.gradle.plugins.scan' version '2.4.1'
     id "org.sonarqube" version "3.4.0.2513"
 }
 
@@ -34,7 +34,7 @@ repositories {
 }
 
 dependencies {
-    spotbugs 'com.github.spotbugs:spotbugs:4.7.1'
+    spotbugs 'com.github.spotbugs:spotbugs:4.7.2'
 
     api 'com.squareup.retrofit2:retrofit:2.9.0'
     api 'com.squareup.retrofit2:converter-jackson:2.9.0'
@@ -44,7 +44,7 @@ dependencies {
     api 'com.squareup.okio:okio:3.2.0'
 
     // newer version of dependency to fix vulnerability until converter-jackson is updated
-    api 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
+    api 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.assertj:assertj-core:3.23.1'
@@ -101,12 +101,12 @@ sonarqube {
 
 // Nexus vulnerability scan (see https://github.com/sonatype-nexus-community/scan-gradle-plugin)
 ossIndexAudit {
-    dependencyGraph = true
+    outputFormat = 'DEPENDENCY_GRAPH'
     printBanner = false
 }
 
 wrapper {
-    gradleVersion = '7.5'
+    gradleVersion = '7.5.1'
     distributionType = Wrapper.DistributionType.ALL
 }
 

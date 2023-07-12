@@ -79,7 +79,7 @@ public class MphTest {
         MphOutput result = _MPH.mph(new MphInputPair(input1, input2)).execute().body();
         assertNotNull(result);
         assertEquals(MphOutput.Result.SINGLE_PRIMARY, result.getResult());
-        assertEquals("mp_2007_breast", result.getGroupId());
+        assertEquals("mph_2007_to_2017_breast", result.getGroupId());
         assertEquals("M13", result.getStep());
         assertEquals("Tumors that do not meet any of the criteria are abstracted as a single primary.", result.getReason());
         assertEquals(10, result.getAppliedRules().size());
@@ -90,9 +90,9 @@ public class MphTest {
         result = _MPH.mph(new MphInputPair(input1, input2)).execute().body();
         assertNotNull(result);
         assertEquals(MphOutput.Result.QUESTIONABLE, result.getResult());
-        assertEquals("mp_2007_breast", result.getGroupId());
+        assertEquals("mph_2007_to_2017_breast", result.getGroupId());
         assertEquals("M7", result.getStep());
-        assertEquals("Unable to apply Rule M7 of mp_2007_breast. Valid and known laterality should be provided.", result.getReason());
+        assertEquals("Unable to apply Rule M7 of MPH 2007-2017 Breast. Valid and known laterality should be provided.", result.getReason());
         assertEquals(4, result.getAppliedRules().size());
         assertEquals("Is there a tumor(s) in each breast?", result.getAppliedRules().get(3).getQuestion());
 
@@ -110,7 +110,7 @@ public class MphTest {
         result = _MPH.mph(new MphInputPair(input1, input2)).execute().body();
         assertNotNull(result);
         assertEquals(MphOutput.Result.MULTIPLE_PRIMARIES, result.getResult());
-        assertEquals("mp_2007_breast", result.getGroupId());
+        assertEquals("mph_2007_to_2017_breast", result.getGroupId());
         assertEquals("M5", result.getStep());
         assertEquals("Tumors diagnosed more than five (5) years apart are multiple primaries.", result.getReason());
         assertEquals(2, result.getAppliedRules().size());

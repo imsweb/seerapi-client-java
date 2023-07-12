@@ -51,7 +51,7 @@ public class SiteRecodeTest {
 
         // the API call works out to:
         //     https://api.seer.cancer.gov/rest/recode/sitegroup?site=C379
-        assertEquals("Required request parameter 'hist' for method parameter type String is not present", message);
+        assertEquals("Required parameter 'hist' is not present.", message);
     }
 
     @Test

@@ -48,19 +48,19 @@ class RxTest {
 
     @Test
     void testRxById() throws IOException {
-        Rx rx = _RX.getById("latest", "53c44afe102c1290262dc672").execute().body();
+        Rx rx = _RX.getById("latest", "53c44b0a102c1290262dce76").execute().body();
 
         assertNotNull(rx);
-        assertEquals("ABT-751", rx.getName());
+        assertEquals("Imatinib mesylate", rx.getName());
         assertTrue(rx.getAlternateName().size() > 1);
         assertEquals(Rx.Type.DRUG, rx.getType());
         assertNull(rx.getHistology());
-        assertTrue(rx.getRemarks().startsWith("Phase II ALL"));
+        assertTrue(rx.getRemarks().startsWith("January 31, 2012"));
         assertNull(rx.getEvsId());
         assertNull(rx.getAbbreviation());
         assertEquals(Collections.singletonList("Chemotherapy"), rx.getCategory());
         assertTrue(rx.getSubcategory().size() > 0);
-        assertNull(rx.getNscNumber());
+        assertEquals(1, rx.getNscNumber().size());
         assertNull(rx.getDrugs());
         assertNull(rx.getRadiation());
         assertNull(rx.getHidden());
@@ -72,7 +72,17 @@ class RxTest {
         assertNull(rx.getNote());
         assertNull(rx.getFieldNotes());
         assertNull(rx.getScore());
-        assertEquals(Arrays.asList("neuroblastoma", "Pediatric ALL"), rx.getPrimarySite());
+        assertEquals(Arrays.asList("aggressive mastocytosis",
+                "chronic eosinophilic leukemia",
+                "Colorectal",
+                "dermatofibrosarcoma protuberans",
+                "gastric",
+                "GIST",
+                "hypereosinophilic syndrome",
+                "leukemia",
+                "lung",
+                "other cancer",
+                "Ph+ALL"), rx.getPrimarySite());
         assertNull(rx.getHistory());
     }
 
@@ -112,8 +122,8 @@ class RxTest {
 
         assertNotNull(results);
         assertEquals(25, results.getCount().longValue());
-        assertEquals(12, results.getTotal().longValue());
-        assertEquals(12, results.getResults().size());
+        assertEquals(8, results.getTotal().longValue());
+        assertEquals(8, results.getResults().size());
         assertEquals(Collections.singletonList("abt"), results.getTerms());
 
         search.setMode(PublishableSearch.SearchMode.OR);

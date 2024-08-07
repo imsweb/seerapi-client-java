@@ -8,14 +8,16 @@ public class MphOutput {
 
     @JsonProperty("result")
     private Result _result;
+    @JsonProperty("group_id")
+    private String _groupId;
+    @JsonProperty("group_name")
+    private String _groupName;
+    @JsonProperty("step")
+    private String _step;
     @JsonProperty("reason")
     private String _reason;
     @JsonProperty("applied_rules")
     private List<MphRule> _appliedRules;
-    @JsonProperty("group_id")
-    private String _groupId;
-    @JsonProperty("step")
-    private String _step;
 
     public Result getResult() {
         return _result;
@@ -64,6 +66,7 @@ public class MphOutput {
         // indicates the two tumors are different primaries
         MULTIPLE_PRIMARIES,
         // indicates there is not enough information to make a proper determination
-        QUESTIONABLE
+        QUESTIONABLE,
+        INVALID_INPUT
     }
 }

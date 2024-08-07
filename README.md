@@ -30,14 +30,14 @@ Download [the latest JAR][1] or grab via Maven:
 <dependency>
     <groupId>com.imsweb</groupId>
     <artifactId>seerapi-client-java</artifactId>
-    <version>5.4</version>
+    <version>5.5</version>
 </dependency>
 ```
 
 or via Gradle:
 
 ```
-compile 'com.imsweb:seerapi-client-java:5.4'
+compile 'com.imsweb:seerapi-client-java:5.5'
 ```
 
 ## Usage

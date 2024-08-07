@@ -124,7 +124,7 @@ class NaaccrTest {
         assertThat(name.getRecordTypes()).containsExactly("A", "M", "C", "I");
         assertThat(name.getDataType()).isEqualTo("digits");
         assertThat(name.getLength()).isEqualTo(2);
-        assertThat(name.getPadType()).isEqualTo("rightBlank");
+        assertThat(name.getPadType()).isEqualTo("none");
         assertThat(name.getTrimType()).isEqualTo("all");
         assertThat(name.getAllowUnlimitedText()).isFalse();
         assertThat(name.getDocumentation()).isNotEmpty();

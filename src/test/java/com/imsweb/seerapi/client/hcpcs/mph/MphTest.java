@@ -14,6 +14,7 @@ import com.imsweb.seerapi.client.SeerApi;
 import com.imsweb.seerapi.client.mph.MphInput;
 import com.imsweb.seerapi.client.mph.MphInputPair;
 import com.imsweb.seerapi.client.mph.MphOutput;
+import com.imsweb.seerapi.client.mph.MphOutput.Result;
 import com.imsweb.seerapi.client.mph.MphRule;
 import com.imsweb.seerapi.client.mph.MphService;
 
@@ -55,8 +56,9 @@ public class MphTest {
         input2.setDateOfDiagnosisYear("2016");
         input2.setLaterality("1");
 
-        Call<MphOutput> call = _MPH.mph(new MphInputPair(input1, input2));
-        assertThrows(BadRequestException.class, call::execute);
+        MphOutput result = _MPH.mph(new MphInputPair(input1, input2)).execute().body();
+        assertNotNull(result);
+        assertEquals(Result.INVALID_INPUT, result.getResult());
     }
 
     @Test
@@ -112,9 +114,9 @@ public class MphTest {
         assertEquals(MphOutput.Result.MULTIPLE_PRIMARIES, result.getResult());
         assertEquals("mph_2007_to_2017_breast", result.getGroupId());
         assertEquals("M5", result.getStep());
-        assertEquals("Tumors diagnosed more than five (5) years apart are multiple primaries.", result.getReason());
+        assertEquals("Tumors diagnosed more than 5 years apart are multiple primaries.", result.getReason());
         assertEquals(2, result.getAppliedRules().size());
-        assertEquals("Are there tumors diagnosed more than five (5) years apart?", result.getAppliedRules().get(1).getQuestion());
+        assertEquals("Are there tumors diagnosed more than 5 years apart?", result.getAppliedRules().get(1).getQuestion());
     }
 
     @Test
@@ -160,8 +162,9 @@ public class MphTest {
         i1.setDateOfDiagnosisYear("2015");
         i2.setDateOfDiagnosisYear("2015");
 
-        Call<MphOutput> call = _MPH.mph(new MphInputPair(i1, i2));
-        assertThrows(BadRequestException.class, call::execute);
+        MphOutput result = _MPH.mph(new MphInputPair(i1, i2)).execute().body();
+        assertNotNull(result);
+        assertEquals(MphOutput.Result.INVALID_INPUT, result.getResult());
     }
 
     @Test

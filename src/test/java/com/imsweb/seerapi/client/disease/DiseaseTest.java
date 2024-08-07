@@ -174,8 +174,8 @@ class DiseaseTest {
 
         assertNotNull(results);
         assertEquals(25, results.getCount().longValue());
-        assertEquals(6, results.getTotal().longValue());
-        assertEquals(6, results.getResults().size());
+        assertEquals(5, results.getTotal().longValue());
+        assertEquals(5, results.getResults().size());
         assertEquals(Collections.singletonList("basophilic"), results.getTerms());
 
         search.setSiteCategory("BAD_VALUE");
@@ -210,8 +210,8 @@ class DiseaseTest {
 
         assertNotNull(results);
         assertEquals(25, results.getCount().longValue());
-        assertEquals(7, results.getTotal().longValue());
-        assertEquals(7, results.getResults().size());
+        assertEquals(6, results.getTotal().longValue());
+        assertEquals(6, results.getResults().size());
         assertEquals(Collections.singletonList("basophilic"), results.getTerms());
     }
 

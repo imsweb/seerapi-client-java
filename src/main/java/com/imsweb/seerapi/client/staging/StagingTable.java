@@ -23,6 +23,8 @@ public class StagingTable {
     private String _notes;
     private String _footnotes;
     private String _rationale;
+    private String additionalInfo;
+    private String codingGuidelines;
     private Date _lastModified;
     private List<StagingColumnDefinition> _definition;
     private Set<String> _extraInput;
@@ -116,6 +118,24 @@ public class StagingTable {
 
     public void setRationale(String rationale) {
         _rationale = rationale;
+    }
+
+    @JsonProperty("additional_info")
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
+
+    @JsonProperty("coding_guidelines")
+    public String getCodingGuidelines() {
+        return codingGuidelines;
+    }
+
+    public void setCodingGuidelines(String codingGuidelines) {
+        this.codingGuidelines = codingGuidelines;
     }
 
     @JsonProperty("last_modified")

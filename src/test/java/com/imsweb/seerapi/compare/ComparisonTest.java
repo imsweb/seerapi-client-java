@@ -4,6 +4,7 @@
 package com.imsweb.seerapi.compare;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -15,6 +16,9 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
+import com.imsweb.seerapi.client.glossary.Glossary;
+import com.imsweb.seerapi.client.glossary.GlossarySearchResults;
+import com.imsweb.seerapi.client.glossary.GlossaryService;
 import com.imsweb.seerapi.client.hcpcs.Hcpcs;
 import com.imsweb.seerapi.client.hcpcs.HcpcsService;
 import com.imsweb.seerapi.client.ndc.NdcProduct;
@@ -38,8 +42,8 @@ class ComparisonTest {
 
     @Test
     void testNdc() throws IOException {
-        NdcService ndcProd = new SeerApi.Builder().url(PROD_URL).apiKey(getApiKey()).connect().ndc();
-        NdcService ndcLocal = new SeerApi.Builder().url(LOCAL_URL).apiKey(getApiKey()).connect().ndc();
+        NdcService prodService = new SeerApi.Builder().url(PROD_URL).apiKey(getApiKey()).connect().ndc();
+        NdcService localService = new SeerApi.Builder().url(LOCAL_URL).apiKey(getApiKey()).connect().ndc();
 
         long page = 1;
 
@@ -47,8 +51,8 @@ class ComparisonTest {
         params.put("page", String.valueOf(page));
         params.put("per_page", "100");
         params.put("order", "ndc");
-        List<NdcProduct> prodList = ndcProd.search(params).execute().body();
-        List<NdcProduct> localList = ndcLocal.search(params).execute().body();
+        List<NdcProduct> prodList = prodService.search(params).execute().body();
+        List<NdcProduct> localList = localService.search(params).execute().body();
 
         while (!Objects.requireNonNull(prodList).isEmpty() && !Objects.requireNonNull(localList).isEmpty()) {
             assertThat(localList)
@@ -60,15 +64,15 @@ class ComparisonTest {
 
             page += 1;
             params.put("page", String.valueOf(page));
-            prodList = ndcProd.search(params).execute().body();
-            localList = ndcLocal.search(params).execute().body();
+            prodList = prodService.search(params).execute().body();
+            localList = localService.search(params).execute().body();
         }
     }
 
     @Test
     void testHcpcs() throws IOException {
-        HcpcsService hcpcsProd = new SeerApi.Builder().url(PROD_URL).apiKey(getApiKey()).connect().hcpcs();
-        HcpcsService hcpcsLocal = new SeerApi.Builder().url(LOCAL_URL).apiKey(getApiKey()).connect().hcpcs();
+        HcpcsService prodService = new SeerApi.Builder().url(PROD_URL).apiKey(getApiKey()).connect().hcpcs();
+        HcpcsService localService = new SeerApi.Builder().url(LOCAL_URL).apiKey(getApiKey()).connect().hcpcs();
 
         long page = 1;
 
@@ -77,8 +81,8 @@ class ComparisonTest {
         params.put("per_page", "100");
         params.put("order", "hcpcs_code");
 
-        List<Hcpcs> prodList = hcpcsProd.search(params).execute().body();
-        List<Hcpcs> localList = hcpcsLocal.search(params).execute().body();
+        List<Hcpcs> prodList = prodService.search(params).execute().body();
+        List<Hcpcs> localList = localService.search(params).execute().body();
 
         while (!Objects.requireNonNull(prodList).isEmpty()) {
             System.out.println("HCPCS page " + page);
@@ -90,8 +94,8 @@ class ComparisonTest {
 
             page += 1;
             params.put("page", String.valueOf(page));
-            prodList = hcpcsProd.search(params).execute().body();
-            localList = hcpcsLocal.search(params).execute().body();
+            prodList = prodService.search(params).execute().body();
+            localList = localService.search(params).execute().body();
         }
     }
 
@@ -108,8 +112,8 @@ class ComparisonTest {
 
     @Test
     void testStagingSchemas() throws IOException {
-        StagingService stagingProd = new SeerApi.Builder().url(PROD_URL).apiKey(getApiKey()).connect().staging();
-        StagingService stagingLocal = new SeerApi.Builder().url(LOCAL_URL).apiKey(getApiKey()).connect().staging();
+        StagingService prodService = new SeerApi.Builder().url(PROD_URL).apiKey(getApiKey()).connect().staging();
+        StagingService localService = new SeerApi.Builder().url(LOCAL_URL).apiKey(getApiKey()).connect().staging();
 
         Map<String, String> algorithmMap = getAlgorithmVersions();
         for (String algorithmId : algorithmMap.keySet()) {
@@ -117,8 +121,8 @@ class ComparisonTest {
 
             System.out.println("Getting list of all schemas in " + algorithmId + ":" + algorithmVersion);
 
-            List<StagingSchemaInfo> prodSchemas = stagingProd.schemas(algorithmId, algorithmVersion).execute().body();
-            List<StagingSchemaInfo> localSchemas = stagingLocal.schemas(algorithmId, algorithmVersion).execute().body();
+            List<StagingSchemaInfo> prodSchemas = prodService.schemas(algorithmId, algorithmVersion).execute().body();
+            List<StagingSchemaInfo> localSchemas = localService.schemas(algorithmId, algorithmVersion).execute().body();
 
             assertThat(localSchemas)
                     .hasSameSizeAs(prodSchemas)  // Ensure both lists have the same size
@@ -127,8 +131,8 @@ class ComparisonTest {
                     .isEqualTo(prodSchemas);
 
             for (StagingSchemaInfo prodSchema : Objects.requireNonNull(prodSchemas)) {
-                StagingSchema prod = stagingProd.schemaById(algorithmId, algorithmVersion, prodSchema.getId()).execute().body();
-                StagingSchema local = stagingLocal.schemaById(algorithmId, algorithmVersion, prodSchema.getId()).execute().body();
+                StagingSchema prod = prodService.schemaById(algorithmId, algorithmVersion, prodSchema.getId()).execute().body();
+                StagingSchema local = localService.schemaById(algorithmId, algorithmVersion, prodSchema.getId()).execute().body();
 
                 System.out.println("Comparing [" + algorithmId + ":" + algorithmVersion + "] schema " + prodSchema.getId());
 
@@ -151,8 +155,8 @@ class ComparisonTest {
 
     @Test
     void testStagingTables() throws IOException {
-        StagingService stagingProd = new SeerApi.Builder().url(PROD_URL).apiKey(getApiKey()).connect().staging();
-        StagingService stagingLocal = new SeerApi.Builder().url(LOCAL_URL).apiKey(getApiKey()).connect().staging();
+        StagingService prodService = new SeerApi.Builder().url(PROD_URL).apiKey(getApiKey()).connect().staging();
+        StagingService localService = new SeerApi.Builder().url(LOCAL_URL).apiKey(getApiKey()).connect().staging();
 
         Map<String, String> algorithmMap = getAlgorithmVersions();
         for (String algorithmId : algorithmMap.keySet()) {
@@ -160,8 +164,8 @@ class ComparisonTest {
 
             System.out.println("Getting list of all tables in " + algorithmId + ":" + algorithmVersion);
 
-            List<StagingTable> prodTables = stagingProd.tables(algorithmId, algorithmVersion).execute().body();
-            List<StagingTable> localTables = stagingLocal.tables(algorithmId, algorithmVersion).execute().body();
+            List<StagingTable> prodTables = prodService.tables(algorithmId, algorithmVersion).execute().body();
+            List<StagingTable> localTables = localService.tables(algorithmId, algorithmVersion).execute().body();
 
             assertThat(localTables)
                     .hasSameSizeAs(prodTables)  // Ensure both lists have the same size
@@ -170,8 +174,8 @@ class ComparisonTest {
                     .isEqualTo(prodTables);
 
             for (StagingTable prodTable : Objects.requireNonNull(prodTables)) {
-                StagingTable prod = stagingProd.tableById(algorithmId, algorithmVersion, prodTable.getId()).execute().body();
-                StagingTable local = stagingLocal.tableById(algorithmId, algorithmVersion, prodTable.getId()).execute().body();
+                StagingTable prod = prodService.tableById(algorithmId, algorithmVersion, prodTable.getId()).execute().body();
+                StagingTable local = localService.tableById(algorithmId, algorithmVersion, prodTable.getId()).execute().body();
 
                 System.out.println("Comparing [" + algorithmId + ":" + algorithmVersion + "] table " + prodTable.getId());
 
@@ -190,4 +194,61 @@ class ComparisonTest {
             }
         }
     }
+
+    @Test
+    void testGlossary() throws IOException {
+        GlossaryService prodService = new SeerApi.Builder().url(PROD_URL).apiKey(getApiKey()).connect().glossary();
+        GlossaryService localService = new SeerApi.Builder().url(LOCAL_URL).apiKey(getApiKey()).connect().glossary();
+
+        Map<String, String> params = new HashMap<>();
+
+        long offset = 0;
+        long perPage = 100;
+        params.put("offset", String.valueOf(offset));
+        params.put("count", String.valueOf(perPage));
+
+        // get a list of ids
+        List<String> ids = new ArrayList<>();
+
+        System.out.println("Collecting identifiers for glossary 'latest' version");
+
+        GlossarySearchResults prod = prodService.search("latest", params).execute().body();
+
+        while (Objects.requireNonNull(prod).getResults() != null && !prod.getResults().isEmpty()) {
+            for (Glossary glossary : prod.getResults())
+                ids.add(glossary.getId());
+
+            offset += perPage;
+            params.put("offset", String.valueOf(offset));
+
+            prod = prodService.search("latest", params).execute().body();
+        }
+
+        System.out.println("Found " + ids.size() + " identifiers for glossary 'latest' version");
+
+        for (String id : ids) {
+            System.out.println("Comparing " + id);
+            Glossary prodGlossary = prodService.getById("latest", id).execute().body();
+            Glossary localGlossary = localService.getById("latest", id).execute().body();
+
+            assertThat(localGlossary)
+                    .usingRecursiveComparison()
+                    .withComparatorForType(
+                            (value1, value2) -> {
+                                // Treat null and empty string as equal
+                                if (value1 == null && "".equals(value2) || "".equals(value1) && value2 == null) {
+                                    return 0; // Consider them equal
+                                }
+                                if (value1 == null)
+                                    return -1;
+                                if (value2 == null)
+                                    return 1;
+                                return value1.compareTo(value2);
+                            },
+                            String.class  // Apply to all String fields, including in lists
+                    )
+                    .isEqualTo(prodGlossary);
+        }
+    }
+
 }

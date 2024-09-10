@@ -16,6 +16,9 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
+import com.imsweb.seerapi.client.disease.Disease;
+import com.imsweb.seerapi.client.disease.DiseaseSearchResults;
+import com.imsweb.seerapi.client.disease.DiseaseService;
 import com.imsweb.seerapi.client.glossary.Glossary;
 import com.imsweb.seerapi.client.glossary.GlossarySearchResults;
 import com.imsweb.seerapi.client.glossary.GlossaryService;
@@ -23,6 +26,9 @@ import com.imsweb.seerapi.client.hcpcs.Hcpcs;
 import com.imsweb.seerapi.client.hcpcs.HcpcsService;
 import com.imsweb.seerapi.client.ndc.NdcProduct;
 import com.imsweb.seerapi.client.ndc.NdcService;
+import com.imsweb.seerapi.client.rx.Rx;
+import com.imsweb.seerapi.client.rx.RxSearchResults;
+import com.imsweb.seerapi.client.rx.RxService;
 import com.imsweb.seerapi.client.staging.StagingSchema;
 import com.imsweb.seerapi.client.staging.StagingSchemaInfo;
 import com.imsweb.seerapi.client.staging.StagingService;
@@ -251,4 +257,101 @@ class ComparisonTest {
         }
     }
 
+    @Test
+    void testRx() throws IOException {
+        RxService prodService = new SeerApi.Builder().url(PROD_URL).apiKey(getApiKey()).connect().rx();
+        RxService localService = new SeerApi.Builder().url(LOCAL_URL).apiKey(getApiKey()).connect().rx();
+
+        Map<String, String> params = new HashMap<>();
+
+        long offset = 0;
+        long perPage = 100;
+        params.put("offset", String.valueOf(offset));
+        params.put("count", String.valueOf(perPage));
+
+        // get a list of ids
+        List<String> ids = new ArrayList<>();
+
+        System.out.println("Collecting identifiers for rx 'latest' version");
+
+        RxSearchResults prod = prodService.search("latest", params).execute().body();
+
+        while (Objects.requireNonNull(prod).getResults() != null && !prod.getResults().isEmpty()) {
+            for (Rx rx : prod.getResults())
+                ids.add(rx.getId());
+
+            offset += perPage;
+            params.put("offset", String.valueOf(offset));
+
+            prod = prodService.search("latest", params).execute().body();
+        }
+
+        System.out.println("Found " + ids.size() + " identifiers for rx 'latest' version");
+
+        for (String id : ids) {
+            System.out.println("Comparing " + id);
+            Rx prodRx = prodService.getById("latest", id).execute().body();
+            Rx localRx = localService.getById("latest", id).execute().body();
+
+            assertThat(localRx)
+                    .usingRecursiveComparison()
+                    .isEqualTo(prodRx);
+        }
+    }
+
+    @Test
+    void testDisease() throws IOException {
+        DiseaseService prodService = new SeerApi.Builder().url(PROD_URL).apiKey(getApiKey()).connect().disease();
+        DiseaseService localService = new SeerApi.Builder().url(LOCAL_URL).apiKey(getApiKey()).connect().disease();
+
+        Map<String, String> params = new HashMap<>();
+
+        long offset = 0;
+        long perPage = 100;
+        params.put("offset", String.valueOf(offset));
+        params.put("count", String.valueOf(perPage));
+
+        // get a list of ids
+        List<String> ids = new ArrayList<>();
+
+        System.out.println("Collecting identifiers for disease 'latest' version");
+
+        DiseaseSearchResults prod = prodService.search("latest", params).execute().body();
+
+        while (Objects.requireNonNull(prod).getResults() != null && !prod.getResults().isEmpty()) {
+            for (Disease disease : prod.getResults())
+                ids.add(disease.getId());
+
+            offset += perPage;
+            params.put("offset", String.valueOf(offset));
+
+            prod = prodService.search("latest", params).execute().body();
+        }
+
+        System.out.println("Found " + ids.size() + " identifiers for disease 'latest' version");
+
+        for (String id : ids) {
+            System.out.println("Comparing " + id);
+            Disease prodDisease = prodService.getById("latest", id).execute().body();
+            Disease localDisease = localService.getById("latest", id).execute().body();
+
+            assertThat(localDisease)
+                    .usingRecursiveComparison()
+                    .withComparatorForType(
+                            (value1, value2) -> {
+                                // Treat null and empty string as equal
+                                if (value1 == null && "".equals(value2) || "".equals(value1) && value2 == null) {
+                                    return 0; // Consider them equal
+                                }
+                                if (value1 == null)
+                                    return -1;
+                                if (value2 == null)
+                                    return 1;
+                                return value1.compareTo(value2);
+                            },
+                            String.class  // Apply to all String fields, including in lists
+                    )
+                    .isEqualTo(prodDisease);
+        }
+    }
 }

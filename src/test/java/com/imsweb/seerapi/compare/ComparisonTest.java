@@ -52,6 +52,7 @@ class ComparisonTest {
         NdcService localService = new SeerApi.Builder().url(LOCAL_URL).apiKey(getApiKey()).connect().ndc();
 
         long page = 1;
+        long processed = 0;
 
         Map<String, String> params = new HashMap<>();
         params.put("page", String.valueOf(page));
@@ -61,12 +62,13 @@ class ComparisonTest {
         List<NdcProduct> localList = localService.search(params).execute().body();
 
         while (!Objects.requireNonNull(prodList).isEmpty() && !Objects.requireNonNull(localList).isEmpty()) {
+            processed += prodList.size();
             assertThat(localList)
                     .hasSameSizeAs(prodList)  // Ensure both lists have the same size
                     .usingRecursiveComparison()
                     .isEqualTo(prodList);
 
-            System.out.println("NDC page " + page);
+            System.out.println("NDC page " + page + " (processed " + processed + " so far)");
 
             page += 1;
             params.put("page", String.valueOf(page));
@@ -80,6 +82,7 @@ class ComparisonTest {
         HcpcsService prodService = new SeerApi.Builder().url(PROD_URL).apiKey(getApiKey()).connect().hcpcs();
         HcpcsService localService = new SeerApi.Builder().url(LOCAL_URL).apiKey(getApiKey()).connect().hcpcs();
 
+        long processed = 0;
         long page = 1;
 
         Map<String, String> params = new HashMap<>();
@@ -91,7 +94,9 @@ class ComparisonTest {
         List<Hcpcs> localList = localService.search(params).execute().body();
 
         while (!Objects.requireNonNull(prodList).isEmpty()) {
-            System.out.println("HCPCS page " + page);
+            processed += prodList.size();
+            System.out.println("HCPCS page " + page + " (processed " + processed + " so far)");
+
             assertThat(localList)
                     .hasSameSizeAs(prodList)  // Ensure both lists have the same size
                     .usingRecursiveComparison()
@@ -239,20 +244,6 @@ class ComparisonTest {
 
             assertThat(localGlossary)
                     .usingRecursiveComparison()
-                    .withComparatorForType(
-                            (value1, value2) -> {
-                                // Treat null and empty string as equal
-                                if (value1 == null && "".equals(value2) || "".equals(value1) && value2 == null) {
-                                    return 0; // Consider them equal
-                                }
-                                if (value1 == null)
-                                    return -1;
-                                if (value2 == null)
-                                    return 1;
-                                return value1.compareTo(value2);
-                            },
-                            String.class  // Apply to all String fields, including in lists
-                    )
                     .isEqualTo(prodGlossary);
         }
     }
@@ -337,20 +328,6 @@ class ComparisonTest {
 
             assertThat(localDisease)
                     .usingRecursiveComparison()
-                    .withComparatorForType(
-                            (value1, value2) -> {
-                                // Treat null and empty string as equal
-                                if (value1 == null && "".equals(value2) || "".equals(value1) && value2 == null) {
-                                    return 0; // Consider them equal
-                                }
-                                if (value1 == null)
-                                    return -1;
-                                if (value2 == null)
-                                    return 1;
-                                return value1.compareTo(value2);
-                            },
-                            String.class  // Apply to all String fields, including in lists
-                    )
                     .isEqualTo(prodDisease);
         }
     }

@@ -29,10 +29,12 @@ import com.imsweb.seerapi.client.ndc.NdcService;
 import com.imsweb.seerapi.client.rx.Rx;
 import com.imsweb.seerapi.client.rx.RxSearchResults;
 import com.imsweb.seerapi.client.rx.RxService;
+import com.imsweb.seerapi.client.staging.StagingAlgorithm;
 import com.imsweb.seerapi.client.staging.StagingSchema;
 import com.imsweb.seerapi.client.staging.StagingSchemaInfo;
 import com.imsweb.seerapi.client.staging.StagingService;
 import com.imsweb.seerapi.client.staging.StagingTable;
+import com.imsweb.seerapi.client.staging.StagingVersion;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -119,6 +121,30 @@ class ComparisonTest {
         versions.put("cs", "02.05.50");
 
         return versions;
+    }
+
+    @Test
+    void testStagingAlgorithmsAndVersions() throws IOException {
+        StagingService prodService = new SeerApi.Builder().url(PROD_URL).apiKey(getApiKey()).connect().staging();
+        StagingService localService = new SeerApi.Builder().url(LOCAL_URL).apiKey(getApiKey()).connect().staging();
+
+        List<StagingAlgorithm> prodAlgorithms = prodService.algorithms().execute().body();
+        List<StagingAlgorithm> localAlgorithms = localService.algorithms().execute().body();
+
+        assertThat(localAlgorithms)
+                .hasSameSizeAs(prodAlgorithms)  // Ensure both lists have the same size
+                .usingRecursiveComparison()
+                .isEqualTo(prodAlgorithms);
+
+        for (StagingAlgorithm algorithm : Objects.requireNonNull(prodAlgorithms)) {
+            List<StagingVersion> prodVersions = prodService.versions(algorithm.getAlgorithm()).execute().body();
+            List<StagingVersion> localVersions = localService.versions(algorithm.getAlgorithm()).execute().body();
+
+            assertThat(localVersions)
+                    .hasSameSizeAs(prodVersions)
+                    .usingRecursiveComparison()
+                    .isEqualTo(prodVersions);
+        }
     }
 
     @Test

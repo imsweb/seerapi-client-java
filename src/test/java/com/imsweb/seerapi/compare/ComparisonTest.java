@@ -76,6 +76,10 @@ class ComparisonTest {
             params.put("page", String.valueOf(page));
             prodList = prodService.search(params).execute().body();
             localList = localService.search(params).execute().body();
+
+            // there are way too many entities; limit to 10,000
+            if (processed >= 10_000)
+                break;
         }
     }
 

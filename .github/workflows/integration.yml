@@ -34,4 +34,4 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           chmod +x gradlew
-          ./gradlew --continue build sonarqube
+          ./gradlew --continue build sonar

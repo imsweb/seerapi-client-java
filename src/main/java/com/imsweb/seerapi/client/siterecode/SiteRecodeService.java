@@ -3,28 +3,31 @@
  */
 package com.imsweb.seerapi.client.siterecode;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
-
-import com.imsweb.seerapi.client.shared.Version;
 
 public interface SiteRecodeService {
 
     /**
-     * Return the version of the SEER Site Recode database.
-     * @return a String representing the database version
+     * Return the supported algorithms and versions
+     * @return a list of information about the algorithms
      */
-    @GET("recode/version")
-    Call<Version> version();
+    @GET("recode/sitegroup/algorithms")
+    Call<List<SiteGroupAlgorithm>> algorithms();
 
     /**
-     * Return the SEER Site Group for the site/histology combination, or 99999 if the combination is unknown.
+     * Return the specified algorithm site group for the site/histology/behavior combination, or 99999 if the combination is unknown.
+     * @param algorithm site group algorithm
      * @param site Primary Site O3
      * @param hist Histology O3
+     * @param behavior Behavior O3
      * @return a SiteRecode object based on the site and histology
      */
-    @GET("recode/sitegroup")
-    Call<SiteRecode> siteGroup(@Query("site") String site, @Query("hist") String hist);
+    @GET("recode/sitegroup/{algorithm}")
+    Call<SiteRecode> siteGroup(@Path("algorithm") String algorithm, @Query("site") String site, @Query("hist") String hist, @Query("behavior") String behavior);
 
 }

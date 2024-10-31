@@ -3,13 +3,13 @@
  */
 package com.imsweb.seerapi.client;
 
-import java.io.IOException;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 import retrofit2.Call;
 
-import com.imsweb.seerapi.client.shared.Version;
+import com.imsweb.seerapi.client.siterecode.SiteGroupAlgorithm;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -17,13 +17,13 @@ class SeerApiTest {
 
     @Test
     void testBadApiKeyAndURL() {
-        Call<Version> call = new SeerApi.Builder().url("https://api.seer.cancer.gov/rest/").apiKey("BAD KEY").connect().siteRecode().version();
+        Call<List<SiteGroupAlgorithm>> call = new SeerApi.Builder().url("https://api.seer.cancer.gov/rest/").apiKey("BAD KEY").connect().siteRecode().algorithms();
         assertThrows(NotAuthorizedException.class, call::execute);
     }
 
     @Test
-    void testBadApiKey() throws IOException {
-        Call<Version> call = new SeerApi.Builder().apiKey("BAD KEY").connect().siteRecode().version();
+    void testBadApiKey() {
+        Call<List<SiteGroupAlgorithm>> call = new SeerApi.Builder().apiKey("BAD KEY").connect().siteRecode().algorithms();
         assertThrows(NotAuthorizedException.class, call::execute);
     }
 

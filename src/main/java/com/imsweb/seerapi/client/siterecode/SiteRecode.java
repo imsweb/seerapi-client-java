@@ -11,6 +11,8 @@ public class SiteRecode {
     protected String _site;
     @JsonProperty("hist")
     protected String _hist;
+    @JsonProperty("behavior")
+    protected String _behavior;
     @JsonProperty("site_group")
     protected String _siteGroup;
 
@@ -28,6 +30,14 @@ public class SiteRecode {
 
     public void setHist(String hist) {
         _hist = hist;
+    }
+
+    public String getBehavior() {
+        return _behavior;
+    }
+
+    public void setBehavior(String behavior) {
+        _behavior = behavior;
     }
 
     public String getSiteGroup() {

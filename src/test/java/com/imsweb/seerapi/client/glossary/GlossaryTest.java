@@ -22,6 +22,7 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static com.imsweb.seerapi.client.glossary.Glossary.Category.GENERAL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -73,37 +74,6 @@ class GlossaryTest {
     }
 
     @Test
-    void testGlossaryChangelog() throws IOException {
-        GlossaryChangelogResults results = _GLOSSARY.changelogs("latest", null, null, 1).execute().body();
-
-        assertNotNull(results);
-
-        // TODO since all the glossary items were removed from the production database, this needs to be commented out; it will return when they are published again
-
-            /*
-            Assert.assertEquals(1, changes.size());
-
-            GlossaryChangelog changelog = changes.get(0);
-
-            Assert.assertNotNull(changelog.getUser());
-            Assert.assertEquals("latest_dev", changelog.getVersion());
-            Assert.assertTrue(changelog.getId().length() > 0);
-            Assert.assertTrue(changelog.getAdds().size() > 0);
-
-            GlossaryChangelogEntry entry = changelog.getAdds().get(0);
-            Assert.assertTrue(entry.getId().length() > 0);
-            Assert.assertTrue(entry.getName().length() > 0);
-            Assert.assertNull(entry.getOldVersion());
-            Assert.assertNull(entry.getNewVersion());
-
-            Assert.assertNull(changelog.getMods());
-            Assert.assertNull(changelog.getDeletes());
-            Assert.assertNotNull(changelog.getDate());
-            Assert.assertEquals("Initial migration", changelog.getDescription());
-            */
-    }
-
-    @Test
     void testGlossarySearch() throws IOException {
         String term = "killer";
         GlossarySearch search = new GlossarySearch(term);
@@ -113,7 +83,7 @@ class GlossaryTest {
         assertNotNull(results);
         assertEquals(25, results.getCount().longValue());
         assertTrue(results.getTotal().longValue() > 0);
-        assertTrue(results.getResults().size() > 0);
+        assertFalse(results.getResults().isEmpty());
         assertEquals(Collections.singletonList(term), results.getTerms());
 
         // add the category and verify there are no results
@@ -130,7 +100,7 @@ class GlossaryTest {
         assertNotNull(results);
         assertEquals(25, results.getCount().longValue());
         assertTrue(results.getTotal().longValue() > 0);
-        assertTrue(results.getResults().size() > 0);
+        assertFalse(results.getResults().isEmpty());
         assertEquals(Collections.singletonList(term), results.getTerms());
     }
 
@@ -147,7 +117,7 @@ class GlossaryTest {
             GlossarySearchResults results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(Glossary.Category.HEMATO)).execute().body();
             assertNotNull(results);
             assertTrue(results.getTotal() > 0);
-            assertTrue(results.getResults().size() > 0);
+            assertFalse(results.getResults().isEmpty());
 
             // the first time through, set the total
             if (total == null)

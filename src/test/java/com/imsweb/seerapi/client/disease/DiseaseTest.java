@@ -18,6 +18,7 @@ import com.imsweb.seerapi.client.publishable.PublishableSearch;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -54,7 +55,7 @@ class DiseaseTest {
         List<PrimarySite> sites = _DISEASE.primarySites().execute().body();
 
         assertNotNull(sites);
-        assertTrue(sites.size() > 0);
+        assertFalse(sites.isEmpty());
         assertEquals("C000", sites.get(0).getValue());
         assertEquals("External upper lip", sites.get(0).getLabel());
     }
@@ -64,7 +65,7 @@ class DiseaseTest {
         List<PrimarySite> sites = _DISEASE.primarySiteCode("C021").execute().body();
 
         assertNotNull(sites);
-        assertTrue(sites.size() > 0);
+        assertFalse(sites.isEmpty());
         assertEquals("C021", sites.get(0).getValue());
         assertEquals("Border of tongue", sites.get(0).getLabel());
     }
@@ -74,7 +75,7 @@ class DiseaseTest {
         List<SiteCategory> categories = _DISEASE.siteCategories().execute().body();
 
         assertNotNull(categories);
-        assertTrue(categories.size() > 0);
+        assertFalse(categories.isEmpty());
         assertEquals("head-and-neck", categories.get(0).getId());
         assertEquals("Head and Neck", categories.get(0).getLabel());
         assertEquals(2, categories.get(0).getSites().size());
@@ -91,7 +92,7 @@ class DiseaseTest {
         assertEquals("Pure erythroid leukemia", disease.getName());
         assertEquals(Disease.Type.HEMATO, disease.getType());
         assertEquals("9840/3", disease.getIcdO3Morphology());
-        assertTrue(disease.getSamePrimaries().size() > 0);
+        assertFalse(disease.getSamePrimaries().isEmpty());
 
         assertNotNull(disease.getId());
         assertEquals("latest", disease.getVersion());
@@ -115,7 +116,7 @@ class DiseaseTest {
         assertEquals(1, disease.getAbstractorNote().size());
         assertEquals(2, disease.getTreatment().size());
         assertNull(disease.getGenetics());
-        assertTrue(disease.getAlternateName().size() > 0);
+        assertFalse(disease.getAlternateName().isEmpty());
         assertEquals("Acute erythremia", disease.getAlternateName().get(0).getValue());
         assertTrue(disease.getIcdO2Morphology().contains("9840/3"));
         assertTrue(disease.getIcdO1Morphology().contains("9840/3"));
@@ -228,7 +229,7 @@ class DiseaseTest {
             DiseaseSearchResults results = _DISEASE.search("latest", search.paramMap()).execute().body();
             assertNotNull(results);
             assertTrue(results.getTotal() > 0);
-            assertTrue(results.getResults().size() > 0);
+            assertFalse(results.getResults().isEmpty());
 
             // the first time through, set the total
             if (total == null)
@@ -276,8 +277,8 @@ class DiseaseTest {
         assertEquals("Initial migration", changelog.getDescription());
 
         DiseaseChangelogEntry entry = changelog.getAdds().get(0);
-        assertTrue(entry.getId().length() > 0);
-        assertTrue(entry.getName().length() > 0);
+        assertFalse(entry.getId().isEmpty());
+        assertFalse(entry.getName().isEmpty());
         assertNull(entry.getOldVersion());
         assertNull(entry.getNewVersion());
     }

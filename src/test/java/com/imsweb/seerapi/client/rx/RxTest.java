@@ -20,6 +20,7 @@ import com.imsweb.seerapi.client.publishable.PublishableSearch;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -59,7 +60,7 @@ class RxTest {
         assertNull(rx.getEvsId());
         assertNull(rx.getAbbreviation());
         assertEquals(Collections.singletonList("Chemotherapy"), rx.getCategory());
-        assertTrue(rx.getSubcategory().size() > 0);
+        assertFalse(rx.getSubcategory().isEmpty());
         assertEquals(1, rx.getNscNumber().size());
         assertNull(rx.getDrugs());
         assertNull(rx.getRadiation());
@@ -103,14 +104,14 @@ class RxTest {
         assertNotNull(changelog.getUser());
         assertEquals("latest", changelog.getVersion());
         assertNull(changelog.getAdds());
-        assertTrue(changelog.getMods().size() > 0);
+        assertFalse(changelog.getMods().isEmpty());
         assertNull(changelog.getDeletes());
         assertNotNull(changelog.getDate());
         assertNull(changelog.getDescription());
 
         RxChangelogEntry entry = changelog.getMods().get(0);
-        assertTrue(entry.getId().length() > 0);
-        assertTrue(entry.getName().length() > 0);
+        assertFalse(entry.getId().isEmpty());
+        assertFalse(entry.getName().isEmpty());
         assertNotNull(entry.getOldVersion());
         assertNotNull(entry.getNewVersion());
     }
@@ -159,7 +160,7 @@ class RxTest {
             RxSearchResults results = _RX.search("latest", search.paramMap()).execute().body();
             assertNotNull(results);
             assertTrue(results.getTotal() > 0);
-            assertTrue(results.getResults().size() > 0);
+            assertFalse(results.getResults().isEmpty());
 
             // the first time through, set the total
             if (total == null)

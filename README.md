@@ -30,14 +30,14 @@ Download [the latest JAR][1] or grab via Maven:
 <dependency>
     <groupId>com.imsweb</groupId>
     <artifactId>seerapi-client-java</artifactId>
-    <version>5.6</version>
+    <version>5.7</version>
 </dependency>
 ```
 
 or via Gradle:
 
 ```
-compile 'com.imsweb:seerapi-client-java:5.6'
+compile 'com.imsweb:seerapi-client-java:5.7'
 ```
 
 ## Usage
@@ -132,15 +132,17 @@ A searchable database for coding oncology drug and regimen treatment categories 
 api.rx().getById("latest", "53c44b01102c1290262dc8b2").execute().body()
 ```
 
-### SEER Incidence Site Recode (rest/recode)
+### Site Recode (rest/recode)
 
-The values of SEER site recode variables are based on the primary site and histology data fields submitted to SEER by the
-registries. The site recode variables define the major cancer site/histology groups that are commonly used in the reporting of
-cancer incidence data. For example, there is a section of the SEER Cancer Statistics Review for each major site corresponding to
-groupings in a site recode variable. The site recode variables are added to SEER databases as a convenience for researchers.
+The API supports three algorithms for recoding site: SEER site recode ("seer"), International Classification of Childhood Cancer Site Recode ("iccc"), 
+and Adolescents and Young Adults Site Recode ("aya"). The values of SEER site recode variables are based on the primary site, histology and 
+behavior data fields submitted to SEER by the registries. The site recode variables define the major cancer site/histology groups that 
+are commonly used in the reporting of cancer incidence data. For example, there is a section of the SEER Cancer Statistics Review for 
+each major site corresponding to groupings in a site recode variable. The site recode variables are added to SEER databases as a 
+convenience for researchers.
 
 ```java
-api.siteRecode().siteGroup("C619", "8000").execute().body()
+api.siteRecode().siteGroup("seer", "C619", "8000", null).execute().body()
 ```
 
 ### Site-specific Surgery Codes (rest/surgery)

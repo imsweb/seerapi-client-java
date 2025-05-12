@@ -30,7 +30,7 @@ class RxTest {
     private static RxService _RX;
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         _RX = new SeerApi.Builder().connect().rx();
     }
 

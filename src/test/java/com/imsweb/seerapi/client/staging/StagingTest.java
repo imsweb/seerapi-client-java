@@ -95,7 +95,7 @@ class StagingTest {
     private static StagingService _STAGING;
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         _STAGING = new SeerApi.Builder().connect().staging();
     }
 

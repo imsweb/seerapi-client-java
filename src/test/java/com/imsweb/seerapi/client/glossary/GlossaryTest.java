@@ -33,7 +33,7 @@ class GlossaryTest {
     private static GlossaryService _GLOSSARY;
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         _GLOSSARY = new SeerApi.Builder().connect().glossary();
     }
 

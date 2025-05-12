@@ -28,7 +28,7 @@ class DiseaseTest {
     private static DiseaseService _DISEASE;
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         _DISEASE = new SeerApi.Builder().connect().disease();
     }
 

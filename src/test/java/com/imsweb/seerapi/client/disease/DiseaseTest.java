@@ -28,7 +28,7 @@ class DiseaseTest {
     private static DiseaseService _DISEASE;
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         _DISEASE = new SeerApi.Builder().connect().disease();
     }
 
@@ -117,7 +117,7 @@ class DiseaseTest {
         assertEquals(2, disease.getTreatment().size());
         assertNull(disease.getGenetics());
         assertFalse(disease.getAlternateName().isEmpty());
-        assertEquals("Acute erythremia", disease.getAlternateName().get(0).getValue());
+        assertEquals("Acute erythemia [OBS]", disease.getAlternateName().get(0).getValue());
         assertTrue(disease.getIcdO2Morphology().contains("9840/3"));
         assertTrue(disease.getIcdO1Morphology().contains("9840/3"));
         assertEquals("C94.0 Acute erythroid leukemia", disease.getIcd10CmCode().get(0).getValue());

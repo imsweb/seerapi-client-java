@@ -2,14 +2,14 @@ plugins {
     id 'java-library'
     id 'checkstyle'
     id 'jacoco'
-    id "com.github.spotbugs" version "6.0.25"
+    id "com.github.spotbugs" version "6.1.11"
     id 'maven-publish'
     id 'signing'
     id "io.codearte.nexus-staging" version "0.30.0"
     id 'com.adarshr.test-logger' version '4.0.0'
-    id "com.github.ben-manes.versions" version "0.51.0"
-    id 'org.sonatype.gradle.plugins.scan' version '2.8.3'
-    id "org.sonarqube" version "5.1.0.4882"
+    id "com.github.ben-manes.versions" version "0.52.0"
+    id 'org.sonatype.gradle.plugins.scan' version '3.1.1'
+    id "org.sonarqube" version "6.1.0.5360"
 }
 
 group = 'com.imsweb'
@@ -18,7 +18,7 @@ description = 'Java client library for SEER*API'
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
-    options.compilerArgs << "-Werror"
+    options.compilerArgs << "-Werror" << "-Xlint:-options"
 }
 
 java {
@@ -34,19 +34,22 @@ repositories {
 }
 
 dependencies {
-    spotbugs 'com.github.spotbugs:spotbugs:4.8.6'
+    spotbugs 'com.github.spotbugs:spotbugs:4.9.3'
 
     api 'com.squareup.retrofit2:retrofit:2.11.0'
     api 'com.squareup.retrofit2:converter-jackson:2.11.0'
 
     // retrofit will not update these dependencies to fix vulnerabilities
     api 'com.squareup.okhttp3:okhttp:4.12.0'
-    api 'com.squareup.okio:okio:3.9.1'
+    api 'com.squareup.okio:okio:3.11.0'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.3'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.11.3'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.3'
-    testImplementation 'org.assertj:assertj-core:3.26.3'
+    testImplementation platform('org.junit:junit-bom:5.12.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.12.2'
+
+    testImplementation 'org.assertj:assertj-core:3.27.3'
     testImplementation 'com.google.code.bean-matchers:bean-matchers:0.14'
 }
 
@@ -122,7 +125,7 @@ tasks.named("dependencyUpdates").configure {
 }
 
 wrapper {
-    gradleVersion = '8.8'
+    gradleVersion = '8.14'
     distributionType = Wrapper.DistributionType.ALL
 }
 

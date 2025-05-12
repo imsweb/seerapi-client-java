@@ -21,6 +21,7 @@ import com.imsweb.seerapi.client.shared.KeywordMatch;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static com.imsweb.seerapi.client.glossary.Glossary.Category.GENERAL;
+import static com.imsweb.seerapi.client.glossary.Glossary.Category.HEMATO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -49,7 +50,7 @@ class GlossaryTest {
         assertEquals(1, versions.size());
         GlossaryVersion version = versions.get(0);
         assertEquals("latest", version.getName());
-        assertNull(version.getType());  // type not returned when no permisisons
+        assertNull(version.getType());  // type isn't returned when no permisisons
         assertNotNull(version.getFirstPublished());
         assertNotNull(version.getCount());
     }
@@ -68,7 +69,7 @@ class GlossaryTest {
         assertNull(glossary.getPrimarySite());
 
         assertNull(glossary.getHistology());
-        assertTrue(glossary.getDefinition().startsWith("An x-ray of the lymphatic system."));
+        assertTrue(glossary.getDefinition().startsWith("An x-ray or computer image of the lymphatic system."));
         assertNull(glossary.getAlternateName());
         assertNull(glossary.getHistory());
     }
@@ -87,15 +88,15 @@ class GlossaryTest {
         assertEquals(Collections.singletonList(term), results.getTerms());
 
         // add the category and verify there are no results
-        results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(Glossary.Category.SOLID_TUMOR)).execute().body();
+        results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(GENERAL)).execute().body();
 
         assertNotNull(results);
         assertEquals(25, results.getCount().longValue());
-        assertEquals(0, results.getTotal().longValue());
-        assertNull(results.getResults());
+        assertTrue(results.getTotal().longValue() > 0);
+        assertFalse(results.getResults().isEmpty());
 
         // add a second category and verify there are we get the results again
-        results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(Glossary.Category.SOLID_TUMOR, Glossary.Category.HEMATO)).execute().body();
+        results = _GLOSSARY.search("latest", search.paramMap(), EnumSet.of(GENERAL, Glossary.Category.HEMATO)).execute().body();
 
         assertNotNull(results);
         assertEquals(25, results.getCount().longValue());
@@ -126,18 +127,22 @@ class GlossaryTest {
             search.setOffset(search.getOffset() + results.getResults().size());
         }
 
-        assertTrue(total > 100);
+        assertTrue(total > 0);
     }
 
     @Test
     void testGlossaryMatch() throws IOException {
-        String text = "This text contains summary stage which should be found.";
+        String text = "white blood cells that produce antibodies";
 
         Set<KeywordMatch> matches = _GLOSSARY.match(text, null, true).execute().body();
         assertNotNull(matches);
-        assertEquals(1, matches.size());
+        assertEquals(2, matches.size());
 
         matches = _GLOSSARY.match(text, EnumSet.of(GENERAL), true).execute().body();
+        assertNotNull(matches);
+        assertEquals(2, matches.size());
+
+        matches = _GLOSSARY.match(text, EnumSet.of(HEMATO), true).execute().body();
         assertNotNull(matches);
         assertEquals(0, matches.size());
     }

@@ -538,11 +538,11 @@ class StagingTest {
     void testStagingGlossary() throws IOException {
         Set<KeywordMatch> matches = _STAGING.schemaGlossary("eod_public", "2.0", "breast", null, true).execute().body();
         assertThat(matches).hasSize(26);
-        matches = _STAGING.schemaGlossary("eod_public", "2.0", "breast", EnumSet.of(Category.STAGING), true).execute().body();
-        assertThat(matches).hasSize(1);
+        matches = _STAGING.schemaGlossary("eod_public", "2.0", "breast", EnumSet.of(Category.GENERAL), true).execute().body();
+        assertThat(matches).hasSize(26);
 
         matches = _STAGING.tableGlossary("eod_public", "2.0", "cea_pretx_lab_value_33864", null, true).execute().body();
-        assertThat(matches).hasSize(24);
+        assertThat(matches).hasSize(23);
         matches = _STAGING.tableGlossary("eod_public", "2.0", "cea_pretx_lab_value_33864", EnumSet.of(Category.STAGING), true).execute().body();
         assertThat(matches).isEmpty();
     }

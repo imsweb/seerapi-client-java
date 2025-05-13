@@ -18,6 +18,11 @@ group = 'com.imsweb'
 version = '5.8-SNAPSHOT'
 description = 'Java client library for SEER*API'
 
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << "-Werror" << "-Xlint:-options"
+}
+
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -32,6 +37,8 @@ dependencies {
 
     api 'com.squareup.retrofit2:retrofit:2.11.0'
     api 'com.squareup.retrofit2:converter-jackson:2.11.0'
+
+    // retrofit will not update these dependencies to fix vulnerabilities
     api 'com.squareup.okhttp3:okhttp:4.12.0'
     api 'com.squareup.okio:okio:3.11.0'
 
@@ -46,10 +53,11 @@ dependencies {
 }
 
 jar {
+    // specify the archive name; otherwise the version is appended to the war file
     archiveFileName = 'seerapi-java.jar'
+
     manifest {
-        attributes(
-                'Implementation-Title': 'SEER*API Java Client',
+        attributes('Implementation-Title': 'SEER*API Java Client',
                 'Implementation-Version': archiveVersion,
                 'Implementation-Vendor': group,
                 'Created-By': System.properties['java.vm.version'] + " (" + System.properties['java.vm.vendor'] + ")",

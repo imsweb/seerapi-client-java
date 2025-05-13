@@ -37,7 +37,7 @@ Download [the latest JAR][1] or grab via Maven:
 or via Gradle:
 
 ```
-compile 'com.imsweb:seerapi-client-java:5.7'
+compile 'com.imsweb:seerapi-client-java:5.8'
 ```
 
 ## Usage

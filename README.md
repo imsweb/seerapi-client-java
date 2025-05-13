@@ -30,7 +30,7 @@ Download [the latest JAR][1] or grab via Maven:
 <dependency>
     <groupId>com.imsweb</groupId>
     <artifactId>seerapi-client-java</artifactId>
-    <version>5.7</version>
+    <version>5.8</version>
 </dependency>
 ```
 

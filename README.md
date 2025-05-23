@@ -1,7 +1,7 @@
 # seerapi-client-java
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=imsweb_seerapi-client-java&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=imsweb_seerapi-client-java)
 [![integration](https://github.com/imsweb/seerapi-client-java/workflows/integration/badge.svg)](https://github.com/imsweb/seerapi-client-java/actions)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.imsweb/seerapi-client-java/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.imsweb/seerapi-client-java)
+[![Maven Central](https://img.shields.io/maven-central/v/com.imsweb/seerapi-client-java.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/com.imsweb/seerapi-client-java)
 
 A [SEER*API](https://api.seer.cancer.gov) client for Java applications.  This library supports most of the APIs and
 makes them easy to incorporate into Java applications.

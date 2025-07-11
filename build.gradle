@@ -10,7 +10,7 @@ plugins {
     id 'com.adarshr.test-logger' version '4.0.0'
     id "com.github.ben-manes.versions" version "0.52.0"
     id 'org.sonatype.gradle.plugins.scan' version '3.1.1'
-    id "org.sonarqube" version "6.1.0.5360"
+    id "org.sonarqube" version "6.2.0.5505"
     id 'com.vanniktech.maven.publish' version '0.31.0'
 }
 
@@ -37,6 +37,7 @@ dependencies {
 
     api 'com.squareup.retrofit2:retrofit:2.11.0'
     api 'com.squareup.retrofit2:converter-jackson:2.11.0'
+    api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.19.1'
 
     // retrofit will not update these dependencies to fix vulnerabilities
     api 'com.squareup.okhttp3:okhttp:4.12.0'

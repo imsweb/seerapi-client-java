@@ -5,10 +5,8 @@ package com.imsweb.seerapi.client.naaccr;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.imsweb.seerapi.client.SeerApi;
@@ -25,128 +23,64 @@ class NaaccrTest {
     }
 
     @Test
-    void testNaaccrFlatVersions() throws IOException {
-        List<NaaccrVersion> versions = _NAACCR.flatVersions().execute().body();
+    void testVersions() throws IOException {
+        List<NaaccrVersion> versions = _NAACCR.versions().execute().body();
 
         assertThat(versions).isNotNull().isNotEmpty();
         for (NaaccrVersion version : versions) {
             assertThat(version.getVersion()).isNotEmpty();
-            assertThat(version.getName()).isNotEmpty();
-            assertThat(version.getLength()).isGreaterThanOrEqualTo(22824);
-            assertThat(version.getDescription()).isNull();
-            assertThat(version.getStyle()).isNotEmpty();
+            assertThat(version.getYearImplemented()).isGreaterThan(2020);
+            assertThat(version.getDateOfPublication()).isNotNull();
         }
     }
 
     @Test
-    void testNaaccrXmlVersions() throws IOException {
-        List<NaaccrVersion> versions = _NAACCR.xmlVersions().execute().body();
-
-        assertThat(versions).isNotNull().isNotEmpty();
-        for (NaaccrVersion version : versions) {
-            assertThat(version.getVersion()).isNotEmpty();
-            assertThat(version.getName()).isNotEmpty();
-            assertThat(version.getLength()).isNull();
-            assertThat(version.getDescription()).isNull();
-            assertThat(version.getStyle()).isNotEmpty();
-            assertThat(version.getDictionaryUri()).isNotEmpty();
-            assertThat(version.getDictionaryDescription()).isNotEmpty();
-            assertThat(version.getSpecificationVersion()).isNotEmpty();
-        }
-    }
-
-    @Test
-    void testNaaccrFlatFieldNames() throws IOException {
-        List<NaaccrFieldName> names = _NAACCR.flatFieldNames("latest").execute().body();
+    void testNaaccrFieldNames() throws IOException {
+        List<NaaccrItemInfo> names = _NAACCR.fieldNames("latest").execute().body();
 
         assertThat(names).isNotNull();
-        for (NaaccrFieldName name : names) {
-            assertThat(name.getItemNum()).isPositive();
+        for (NaaccrItemInfo name : names) {
+            assertThat(name.getItem()).isNotEmpty();
             assertThat(name.getName()).isNotEmpty();
         }
     }
 
     @Test
-    void testNaaccrXmlFieldNames() throws IOException {
-        List<NaaccrFieldName> names = _NAACCR.xmlFieldNames("latest").execute().body();
-
-        assertThat(names).isNotNull();
-        for (NaaccrFieldName name : names) {
-            assertThat(name.getNaaccrId()).isNotEmpty();
-            assertThat(name.getItemNum()).isPositive();
-            assertThat(name.getName()).isNotEmpty();
-        }
+    void testNaaccrItem() throws IOException {
+        validateItem(_NAACCR.item("25", "80").execute().body());
+        validateItem(_NAACCR.item("25", "addrAtDxState").execute().body());
     }
 
-    @Test
-    void testNaaccrFlatField() throws IOException {
-        NaaccrFlatField name = _NAACCR.flatField("16", 521).execute().body();
-
-        assertThat(name).isNotNull();
-        assertThat(name.getItemNum()).isEqualTo(521);
-        assertThat(name.getNaaccrId()).isEqualTo("morphTypebehavIcdO3");
-        assertThat(name.getName()).isEqualTo("Morph--Type&Behav ICD-O-3");
-        assertThat(name.getSection()).isEqualTo("Cancer Identification");
-        assertThat(name.getAlign()).isEqualTo("LEFT");
-        assertThat(name.getPadChar()).isEqualTo(" ");
-        assertThat(name.getDocumentation()).startsWith("<table class=\"naaccr-summary-table naaccr-borders\">");
-        assertThat(name.getStart()).isEqualTo(550);
-        assertThat(name.getEnd()).isEqualTo(554);
-
-        assertThat(name.getSubFields()).hasSize(2);
-        assertThat(name.getSubFields()).extracting("item").contains(522, 523);
-
-        NaaccrSubField sub = name.getSubFields().get(0);
-        assertThat(sub.getName()).isEqualTo("Histologic Type ICD-O-3");
-        assertThat(sub.getStart()).isEqualTo(550);
-        assertThat(sub.getEnd()).isEqualTo(553);
-        assertThat(sub.getAlign()).isEqualTo("LEFT");
-        assertThat(sub.getPadChar()).isEqualTo(" ");
-
-        // test one with default value
-        NaaccrFlatField recordID = _NAACCR.flatField("18", 10).execute().body();
-        assertThat(recordID).isNotNull();
-        assertThat(recordID.getName()).isEqualTo("Record Type");
-        assertThat(recordID.getSection()).isEqualTo("Record ID");
-        assertThat(recordID.getDefaultValue()).isEqualTo("A");
+    private void validateItem(NaaccrItem item) {
+        assertThat(item).isNotNull();
+        assertThat(item.getItemNumber()).isEqualTo("80");
+        assertThat(item.getItemName()).isEqualTo("Addr at DX--State");
+        assertThat(item.getItemDataType()).isEqualTo("alpha");
+        assertThat(item.getItemLength()).isEqualTo("2");
+        assertThat(item.getYearImplemented()).isEqualTo("2011");
+        assertThat(item.getVersionImplemented()).isEqualTo("12.2");
+        assertThat(item.getXmlNaaccrId()).isEqualTo("addrAtDxState");
+        assertThat(item.getXmlParentId()).isEqualTo("Tumor");
+        assertThat(item.getRecordTypes()).containsExactlyInAnyOrder("A", "C", "I", "M");
+        assertThat(item.getSection()).isEqualTo("Demographic");
+        assertThat(item.getSourceOfStandard()).isEqualTo("CoC");
+        assertThat(item.getDateCreated()).isInThePast();
+        assertThat(item.getDateModified()).isInThePast();
+        assertThat(item.getDescription()).isNotEmpty();
+        assertThat(item.getRationale()).isNotEmpty();
+        assertThat(item.getNpcrCollect()).isEqualTo("Required");
+        assertThat(item.getCocCollect()).isEqualTo("Required");
+        assertThat(item.getSeerCollect()).isEqualTo("Required");
+        assertThat(item.getCccrCollect()).isEqualTo("No recommendation");
+        assertThat(item.getAlternateNames()).containsExactlyInAnyOrder("State at Diagnosis (CoC)", "State (pre-96 CoC)");
+        assertThat(item.getFormat()).isEqualTo("Upper case");
+        assertThat(item.getCodeDescription()).isEqualTo("In addition to USPS abbreviations");
+        assertThat(item.getAllowableValues()).isEqualTo("Refer to EDITS table STATE.DBF in Appendix B; CD, US, XX, YY, ZZ");
+        assertThat(item.getAllowedCodes())
+                .hasSize(5)
+                .allMatch(allowedCode -> allowedCode.getDescription() != null)
+                .extracting("code")
+                .containsExactlyInAnyOrder("CD", "US", "XX", "YY", "ZZ");
     }
 
-    @Test
-    void testNaaccrXmlField() throws IOException {
-        NaaccrXmlField name = _NAACCR.xmlField("21", "phase2RadiationExternalBeamTech").execute().body();
-
-        assertThat(name).isNotNull();
-        assertThat(name.getNaaccrId()).isEqualTo("phase2RadiationExternalBeamTech");
-        assertThat(name.getItemNum()).isEqualTo(1512);
-        assertThat(name.getName()).isEqualTo("Phase II Radiation External Beam Planning Tech");
-        assertThat(name.getSection()).isEqualTo("Treatment-1st Course");
-        assertThat(name.getParentXmlElement()).isEqualTo("Tumor");
-        assertThat(name.getRecordTypes()).containsExactly("A", "M", "C", "I");
-        assertThat(name.getDataType()).isEqualTo("digits");
-        assertThat(name.getLength()).isEqualTo(2);
-        assertThat(name.getPadType()).isEqualTo("none");
-        assertThat(name.getTrimType()).isEqualTo("all");
-        assertThat(name.getAllowUnlimitedText()).isFalse();
-        assertThat(name.getDocumentation()).isNotEmpty();
-    }
-
-    // these two tests are slow so don't run them all the time; they verify that all the items from flat and NAACR can be read without error
-
-    @Disabled("Slow test so do not run all the time")
-    public void loadAllFlat() throws IOException {
-        for (NaaccrFieldName name : Objects.requireNonNull(_NAACCR.flatFieldNames("latest").execute().body())) {
-            NaaccrFlatField field = _NAACCR.flatField("latest", name.getItemNum()).execute().body();
-
-            assertThat(field).isNotNull();
-        }
-    }
-
-    @Disabled("Slow test so do not run all the time")
-    public void loadAllXml() throws IOException {
-        for (NaaccrFieldName name : Objects.requireNonNull(_NAACCR.xmlFieldNames("latest").execute().body())) {
-            NaaccrXmlField field = _NAACCR.xmlField("latest", name.getNaaccrId()).execute().body();
-
-            assertThat(field).isNotNull();
-        }
-    }
 }

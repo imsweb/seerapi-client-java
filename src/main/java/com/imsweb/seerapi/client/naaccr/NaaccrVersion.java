@@ -1,54 +1,41 @@
 package com.imsweb.seerapi.client.naaccr;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.time.OffsetDateTime;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({"version", "year_implemented", "date_of_publication"})
 public class NaaccrVersion {
 
-    @JsonProperty("version")
-    protected String _version;
-    @JsonProperty("name")
-    protected String _name;
-    @JsonProperty("length")
-    protected Integer _length;
-    @JsonProperty("description")
-    protected String _description;
-    @JsonProperty("style")
-    protected String _style;
-    @JsonProperty("dictionary_uri")
-    protected String dictionaryUri;
-    @JsonProperty("dictionary_description")
-    protected String dictionaryDescription;
-    @JsonProperty("specification_version")
-    protected String specificationVersion;
+    private String version;
+    private Integer yearImplemented;
+    private OffsetDateTime dateOfPublication;
 
     public String getVersion() {
-        return _version;
+        return version;
     }
 
-    public String getName() {
-        return _name;
+    public void setVersion(String version) {
+        this.version = version;
     }
 
-    public Integer getLength() {
-        return _length;
+    @JsonProperty("year_implemented")
+    public Integer getYearImplemented() {
+        return yearImplemented;
     }
 
-    public String getDescription() {
-        return _description;
+    public void setYearImplemented(Integer yearImplemented) {
+        this.yearImplemented = yearImplemented;
     }
 
-    public String getStyle() {
-        return _style;
+    @JsonProperty("date_of_publication")
+    public OffsetDateTime getDateOfPublication() {
+        return dateOfPublication;
     }
 
-    public String getDictionaryUri() {
-        return dictionaryUri;
+    public void setDateOfPublication(OffsetDateTime dateOfPublication) {
+        this.dateOfPublication = dateOfPublication;
     }
 
-    public String getDictionaryDescription() {
-        return dictionaryDescription;
-    }
-    public String getSpecificationVersion() {
-        return specificationVersion;
-    }
 }

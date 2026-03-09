@@ -43,7 +43,7 @@ class NdcTest {
         assertThat(product.getDosageFormName()).isEqualTo("CAPSULE");
         assertThat(product.getRouteName()).containsExactly("ORAL");
         assertThat(product.getStartMarketingDate()).isEqualTo("20021126");
-        assertThat(product.getEndMarketingDate()).isNull();
+        assertThat(product.getEndMarketingDate()).isEqualTo("20270731");
         assertThat(product.getMarketingCategoryName()).isEqualTo("NDA");
         assertThat(product.getApplicationNumber()).isEqualTo("NDA021411");
         assertThat(product.getLabelerName()).isEqualTo("Eli Lilly and Company");

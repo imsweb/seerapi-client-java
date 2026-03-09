@@ -89,7 +89,7 @@ class DiseaseTest {
         Disease disease = _DISEASE.getById("latest", "51f6cf58e3e27c3994bd5408").execute().body();
 
         assertNotNull(disease);
-        assertEquals("Pure erythroid leukemia", disease.getName());
+        assertEquals("Acute erythroid leukemia (AEL)", disease.getName());
         assertEquals(Disease.Type.HEMATO, disease.getType());
         assertEquals("9840/3", disease.getIcdO3Morphology());
         assertFalse(disease.getSamePrimaries().isEmpty());
@@ -115,7 +115,7 @@ class DiseaseTest {
         assertNull(disease.getObsoleteNewCode());
         assertEquals(1, disease.getAbstractorNote().size());
         assertEquals(2, disease.getTreatment().size());
-        assertNull(disease.getGenetics());
+        assertNotNull(disease.getGenetics());
         assertFalse(disease.getAlternateName().isEmpty());
         assertEquals("Acute erythemia [OBS]", disease.getAlternateName().get(0).getValue());
         assertTrue(disease.getIcdO2Morphology().contains("9840/3"));
@@ -138,7 +138,7 @@ class DiseaseTest {
         assertNotNull(disease.getTransformFrom());
         assertNull(disease.getTransformTo());
         assertNotNull(disease.getImmunophenotype());
-        assertEquals("Bone marrow biopsy", disease.getDiagnosisMethod().get(0).getValue());
+        assertEquals("Cytogenetics", disease.getDiagnosisMethod().get(0).getValue());
         assertEquals("See abstractor notes", disease.getModuleId().get(0).getValue());
         assertNull(disease.getBiomarkers());
         assertNull(disease.getTreatmentText());
@@ -175,8 +175,8 @@ class DiseaseTest {
 
         assertNotNull(results);
         assertEquals(25, results.getCount().longValue());
-        assertEquals(5, results.getTotal().longValue());
-        assertEquals(5, results.getResults().size());
+        assertEquals(7, results.getTotal().longValue());
+        assertEquals(7, results.getResults().size());
         assertEquals(Collections.singletonList("basophilic"), results.getTerms());
 
         search.setSiteCategory("BAD_VALUE");
@@ -211,8 +211,8 @@ class DiseaseTest {
 
         assertNotNull(results);
         assertEquals(25, results.getCount().longValue());
-        assertEquals(6, results.getTotal().longValue());
-        assertEquals(6, results.getResults().size());
+        assertEquals(8, results.getTotal().longValue());
+        assertEquals(8, results.getResults().size());
         assertEquals(Collections.singletonList("basophilic"), results.getTerms());
     }
 

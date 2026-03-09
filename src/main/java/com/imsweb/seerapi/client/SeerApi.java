@@ -97,6 +97,7 @@ public final class SeerApi {
      * Return the internal ObjectMapper
      * @return an Objectmapper
      */
+    @SuppressWarnings("deprecation")
     static ObjectMapper getMapper() {
         ObjectMapper mapper = new ObjectMapper();
 

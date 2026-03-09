@@ -6,11 +6,11 @@ plugins {
     id 'java-library'
     id 'checkstyle'
     id 'jacoco'
-    id "com.github.spotbugs" version "6.1.11"
+    id "com.github.spotbugs" version "6.4.8"
     id 'com.adarshr.test-logger' version '4.0.0'
-    id "com.github.ben-manes.versions" version "0.52.0"
-    id 'org.sonatype.gradle.plugins.scan' version '3.1.1'
-    id "org.sonarqube" version "6.2.0.5505"
+    id "com.github.ben-manes.versions" version "0.53.0"
+    id 'org.sonatype.gradle.plugins.scan' version '3.1.4'
+    id "org.sonarqube" version "7.2.3.7755"
     id 'com.vanniktech.maven.publish' version '0.31.0'
 }
 
@@ -33,15 +33,15 @@ repositories {
 }
 
 dependencies {
-    spotbugs 'com.github.spotbugs:spotbugs:4.9.3'
+    spotbugs 'com.github.spotbugs:spotbugs:4.9.8'
 
-    api 'com.squareup.retrofit2:retrofit:2.11.0'
-    api 'com.squareup.retrofit2:converter-jackson:2.11.0'
-    api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.19.1'
+    api 'com.squareup.retrofit2:retrofit:3.0.0'
+    api 'com.squareup.retrofit2:converter-jackson:3.0.0'
+    api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.21.1'
 
     // retrofit will not update these dependencies to fix vulnerabilities
     api 'com.squareup.okhttp3:okhttp:4.12.0'
-    api 'com.squareup.okio:okio:3.11.0'
+    api 'com.squareup.okio:okio:3.16.4'
 
     testImplementation platform('org.junit:junit-bom:5.12.2')
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
@@ -49,7 +49,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.12.2'
 
-    testImplementation 'org.assertj:assertj-core:3.27.3'
+    testImplementation 'org.assertj:assertj-core:3.27.7'
     testImplementation 'com.google.code.bean-matchers:bean-matchers:0.14'
 }
 
@@ -157,6 +157,6 @@ mavenPublishing {
 }
 
 wrapper {
-    gradleVersion = '8.14'
+    gradleVersion = '9.4.0'
     distributionType = Wrapper.DistributionType.ALL
 }

@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Properties;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -59,6 +60,9 @@ public final class SeerApi {
             baseUrl += "/";
 
         OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(Duration.ofSeconds(30))
+                .readTimeout(Duration.ofSeconds(30))
+                .writeTimeout(Duration.ofSeconds(30))
                 .addInterceptor(chain -> {
                     Request original = chain.request();
 

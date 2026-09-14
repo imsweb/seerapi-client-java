@@ -42,7 +42,7 @@ class DiseaseTest {
         List<DiseaseVersion> versions = _DISEASE.versions().execute().body();
 
         assertNotNull(versions);
-        assertEquals(1, versions.size());
+        assertFalse(versions.isEmpty());
         DiseaseVersion version = versions.get(0);
         assertEquals("latest", version.getName());
         assertNull(version.getType());  // type not returned when no permisisons

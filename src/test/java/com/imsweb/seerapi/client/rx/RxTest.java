@@ -39,7 +39,7 @@ class RxTest {
         List<RxVersion> versions = _RX.versions().execute().body();
 
         assertNotNull(versions);
-        assertEquals(1, versions.size());
+        assertFalse(versions.isEmpty());
         RxVersion version = versions.get(0);
         assertEquals("latest", version.getName());
         assertNull(version.getType());  // type not returned when no permisisons

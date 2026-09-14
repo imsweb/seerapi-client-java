@@ -91,6 +91,7 @@ public class NdcSeerInfo {
         ANCILLARY,
         CHEMOTHERAPY,
         IMMUNOTHERAPY,
-        RADIOPHARMACEUTICAL
+        RADIOPHARMACEUTICAL,
+        HEME_TRANSPLANT_ENDOCRINE_PROCEDURE
     }
 }

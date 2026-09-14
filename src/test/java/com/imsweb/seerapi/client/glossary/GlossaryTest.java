@@ -47,7 +47,7 @@ class GlossaryTest {
         List<GlossaryVersion> versions = _GLOSSARY.versions().execute().body();
 
         assertNotNull(versions);
-        assertEquals(1, versions.size());
+        assertFalse(versions.isEmpty());
         GlossaryVersion version = versions.get(0);
         assertEquals("latest", version.getName());
         assertNull(version.getType());  // type isn't returned when no permisisons

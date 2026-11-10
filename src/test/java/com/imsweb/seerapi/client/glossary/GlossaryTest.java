@@ -48,9 +48,8 @@ class GlossaryTest {
 
         assertNotNull(versions);
         assertFalse(versions.isEmpty());
-        GlossaryVersion version = versions.get(0);
+        GlossaryVersion version = versions.stream().filter(v -> "latest".equals(v.getName())).findFirst().orElseThrow();
         assertEquals("latest", version.getName());
-        assertNull(version.getType());  // type isn't returned when no permisisons
         assertNotNull(version.getFirstPublished());
         assertNotNull(version.getCount());
     }

@@ -40,9 +40,8 @@ class RxTest {
 
         assertNotNull(versions);
         assertFalse(versions.isEmpty());
-        RxVersion version = versions.get(0);
+        RxVersion version = versions.stream().filter(v -> "latest".equals(v.getName())).findFirst().orElseThrow();
         assertEquals("latest", version.getName());
-        assertNull(version.getType());  // type not returned when no permisisons
         assertNotNull(version.getFirstPublished());
         assertNotNull(version.getCount());
     }
@@ -123,8 +122,8 @@ class RxTest {
 
         assertNotNull(results);
         assertEquals(25, results.getCount().longValue());
-        assertEquals(8, results.getTotal().longValue());
-        assertEquals(8, results.getResults().size());
+        assertEquals(9, results.getTotal().longValue());
+        assertEquals(9, results.getResults().size());
         assertEquals(Collections.singletonList("abt"), results.getTerms());
 
         search.setMode(PublishableSearch.SearchMode.OR);

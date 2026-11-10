@@ -103,6 +103,8 @@ public class Disease extends Publishable {
     private List<YearRangeString> _samePrimaries;
     @JsonProperty("same_primaries_text")
     private List<YearRangeString> _samePrimariesText;
+    @JsonProperty("same_primary_text")
+    private List<YearRangeString> _samePrimaryText;
     @JsonProperty("progression")
     private List<YearRangeString> _progression;
     @JsonProperty("diagnostic_confirmation")
@@ -420,6 +422,14 @@ public class Disease extends Publishable {
 
     public void setSamePrimariesText(List<YearRangeString> samePrimariesText) {
         _samePrimariesText = samePrimariesText;
+    }
+
+    public List<YearRangeString> getSamePrimaryText() {
+        return _samePrimaryText;
+    }
+
+    public void setSamePrimaryText(List<YearRangeString> samePrimaryText) {
+        _samePrimaryText = samePrimaryText;
     }
 
     public List<YearRangeString> getBiomarkers() {
